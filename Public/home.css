@@ -88,6 +88,418 @@ body {
   color: #0d1b56;
 }
 
+.hero {
+  background: #0d1b56;
+  color: white;
+  padding: 80px 10%;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.hero-buttons button {
+  background-color: #ffd700;
+  color: #0d1b56;
+  padding: 12px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.hero-buttons button:hover {
+  background-color: #0d1b56;
+  color: white;
+}
+
+.how-it-works {
+  text-align: center;
+  padding: 50px 10%;
+  background-color: #f3f4f6;
+}
+
+.how-it-works h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.how-it-works .steps {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+.how-it-works .step {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.how-it-works .step h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0d1b56;
+}
+
+.how-it-works .step p {
+  font-size: 16px;
+  color: #444;
+  margin-top: 10px;
+}
+
+.freelancer-profiles {
+  padding: 50px 10%;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.freelancer-profiles h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.freelancer-profiles .profiles {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.freelancer-profiles .profile {
+  flex: 1 1 calc(33% - 20px);
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.freelancer-profiles .profile img {
+  width: 100%;
+  max-width: 180px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.freelancer-profiles .profile h3 {
+  font-size: 20px;
+  color: #0d1b56;
+}
+
+.freelancer-profiles .profile p {
+  font-size: 16px;
+  color: #444;
+}
+
+.testimonials {
+  padding: 50px 10%;
+  background-color: #f3f4f6;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.testimonials .testimonial {
+  margin-bottom: 30px;
+}
+
+.testimonials .testimonial p {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.testimonials .testimonial h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0d1b56;
+}
+
+.pricing {
+  padding: 50px 10%;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.pricing h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.pricing .pricing-plan {
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.pricing .pricing-plan h3 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0d1b56;
+}
+
+.pricing .pricing-plan p {
+  font-size: 16px;
+  color: #444;
+}
+
+.contact-us {
+  padding: 50px 10%;
+  background-color: #f3f4f6;
+}
+
+.contact-us h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.contact-us form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-us label {
+  font-size: 16px;
+  color: #444;
+}
+
+.contact-us input,
+.contact-us textarea {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.contact-us input:focus,
+.contact-us textarea:focus {
+  border-color: #0d1b56;
+}
+
+.contact-us button {
+  background-color: #0d1b56;
+  color: white;
+  padding: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.contact-us button:hover {
+  background-color: #ffd700;
+}
+
+.footer {
+  background-color: #0d1b56;
+  color: white;
+  padding: 40px 5%;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+.footer-logo h3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.footer-links h3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.quick-links a {
+  color: white;
+  text-decoration: none;
+  padding: 5px;
+}
+
+.quick-links a:hover {
+  color: #ffd700;
+}
+
+ul,
+ol {
+  list-style: none;
+  text-align: center;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: #0d1b56; /* Dark blue */
+  color: white;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #ffd700; /* Gold color on hover */
+  transform: scale(1.05); /* Slight scaling effect on hover */
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: transparent;
+  color: #0d1b56; /* Dark blue */
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #0d1b56; /* Border color matches text color */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #0d1b56; /* Dark blue background on hover */
+  color: white; /* Change text to white on hover */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background-color: #0d1b56;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 80px;
+}
+
+.logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 5px 12px;
+  width: 45%;
+  height: 50px;
+  transition: 0.3s;
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+  background: transparent;
+  color: white;
+}
+
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-container button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-buttons button {
+  background-color: white;
+  color: #0d1b56;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-buttons button:hover {
+  background-color: #ffd700;
+  color: #0d1b56;
+}
+
 .footer {
   background-color: #0d1b56;
   color: white;
@@ -131,7 +543,7 @@ body {
 }
 
 .footer-links h3 {
-  font-size: 18px;
+  font-size: 24px; /* Make Quick Links title same size as Milestone */
   margin-bottom: 12px;
   text-align: center;
 }
