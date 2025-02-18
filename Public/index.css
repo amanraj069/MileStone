@@ -1,3 +1,4 @@
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
@@ -5,6 +6,7 @@
   font-family: Arial, sans-serif;
 }
 
+/* Body */
 body {
   background-color: #f3f4f6;
   min-height: 100vh;
@@ -12,6 +14,7 @@ body {
   flex-direction: column;
 }
 
+/* NAVBAR */
 .navbar {
   background-color: #0d1b56;
   display: flex;
@@ -33,6 +36,7 @@ body {
   cursor: pointer;
 }
 
+/* Search Bar */
 .search-container {
   display: flex;
   align-items: center;
@@ -66,6 +70,7 @@ body {
   color: white;
 }
 
+/* NAV BUTTONS */
 .nav-buttons {
   display: flex;
   gap: 10px;
@@ -88,6 +93,7 @@ body {
   color: #0d1b56;
 }
 
+/* FOOTER */
 .footer {
   background-color: #0d1b56;
   color: white;
@@ -104,9 +110,9 @@ body {
   flex-wrap: wrap;
   max-width: 1200px;
   margin: auto;
-  padding: 20px 0;
 }
 
+/* Footer Sections */
 .footer-section {
   flex: 1;
   min-width: 250px;
@@ -114,13 +120,9 @@ body {
   padding: 0 20px;
 }
 
-.footer-logo {
-  text-align: center;
-}
-
-.footer-logo h3 {
+/* Logo & Company Info */
+.footer-logo h2 {
   font-size: 24px;
-  font-weight: bold;
   margin-bottom: 10px;
 }
 
@@ -130,10 +132,10 @@ body {
   line-height: 1.5;
 }
 
+/* Quick Links */
 .footer-links h3 {
   font-size: 18px;
   margin-bottom: 12px;
-  text-align: center;
 }
 
 .quick-links {
@@ -146,21 +148,36 @@ body {
 .quick-links a {
   color: white;
   text-decoration: none;
-  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
-  padding: 5px;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
 }
 
 .quick-links a:hover {
   color: #ffd700;
-  transform: scale(1.05);
 }
 
-ul,
-ol {
-  list-style: none;
-  text-align: center;
+/* Social Icons */
+.footer-social h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
 }
 
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons .icon {
+  font-size: 24px;
+  transition: transform 0.3s ease-in-out, color 0.3s;
+}
+
+.social-icons .icon:hover {
+  transform: scale(1.2);
+  color: #ffd700;
+}
+
+/* Footer Bottom */
 .footer-bottom {
   margin-top: 20px;
   padding-top: 10px;
@@ -169,6 +186,7 @@ ol {
   font-size: 14px;
 }
 
+/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
@@ -196,21 +214,14 @@ ol {
 
   .footer-section {
     text-align: center;
-    padding: 20px 0;
-    width: 100%;
+    padding: 10px 0;
   }
 
   .quick-links {
     align-items: center;
   }
-}
 
-.footer-title,
-.footer-logo h3 {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.normal {
-  font-size: 40px;
+  .social-icons {
+    justify-content: center;
+  }
 }
