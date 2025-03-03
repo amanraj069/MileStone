@@ -227,6 +227,12 @@ function goBack() {
     window.location.href = "job_listing.html";
 }
 
+function goProfile() {
+    // You would normally use history.back() or redirect to a specific page
+    alert('Navigating to Profile page...');
+    window.location.href = "view_profile.html";
+}
+
 // Apply Now functionality 
 // document.addEventListener("DOMContentLoaded", function () {
 
