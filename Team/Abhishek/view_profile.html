@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="view_profile.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Job Details Section -->
+        <header>
+            <a href="#" class="back-button" onclick="goJobListing()" style="color: #1E90FF;">
+                <i class="fas fa-arrow-left"></i> Back to Job Details
+            </a>
+            <div></div> <!-- Empty div for spacing -->
+        </header>
+        <!-- Profile Header (Same as before) -->
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-image"><img src="user_image.jpg" alt="Applicant"></div>
+                <div class="profile-details">
+                    <h1>Ravi Krishan</h1>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.3 (48 reviews)</span>
+                    </div>
+                    <div>Senior Frontend Developer</div>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Greater Noida (Delhi)</p>
+                        <p><i class="fas fa-envelope"></i> ravi.dev@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +91 9941793002</p>
+                    </div>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary">Contact Me</button>
+                <button class="btn btn-secondary">Download CV</button>
+            </div>
+        </div>
+
+        <!-- Stats Container (Same as before) -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-briefcase"></i>
+                <div class="stat-value">109</div>
+                <div>Projects Completed</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <div class="stat-value">94.2%</div>
+                <div>Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="stat-value">90%</div>
+                <div>On Time</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign"></i>
+                <div class="stat-value">$45/hr</div>
+                <div>Hourly Rate</div>
+            </div>
+        </div>
+
+        <!-- New About Section -->
+        <div class="about-section">
+            <h2>About Me</h2>
+            <p>I am a Full-stack developer with 5+ years of experience in building web application. Specialized in React, Node.js, and Next.js, I have successfully delivered over 150 projects for clients worldwide. My focus is on creating scalable, efficient, and user-friendly solutions.</p>
+            <p>With a passion for clean code and innovative solutions, I approach each project with dedication and attention to detail. I believe in maintaining clear communication throughout the development process and ensuring that all deliverables exceed client expectations.</p>
+        </div>
+
+        <!-- Skills Section (Same as before) -->
+        <div class="skills-section">
+            <div class="skills-category">
+                <h3>Frontend Development</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Vue.js</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS</span>
+                </div>
+            </div>
+            <div class="skills-category">
+                <h3>Backend Development</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Django</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Education & Certifications Section -->
+        <div class="education-section">
+            <h2>Education & Certifications</h2>
+            <div class="education-item">
+                <div class="education-logo">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="education-details">
+                    <h3>Bachelor of Techonology in Computer Science</h3>
+                    <div class="institution">Stanford University</div>
+                    <div class="period">2018 - 2020</div>
+                </div>
+            </div>
+            <div class="education-item">
+                <div class="education-logo">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="education-details">
+                    <h3>AWS Certified Solutions Architect</h3>
+                    <div class="institution">Amazon Web Services</div>
+                    <div class="period">Issued Dec 2023</div>
+                </div>
+            </div>
+            <div class="education-item">
+                <div class="education-logo">
+                    <i class="fas fa-award"></i>
+                </div>
+                <div class="education-details">
+                    <h3>Google Cloud Professional Developer</h3>
+                    <div class="institution">Google</div>
+                    <div class="period">Issued Jun 2023</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Updated Portfolio Section -->
+        <div class="portfolio-section">
+            <div class="portfolio-header">
+                <h2>Portfolio</h2>
+                <a href="https://portfolio.example.com" target="_blank" class="btn btn-secondary">Go to Site</a>
+            </div>
+            <iframe src="/api/placeholder/1200/500" class="portfolio-frame" title="Portfolio Preview"></iframe>
+        </div>
+
+        <!-- Reviews Section (Same as before) -->
+        <div class="reviews-section">
+            <div class="portfolio-header">
+                <h2>Client Reviews</h2>
+                <button class="btn btn-secondary">View All Reviews</button>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-image"></div>
+                    <div>
+                        <h3>Gaurav Patel</h3>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p>"Ravi is an exceptional developer. Delivered the project ahead of schedule with outstanding quality. Highly recommended!"</p>
+                <small>2 weeks ago</small>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-image"></div>
+                    <div>
+                        <h3>Akshath Tripathi</h3>
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p>"Great communication and problem-solving skills. Will definitely work with Krishan again."</p>
+                <small>1 month ago</small>
+            </div>
+        </div>
+    </div>
+
+    <script src="view_profile.js"></script>
+</body>
+</html>
