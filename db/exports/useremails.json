@@ -1,0 +1,173 @@
+[
+  {
+    "_id": "66e2ed250288daff25ec21d4",
+    "id": "116531159167126190277",
+    "username": "Amit Singh Bisht",
+    "email": "amitnita2004@gmail.com",
+    "createdAt": "2024-09-12T13:31:17.964Z",
+    "updatedAt": "2024-09-12T13:31:17.964Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e2ed580288daff25ec21d8",
+    "id": "100136107786126746454",
+    "username": "Crickter XCoder",
+    "email": "crickterxcoder@gmail.com",
+    "createdAt": "2024-09-12T13:32:08.828Z",
+    "updatedAt": "2024-09-12T13:32:08.828Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e31621328762e0c4a78961",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-12T16:26:09.074Z",
+    "updatedAt": "2024-09-12T16:26:09.074Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e02cd7c5b41330f35600",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T06:48:12.271Z",
+    "updatedAt": "2024-09-13T06:48:12.271Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e06bd7c5b41330f35603",
+    "id": "100136107786126746454",
+    "username": "Crickter XCoder",
+    "email": "crickterxcoder@gmail.com",
+    "createdAt": "2024-09-13T06:49:15.583Z",
+    "updatedAt": "2024-09-13T06:49:15.583Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e0db6326c6544747e1fe",
+    "id": "100136107786126746454",
+    "username": "Crickter XCoder",
+    "email": "crickterxcoder@gmail.com",
+    "createdAt": "2024-09-13T06:51:07.919Z",
+    "updatedAt": "2024-09-13T06:51:07.919Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e11f748d86643f4fc78c",
+    "id": "100136107786126746454",
+    "username": "Crickter XCoder",
+    "email": "crickterxcoder@gmail.com",
+    "createdAt": "2024-09-13T06:52:15.788Z",
+    "updatedAt": "2024-09-13T06:52:15.788Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e182c2ad4a1e2c5c70b5",
+    "id": "100136107786126746454",
+    "username": "Crickter XCoder",
+    "email": "crickterxcoder@gmail.com",
+    "createdAt": "2024-09-13T06:53:54.950Z",
+    "updatedAt": "2024-09-13T06:53:54.950Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e231ee30a97e1e797bc6",
+    "id": "100136107786126746454",
+    "username": "Crickter XCoder",
+    "email": "crickterxcoder@gmail.com",
+    "createdAt": "2024-09-13T06:56:49.284Z",
+    "updatedAt": "2024-09-13T06:56:49.284Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e23dee30a97e1e797bca",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T06:57:01.519Z",
+    "updatedAt": "2024-09-13T06:57:01.519Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e2e3ee30a97e1e797bce",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T06:59:47.320Z",
+    "updatedAt": "2024-09-13T06:59:47.320Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e3e351ee30a97e1e797bd2",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T07:01:37.651Z",
+    "updatedAt": "2024-09-13T07:01:37.651Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e40242d48546050e690ea7",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T09:13:38.500Z",
+    "updatedAt": "2024-09-13T09:13:38.500Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e40a4fd48546050e690eb8",
+    "id": "116531159167126190277",
+    "username": "Amit Singh Bisht",
+    "email": "amitnita2004@gmail.com",
+    "createdAt": "2024-09-13T09:47:59.367Z",
+    "updatedAt": "2024-09-13T09:47:59.367Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e410958561634f514e7e33",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T10:14:45.110Z",
+    "updatedAt": "2024-09-13T10:14:45.110Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e410a28561634f514e7e37",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T10:14:58.680Z",
+    "updatedAt": "2024-09-13T10:14:58.680Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e410dd8561634f514e7e3b",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T10:15:57.499Z",
+    "updatedAt": "2024-09-13T10:15:57.499Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e414888561634f514e7e3f",
+    "id": "115653976332508003651",
+    "username": "Amit Singh Bisht",
+    "email": "singhbishtamit2@gmail.com",
+    "createdAt": "2024-09-13T10:31:36.118Z",
+    "updatedAt": "2024-09-13T10:31:36.118Z",
+    "__v": 0
+  },
+  {
+    "_id": "66f2efe9461b68951c30b94d",
+    "id": "106417576684392737375",
+    "username": "Tushar Kumar",
+    "email": "tusharph1@gmail.com",
+    "createdAt": "2024-09-24T16:59:21.595Z",
+    "updatedAt": "2024-09-24T16:59:21.595Z",
+    "__v": 0
+  }
+]

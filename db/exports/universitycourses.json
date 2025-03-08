@@ -1,0 +1,245 @@
+[
+  {
+    "_id": "6777b68f8812afe4ade2c735",
+    "name": "Master of Business Administration",
+    "fieldOfStudy": "Business",
+    "degreeType": [
+      "MBA",
+      "MA"
+    ],
+    "format": "On-campus",
+    "mode": "Full-time",
+    "language": "Hindi",
+    "studyDuration": 24,
+    "fee": 50000,
+    "gallery": [
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400"
+    ],
+    "scholarshipPrograms": [
+      "b1156c84-6109-4583-ad5c-5bb6dd46d06b"
+    ],
+    "curriculum": [
+      {
+        "title": "Strategic Management",
+        "description": "This course covers the fundamentals of strategic management, including strategy formulation, implementation, and evaluation.",
+        "_id": "6777b68f8812afe4ade2c736"
+      },
+      {
+        "title": "Financial Accounting",
+        "description": "An in-depth study of financial accounting principles and practices, focusing on the preparation and analysis of financial statements.",
+        "_id": "6777b68f8812afe4ade2c737"
+      }
+    ],
+    "admission": "Bachelor's degree in any field, minimum 3 years of work experience, GMAT/GRE scores, English proficiency test scores (TOEFL/IELTS).",
+    "id": "0a4ee482-771a-4e48-923b-40aff7372860",
+    "createdAt": "2025-01-03T10:06:07.941Z",
+    "updatedAt": "2025-01-10T11:24:51.817Z",
+    "__v": 0,
+    "university": "584c5a2d-8654-49ed-a549-c75ff3724fe6",
+    "thumbnailImage": "https://picsum.photos/seed/picsum/600/400",
+    "description": "This is a small description about the course."
+  },
+  {
+    "_id": "6777bdeb8812afe4ade2c739",
+    "name": "Bachelor of Science in Computer Science",
+    "fieldOfStudy": "Computer Science",
+    "degreeType": [
+      "BSc",
+      "BA",
+      "MSc"
+    ],
+    "format": "On-campus",
+    "mode": "Full-time",
+    "language": "English",
+    "studyDuration": 48,
+    "fee": 40000,
+    "gallery": [
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400"
+    ],
+    "scholarshipPrograms": [
+      "c5f6a923-e519-4136-9c47-f25b0de02438",
+      "b1156c84-6109-4583-ad5c-5bb6dd46d06b"
+    ],
+    "curriculum": [
+      {
+        "title": "Data Structures and Algorithms",
+        "description": "This course introduces the fundamental data structures and algorithms used in computer science, including arrays, linked lists, stacks, queues, trees, and graphs.",
+        "_id": "6777bdeb8812afe4ade2c73a"
+      },
+      {
+        "title": "Operating Systems",
+        "description": "An overview of operating system concepts, including process management, memory management, file systems, and security.",
+        "_id": "6777bdeb8812afe4ade2c73b"
+      }
+    ],
+    "admission": "High school diploma or equivalent, SAT/ACT scores, English proficiency test scores (TOEFL/IELTS).",
+    "id": "31fc2ccd-427e-42ce-a52e-48557cf48eac",
+    "createdAt": "2025-01-03T10:37:31.803Z",
+    "updatedAt": "2025-01-11T06:50:14.778Z",
+    "__v": 0,
+    "university": "42c640f3-9dc0-4a40-840f-4db312e1c4de",
+    "thumbnailImage": "https://picsum.photos/seed/picsum/600/400",
+    "description": "This is a small description about the course."
+  },
+  {
+    "_id": "6777bdf28812afe4ade2c73d",
+    "name": "Master of Science in Data Science",
+    "fieldOfStudy": "Data Science",
+    "degreeType": [
+      "MSc",
+      "BSc",
+      "MBA"
+    ],
+    "format": "Online",
+    "mode": "Part-time",
+    "language": "English",
+    "studyDuration": 36,
+    "fee": 45000,
+    "gallery": [
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400"
+    ],
+    "scholarshipPrograms": [
+      "c5f6a923-e519-4136-9c47-f25b0de02438",
+      "b1156c84-6109-4583-ad5c-5bb6dd46d06b"
+    ],
+    "curriculum": [
+      {
+        "title": "Machine Learning",
+        "description": "This course covers the principles and techniques of machine learning, including supervised and unsupervised learning, neural networks, and deep learning.",
+        "_id": "6777bdf28812afe4ade2c73e"
+      },
+      {
+        "title": "Big Data Analytics",
+        "description": "An introduction to big data technologies and tools, including Hadoop, Spark, and NoSQL databases.",
+        "_id": "6777bdf28812afe4ade2c73f"
+      }
+    ],
+    "admission": "Bachelor's degree in a related field, minimum 2 years of work experience, English proficiency test scores (TOEFL/IELTS).",
+    "id": "d7a22327-d7d1-43ae-b598-10765a09ef72",
+    "createdAt": "2025-01-03T10:37:38.521Z",
+    "updatedAt": "2025-01-11T06:50:14.778Z",
+    "__v": 0,
+    "university": "42c640f3-9dc0-4a40-840f-4db312e1c4de",
+    "thumbnailImage": "https://picsum.photos/seed/picsum/600/400",
+    "description": "This is a small description about the course."
+  },
+  {
+    "_id": "6777bdf98812afe4ade2c741",
+    "name": "Bachelor of Arts in Psychology",
+    "fieldOfStudy": "Psychology",
+    "degreeType": [
+      "BA",
+      "BSc",
+      "MBA"
+    ],
+    "format": "On-campus",
+    "mode": "Full-time",
+    "language": "English",
+    "studyDuration": 48,
+    "fee": 35000,
+    "gallery": [
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400"
+    ],
+    "scholarshipPrograms": [
+      "f8df7003-a924-4ff2-afd3-01dc278e9cfd",
+      "e4ef4714-65f3-4e01-8aae-db687b225306"
+    ],
+    "curriculum": [
+      {
+        "title": "Introduction to Psychology",
+        "description": "This course provides an overview of the major concepts, theories, and research findings in psychology.",
+        "_id": "6777bdf98812afe4ade2c742"
+      },
+      {
+        "title": "Abnormal Psychology",
+        "description": "An examination of psychological disorders, including their symptoms, causes, and treatments.",
+        "_id": "6777bdf98812afe4ade2c743"
+      }
+    ],
+    "admission": "High school diploma or equivalent, SAT/ACT scores, English proficiency test scores (TOEFL/IELTS).",
+    "id": "e32562d4-883d-4f52-8970-9927e0a78e0f",
+    "createdAt": "2025-01-03T10:37:45.126Z",
+    "updatedAt": "2025-01-10T11:25:40.085Z",
+    "__v": 0,
+    "university": "76756851-1685-42ce-86b3-f356ac97e8da",
+    "thumbnailImage": "https://picsum.photos/seed/picsum/600/400",
+    "description": "This is a small description about the course."
+  },
+  {
+    "_id": "6777bdff8812afe4ade2c745",
+    "name": "Master of Public Health",
+    "fieldOfStudy": "Public Health",
+    "degreeType": [
+      "MS",
+      "BSc",
+      "MBA"
+    ],
+    "format": "Hybrid",
+    "mode": "Full-time",
+    "language": "Spanish",
+    "studyDuration": 24,
+    "fee": 55000,
+    "gallery": [
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400",
+      "https://picsum.photos/seed/picsum/600/400"
+    ],
+    "scholarshipPrograms": [
+      "f8df7003-a924-4ff2-afd3-01dc278e9cfd",
+      "e4ef4714-65f3-4e01-8aae-db687b225306"
+    ],
+    "curriculum": [
+      {
+        "title": "Epidemiology",
+        "description": "This course covers the principles and methods of epidemiology, including study design, data collection, and data analysis.",
+        "_id": "6777bdff8812afe4ade2c746"
+      },
+      {
+        "title": "Health Policy and Management",
+        "description": "An overview of health policy and management, including the organization, financing, and delivery of health services.",
+        "_id": "6777bdff8812afe4ade2c747"
+      }
+    ],
+    "admission": "Bachelor's degree in a related field, minimum 2 years of work experience, English proficiency test scores (TOEFL/IELTS).",
+    "id": "a58f58a8-ab04-4c5f-9402-86a80eb601bb",
+    "createdAt": "2025-01-03T10:37:51.921Z",
+    "updatedAt": "2025-01-10T11:25:50.728Z",
+    "__v": 0,
+    "university": "76756851-1685-42ce-86b3-f356ac97e8da",
+    "thumbnailImage": "https://picsum.photos/seed/picsum/600/400",
+    "description": "This is a small description about the course."
+  }
+]

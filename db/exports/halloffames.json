@@ -1,0 +1,51 @@
+[
+  {
+    "_id": "676adcd26155d4ba9d75de16",
+    "achievement": "Walsh",
+    "year": 2023,
+    "students": [
+      {
+        "student": "676ac689dadef9bece24615a",
+        "rank": 3,
+        "_id": "676aee78539476be4bf96241"
+      },
+      {
+        "student": "676ac689dadef9bece24615c",
+        "rank": 1,
+        "_id": "676aee78539476be4bf96242"
+      }
+    ],
+    "createdAt": "2024-12-24T16:09:54.187Z",
+    "updatedAt": "2024-12-24T17:25:12.686Z",
+    "__v": 0
+  },
+  {
+    "_id": "676adfa5c834022374313dea",
+    "achievement": "Hilll",
+    "year": 2022,
+    "students": [
+      {
+        "student": "676ac689dadef9bece24617f",
+        "rank": 5,
+        "_id": "676aee00539476be4bf961f1"
+      },
+      {
+        "student": "676ac689dadef9bece246160",
+        "rank": 1,
+        "_id": "676aee00539476be4bf961f2"
+      },
+      {
+        "student": "676ac652dadef9bece2460fc",
+        "rank": 3,
+        "_id": "676aee00539476be4bf961f3"
+      },
+      {
+        "student": "676ac652dadef9bece2460fc",
+        "rank": "40"
+      }
+    ],
+    "createdAt": "2024-12-24T16:21:57.850Z",
+    "updatedAt": "2024-12-24T17:23:12.839Z",
+    "__v": 0
+  }
+]

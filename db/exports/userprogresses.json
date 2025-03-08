@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "672ceacd6e0a8d0190ebe1bb",
+    "id": "0a561e0c-e6c2-43cd-a986-7ca3b78995dc",
+    "userId": "44a72e30-270f-484e-97d8-8c242e258743",
+    "courseId": "ac147e2c-cc33-405b-aedb-fff7296fc3be",
+    "topicId": "xy697e2c-cc33-405b-aedb-fff7296fc3be",
+    "isCompleted": true,
+    "createdAt": "2024-11-07T16:29:01.405Z",
+    "updatedAt": "2024-11-07T16:29:01.405Z",
+    "__v": 0
+  },
+  {
+    "_id": "672ceafb6e0a8d0190ebe1bf",
+    "id": "e9bb1645-3458-45aa-ad0b-2a4ef5d24542",
+    "userId": "44a72e30-270f-484e-97d8-8c242e258743",
+    "courseId": "ac147e2c-cc33-405b-aedb-fff7296fc3be",
+    "topicId": "ac147e2c-cc33-bo54-aedb-fff7296fc3be",
+    "isCompleted": true,
+    "createdAt": "2024-11-07T16:29:47.078Z",
+    "updatedAt": "2024-11-07T16:29:47.078Z",
+    "__v": 0
+  }
+]

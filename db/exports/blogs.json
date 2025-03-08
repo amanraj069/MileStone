@@ -1,0 +1,131 @@
+[
+  {
+    "_id": "6758758ccf657be784c12dfe",
+    "id": "c9262b47-3d61-4e6a-8467-d774241dd814",
+    "userId": "2098c572-5670-4406-9a61-e9b2ab150538",
+    "slug": "wendell92",
+    "topics": [
+      "c238e4a4-0417-437a-bcdb-c095c6e67c09"
+    ],
+    "like": 10,
+    "views": 129,
+    "name": "Wendell92",
+    "content": "\"[{\\\"type\\\":\\\"heading-one\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Why this editor?\\\"}]},{\\\"type\\\":\\\"bulleted-list\\\",\\\"children\\\":[{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"The editor's \\\\\\\"schema\\\\\\\" was hardcoded and hard to customize. Things like bold and italic were supported out of the box, but what about comments, or embeds, or even more domain-specific needs?\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Transforming the documents programmatically was very convoluted. Writing as a user may have worked, but making programmatic changes, which is critical for building advanced behaviors, was needlessly complex.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Serializing to HTML, Markdown, etc. seemed like an afterthought. Simple things like transforming a document to HTML or Markdown involved writing lots of boilerplate code, for what seemed like very common use cases.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Re-inventing the view layer seemed inefficient and limiting. Most editors rolled their own views, instead of using existing technologies like React, so you had to learn a whole new system with new \\\\\\\"gotchas\\\\\\\".\\\"}]}]},{\\\"type\\\":\\\"heading-two\\\",\\\"children\\\":[{\\\"text\\\":\\\"Now we talk about something else...\\\"}],\\\"align\\\":\\\"center\\\"},{\\\"type\\\":\\\"text\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"How about this? How much time do you spend in a day unproductively? Ever thought of it? In fact, it seems like it might not be much, but it in fact is a lot...\\\"}]}]\"",
+    "description": "This is a sample description to be updated in the future and has placeholder text to aid in development.",
+    "category": [
+      "eb022d05-4584-4481-9cf3-670dd1d0f431"
+    ],
+    "course": [],
+    "isFeatured": true,
+    "exams": [],
+    "createdAt": "2024-12-10T17:08:28.376Z",
+    "updatedAt": "2025-01-13T16:31:38.456Z",
+    "__v": 0
+  },
+  {
+    "_id": "675876ac866f79314f991158",
+    "userId": "2098c572-5670-4406-9a61-e9b2ab150538",
+    "slug": "feil-leannon",
+    "topics": [
+      "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+      "45b29c17-86a5-4b98-b04e-a8040298d3d6",
+      "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+      "22e6dfde-02e5-410c-9908-87aa8b17f2ee"
+    ],
+    "like": 1,
+    "views": 10,
+    "name": "Feil - Leannon",
+    "content": "\"[{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"This is editable\\\"},{\\\"text\\\":\\\"rich\\\",\\\"bold\\\":true},{\\\"text\\\":\\\"much\\\"},{\\\"text\\\":\\\"rich\\\",\\\"italic\\\":true},{\\\"text\\\":\\\"better than a\\\"},{\\\"text\\\":\\\"textarea\\\",\\\"code\\\":true},{\\\"text\\\":\\\"!\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Since it's rich text, you can do things like turn a selection of text \\\"},{\\\"text\\\":\\\"bold\\\",\\\"bold\\\":true},{\\\"text\\\":\\\", or add a semantically rendered block quote in the middle of the page, like this:\\\"}]},{\\\"type\\\":\\\"block-quote\\\",\\\"children\\\":[{\\\"text\\\":\\\"A wise quote.\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"align\\\":\\\"center\\\",\\\"children\\\":[{\\\"text\\\":\\\"Try it out for yourself!\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"align\\\":\\\"center\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"heading-one\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Hello there,\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"image\\\",\\\"url\\\":\\\"https://res.cloudinary.com/p-seelam/image/upload/v1730902312/office-1_qbgkwq.jpg\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"heading-two\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"This is a sample text for H2 tag!\\\"}]},{\\\"type\\\":\\\"heading-two\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"This is how code looks! Isn't it cool?\\\",\\\"code\\\":true}]},{\\\"type\\\":\\\"block-quote\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"code\\\":true,\\\"text\\\":\\\"One more quote!!\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"align\\\":\\\"right\\\",\\\"children\\\":[{\\\"text\\\":\\\"Also you can align text as you like :)\\\"}]}]\"",
+    "description": "This is a sample description to be updated in the future and has placeholder text to aid in development.",
+    "category": [
+      "eb022d05-4584-4481-9cf3-670dd1d0f431"
+    ],
+    "course": [
+      "40756509-4367-4a3d-ba0e-b84cd1f883cb",
+      "8d08a2ca-0fba-4559-826d-8001237438d1"
+    ],
+    "isFeatured": true,
+    "exams": [],
+    "id": "4f8e9572-2505-4174-b131-05d853bfa2f8",
+    "createdAt": "2024-12-10T17:13:16.882Z",
+    "updatedAt": "2025-01-01T19:46:10.429Z",
+    "__v": 0
+  },
+  {
+    "_id": "6765b965465b936605c58c36",
+    "userId": "2098c572-5670-4406-9a61-e9b2ab150538",
+    "slug": "dallin-cummings",
+    "topics": [
+      "f9a82d3e-44fe-4511-bc59-7f6737a4ca6f"
+    ],
+    "like": 2,
+    "views": 13,
+    "name": "Dallin Cummings",
+    "content": "\"[{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"type\\\":\\\"rich\\\",\\\"text\\\":\\\"Quinoa (\\\"},{\\\"type\\\":\\\"rich\\\",\\\"text\\\":\\\"Chenopodium quinoa Wild.)\\\",\\\"italic\\\":true},{\\\"type\\\":\\\"rich\\\",\\\"text\\\":\\\", a pseudo-cereal, is a native of the Andean region and is a member of the subsection Cellulata of the section Chenopodium of the genus Chenopodium. \\\"}]}]\"",
+    "description": "Aspernatur tenetur adipisci reprehenderit tempore sunt quia nulla.",
+    "category": [
+      "dec38f95-ce10-4995-b6b0-b10471a17e93"
+    ],
+    "course": [
+      "7831a0e2-2203-4970-b7a3-c9275d5b5fe4"
+    ],
+    "isFeatured": false,
+    "exams": [],
+    "id": "9b92d14f-0d9d-4c2d-9ec7-7df68e7e70cc",
+    "createdAt": "2024-12-20T18:37:25.895Z",
+    "updatedAt": "2025-01-31T05:53:13.593Z",
+    "__v": 0
+  },
+  {
+    "_id": "6765bb34465b936605c58cd6",
+    "userId": "2098c572-5670-4406-9a61-e9b2ab150538",
+    "slug": "quinoa",
+    "topics": [
+      "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+      "d3b5e97b-df26-4c31-a36e-dc440daabcc5"
+    ],
+    "like": 2,
+    "views": 8,
+    "name": "Quinoa",
+    "content": "\"[{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Introduction\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"image\\\",\\\"url\\\":\\\"https://enest-assets.s3.ap-south-1.amazonaws.com/1734873932205\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Quinoa (Chenopodium quinoa Wild.), a pseudo-cereal, is a native of the Andean region and is a member of the subsection Cellulata of the section Chenopodium of the genus Chenopodium.  Chenopodium quinoa Wild. It is an annual broad-leaved plant, 1–2 m tall with deep penetrating roots, and can be cultivated from sea level up to an altitude of 3800 m. The plant shows tolerance to frost, salinity, and drought, and has the ability to grow on marginal soils. To emphasise the benefits of the specialised crop, particularly it’s capacity to thrive in arid soil, the United Nations recognized 2013 as the \\\\\\\"Year of Quinoa.\\\\\\\" Quinoa grain is highly nutritious due to its outstanding protein quality and wide range of minerals and vitamins. The grain is gluten-free and protein is a balanced amino-acid spectrum with high lysine (5.1–6.4%) and methionine (0.4–1.0%) contents that are deficient in cereals. With a high protein content of 14-18% and a rich presence of essential amino acids, quinoa has caught the attention of the health-conscious, especially vegans and vegetarians. The grain is used to make flour, soup, breakfast, cereal, and alcohol, while the flour is utilized in making biscuits, bread, and processed food. Quinoa starch having small grains and high viscosity can be exploited for various industrial applications. The crop is self-pollinated with low outcrossing rates. Quinoa’s ability to produce high-protein grains under ecologically extreme conditions makes it important for the diversification of future agricultural systems, especially in high-altitude areas of the Himalayas and North Indian Plains. Quinoa is a gynomonoecious annual plant with a well-developed, highly ramified tap-root system penetrating as deep as 1.5 m below the surface, which protects against drought conditions.\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Climatic requirements\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Depending on the variety, optimal growing conditions are in cool climates with temperatures that vary between −4°C (25°F) during the night to nearly 35°C (95°F) during the day. Some cultivars can withstand lower temperatures without damage. Light frosts normally do not affect the plants at any stage of development, except during flowering.  Water requirements are highly variable between the different cultivars, ranging from 300 to 1,000 mm (12 to 39 in) during the growing season.\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Crop production and management\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Quinoa can be grown on various types of soils, including marginal soils with a wide pH range. A level, well-drained seedbed is most suited for quinoa cultivation. Seeds should be sown 1–2 cm deep in a finely structured, moist seed bed. Weed control has a major impact on grain yield. Utmost care should be taken in the regulation of sowing dates in quinoa because of slow growth during the first two weeks after emergence, during which competition from rapidly growing weeds is greater. Early sowing would enable quinoa to have a head start over weeds as the plant can attain good growth during this period. Quinoa responds well to nitrogenous fertilizers, but high levels of available nitrogen are reported to decrease yield due to slow maturity and intense lodging. Heavy doses of phosphorus and potash are known to increase vegetative growth without any increase in seed yield. Quinoa is a drought-tolerant crop having low water requirements, though the yield is significantly affected by irrigation. Excessive irrigation in the seedling stage causes diseases like stunting and damping off, while such conditions after stand establishment produce tall plants with no yield improvement. \\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"The low water requirement shows its drought-hardy nature and makes it suitable for cultivation on large tracts of Jharkhand during the Rabi season where assured irrigation is non-existent and farmers have limited availability of water. The drying of the plant and shedding of leaves signifies the mature stage of the plant. \\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Tolerance in relation to stress conditions\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Quinoa exhibits a high level of resistance to several predominant adverse factors, like soil salinity, drought, frost, diseases, and pests. It can tolerate soil pH from 4.8 to 9.5 because of mycorrhizal associations, thus maximizing the use of scarce nutrients and also resisting frost before the flower-bud formation stage. Moreover, it accumulates salt ions in tissues, which adjusts leaf water potential, enabling the plant to maintain cell turgor and limit transpiration under saline conditions. In addition, a significant increase in leaf area at a salinity level of 11 dSm−1 as compared to the 3 dSm−1 control has been noted. The drought resistance of quinoa is attributed to morphological characteristics, such as an extensively ramified root system and the presence of vesicles containing calcium oxalate that are hygroscopic in nature and reduce transpiration. Physiological characteristics indicating drought resistance are low osmotic potential, low turgid weight/dry weight ratio, low elasticity, and an ability to maintain positive turgor even at low leaf water potentials.\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Grain quality\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Quinoa is referred to as a pseudo-oilseed crop due to the exceptional balance between oil, protein, and fats. Perisperm, embryo, and endosperm are the three areas where reserve food is stored in quinoa seed. Starch is stored in the perisperm and lipids and protein are in the endosperm and embryo. Starch content varies from 51 to 61%, and consists of uniform small granules. Quinoa starch has the potential that can be used for specialized industrial applications due to its small granules and high viscosity. Starches having small-sized granules could serve as dusting starches in cosmetics and rubber tyre mould release agents. Grains have an average of about 4.1% fibre with a range from 1.1 to 16.32%. The fibre content is much higher than that of rice (0.4%), wheat (2.7%), and corn (1.7%).\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"image\\\",\\\"url\\\":\\\"https://enest-assets.s3.ap-south-1.amazonaws.com/1734874014478\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"The ash content of quinoa (3.4%), is higher than that of rice (0.5%), wheat (1.8%), and other traditional cereals. Quinoa grains contain large amounts of minerals like Ca, Fe, Zn, Cu, and Mn. Calcium and iron are significantly higher than most commonly used cereals. It has about 0.26% of magnesium in comparison to 0.16% of wheat and 0.14% of corn. Several studies have revealed that the oil content in quinoa ranges from 1.8 to 9.5%, with an average of 5.0–7.2% which is higher than that of maize (3–4%). Quinoa oil is rich in essential fatty acids, like linoleate and linolenate. \\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"image\\\",\\\"url\\\":\\\"https://enest-assets.s3.ap-south-1.amazonaws.com/1734874031519\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"The protein content in grain ranges from 7.47 to 22.08% with an average of 13.81%. Albumin and globulins are the major protein fraction (44–77% of total protein) while the percentage of prolamines is low (0.5–0.7%). The protein quality of quinoa grain is superior to most cereal grains including wheat. The seeds have a balanced amino acid spectrum with high lysine, histidine, and methionine. The content of essential amino acids in quinoa is higher than in common cereals. The grain's high protein quality and energy value can be utilized in the poultry industry. Quinoa is considered one of the best leaf-protein concentrate sources and has the potential as a protein substitute for the food and pharmaceutical industries.\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Saponins:\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Saponins are the principal anti-nutritional factors present in the seed coat of quinoa. The saponin content in seeds of sweet genotypes varies from 0.2 to 0.4 g/kg dry matter and in bitter genotypes from 4.7 to 11.3 g/kg dry matter. Saponins in quinoa are basically glycosidic triterpenoids with glucose constituting about 80% of the weight. Saponin content is affected by soil-water deficit, high water deficit lowers the saponin content. Saponin content also differs in different growing stages, low saponin is found in the branching stage and high in the blooming stage. On a commercial scale, saponins are removed by abrasive dehulling, but in this method, some saponin remains attached to the perisperm.  Saponins have immense industrial importance and are used in the preparation of soaps, detergents, shampoos, beer, fire extinguishers, and photography, cosmetic and pharmaceutical industries. \\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Economic uses\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Quinoa is highly nutritive and is used to make flour, soup, breakfast, and alcohol. It is sold as whole grain cooked as rice or in combination dishes. It can be fermented to make beer or used to feed livestock. The whole plant is also used as green fodder to feed cattle, pigs, and poultry. The plant due to its medicinal value is reportedly used in inflammation, as an analgesic, and as a disinfectant of the urinary tract. It is also used in fractures and internal haemorrhaging and as an insect repellent. The starch of C. quinoa is highly suitable for emulsion food products. Quinoa flour, in combination with wheat flour or corn meal, is used in making biscuits, bread, and processed food. The seed flour has good gelation properties, water-absorption capacity, emulsion capacity, and stability. The highly nutritious quinoa flour could be used to supplement protein-deficient wheat flour, commonly used for human consumption in India\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"The potential of Quinoa in Jharkhand\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Jharkhand, located between 21°57' to 25°14' N latitude and 83°20' to 87°58'E longitude, exhibits enormous diversity for agro-climatic regions and edapho-climatic conditions. Quinoa adapts to extreme and unforgiving weather conditions, drought, high salinity, and frost. It has a great level of adaptability and can survive in lowlands, water deficit areas, and areas over 4000 meters above mean sea level. The studies showed that quinoa has high adaptation to agro-climatic conditions and, therefore, has excellent potential as an alternative crop to rehabilitate problematic soil farms which have become uneconomical for the cultivation of traditionally grown crops. The low water requirement shows its drought-hardy nature and makes it suitable for cultivation on large tracts of Jharkhand during the Rabi season where assured irrigation is non-existent and farmers have limited availability of water. Quinoa can play a major role in the future diversification of agricultural systems in the state, Quinoa has been cultivated successfully in the nearby states of Jharkhand like Uttar Pradesh and north Indian states. The Trials at N.B.R.I., Lucknow (120 m above sea level) have shown that the crop can be successfully cultivated in this region, with many cultivars giving high grain yields. Quinoa can be termed ‘underutilized’, especially for India, since in spite of its wide adaptability, rusticity and nutritional superiority, its commercial potential has remained untapped. In India, a large portion of the population has little access to a protein-rich diet, since rice and wheat are the principal food crops. Quinoa’s highly proteinaceous grain can help to make diets more balanced in this region and can play an important role in combating ‘silent hunger’ among poor populations in Jharkhand and nearby states who have little access to a protein-rich diet. With its high nutritional content and adaptability to harsh growing conditions, quinoa may have the potential to diversify crops on smallholder farms and to supply an extra source of nutrition to subsistence farmers of Jharkhand. Besides this, improved technologies and links with other areas, like product development and marketing, would enable the industry to tap its potential for diverse applications. Making quinoa popular in Jharkhand would require the dissemination of information about the crop among the farmers as well as the consumers, proper marketing, and efficient post-harvest technologies.\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"image\\\",\\\"url\\\":\\\"https://enest-assets.s3.ap-south-1.amazonaws.com/1734874084841\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"Reference:\\\",\\\"bold\\\":true}]},{\\\"type\\\":\\\"numbered-list\\\",\\\"children\\\":[{\\\"type\\\":\\\"list-item\\\",\\\"children\\\":[{\\\"text\\\":\\\"Food and Agriculture Organization of the United Nations (2013). International Year of Quinoa\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"children\\\":[{\\\"text\\\":\\\"Bhargava, A., Shukla, S., & Ohri, D. (2006). Chenopodium quinoa—an Indian perspective. Industrial crops and products, 23(1), 73-87.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"children\\\":[{\\\"text\\\":\\\"Nanduri, K. R., Hirich, A., Salehi, M., Saadat, S., & Jacobsen, S. E. (2019). Quinoa: a new crop for harsh environments. In Sabkha Ecosystems (pp. 301-333). Springer, Cham.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"children\\\":[{\\\"text\\\":\\\"Angeli, V., Miguel Silva, P., Crispim Massuela, D., Khan, M. W., Hamar, A., Khajehei, F., ... & Piatti, C. (2020). Quinoa (Chenopodium quinoa Willd.): An overview of the potentials of the “Golden Grain” and socio-economic and environmental aspects of its cultivation and marketization. Foods, 9(2), 216.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"children\\\":[{\\\"text\\\":\\\"Gardner, M., Maliro, M. F., Goldberger, J. R., & Murphy, K. M. (2019). Assessing the potential adoption of quinoa for human consumption in central Malawi. Frontiers in Sustainable Food Systems, 3, 52.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"children\\\":[{\\\"text\\\":\\\"https://thewire.in/agriculture/urban-indias-quinoa-craze-is-further-endangering-millets\\\"}]}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]},{\\\"type\\\":\\\"paragraph\\\",\\\"children\\\":[{\\\"text\\\":\\\"\\\"}]}]\"",
+    "description": "Natus rem dolore magni.",
+    "category": [
+      "dec38f95-ce10-4995-b6b0-b10471a17e93",
+      "eb022d05-4584-4481-9cf3-670dd1d0f431"
+    ],
+    "course": [
+      "66d5d54aebe30a5fdd00c659",
+      "66de86aa9a8ac0cf877ff94e"
+    ],
+    "isFeatured": true,
+    "exams": [],
+    "id": "8cc8762a-cddc-499d-a68f-54947c3fae32",
+    "createdAt": "2024-12-20T18:45:08.072Z",
+    "updatedAt": "2025-01-05T05:27:50.254Z",
+    "__v": 0
+  },
+  {
+    "_id": "676bd23c6e0299c9b7c0858b",
+    "userId": "2098c572-5670-4406-9a61-e9b2ab150538",
+    "slug": "random-text",
+    "topics": [
+      "c238e4a4-0417-437a-bcdb-c095c6e67c09"
+    ],
+    "like": 1,
+    "views": 2,
+    "name": "random text",
+    "content": "\"[{\\\"type\\\":\\\"heading-one\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Why this editor?\\\"}]},{\\\"type\\\":\\\"bulleted-list\\\",\\\"children\\\":[{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"The editor's \\\\\\\"schema\\\\\\\" was hardcoded and hard to customize. Things like bold and italic were supported out of the box, but what about comments, or embeds, or even more domain-specific needs?\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Transforming the documents programmatically was very convoluted. Writing as a user may have worked, but making programmatic changes, which is critical for building advanced behaviors, was needlessly complex.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Serializing to HTML, Markdown, etc. seemed like an afterthought. Simple things like transforming a document to HTML or Markdown involved writing lots of boilerplate code, for what seemed like very common use cases.\\\"}]},{\\\"type\\\":\\\"list-item\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"Re-inventing the view layer seemed inefficient and limiting. Most editors rolled their own views, instead of using existing technologies like React, so you had to learn a whole new system with new \\\\\\\"gotchas\\\\\\\".\\\"}]}]},{\\\"type\\\":\\\"heading-two\\\",\\\"children\\\":[{\\\"text\\\":\\\"Now we talk about something else...\\\"}],\\\"align\\\":\\\"center\\\"},{\\\"type\\\":\\\"text\\\",\\\"align\\\":\\\"left\\\",\\\"children\\\":[{\\\"text\\\":\\\"How about this? How much time do you spend in a day unproductively? Ever thought of it? In fact, it seems like it might not be much, but it in fact is a lot...\\\"}]}]\"",
+    "description": "This is a sample description to be updated in the future and has placeholder text to aid in development.",
+    "category": [
+      "eb022d05-4584-4481-9cf3-670dd1d0f431"
+    ],
+    "course": [],
+    "isFeatured": true,
+    "imageUrl": "https://via.placeholder.com/150",
+    "exams": [],
+    "id": "8b196db1-3013-4946-9a1a-2661fd431deb",
+    "createdAt": "2024-12-25T09:37:00.032Z",
+    "updatedAt": "2024-12-27T11:55:45.487Z",
+    "__v": 0
+  }
+]
