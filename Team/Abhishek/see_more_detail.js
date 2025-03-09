@@ -227,6 +227,11 @@ function goBack() {
     window.location.href = "job_listing.html";
 }
 
+function goProfile() {
+    alert('Navigating to Profile page...');
+    window.location.href = "view_profile.html";
+}
+
 // Apply Now functionality 
 // document.addEventListener("DOMContentLoaded", function () {
 
