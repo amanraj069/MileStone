@@ -228,6 +228,7 @@ function goBack() {
 }
 
 function goProfile() {
+    // You would normally use history.back() or redirect to a specific page
     alert('Navigating to Profile page...');
     window.location.href = "view_profile.html";
 }
