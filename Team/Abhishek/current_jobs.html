@@ -3,127 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Jobs</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Currently Working Freelancers</title>
     <link rel="stylesheet" href="current_jobs.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">Current Jobs</div>
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search jobs, companies...">
-                <button class="search-btn"><i class="fas fa-search"></i></button>
+        <h1 class="section-title">Currently Working Freelancers</h1>
+        
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search freelancers, skills...">
+            <button class="search-btn">
+                <i>🔍</i>
+            </button>
+        </div>
+                
+        <div class="freelancer-list">
+            <!-- Freelancer Card 1 -->
+            <div class="freelancer-card" data-Since="3" data-rating="5.0">
+                <div class="card-header">
+                    <img src="user_image.jpg" alt="Profile" class="profile-img">
+                    <div class="freelancer-info">
+                        <a href="view_profile.html" class="freelancer-name">Atul Khatri</a>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">⯪</span>
+                            <span>4.6</span>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="mark-finished-btn">Mark Finished</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="skills">
+                        <span class="skill-tag">Power Bi</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Plotly</span>
+                    </div>
+                    <div class="project-info">
+                        <p class="info-label">Working on:</p>
+                        <p class="project-name">Marketing Data Analyst</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="Since-date">
+                        <span class="date-icon">📅</span>
+                        <span>Since 2 weeks</span>
+                    </div>
+                    <button class="chat-btn">Chat</button>
+                    <button class="see-more-btn" onclick="see_more_Page()">See More</button>
+                </div>
             </div>
-        </header>
-
-        <div class="filters">
-            <button class="filter-btn active">All Jobs</button>
-            <button class="filter-btn">Recent</button>
-            <button class="filter-btn">Remote</button>
-            <button class="filter-btn">Full-time</button>
-            <button class="filter-btn">Part-time</button>
-        </div>
-
-        <div class="content">
-            <main class="job-listings">
-                <div class="job-card">
-                    <div class="job-img-container">
-                        <img src="user_image.jpg" alt="Freelancer" class="job-img">
-                    </div>
-                    <div class="job-info">
-                        <div class="job-header">
-                            <h2 class="job-title">Senior Frontend Developer <span class="worker-name">(Ravi Krishan)</span></h2>
-                            <button class="mark-finished-btn">Mark Finished</button>
+            
+            <!-- Freelancer Card 2 -->
+            <div class="freelancer-card" data-Since="3" data-rating="4.2">
+                <div class="card-header">
+                    <img src="user_image.jpg" alt="Profile" class="profile-img">
+                    <div class="freelancer-info">
+                        <a href="freelancer-profile.html" class="freelancer-name">Vikram Reddy</a>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">☆</span>
+                            <span>4.2</span>
                         </div>
-                        <div class="job-rating">★★★★☆ 4.6 (24 reviews)</div>
-                        <div class="job-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">TypeScript</span>
-                            <span class="tech-tag">UI/UX</span>
-                        </div>
-                        <div class="worked-on">Worked on: E-commerce Platform Redesign</div>
                     </div>
-                    <div class="job-actions">
-                        <button class="complain-btn">Complain</button>
-                        <button class="chat-btn">Chat</button>
-                        <button class="see-more-btn">See More</button>
+                    <div>
+                        <button class="mark-finished-btn">Mark Finished</button>
                     </div>
                 </div>
-
-                <div class="job-card">
-                    <div class="job-img-container">
-                        <img src="user_female.png" alt="Freelancer" class="job-img">
+                <div class="card-body">
+                    <div class="skills">
+                        <span class="skill-tag">Adobe Illustrator</span>
+                        <span class="skill-tag">Sketch</span>
+                        <span class="skill-tag">Graphic Design</span>
                     </div>
-                    <div class="job-info">
-                        <div class="job-header">
-                            <h2 class="job-title">UX/UI Designer <span class="worker-name">(Jane Smith)</span></h2>
-                            <button class="mark-finished-btn">Mark Finished</button>
-                        </div>
-                        <div class="job-rating">★★★★☆ 4.8 (16 reviews)</div>
-                        <div class="job-tech">
-                            <span class="tech-tag">Figma</span>
-                            <span class="tech-tag">Adobe XD</span>
-                            <span class="tech-tag">Sketch</span>
-                        </div>
-                        <div class="worked-on">Worked on: Inventory Management API</div>
-                    </div>
-                    <div class="job-actions">
-                        <button class="complain-btn">Complain</button>
-                        <button class="chat-btn">Chat</button>
-                        <button class="see-more-btn">See More</button>
+                    <div class="project-info">
+                        <p class="info-label">Working on:</p>
+                        <p class="project-name">Banner Design</p>
                     </div>
                 </div>
+                <div class="card-footer">
+                    <div class="Since-date">
+                        <span class="date-icon">📅</span>
+                        <span>Since 3 days</span>
+                    </div>
+                    <button class="chat-btn">Chat</button>
+                    <button class="see-more-btn" onclick="see_more_Page()">See More</button>
+                </div>
+            </div>
 
-                <div class="job-card">
-                    <div class="job-img-container">
-                        <img src="freelancer3.jpg" alt="Freelancer" class="job-img">
-                    </div>
-                    <div class="job-info">
-                        <div class="job-header">
-                            <h2 class="job-title">Backend Developer <span class="worker-name">(Alex Brown)</span></h2>
-                            <button class="mark-finished-btn">Mark Finished</button>
+            <!-- Freelancer Card 3 -->
+            <div class="freelancer-card" data-Since="7" data-rating="3.9">
+                <div class="card-header">
+                    <img src="user_female.png" alt="Profile" class="profile-img">
+                    <div class="freelancer-info">
+                        <a href="freelancer-profile.html" class="freelancer-name">Neha Kapoor</a>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">☆</span>
+                            <span class="star">☆</span>
+                            <span>3.9</span>
                         </div>
-                        <div class="job-rating">★★★☆☆ 3.8 (31 reviews)</div>
-                        <div class="job-tech">
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Express</span>
-                            <span class="tech-tag">MongoDB</span>
-                        </div>
-                        <div class="worked-on">Worked on: Mobile UI Design</div>
                     </div>
-                    <div class="job-actions">
-                        <button class="complain-btn">Complain</button>
-                        <button class="chat-btn">Chat</button>
-                        <button class="see-more-btn">See More</button>
+                    <div>
+                        <button class="mark-finished-btn">Mark Finished</button>
                     </div>
                 </div>
-
-                <div class="job-card">
-                    <div class="job-img-container">
-                        <img src="freelancer4.jpg" alt="Freelancer" class="job-img">
+                <div class="card-body">
+                    <div class="skills">
+                        <span class="skill-tag">React Native</span>
+                        <span class="skill-tag">Redux</span>
+                        <span class="skill-tag">TypeScript</span>
                     </div>
-                    <div class="job-info">
-                        <div class="job-header">
-                            <h2 class="job-title">DevOps Engineer <span class="worker-name">(Sarah Lee)</span></h2>
-                            <button class="mark-finished-btn">Mark Finished</button>
-                        </div>
-                        <div class="job-rating">★★★★☆ 4.9 (27 reviews)</div>
-                        <div class="job-tech">
-                            <span class="tech-tag">Kubernetes</span>
-                            <span class="tech-tag">Docker</span>
-                            <span class="tech-tag">AWS</span>
-                        </div>
-                        <div class="worked-on">Worked on: Dashboard Redesign</div>
-                    </div>
-                    <div class="job-actions">
-                        <button class="complain-btn">Complain</button>
-                        <button class="chat-btn">Chat</button>
-                        <button class="see-more-btn">See More</button>
+                    <div class="project-info">
+                        <p class="info-label">Working on:</p>
+                        <p class="project-name">Mobile Fitness App</p>
                     </div>
                 </div>
-            </main>
-        </div>
+                <div class="card-footer">
+                    <div class="Since-date">
+                        <span class="date-icon">📅</span>
+                        <span>Since 1 week</span>
+                    </div>
+                    <button class="chat-btn">Chat</button>
+                    <button class="see-more-btn" onclick="see_more_Page()">See More</button>
+                </div>
+            </div>
+
+            <!-- Freelancer Card 4 -->
+            <div class="freelancer-card" data-Since="14" data-rating="4.8">
+                <div class="card-header">
+                    <img src="user_image.jpg" alt="Profile" class="profile-img">
+                    <div class="freelancer-info">
+                        <a href="freelancer-profile.html" class="freelancer-name">Rohit Sharma</a>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">☆</span>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="mark-finished-btn">Mark Finished</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="skills">
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">HTML5</span>
+                    </div>
+                    <div class="project-info">
+                        <p class="info-label">Working on:</p>
+                        <p class="project-name">Online Learning Platform</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="Since-date">
+                        <span class="date-icon">📅</span>
+                        <span>Since 2 days</span>
+                    </div>
+                    <button class="chat-btn">Chat</button>
+                    <button class="see-more-btn" onclick="see_more_Page()">See More</button>
+                </div>
+            </div>
+
+            <!-- Freelancer Card 5 -->
+            <div class="freelancer-card" data-Since="45" data-rating="4.7">
+                <div class="card-header">
+                    <img src="user_female.png" alt="Profile" class="profile-img">
+                    <div class="freelancer-info">
+                        <a href="freelancer-profile.html" class="freelancer-name">Sneha Iyer</a>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">☆</span>
+                            <span>4.7</span>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="mark-finished-btn">Mark Finished</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="skills">
+                        <span class="skill-tag">Shopify</span>
+                        <span class="skill-tag">Liquid</span>
+                        <span class="skill-tag">E-commerce</span>
+                    </div>
+                    <div class="project-info">
+                        <p class="info-label">Working on:</p>
+                        <p class="project-name">Online Store Redesign</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="Since-date">
+                        <span class="date-icon">📅</span>
+                        <span>Since 4 days</span>
+                    </div>
+                    <button class="chat-btn">Chat</button>
+                    <button class="see-more-btn" onclick="see_more_Page()">See More</button>
+                </div>
+            </div>
     </div>
 
     <script src="current_jobs.js"></script>
