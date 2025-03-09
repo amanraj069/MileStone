@@ -1,0 +1,263 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f3f2ef;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0a66c2;
+}
+
+.search-bar {
+    flex-grow: 1;
+    margin: 0 20px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 8px 15px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    background-color: #f3f3f3;
+}
+
+.filter-btn.active {
+    background-color: #0a66c2;
+    color: white;
+    border-color: #0a66c2;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+}
+
+.job-listings {
+    flex-grow: 1;
+}
+
+.job-card {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    align-items: center;
+}
+
+.job-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.job-img-container {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+.job-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.job-info {
+    flex-grow: 1;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.job-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.worker-name {
+    font-weight: normal;
+    font-size: 14px;
+    color: #666;
+}
+
+.mark-finished-btn {
+    padding: 6px 10px;
+    background-color: transparent;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mark-finished-btn::before {
+    content: "✔";
+    font-size: 12px;
+}
+
+.mark-finished-btn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.job-rating {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.job-tech {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.tech-tag {
+    background-color: #f3f2ef;
+    color: #0a66c2;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.worked-on {
+    font-size: 14px;
+    color: #666;
+}
+
+.job-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.complain-btn {
+    padding: 8px 15px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.complain-btn:hover {
+    background-color: #cc0000;
+}
+
+.chat-btn {
+    padding: 8px 15px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.chat-btn:hover {
+    background-color: #f57c00;
+}
+
+.see-more-btn {
+    padding: 8px 15px;
+    background-color: #0a66c2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.see-more-btn:hover {
+    background-color: #084e96;
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .job-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .job-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .job-actions {
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
