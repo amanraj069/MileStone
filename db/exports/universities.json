@@ -1,0 +1,346 @@
+[
+  {
+    "_id": "67060f31788c34296e6e273b",
+    "id": "49eb6bad-dc70-434e-a098-827644ba79cd",
+    "universityName": "Tech University",
+    "country": "USA",
+    "state": "New York",
+    "fieldOfStudy": "Agriculture",
+    "intro": "Tech University is renowned for its advanced technology programs.",
+    "fee": 25000,
+    "degreeType": [
+      "Master",
+      "Bachelors",
+      "MSc",
+      "BSc",
+      "Phd"
+    ],
+    "studyFormat": "In-person",
+    "studyMode": "Full time",
+    "studyLanguage": "English",
+    "programDuration": "4 years",
+    "scholarshipPrograms": [
+      "Merit-based Scholarship",
+      "Need-based Scholarship"
+    ],
+    "admission": "Admissions open for Fall 2024",
+    "curriculam": "The curriculum focuses on hands-on experience in advanced technology and research.",
+    "aboutLocation": "Located in the heart of New York, providing students with numerous opportunities for internships and industry experience.",
+    "gallery": [
+      "image1_id",
+      "image2_id"
+    ],
+    "createdAt": "2024-10-09T05:05:53.008Z",
+    "updatedAt": "2024-10-09T05:05:53.008Z",
+    "__v": 0
+  },
+  {
+    "_id": "6706112762845485c296f557",
+    "id": "afa38192-4bf2-46d8-99db-87a1c9fd2b51",
+    "universityName": "Riverfront Institute of Horticulture",
+    "country": "UK",
+    "state": "London",
+    "fieldOfStudy": "Horticulture",
+    "intro": "Riverfront Institute is renowned for its innovative horticultural research.",
+    "fee": 28000,
+    "degreeType": [
+      "Master",
+      "Phd"
+    ],
+    "studyFormat": "Distant",
+    "studyMode": "Part time",
+    "studyLanguage": "English",
+    "programDuration": "2 years",
+    "scholarshipPrograms": [
+      "Research Scholarship",
+      "Work-study Program"
+    ],
+    "admission": "Admissions open for Winter 2024",
+    "curriculam": "Emphasizes plant biology, soil science, and greenhouse management.",
+    "aboutLocation": "Situated in the bustling city of London, offering exposure to the horticultural industry.",
+    "gallery": [
+      "image5_id",
+      "image6_id"
+    ],
+    "createdAt": "2024-10-09T05:14:15.146Z",
+    "updatedAt": "2024-10-09T05:14:15.146Z",
+    "__v": 0
+  },
+  {
+    "_id": "6706115062845485c296f559",
+    "id": "df5b95d9-9ea9-49cb-b1f9-afc9e59cd62b",
+    "universityName": "Mountainview Floriculture College",
+    "country": "Switzerland",
+    "state": "Bern",
+    "fieldOfStudy": "Floriculture",
+    "intro": "Mountainview College specializes in ornamental plant cultivation and design.",
+    "fee": 32000,
+    "degreeType": [
+      "Bachelors",
+      "Phd"
+    ],
+    "studyFormat": "In-person",
+    "studyMode": "Full time",
+    "studyLanguage": "German",
+    "programDuration": "3.5 years",
+    "scholarshipPrograms": [
+      "Design Excellence Scholarship"
+    ],
+    "admission": "Admissions open for Fall 2024",
+    "curriculam": "Focus on flower breeding, garden design, and landscape architecture.",
+    "aboutLocation": "Nestled in the Swiss Alps, perfect for hands-on horticulture experience.",
+    "gallery": [
+      "image9_id",
+      "image10_id"
+    ],
+    "createdAt": "2024-10-09T05:14:56.440Z",
+    "updatedAt": "2024-10-09T05:14:56.440Z",
+    "__v": 0
+  },
+  {
+    "_id": "6706116b62845485c296f55b",
+    "id": "254d5557-aecb-4bcc-ada5-379a4d351691",
+    "universityName": "Coastal Aquaculture University",
+    "country": "New Zealand",
+    "state": "Auckland",
+    "fieldOfStudy": "Aquaculture",
+    "intro": "Coastal Aquaculture University is dedicated to sustainable marine and fishery sciences.",
+    "fee": 34000,
+    "degreeType": [
+      "Master",
+      "Phd"
+    ],
+    "studyFormat": "On Campus",
+    "studyMode": "Full time",
+    "studyLanguage": "English",
+    "programDuration": "3 years",
+    "scholarshipPrograms": [
+      "Ocean Conservation Scholarship"
+    ],
+    "admission": "Admissions open for Spring 2024",
+    "curriculam": "Explores aquaculture methods, fish farming technologies, and sustainable marine ecosystems.",
+    "aboutLocation": "Located near Auckland's coastline, offering rich marine life exploration.",
+    "gallery": [
+      "image13_id",
+      "image14_id"
+    ],
+    "createdAt": "2024-10-09T05:15:23.358Z",
+    "updatedAt": "2024-10-09T05:15:23.358Z",
+    "__v": 0
+  },
+  {
+    "_id": "6706118962845485c296f55d",
+    "id": "e1630a79-0831-4396-8502-abac29bd2c69",
+    "universityName": "Harvest Fields Institute of Agriculture",
+    "country": "Brazil",
+    "state": "São Paulo",
+    "fieldOfStudy": "Agriculture",
+    "intro": "Harvest Fields Institute is known for its innovative approach to crop science and bioengineering.",
+    "fee": 25000,
+    "degreeType": [
+      "BSc",
+      "MSc"
+    ],
+    "studyFormat": "In-person",
+    "studyMode": "Full time",
+    "studyLanguage": "Portuguese",
+    "programDuration": "5 years",
+    "scholarshipPrograms": [
+      "Sustainable Agriculture Scholarship"
+    ],
+    "admission": "Admissions open for Fall 2024",
+    "curriculam": "Hands-on experience in crop improvement, soil science, and modern bioengineering methods.",
+    "aboutLocation": "Located in the agricultural heartland of Brazil, providing vast farmland for research.",
+    "gallery": [
+      "image17_id",
+      "image18_id"
+    ],
+    "createdAt": "2024-10-09T05:15:53.044Z",
+    "updatedAt": "2024-10-09T05:15:53.044Z",
+    "__v": 0
+  },
+  {
+    "_id": "670611ae62845485c296f55f",
+    "id": "640ebfc1-daf3-4069-872b-a52fc6a49ee2",
+    "universityName": "Florascape College of Floriculture",
+    "country": "Netherlands",
+    "state": "Amsterdam",
+    "fieldOfStudy": "Floriculture",
+    "intro": "Florascape College is known for its excellence in ornamental plant cultivation and landscape design.",
+    "fee": 33000,
+    "degreeType": [
+      "Bachelors",
+      "MSc"
+    ],
+    "studyFormat": "On Campus",
+    "studyMode": "Full time",
+    "studyLanguage": "Dutch",
+    "programDuration": "3 years",
+    "scholarshipPrograms": [
+      "Floral Design Scholarship"
+    ],
+    "admission": "Admissions open for Winter 2024",
+    "curriculam": "Focuses on flower breeding, ornamental plant science, and landscape design.",
+    "aboutLocation": "Located in the floral capital of the world, offering rich exposure to the global flower trade.",
+    "gallery": [],
+    "createdAt": "2024-10-09T05:16:30.825Z",
+    "updatedAt": "2024-10-09T05:16:30.825Z",
+    "__v": 0
+  },
+  {
+    "_id": "6706121362845485c296f561",
+    "id": "22f91c71-5dd4-44d2-9b7f-4b45cc5802c7",
+    "universityName": "Blossom Hills Floriculture Academy",
+    "country": "Italy",
+    "state": "Tuscany",
+    "fieldOfStudy": "Floriculture",
+    "intro": "Blossom Hills Academy offers top-tier programs in ornamental horticulture and garden design.",
+    "fee": 26000,
+    "degreeType": [
+      "MSc",
+      "Bachelors"
+    ],
+    "studyFormat": "On Campus",
+    "studyMode": "Full time",
+    "studyLanguage": "Italian",
+    "programDuration": "3.5 years",
+    "scholarshipPrograms": [
+      "Art of Landscape Scholarship"
+    ],
+    "admission": "Admissions open for Fall 2024",
+    "curriculam": "Focuses on ornamental plant cultivation, floral art, and landscape architecture.",
+    "aboutLocation": "Located in Tuscany, surrounded by beautiful landscapes ideal for horticulture studies.",
+    "gallery": [
+      "image25_id",
+      "image26_id"
+    ],
+    "createdAt": "2024-10-09T05:18:11.820Z",
+    "updatedAt": "2024-10-09T05:18:11.820Z",
+    "__v": 0
+  },
+  {
+    "_id": "6706122c62845485c296f563",
+    "id": "eb03ea6b-21a4-4159-b45d-b302160a2dc4",
+    "universityName": "Hillside Horticultural University",
+    "country": "France",
+    "state": "Provence",
+    "fieldOfStudy": "Horticulture",
+    "intro": "Hillside University is known for its leading programs in horticulture and viticulture.",
+    "fee": 31000,
+    "degreeType": [
+      "Bachelors",
+      "MSc",
+      "Phd"
+    ],
+    "studyFormat": "In-person",
+    "studyMode": "Full time",
+    "studyLanguage": "French",
+    "programDuration": "4 years",
+    "scholarshipPrograms": [
+      "Horticultural Innovation Grant"
+    ],
+    "admission": "Admissions open for Winter 2024",
+    "curriculam": "Focuses on plant cultivation, landscape design, and sustainable horticulture.",
+    "aboutLocation": "Located in the Provence region, famous for its vineyards and horticultural expertise.",
+    "gallery": [
+      "image29_id",
+      "image30_id"
+    ],
+    "createdAt": "2024-10-09T05:18:36.722Z",
+    "updatedAt": "2024-10-09T05:18:36.722Z",
+    "__v": 0
+  },
+  {
+    "_id": "6709000306694dd5f17d3453",
+    "id": "1f2adb2f-ad00-4e07-bdc9-860489d6bef7",
+    "universityName": "Tech University",
+    "country": "USA",
+    "state": "LA",
+    "fieldOfStudy": "Agriculture",
+    "intro": "Tech University is renowned for its advanced technology programs.",
+    "fee": 25000,
+    "degreeType": [
+      "Master",
+      "Bachelors",
+      "MSc",
+      "BSc",
+      "Phd"
+    ],
+    "studyFormat": "In-person",
+    "studyMode": "Full time",
+    "studyLanguage": "English",
+    "programDuration": "4 years",
+    "scholarshipPrograms": [
+      "Merit-based Scholarship",
+      "Need-based Scholarship"
+    ],
+    "admission": "Admissions open for Fall 2024",
+    "curriculam": "The curriculum focuses on hands-on experience in advanced technology and research.",
+    "aboutLocation": "Located in the heart of New York, providing students with numerous opportunities for internships and industry experience.",
+    "gallery": [
+      "image1_id",
+      "image2_id"
+    ],
+    "createdAt": "2024-10-11T10:37:55.526Z",
+    "updatedAt": "2024-10-11T10:37:55.526Z",
+    "__v": 0
+  },
+  {
+    "_id": "677a323ecb5c0b7c65411ccf",
+    "name": "University of Texas at Austin",
+    "description": "A leading public research university located in Austin, Texas.",
+    "country": "USA",
+    "city": "Austin",
+    "courses": [
+      "0a4ee482-771a-4e48-923b-40aff7372860"
+    ],
+    "scholarshipBlogs": [
+      "b1156c84-6109-4583-ad5c-5bb6dd46d06b"
+    ],
+    "id": "584c5a2d-8654-49ed-a549-c75ff3724fe6",
+    "createdAt": "2025-01-05T07:18:22.369Z",
+    "updatedAt": "2025-01-05T07:18:22.369Z",
+    "__v": 0,
+    "rankGroup": "1-10"
+  },
+  {
+    "_id": "677a3262cb5c0b7c65411cd2",
+    "name": "Stanford University",
+    "description": "A prestigious private research university located in Stanford, California.",
+    "country": "USA",
+    "city": "California",
+    "courses": [
+      "31fc2ccd-427e-42ce-a52e-48557cf48eac",
+      "d7a22327-d7d1-43ae-b598-10765a09ef72"
+    ],
+    "scholarshipBlogs": [
+      "b1156c84-6109-4583-ad5c-5bb6dd46d06b",
+      "c5f6a923-e519-4136-9c47-f25b0de02438"
+    ],
+    "id": "42c640f3-9dc0-4a40-840f-4db312e1c4de",
+    "createdAt": "2025-01-05T07:18:58.244Z",
+    "updatedAt": "2025-01-11T06:50:14.719Z",
+    "__v": 0,
+    "rankGroup": "11-50"
+  },
+  {
+    "_id": "677a3279cb5c0b7c65411cd5",
+    "name": "Technical University of Munich",
+    "description": "A top-ranked university located in Munich, Germany, known for its engineering and technology programs.",
+    "country": "Germany",
+    "city": "Munich",
+    "courses": [
+      "e32562d4-883d-4f52-8970-9927e0a78e0f",
+      "a58f58a8-ab04-4c5f-9402-86a80eb601bb"
+    ],
+    "scholarshipBlogs": [
+      "f8df7003-a924-4ff2-afd3-01dc278e9cfd",
+      "e4ef4714-65f3-4e01-8aae-db687b225306"
+    ],
+    "id": "76756851-1685-42ce-86b3-f356ac97e8da",
+    "createdAt": "2025-01-05T07:19:21.844Z",
+    "updatedAt": "2025-01-05T08:44:07.228Z",
+    "__v": 0,
+    "rankGroup": "51-100"
+  }
+]

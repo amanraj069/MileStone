@@ -1,0 +1,492 @@
+[
+  {
+    "_id": "678a8765df6aefa36f916a08",
+    "userId": "7928ea2e-a5e4-40e5-b290-b5aee9a21da9",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "ce9b87c0-9327-46b1-941b-f54a4cd26d65",
+    "createdAt": "2025-01-17T16:37:57.847Z",
+    "updatedAt": "2025-02-01T09:52:48.897Z",
+    "__v": 111
+  },
+  {
+    "_id": "678a8765df6aefa36f916a0a",
+    "userId": "7928ea2e-a5e4-40e5-b290-b5aee9a21da9",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "244510bd-46f8-4680-8fd5-ab8c7049a819",
+    "createdAt": "2025-01-17T16:37:57.850Z",
+    "updatedAt": "2025-01-17T16:37:57.850Z",
+    "__v": 0
+  },
+  {
+    "_id": "678aa942a4b0ebe07d0e6165",
+    "userId": "d8252a5d-aae6-4465-bb2a-56e51101017d",
+    "total": 0,
+    "items": [],
+    "id": "493a9c2b-e3ec-4d80-b4d1-5391cf1826da",
+    "createdAt": "2025-01-17T19:02:26.072Z",
+    "updatedAt": "2025-01-17T19:02:26.072Z",
+    "__v": 0
+  },
+  {
+    "_id": "678aa9eaa4b0ebe07d0e616f",
+    "userId": "197e57cf-8708-4fd1-9a5b-a2a6787ff46f",
+    "total": 29000,
+    "items": [
+      {
+        "itemId": "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+        "itemType": "Skill",
+        "qty": 1,
+        "appliedCoupons": [],
+        "finalPrice": 3999,
+        "price": 3999,
+        "_id": "678ab01ea4b0ebe07d0e61bf"
+      },
+      {
+        "itemId": "4c85aff8-f445-4efd-ba25-5fe7c2938ae9",
+        "itemType": "Course",
+        "qty": 1,
+        "appliedCoupons": [],
+        "finalPrice": 1,
+        "price": 1,
+        "_id": "678ab026a4b0ebe07d0e61cf"
+      },
+      {
+        "itemId": "0f7cfe1b-442c-43e2-9164-0b3f7be81d9j",
+        "itemType": "Course",
+        "qty": 1,
+        "appliedCoupons": [],
+        "finalPrice": 10000,
+        "price": 10000,
+        "_id": "678ab041a4b0ebe07d0e61ec"
+      },
+      {
+        "itemId": "c3887555-9bfb-4cfb-bc30-9d65aaf969e3",
+        "itemType": "Course",
+        "qty": 1,
+        "appliedCoupons": [],
+        "finalPrice": 15000,
+        "price": 15000,
+        "_id": "678ab1dda4b0ebe07d0e624d"
+      }
+    ],
+    "id": "5ae85298-98ab-4c9f-b4b4-b7928396353a",
+    "createdAt": "2025-01-17T19:05:14.069Z",
+    "updatedAt": "2025-01-17T19:39:09.727Z",
+    "__v": 4
+  },
+  {
+    "_id": "678b4cfaa4b0ebe07d0e65a3",
+    "userId": "2e6bb05e-cc21-4175-80a6-905282ca9d60",
+    "total": 63590,
+    "items": [
+      {
+        "itemId": "4c85aff8-f445-4efd-ba25-5fe7c2938ae9",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 0,
+        "_id": "679bb4dfb608d9fc764cbd3c"
+      },
+      {
+        "itemId": "b69a39ee-816c-4dca-ad1d-8cf6586af8c7",
+        "itemType": "Skill",
+        "qty": 1,
+        "price": 32841,
+        "_id": "679bb7d5b608d9fc764cbddb"
+      },
+      {
+        "itemId": "629d3c1d-b5d5-49b5-b3ea-1d22e8cc1860",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 10000,
+        "_id": "679bb7f1b608d9fc764cbe4f"
+      },
+      {
+        "itemId": "0f7cfe1b-442c-43e2-9164-0b3f7be81d9f",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 4000,
+        "_id": "67a308b3aea78766290e7bb5"
+      },
+      {
+        "itemId": "71f96e77-bcae-457d-bfe5-322d127dfe00",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 12750,
+        "_id": "67a308bbaea78766290e7bc3"
+      },
+      {
+        "itemId": "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+        "itemType": "Skill",
+        "qty": 1,
+        "price": 3999,
+        "_id": "67a308daaea78766290e7bfb"
+      }
+    ],
+    "id": "bfaeefd3-8e62-4676-895d-b335e8476af1",
+    "createdAt": "2025-01-18T06:40:58.647Z",
+    "updatedAt": "2025-02-05T06:44:43.001Z",
+    "__v": 36,
+    "appliedCoupons": [],
+    "finalPrice": 63590,
+    "gst": 11446.199999999999
+  },
+  {
+    "_id": "678b5bf3a4b0ebe07d0e67cb",
+    "userId": "62c531f2-dacc-472d-9b1c-d4c589967ac7",
+    "total": 0,
+    "items": [],
+    "id": "8d0a2e9f-9a51-4314-8404-fd14ffa8c126",
+    "createdAt": "2025-01-18T07:44:51.221Z",
+    "updatedAt": "2025-01-30T15:22:15.655Z",
+    "__v": 35,
+    "appliedCoupons": [
+      "2a812a3e-b5a0-4862-aaff-0f41de213641"
+    ],
+    "finalPrice": 0,
+    "gst": 0
+  },
+  {
+    "_id": "678bc2da5306078456a41a61",
+    "userId": "b45116c7-650f-4d93-a9a5-5e1a7b8fd3fb",
+    "total": 32250,
+    "appliedCoupons": [
+      "1b769619-565d-40bc-af87-96f7bb242071",
+      "ea94730e-79b7-4553-a983-f3c4c1219d0b",
+      "2a812a3e-b5a0-4862-aaff-0f41de213641"
+    ],
+    "finalPrice": 20940,
+    "gst": 5805,
+    "items": [
+      {
+        "itemId": "0f7cfe1b-442c-43e2-9164-0b3f7be81d9f",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 4000,
+        "_id": "678e9261fb7e9293e67ac4fe"
+      },
+      {
+        "itemId": "71f96e77-bcae-457d-bfe5-322d127dfe00",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 12750,
+        "_id": "678e9262fb7e9293e67ac506"
+      },
+      {
+        "itemId": "c3887555-9bfb-4cfb-bc30-9d65aaf969e3",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 1500,
+        "_id": "678e9262fb7e9293e67ac510"
+      },
+      {
+        "itemId": "629d3c1d-b5d5-49b5-b3ea-1d22e8cc1860",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 10000,
+        "_id": "678e9264fb7e9293e67ac51c"
+      },
+      {
+        "itemId": "4c85aff8-f445-4efd-ba25-5fe7c2938ae9",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 0,
+        "_id": "678e9264fb7e9293e67ac52a"
+      },
+      {
+        "itemId": "0f7cfe1b-442c-43e2-9164-0b3f7be81d9g",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 4000,
+        "_id": "678e9265fb7e9293e67ac53a"
+      }
+    ],
+    "id": "79795a3d-c689-4446-a6c9-6c62d8119f65",
+    "createdAt": "2025-01-18T15:03:54.545Z",
+    "updatedAt": "2025-01-20T18:14:33.628Z",
+    "__v": 11
+  },
+  {
+    "_id": "678cb15f60c936e4f54801f5",
+    "userId": "f46ceb8f-26bf-4a1a-8241-88ff5147d226",
+    "total": 4000,
+    "appliedCoupons": [],
+    "finalPrice": 4000,
+    "gst": 720,
+    "items": [
+      {
+        "itemId": "0f7cfe1b-442c-43e2-9164-0b3f7be81d9f",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 4000,
+        "_id": "679c88d8e2f7bb2fe5076632"
+      }
+    ],
+    "id": "d47666a7-1ce3-4c2d-9dc8-b73e4f132a62",
+    "createdAt": "2025-01-19T08:01:35.317Z",
+    "updatedAt": "2025-01-31T08:24:56.076Z",
+    "__v": 1
+  },
+  {
+    "_id": "678cb15f60c936e4f54801f7",
+    "userId": "f46ceb8f-26bf-4a1a-8241-88ff5147d226",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "4af29159-e6aa-4635-b55d-95a97082aa6f",
+    "createdAt": "2025-01-19T08:01:35.340Z",
+    "updatedAt": "2025-01-19T08:01:35.340Z",
+    "__v": 0
+  },
+  {
+    "_id": "678d43c1fb7e9293e67ab480",
+    "userId": "90a2c73a-4b8e-42a5-9fc4-19e3cd2ad783",
+    "total": 10000,
+    "appliedCoupons": [],
+    "finalPrice": 10000,
+    "gst": 1800,
+    "items": [
+      {
+        "itemId": "629d3c1d-b5d5-49b5-b3ea-1d22e8cc1860",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 10000,
+        "_id": "678d43c1fb7e9293e67ab481"
+      }
+    ],
+    "id": "1490fc21-ad68-4b7a-a662-0a114c01d57c",
+    "createdAt": "2025-01-19T18:26:09.724Z",
+    "updatedAt": "2025-01-19T18:26:09.724Z",
+    "__v": 0
+  },
+  {
+    "_id": "678e5193fb7e9293e67abf35",
+    "userId": "179b15bc-3d97-4fca-91d7-285205f2fc98",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "d7501a36-65c1-44a5-9025-f27e6c72f98f",
+    "createdAt": "2025-01-20T13:37:23.202Z",
+    "updatedAt": "2025-01-20T13:37:23.202Z",
+    "__v": 0
+  },
+  {
+    "_id": "679381b435f23a6b3acb4a5f",
+    "userId": "44a72e30-270f-484e-97d8-8c242e258743",
+    "total": 12750,
+    "appliedCoupons": [],
+    "finalPrice": 12750,
+    "gst": 2295,
+    "items": [
+      {
+        "itemId": "71f96e77-bcae-457d-bfe5-322d127dfe00",
+        "itemType": "Course",
+        "qty": 1,
+        "price": 12750,
+        "_id": "679c6560b608d9fc764cc2c3"
+      }
+    ],
+    "id": "94b0111b-0f87-4fa4-9968-a9ddb4c1dd77",
+    "createdAt": "2025-01-24T12:04:04.876Z",
+    "updatedAt": "2025-01-31T05:54:16.418Z",
+    "__v": 3
+  },
+  {
+    "_id": "67954405aed07bf5bd37198c",
+    "userId": "497d9ca7-2016-4b12-ad18-c9ae7cf6fbd0",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "83dbf527-2c35-49bc-b6b1-889bc5fa2e64",
+    "createdAt": "2025-01-25T20:05:25.175Z",
+    "updatedAt": "2025-01-25T20:05:25.175Z",
+    "__v": 0
+  },
+  {
+    "_id": "6796608cd14ab61345c74758",
+    "userId": "ca8a4506-dcfc-4572-9eb2-d4894c9444ec",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "9914203f-6bfe-4a35-8a3e-ad2377149620",
+    "createdAt": "2025-01-26T16:19:24.520Z",
+    "updatedAt": "2025-01-26T16:19:24.520Z",
+    "__v": 0
+  },
+  {
+    "_id": "6796608cd14ab61345c7475a",
+    "userId": "ca8a4506-dcfc-4572-9eb2-d4894c9444ec",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "f5a93a75-e448-4beb-bd1b-c5776d80c29c",
+    "createdAt": "2025-01-26T16:19:24.523Z",
+    "updatedAt": "2025-01-26T16:19:24.523Z",
+    "__v": 0
+  },
+  {
+    "_id": "679cdc75593927babb76cd7d",
+    "userId": "f7535a0b-a09e-4b7a-9483-3a3bcd592f50",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "74c65021-2372-42f3-af67-d510c116c33e",
+    "createdAt": "2025-01-31T14:21:41.863Z",
+    "updatedAt": "2025-01-31T14:21:41.863Z",
+    "__v": 0
+  },
+  {
+    "_id": "679cdc75593927babb76cd7f",
+    "userId": "f7535a0b-a09e-4b7a-9483-3a3bcd592f50",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "67ff50b3-3780-4ca5-b58f-73df62f5100a",
+    "createdAt": "2025-01-31T14:21:41.868Z",
+    "updatedAt": "2025-01-31T14:21:41.868Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a1f958b6100a24eb7c9de3",
+    "userId": "c4fd162a-88df-48a8-b32c-9dbb432e8aa4",
+    "total": 3999,
+    "appliedCoupons": [],
+    "finalPrice": 3999,
+    "gst": 719.8199999999999,
+    "items": [
+      {
+        "itemId": "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+        "itemType": "Skill",
+        "qty": 1,
+        "price": 3999,
+        "_id": "67a224d6b6100a24eb7ca0fb"
+      }
+    ],
+    "id": "f0120c95-25df-4941-a54d-349b9dfac25a",
+    "createdAt": "2025-02-04T11:26:16.620Z",
+    "updatedAt": "2025-02-04T14:31:50.007Z",
+    "__v": 3
+  },
+  {
+    "_id": "67a62934e513e44992cbc346",
+    "userId": "6c514f5c-3abb-4c1a-b71d-8c51b9be748d",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "6ee22469-4c80-4623-8a3e-b1182787cb58",
+    "createdAt": "2025-02-07T15:39:32.392Z",
+    "updatedAt": "2025-02-07T15:39:32.392Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a62934e513e44992cbc348",
+    "userId": "6c514f5c-3abb-4c1a-b71d-8c51b9be748d",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "55ea2394-82bc-4beb-9649-fb6d3320ef3d",
+    "createdAt": "2025-02-07T15:39:32.404Z",
+    "updatedAt": "2025-02-07T15:39:32.404Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a66ac2ddea7b98054b8db4",
+    "userId": "107084398024001632583",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "cd5f6bc4-8ff3-4b3f-b731-081ccd146e22",
+    "createdAt": "2025-02-07T20:19:14.387Z",
+    "updatedAt": "2025-02-07T20:19:14.387Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a79fc595e0ec1f406dc0e1",
+    "userId": "116087211492430373930",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "73abc538-7d9d-4516-9666-64eef93eb7c2",
+    "createdAt": "2025-02-08T18:17:41.638Z",
+    "updatedAt": "2025-02-08T18:17:41.638Z",
+    "__v": 0
+  },
+  {
+    "_id": "67b5f378cff0486dcb3ac0c3",
+    "userId": "b6e0984c-18ad-44e8-9c23-d403c892f95f",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "3ff6f98a-b47f-42be-9103-44ffc3f36322",
+    "createdAt": "2025-02-19T15:06:32.391Z",
+    "updatedAt": "2025-02-19T15:06:32.391Z",
+    "__v": 0
+  },
+  {
+    "_id": "67b61470882fadef2aa38f21",
+    "userId": "30fa0a56-8b84-478b-af88-f1847185a165",
+    "total": 3999,
+    "appliedCoupons": [
+      "ea94730e-79b7-4553-a983-f3c4c1219d0b"
+    ],
+    "finalPrice": 2879.2799999999997,
+    "gst": 719.8199999999999,
+    "items": [
+      {
+        "itemId": "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+        "itemType": "Skill",
+        "qty": 1,
+        "price": 3999,
+        "_id": "67b6ca6ab3fa4cd9b1e33eef"
+      }
+    ],
+    "id": "78c1874c-25cc-409c-bed1-9db205f6a493",
+    "createdAt": "2025-02-19T17:27:12.477Z",
+    "updatedAt": "2025-02-20T16:06:13.477Z",
+    "__v": 2
+  },
+  {
+    "_id": "67b61470882fadef2aa38f23",
+    "userId": "30fa0a56-8b84-478b-af88-f1847185a165",
+    "total": 0,
+    "appliedCoupons": [],
+    "finalPrice": 0,
+    "gst": 0,
+    "items": [],
+    "id": "3541526d-b7c0-4873-9c90-9114d9db40fa",
+    "createdAt": "2025-02-19T17:27:12.489Z",
+    "updatedAt": "2025-02-19T17:27:12.489Z",
+    "__v": 0
+  }
+]

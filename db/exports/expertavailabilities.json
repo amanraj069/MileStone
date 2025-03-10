@@ -1,0 +1,86 @@
+[
+  {
+    "_id": "67a5a74f084aae87a6918304",
+    "expertId": "ae74efb4-b836-4a98-bfe9-54d836be3751",
+    "day": "2025-02-15T00:00:00.000Z",
+    "timeSlots": [
+      {
+        "startTime": "2025-02-15T09:00:00.000Z",
+        "endTime": "2025-02-15T09:30:00.000Z",
+        "isAvailable": true,
+        "_id": "67a5aafbbed5c0654a098d54"
+      },
+      {
+        "startTime": "2025-02-15T09:30:00.000Z",
+        "endTime": "2025-02-15T10:30:00.000Z",
+        "isAvailable": false,
+        "_id": "67a5aafbbed5c0654a098d55"
+      },
+      {
+        "startTime": "2025-02-15T10:30:00.000Z",
+        "endTime": "2025-02-15T11:00:00.000Z",
+        "isAvailable": true,
+        "_id": "67a5aafbbed5c0654a098d56"
+      },
+      {
+        "startTime": "2025-02-15T12:00:00.000Z",
+        "endTime": "2025-02-15T13:00:00.000Z",
+        "isAvailable": false,
+        "_id": "67a8f413f9bab60ac20370ee"
+      },
+      {
+        "startTime": "2025-02-15T13:00:00.000Z",
+        "endTime": "2025-02-15T14:00:00.000Z",
+        "isAvailable": true,
+        "_id": "67a8f413f9bab60ac20370ef"
+      },
+      {
+        "startTime": "2025-02-15T15:00:00.000Z",
+        "endTime": "2025-02-15T17:00:00.000Z",
+        "isAvailable": true,
+        "_id": "67a5a74f084aae87a6918307"
+      }
+    ],
+    "isVisible": false,
+    "id": "5c1f87de-4fbc-42d9-96fc-5fb2861d3733",
+    "createdAt": "2025-02-07T06:25:19.466Z",
+    "updatedAt": "2025-02-16T00:00:00.103Z",
+    "__v": 2
+  },
+  {
+    "_id": "67a5b42b64241e3176f70cd3",
+    "expertId": "ae74efb4-b836-4a98-bfe9-54d836be3751",
+    "day": "2025-02-14T00:00:00.000Z",
+    "timeSlots": [
+      {
+        "startTime": "2025-02-14T09:00:00.000Z",
+        "endTime": "2025-02-14T10:00:00.000Z",
+        "isAvailable": true,
+        "_id": "67a5b4ac64241e3176f70d1c"
+      },
+      {
+        "startTime": "2025-02-14T10:00:00.000Z",
+        "endTime": "2025-02-14T11:00:00.000Z",
+        "isAvailable": false,
+        "_id": "67a5b4ac64241e3176f70d1d"
+      },
+      {
+        "startTime": "2025-02-14T11:00:00.000Z",
+        "endTime": "2025-02-14T12:00:00.000Z",
+        "isAvailable": false,
+        "_id": "67a5b4a564241e3176f70d0e"
+      },
+      {
+        "startTime": "2025-02-14T12:00:00.000Z",
+        "endTime": "2025-02-14T14:30:00.000Z",
+        "isAvailable": true,
+        "_id": "67a5b4a564241e3176f70d0f"
+      }
+    ],
+    "isVisible": false,
+    "id": "02ba0509-f112-4a21-88fe-3c98beb570a8",
+    "createdAt": "2025-02-07T07:20:11.199Z",
+    "updatedAt": "2025-02-15T00:00:00.062Z",
+    "__v": 2
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "_id": "678f193468a85cc8cb218bf4",
+    "id": "d3e99202-7848-4e2a-bd13-fb44bc530ef4",
+    "name": "University of Horticultural Sciences",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/University+of+Horticultural+Sciences.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.373Z",
+    "updatedAt": "2025-01-21T03:49:08.373Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218bf6",
+    "id": "b236b676-7402-4be4-98e8-ac0e53e28ecc",
+    "name": "Haldia Institute of Technology",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/Haldia+Institute+of+Technology.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.442Z",
+    "updatedAt": "2025-01-21T03:49:08.442Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218bf8",
+    "id": "579e198b-450c-4826-8085-bfbbd85ae896",
+    "name": "MIT ADT University",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/MIT+ADT+University.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.505Z",
+    "updatedAt": "2025-01-21T03:49:08.505Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218bfa",
+    "id": "b426d4ab-e79e-4a6d-b17b-6136120c51ec",
+    "name": "Parul University",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/Parul+University.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.572Z",
+    "updatedAt": "2025-01-21T03:49:08.572Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218bfc",
+    "id": "b8cf24b4-8f55-46a9-a2f8-5e7c0aed68ca",
+    "name": "Sharda University",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/Sharda+University.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.644Z",
+    "updatedAt": "2025-01-21T03:49:08.644Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218bfe",
+    "id": "3bc67ff3-df61-4087-9011-ac8ca5570694",
+    "name": "UICT Jalgaon",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/UICT+Jalgaon.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.710Z",
+    "updatedAt": "2025-01-21T03:49:08.710Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218c00",
+    "id": "78ede0d3-8de3-4763-aa02-e99aa398f735",
+    "name": "University of Delhi",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/University+of+Delhi.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.779Z",
+    "updatedAt": "2025-01-21T03:49:08.779Z",
+    "__v": 0
+  },
+  {
+    "_id": "678f193468a85cc8cb218c02",
+    "id": "4118098f-886a-4e10-aa78-3c23814eb8e2",
+    "name": "University of Punjab",
+    "imageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/MoUs/University+of+Punjab.png",
+    "pages": [
+      "landing",
+      "course",
+      "test",
+      "skillconnect"
+    ],
+    "createdAt": "2025-01-21T03:49:08.845Z",
+    "updatedAt": "2025-01-21T03:49:08.845Z",
+    "__v": 0
+  }
+]

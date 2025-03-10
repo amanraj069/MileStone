@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="current_job_see_more.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Job Details</div>
+            <button id="milestone-btn" onclick="milestone_Page()"> Milestone </button>
+            <button id="complain-btn"> Raise Complaint </button>
+            <div></div> <!-- Empty div for spacing -->
+        </header>
+
+        <div class="job-header">
+            <div class="job-title-section">
+                <div class="job-title-info">
+                    <div class="deadline">Application Deadline: March 15, 2025</div>
+                    <h1 class="job-title">Senior Frontend Developer</h1>
+                    <div class="freelancer-name">Atul Khatri</div>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bangalore (Remote option available)</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>$800-1700 per week</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Posted on Feb 16, 2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="xyz company" class="job-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="job-description">
+            <div class="section-title">
+                Job Description
+            </div>
+            <div class="description-text">
+                <p>We are looking for an experienced Frontend Developer to join our growing team. The ideal candidate
+                    will have strong experience with React, TypeScript, and NextJS, and be passionate about creating
+                    clean, efficient, and maintainable code.</p>
+                <br>
+                <p>As a Senior Frontend Developer, you will be responsible for designing and implementing user interface
+                    components using React.js practices and workflows. You will work closely with the design team to
+                    ensure the technical feasibility of UI/UX designs, and collaborate with back-end developers to build
+                    the application.</p>
+                <br>
+                <p><strong>Responsibilities:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px; margin-bottom: 10px;">
+                    <li>Develop new user-facing features using React.js</li>
+                    <li>Build reusable components and front-end libraries for future use</li>
+                    <li>Translate designs and wireframes into high-quality code</li>
+                    <li>Optimize components for maximum performance across devices and browsers</li>
+                    <li>Coordinate with various teams working on different layers of the infrastructure</li>
+                </ul>
+                <br>
+                <p><strong>Requirements:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>5+ years of experience in front-end development</li>
+                    <li>3+ years of experience with React.js</li>
+                    <li>Strong proficiency in JavaScript, TypeScript, and HTML/CSS</li>
+                    <li>Experience with popular React workflows (Redux, Next.js)</li>
+                    <li>Experience with responsive and adaptive design</li>
+                    <li>Good understanding of asynchronous programming</li>
+                    <li>Familiarity with Git and version control</li>
+                </ul>
+
+                <div class="skills-required">
+                    <div class="skills-title">Technical Skills:</div>
+                    <div class="skills-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">NextJS</span>
+                        <span class="skill-tag">Redux</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Jest</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="milestones">
+            <div class="section-title">
+                Project Milestones
+                <div class="section-buttons">
+                    <button class="add-button" id="addMilestoneBtn">
+                        <i class="fas fa-plus"></i> Add Milestone
+                    </button>
+                </div>
+            </div>
+            <table class="milestones-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Deliverable</th>
+                        <th style="width: 20%;">Deadline</th>
+                        <th style="width: 20%;">Payment</th>
+                        <th style="width: 10%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="milestones-tbody">
+                    <tr>
+                        <td>Initial setup and component architecture</td>
+                        <td>Week 1</td>
+                        <td class="payment-column">$300 (20%)</td>
+                        <td>
+                            <div class="milestone-actions">
+                                <button class="milestone-button edit-milestone">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="milestone-button delete-milestone">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Core functionality implementation</td>
+                        <td>Week 3</td>
+                        <td class="payment-column">$450 (30%)</td>
+                        <td>
+                            <div class="milestone-actions">
+                                <button class="milestone-button edit-milestone">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="milestone-button delete-milestone">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Integration with backend APIs</td>
+                        <td>Week 5</td>
+                        <td class="payment-column">$300 (20%)</td>
+                        <td>
+                            <div class="milestone-actions">
+                                <button class="milestone-button edit-milestone">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="milestone-button delete-milestone">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Testing, bug fixing, and optimization</td>
+                        <td>Week 7</td>
+                        <td class="payment-column">$300 (20%)</td>
+                        <td>
+                            <div class="milestone-actions">
+                                <button class="milestone-button edit-milestone">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="milestone-button delete-milestone">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Final delivery and documentation</td>
+                        <td>Week 8</td>
+                        <td class="payment-column">$150 (10%)</td>
+                        <td>
+                            <div class="milestone-actions">
+                                <button class="milestone-button edit-milestone">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="milestone-button delete-milestone">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Milestone Modal -->
+    <div class="modal-overlay" id="addMilestoneModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Add New Milestone</div>
+                <button class="close-modal" id="closeAddMilestoneModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Deliverable Description</label>
+                    <input type="text" class="form-input" id="deliverableInput" placeholder="E.g., Complete feature X">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deadline</label>
+                    <input type="text" class="form-input" id="milestoneDeadlineInput" placeholder="E.g., Week 2">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Payment Amount</label>
+                    <input type="text" class="form-input" id="paymentInput" placeholder="E.g., $300 (20%)">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" id="cancelAddMilestone">Cancel</button>
+                <button class="save-btn" id="saveAddMilestone">Add Milestone</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Milestone Modal -->
+    <div class="modal-overlay" id="editMilestoneModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Edit Milestone</div>
+                <button class="close-modal" id="closeEditMilestoneModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Deliverable Description</label>
+                    <input type="text" class="form-input" id="editDeliverableInput">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Deadline</label>
+                    <input type="text" class="form-input" id="editMilestoneDeadlineInput">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Payment Amount</label>
+                    <input type="text" class="form-input" id="editPaymentInput">
+                </div>
+                <input type="hidden" id="editMilestoneIndex">
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" id="cancelEditMilestone">Cancel</button>
+                <button class="save-btn" id="saveEditMilestone">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="current_job_see_more.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="job_listing.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Job Listings</div>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search jobs, companies...">
+            </div>
+            <div class="user-profile">
+                <img id="search-icon" src="search-icon.png" alt="Profile" style="border-radius: 50%;">
+            </div>
+        </header>
+
+        <div class="filters">
+            <button class="filter-btn active">All Jobs</button>
+            <button class="filter-btn">Recent</button>
+            <button class="filter-btn">Remote</button>
+            <button class="filter-btn">Full-time</button>
+            <button class="filter-btn">Part-time</button>
+        </div>
+
+        <div class="content">
+            <main class="job-listings">
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">Senior Frontend Developer</h2>
+                        <div class="job-price">$800-1700</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">NextJS</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Bangalore <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 2 days ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">45 applicants</span>
+                        <button class="see-more-btn" onclick="open_see_more_Page()">See More</button>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">UX/UI Designer</h2>
+                        <div class="job-price">$80-500</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">Figma</span>
+                            <span class="tech-tag">Adobe XD</span>
+                            <span class="tech-tag">Sketch</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Mumbai <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Contract <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 3 days ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">32 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">Backend Developer</h2>
+                        <div class="job-price">$600-1200</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Express</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 1 week ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">67 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">DevOps Engineer</h2>
+                        <div class="job-price">$300-1000</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">Kubernetes</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Hyderabad <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 5 days ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">28 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">Data Scientist</h2>
+                        <div class="job-price">$1000-2100</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">SQL</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Bangalore <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 3 days ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">53 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+
+                <!-- Additional Remote Job Postings -->
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">Content Writer</h2>
+                        <div class="job-price">$250-500</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">SEO</span>
+                            <span class="tech-tag">WordPress</span>
+                            <span class="tech-tag">Copywriting</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Part-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 4 days ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">24 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">Social Media Manager</h2>
+                        <div class="job-price">$300-950</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">Instagram</span>
+                            <span class="tech-tag">TikTok</span>
+                            <span class="tech-tag">Analytics</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Hyderabad <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Part-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 1 day ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">38 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-img-container">
+                        <img src="company_logo.jpg" alt="Company" class="job-img">
+                    </div>
+                    <div class="job-info">
+                        <h2 class="job-title">Mobile App Developer</h2>
+                        <div class="job-price">$900-2000</div>
+                        <div class="job-tech">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                        <div class="job-meta">
+                            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Delhi <span class="status-dot"></span></span>
+                            <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot"></span></span>
+                            <span class="job-date"><i class="fas fa-clock"></i> Posted 6 days ago <span class="status-dot"></span></span>
+                        </div>
+                    </div>
+                    <div class="job-actions">
+                        <span class="applications-count">41 applicants</span>
+                        <button class="see-more-btn">See More</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="job_listing.js"></script>
+</body>
+</html>

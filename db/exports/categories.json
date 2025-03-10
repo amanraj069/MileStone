@@ -1,0 +1,148 @@
+[
+  {
+    "_id": "671a30f8f9568e0d358e5964",
+    "name": "Agriculture",
+    "image": "https://img.freepik.com/premium-photo/tractor-spraying-pesticides-soy-field-with-sprayer-spring_875746-14068.jpg?semt=ais_hybrid",
+    "subCategory": [
+      "4028e163-f026-4e7f-beb1-a9f9de45d503",
+      "63c91e04-3255-4848-99dc-d81978da4c5d"
+    ],
+    "description": "Agriculture encompasses crop and livestock production, aquaculture, and forestry for food and non-food products. Agriculture was a key factor in the rise of sedentary human civilization, whereby farming of domesticated species created food surpluses that enabled people to live in cities.",
+    "id": "eb022d05-4584-4481-9cf3-670dd1d0f431",
+    "createdAt": "2024-10-24T11:35:20.652Z",
+    "updatedAt": "2024-12-11T18:00:27.910Z",
+    "__v": 2
+  },
+  {
+    "_id": "6759b66dbbe0ce013cd9f86c",
+    "name": "Maths",
+    "slug": "carmella-douglas",
+    "image": "https://www.google.com/",
+    "subCategory": [
+      "6ccdabc8-e5fd-4c9d-99c8-950dd31a412d",
+      "2de58b55-afb1-4fa5-940a-e970a348dfc5"
+    ],
+    "description": "Exercitationem esse cumque praesentium cupiditate expedita. Fuga culpa cum unde et error blanditiis excepturi provident ipsum. At fugit error eligendi eligendi exercitationem consectetur ab modi consequuntur.",
+    "id": "4acc752a-0c00-49f0-bec0-ef1543818e4b",
+    "createdAt": "2024-12-11T15:57:33.020Z",
+    "updatedAt": "2024-12-21T17:36:49.308Z",
+    "__v": 1
+  },
+  {
+    "_id": "6759b77b5cb9dacd8bf80c91",
+    "name": "Technology",
+    "slug": "karl-ortiz",
+    "image": "https://www.google.com/",
+    "subCategory": [
+      "4028e163-f026-4e7f-beb1-a9f9de45d503",
+      "63c91e04-3255-4848-99dc-d81978da4c5d",
+      "dba49737-e090-4758-816e-f2a0c1e7852b"
+    ],
+    "description": "Atque voluptate laborum. Ipsa excepturi iusto. Numquam sequi sapiente officiis ad rerum delectus illo.",
+    "id": "dec38f95-ce10-4995-b6b0-b10471a17e93",
+    "createdAt": "2024-12-11T16:02:03.550Z",
+    "updatedAt": "2024-12-14T06:05:15.710Z",
+    "__v": 1
+  },
+  {
+    "_id": "675d1c1dc21d4bfa7f1ddef1",
+    "name": "Software",
+    "slug": "grayce-ullrich",
+    "image": "http://localhost:4000/lists/categories/new",
+    "subCategory": [
+      "4028e163-f026-4e7f-beb1-a9f9de45d503",
+      "63c91e04-3255-4848-99dc-d81978da4c5d",
+      "6ccdabc8-e5fd-4c9d-99c8-950dd31a412d"
+    ],
+    "description": "Itaque molestias consequuntur perspiciatis eligendi. Harum deserunt iure accusamus. Rerum perferendis omnis animi dolores.",
+    "id": "3be93a49-55db-4bc5-9a1a-4f17035ba0e3",
+    "createdAt": "2024-12-14T05:48:13.940Z",
+    "updatedAt": "2024-12-14T06:02:01.109Z",
+    "__v": 0
+  },
+  {
+    "_id": "675d2298c21d4bfa7f1de0a6",
+    "name": "English",
+    "slug": "english",
+    "image": "http://localhost:4000/lists/experts",
+    "subCategory": [
+      "2de58b55-afb1-4fa5-940a-e970a348dfc5",
+      "0f074de5-de31-4757-9a64-be654f8bbaef",
+      "bb017b14-9bd1-4df3-bbd4-4298ffda91bb",
+      "63c91e04-3255-4848-99dc-d81978da4c5d"
+    ],
+    "description": "Eveniet provident aut in. Sequi sint numquam labore possimus natus. Quaerat sed iusto tempore quae unde harum ullam.",
+    "id": "8df5bb68-bc48-45e9-a162-a6c3409f2424",
+    "createdAt": "2024-12-14T06:15:52.717Z",
+    "updatedAt": "2024-12-14T06:15:52.717Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a35f420aba63a4a20b7090",
+    "name": "Food Technology",
+    "slug": "food technology",
+    "image": "http://localhost:4000/lists/experts",
+    "subCategory": [
+      "2de58b55-afb1-4fa5-940a-e970a348dfc5",
+      "0f074de5-de31-4757-9a64-be654f8bbaef",
+      "bb017b14-9bd1-4df3-bbd4-4298ffda91bb",
+      "63c91e04-3255-4848-99dc-d81978da4c5d"
+    ],
+    "description": "Eveniet provident aut in. Sequi sint numquam labore possimus natus. Quaerat sed iusto tempore quae unde harum ullam.",
+    "id": "8df5bb68-bc48-45e9-a162-a6c3409f2425",
+    "createdAt": "2024-12-14T06:15:52.717Z",
+    "updatedAt": "2024-12-14T06:15:52.717Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a35f5e0aba63a4a20b7091",
+    "name": "Finance",
+    "slug": "finance",
+    "image": "http://localhost:4000/lists/experts",
+    "subCategory": [
+      "2de58b55-afb1-4fa5-940a-e970a348dfc5",
+      "0f074de5-de31-4757-9a64-be654f8bbaef",
+      "bb017b14-9bd1-4df3-bbd4-4298ffda91bb",
+      "63c91e04-3255-4848-99dc-d81978da4c5d"
+    ],
+    "description": "Eveniet provident aut in. Sequi sint numquam labore possimus natus. Quaerat sed iusto tempore quae unde harum ullam.",
+    "id": "8df5bb68-bc48-45e9-a162-a6c3409f2426",
+    "createdAt": "2024-12-14T06:15:52.717Z",
+    "updatedAt": "2024-12-14T06:15:52.717Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a35f820aba63a4a20b7092",
+    "name": "Marketing",
+    "slug": "marketing",
+    "image": "http://localhost:4000/lists/experts",
+    "subCategory": [
+      "2de58b55-afb1-4fa5-940a-e970a348dfc5",
+      "0f074de5-de31-4757-9a64-be654f8bbaef",
+      "bb017b14-9bd1-4df3-bbd4-4298ffda91bb",
+      "63c91e04-3255-4848-99dc-d81978da4c5d"
+    ],
+    "description": "Eveniet provident aut in. Sequi sint numquam labore possimus natus. Quaerat sed iusto tempore quae unde harum ullam.",
+    "id": "8df5bb68-bc48-45e9-a162-a6c3409f2427",
+    "createdAt": "2024-12-14T06:15:52.717Z",
+    "updatedAt": "2024-12-14T06:15:52.717Z",
+    "__v": 0
+  },
+  {
+    "_id": "67a35f9a0aba63a4a20b7093",
+    "name": "HR",
+    "slug": "hr",
+    "image": "http://localhost:4000/lists/experts",
+    "subCategory": [
+      "2de58b55-afb1-4fa5-940a-e970a348dfc5",
+      "0f074de5-de31-4757-9a64-be654f8bbaef",
+      "bb017b14-9bd1-4df3-bbd4-4298ffda91bb",
+      "63c91e04-3255-4848-99dc-d81978da4c5d"
+    ],
+    "description": "Eveniet provident aut in. Sequi sint numquam labore possimus natus. Quaerat sed iusto tempore quae unde harum ullam.",
+    "id": "8df5bb68-bc48-45e9-a162-a6c3409f2428",
+    "createdAt": "2024-12-14T06:15:52.717Z",
+    "updatedAt": "2024-12-14T06:15:52.717Z",
+    "__v": 0
+  }
+]

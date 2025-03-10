@@ -1,0 +1,2467 @@
+[
+  {
+    "_id": "66d5df54ebe30a5fdd00c71e",
+    "duration": 60,
+    "name": "Advanced Mathematics Quiz",
+    "type": "Full Length",
+    "marks": 100,
+    "language": "English",
+    "questions": [],
+    "isShuffled": false,
+    "isNavigationAllowed": true,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://example.com/quiz-poster.jpg",
+    "attemptedAllows": 2,
+    "extendableDuration": "30",
+    "isExtended": false,
+    "subject": {
+      "id": "ab7c76f3-4cc8-4f9e-9669-3eb78d4c3ce9",
+      "name": "Science"
+    },
+    "syllabus": "LOREM IPSUM SYLLABUS",
+    "id": "1ee9ec7e-b24b-4111-9aaf-331a079a4f83",
+    "createdAt": "2024-09-02T15:52:52.838Z",
+    "updatedAt": "2025-01-24T20:59:24.268Z",
+    "__v": 0,
+    "isLocked": false,
+    "sections": [
+      {
+        "sectionName": "Equations",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "id": "ed14d9c1-100b-4dd0-86e7-cc097c530352",
+            "description": "\\tan\\left(\\tan x\\right)\\tan\\left(\\tan y\\right)=1 $",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "image",
+                "imageURL": "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg",
+                "_id": "676b354071992d167d9357cf"
+              },
+              {
+                "name": "",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "image",
+                "imageURL": "https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg",
+                "_id": "676b354071992d167d9357d0"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": null,
+            "explanation": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "_id": "676b354071992d167d9357ce",
+            "createdAt": "2025-01-24T20:59:24.268Z",
+            "updatedAt": "2025-01-24T20:59:24.268Z"
+          },
+          {
+            "id": "cde96204-3d4c-48f5-82f1-d39ddbf8779d",
+            "description": "\\text{Solve }\\left(x^2+y^2\\right)-\\frac{\\differentialD y}{\\differentialD x}=k^2",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "y=\\left(x+y\\right)",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "6766d9fd03a6795878772d18"
+              },
+              {
+                "name": "y=\\frac{\\left(x+y\\right)}{k}+c",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "6766d9fd03a6795878772d19"
+              },
+              {
+                "name": "y=k\\left(\\frac{x+y}{k}\\right)+c",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "6766d9fd03a6795878772d1a"
+              },
+              {
+                "name": "y=\\left(\\frac{x+y}{k}\\right)+c",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "6766d9fd03a6795878772d1b"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": null,
+            "explanation": "",
+            "positive_marking": 3,
+            "negative_marking": 0,
+            "_id": "6766d9fd03a6795878772d17",
+            "createdAt": "2025-01-24T20:59:24.268Z",
+            "updatedAt": "2025-01-24T20:59:24.268Z"
+          }
+        ],
+        "_id": "6766d9fd03a6795878772d16"
+      }
+    ],
+    "maxMarks": 230
+  },
+  {
+    "_id": "66e03ed7dfee9c35846b94f6",
+    "id": "abc12345-def6-7890-gh12-ijklmnopqrst",
+    "duration": 60,
+    "name": "Mock test advanced",
+    "type": "Sectional",
+    "marks": 75,
+    "language": "Spanish",
+    "questions": [],
+    "isShuffled": true,
+    "isNavigationAllowed": true,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "poster": "https://example.com/images/quiz-poster.jpg",
+    "attemptedAllows": 2,
+    "extendableDuration": "10 minutes",
+    "isExtended": false,
+    "subject": {
+      "id": "19ba3621-4c14-4c06-a03e-c7c2c7871b65",
+      "name": "English"
+    },
+    "syllabus": "LOREM IPSUM SYLLABUS",
+    "topic": "64d0987654321abcdef67890",
+    "__v": 1,
+    "updatedAt": "2024-12-24T18:05:59.609Z",
+    "isLocked": false,
+    "sections": [],
+    "maxMarks": 220
+  },
+  {
+    "_id": "66ea71dfbb4d8edfd43b47d4",
+    "duration": 60,
+    "name": "Introductory Physics Exam",
+    "type": "PYQ",
+    "marks": 75,
+    "language": "English",
+    "questions": [
+      {
+        "section": "Mathematics",
+        "questions": [
+          "47c8afc8-8fd2-4eb4-9ffd-8dc81a76e9b6",
+          "653417c7-ce9e-4ccc-abeb-4ba910e4cbf2"
+        ]
+      },
+      {
+        "section": "Physics",
+        "questions": [
+          "ce61d03c-f316-48d0-a4f0-7485557052c9",
+          "ac64c5c0-a1f4-48ca-87ae-8c0752f0628e",
+          "qstn9012-opqr-6789-stuv-wxyzabcdefg"
+        ]
+      },
+      {
+        "section": "Chemistry",
+        "questions": [
+          "qstn5678-ijkl-4321-mnop-qrstuvwxyz",
+          "qstn1234-abcd-5678-efgh-ijklmnopqrst"
+        ]
+      }
+    ],
+    "isShuffled": false,
+    "isNavigationAllowed": true,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://example.com/quiz-poster.jpg",
+    "attemptedAllows": 1,
+    "extendableDuration": "30",
+    "subject": {
+      "id": "19ba3621-4c14-4c06-a03e-c7c2c7871b65",
+      "name": "English"
+    },
+    "isExtended": false,
+    "syllabus": "LOREM IPSUM SYLLABUS",
+    "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+    "id": "14680c6e-8399-482b-82db-7cb95f02b25a",
+    "createdAt": "2024-09-18T06:23:27.303Z",
+    "updatedAt": "2024-12-26T07:18:02.196Z",
+    "__v": 0,
+    "isLocked": false,
+    "sections": [
+      {
+        "sectionName": "Soil Erosion & deforestation",
+        "subject": "7647000d-3282-402a-aa4e-cfa6d039c50b",
+        "topic": "",
+        "questions": [
+          {
+            "id": "84049764-dd2b-4fec-ae37-c0ef0d327506",
+            "description": "\\text{ Thrashing is harmful for the environment}",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "676d0314a8c4d9e2da1bd52f"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "676d0314a8c4d9e2da1bd530"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": null,
+            "explanation": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "_id": "676d0314a8c4d9e2da1bd52e",
+            "createdAt": "2024-12-26T07:18:02.196Z",
+            "updatedAt": "2024-12-26T07:18:02.196Z"
+          }
+        ],
+        "_id": "676d0314a8c4d9e2da1bd52d"
+      }
+    ],
+    "maxMarks": 240
+  },
+  {
+    "_id": "6766cd8ddb8422f6735be69f",
+    "name": "Differentiation",
+    "type": "Full Length",
+    "sections": [
+      {
+        "sectionName": "Name",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "topic": "3a3987d8-a229-4e38-8391-a514a7ff5b56",
+        "questions": [
+          {
+            "id": "e8638c53-b9ec-4170-8343-326097a3c8fb",
+            "description": "\\tan\\left(\\tan x\\right)\\tan\\left(\\tan y\\right)=1",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "_id": "676a7b43664356a6d2e26454"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "_id": "676a7b43664356a6d2e26455"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": null,
+            "explanation": "\\tan\\left(\\tan x\\right)\\tan\\left(\\tan y\\right)=1",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "_id": "676a7b43664356a6d2e26453",
+            "createdAt": "2024-12-24T09:24:21.938Z",
+            "updatedAt": "2024-12-24T09:24:21.938Z"
+          }
+        ],
+        "_id": "6766cd8ddb8422f6735be6a0"
+      }
+    ],
+    "duration": 40,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "poster": "https://example.com/quiz-poster.jpg",
+    "attemptedAllows": "3",
+    "extendableDuration": "10",
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-01-31T03:45:00.000Z",
+    "endDate": "2025-02-21T04:45:00.000Z",
+    "analysisAvailableDate": "2025-02-01T22:22:00.000Z",
+    "id": "c068f630-4796-484a-8f24-e7c53007cd27",
+    "createdAt": "2024-12-21T14:15:41.689Z",
+    "updatedAt": "2025-01-01T11:02:29.128Z",
+    "__v": 0,
+    "syllabus": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n\n1. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n2. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n3. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "maxMarks": 240
+  },
+  {
+    "_id": "6766d550db8422f6735be752",
+    "name": "Mariana Breitenberg",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "Emil Douglas",
+        "subject": "0a8f2499-0abd-4a6f-a153-f57ebd109a15",
+        "questions": [
+          {
+            "id": "d47233b1-8715-4640-a26d-08b2c1012476",
+            "description": "\\tan\\left(\\tan x\\right)\\tan\\left(\\tan y\\right)=1",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "6766d550db8422f6735be755"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "6766d550db8422f6735be756"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": null,
+            "explanation": "",
+            "negative_marking": 0,
+            "_id": "6766d550db8422f6735be754",
+            "createdAt": "2025-01-24T21:20:10.248Z",
+            "updatedAt": "2025-01-24T21:20:10.248Z"
+          },
+          {
+            "id": "129f0fb2-f52a-45a0-8b6a-ec74cb2ea7e1",
+            "description": "\\text{Find the solution of  }\\tan\\left(\\tan y\\right)xdx+\\tan\\left(\\tan x\\right)ydy=0,\\text{ when }x=y=\\frac{\\pi}{4}",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 5,
+              "max": 8
+            },
+            "explanation": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "_id": "676d0119a8c4d9e2da1bd30f",
+            "createdAt": "2025-01-24T21:20:10.248Z",
+            "updatedAt": "2025-01-24T21:20:10.248Z"
+          }
+        ],
+        "_id": "6766d550db8422f6735be753"
+      }
+    ],
+    "duration": 100,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "poster": "https://example.com/quiz-poster.jpg",
+    "attemptedAllows": 2,
+    "extendableDuration": "20",
+    "isExtended": false,
+    "isLocked": true,
+    "startDate": "2025-01-31T03:45:00.000Z",
+    "endDate": "2025-02-21T04:45:00.000Z",
+    "analysisAvailableDate": "2025-02-01T22:22:00.000Z",
+    "id": "427c9bb3-89df-46f3-81ef-2bc8f0005c62",
+    "createdAt": "2024-12-21T14:48:48.828Z",
+    "updatedAt": "2025-01-24T21:20:10.248Z",
+    "__v": 0,
+    "syllabus": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "maxMarks": 220
+  },
+  {
+    "_id": "676943376c34862c01e6348c",
+    "name": "ST-1 Engineering Maths",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "Maths",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "topic": "ac147e2c-cc33-bo54-aedb-fff7296fc3be",
+        "questions": [
+          {
+            "id": "cb4ba1e1-9125-42f5-9d9e-128f69ecdc04",
+            "description": "x\\int_0^{\\infty}\\!x^2\\,\\mathrm{d}x=",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "0",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "676943376c34862c01e6348f"
+              },
+              {
+                "name": "1",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "676943376c34862c01e63490"
+              },
+              {
+                "name": "2",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "676943376c34862c01e63491"
+              },
+              {
+                "name": "4",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "676943376c34862c01e63492"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": null,
+            "explanation": "",
+            "negative_marking": 0,
+            "_id": "676943376c34862c01e6348e",
+            "createdAt": "2024-12-25T05:49:55.982Z",
+            "updatedAt": "2024-12-25T05:49:55.982Z"
+          }
+        ],
+        "_id": "676943376c34862c01e6348d"
+      }
+    ],
+    "duration": 60,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://agrivision4u.s3.ap-south-1.amazonaws.com/Thumbnails+Test+Series/CFTRI+Free+Test+Series+2023.png",
+    "attemptedAllows": 1,
+    "extendableDuration": "01",
+    "isExtended": false,
+    "isLocked": true,
+    "startDate": "2025-01-28T03:45:00.000Z",
+    "endDate": "2025-02-21T04:45:00.000Z",
+    "analysisAvailableDate": "2025-02-01T22:22:00.000Z",
+    "id": "bd048d47-b498-40ff-b808-466a0750c1fc",
+    "createdAt": "2024-12-23T11:02:15.379Z",
+    "updatedAt": "2025-01-01T11:02:18.021Z",
+    "__v": 0,
+    "syllabus": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "maxMarks": 230
+  },
+  {
+    "_id": "6794028d894087d092492300",
+    "name": "testing nat",
+    "syllabus": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "ad",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "id": "c162be47-ac73-4dff-8612-8d381e4dca73",
+            "description": "asdasd",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679416f3f50534925bb2afd0"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679416f3f50534925bb2afd1"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 6,
+            "negative_marking": 2,
+            "topic": "ea0da557-5e1f-4f71-adf2-7f915a6ce800",
+            "difficultyLevel": "easy",
+            "_id": "679416f3f50534925bb2afcf",
+            "createdAt": "2025-01-24T23:30:36.998Z",
+            "updatedAt": "2025-01-24T23:30:36.998Z"
+          },
+          {
+            "id": "9c38b285-4a68-4720-9c83-a4067e96ac5b",
+            "description": "asdasd",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 1.25,
+              "max": 2.25
+            },
+            "explanation": "",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "xy697e2c-cc33-405b-aedb-fff7296fc3be",
+            "difficultyLevel": "hard",
+            "_id": "6794028d894087d092492302",
+            "createdAt": "2025-01-24T23:30:36.998Z",
+            "updatedAt": "2025-01-24T23:30:36.998Z"
+          },
+          {
+            "id": "c681de47-9a20-46c1-8c85-3a73a231a106",
+            "description": "sacascsac",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679416f3f50534925bb2afd4"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679416f3f50534925bb2afd5"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 6,
+            "negative_marking": 1,
+            "topic": "56fee825-b625-447f-8fbd-8dbfc2697b9b",
+            "difficultyLevel": "easy",
+            "_id": "679416f3f50534925bb2afd3",
+            "createdAt": "2025-01-24T23:30:36.998Z",
+            "updatedAt": "2025-01-24T23:30:36.998Z"
+          }
+        ],
+        "_id": "6794028d894087d092492301"
+      }
+    ],
+    "duration": 2,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "poster": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+    "attemptedAllows": 2,
+    "isExtended": false,
+    "isLocked": false,
+    "id": "86251c2e-9f9b-4209-be0d-5b5dfec33dda",
+    "createdAt": "2025-01-24T21:13:49.080Z",
+    "updatedAt": "2025-01-24T23:30:36.998Z",
+    "__v": 0,
+    "maxMarks": 15,
+    "analysisAvailableDate": "2025-01-30T18:30:00.000Z",
+    "endDate": "2025-01-29T18:30:00.000Z",
+    "startDate": "2025-01-28T18:30:00.000Z"
+  },
+  {
+    "_id": "679423c02986b4a0bffb502c",
+    "name": "ascsadas",
+    "syllabus": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "type": "PYQ",
+    "sections": [
+      {
+        "sectionName": "asdasd",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "id": "1692276a-6141-4723-8350-1e0a7fad793d",
+            "description": "asdas",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679423c02986b4a0bffb502f"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679423c02986b4a0bffb5030"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679423c02986b4a0bffb502e",
+            "createdAt": "2025-01-25T00:07:39.794Z",
+            "updatedAt": "2025-01-25T00:07:39.794Z"
+          }
+        ],
+        "_id": "679423c02986b4a0bffb502d"
+      }
+    ],
+    "duration": 9,
+    "maxMarks": 3,
+    "isShuffled": false,
+    "isNavigationAllowed": true,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "id": "609a6a5a-2417-4a97-8f7b-3d1548dcb029",
+    "createdAt": "2025-01-24T23:35:28.876Z",
+    "updatedAt": "2025-01-25T00:07:39.794Z",
+    "__v": 0,
+    "analysisAvailableDate": "2025-01-28T18:30:00.000Z",
+    "endDate": "2025-01-28T18:30:00.000Z",
+    "startDate": "2025-01-27T18:30:00.000Z"
+  },
+  {
+    "_id": "679463519ed8a319dadd7c06",
+    "name": "Testing Quiz Don't Delete",
+    "syllabus": "This quiz will cover a wide range of topics",
+    "type": "Full Length",
+    "sections": [
+      {
+        "sectionName": "Section 1 : Algo",
+        "subject": "0a8f2499-0abd-4a6f-a153-f57ebd109a15",
+        "questions": [
+          {
+            "id": "6c4e7d41-b1a9-46e4-922f-e544dabe8c0e",
+            "description": "Dummy-TrueFalse",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c09"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0a"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "SimpleExplanation",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "easy",
+            "_id": "679463519ed8a319dadd7c08",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "27e31876-45dd-49be-9ee7-0bba360ce14d",
+            "description": "Dummy-MCQ",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0c"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0d"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0e"
+              },
+              {
+                "name": "Option4",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0f"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "DummyExplanation",
+            "explanationImageUrl": "",
+            "positive_marking": 4,
+            "negative_marking": 2,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679463519ed8a319dadd7c0b",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "3a2c6feb-efb4-4f94-a238-54ae1e5ecf6d",
+            "description": "Dummy-MSQ",
+            "type": "multiple-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c11"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c12"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c13"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Ano\\th erExplanation",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "ea0da557-5e1f-4f71-adf2-7f915a6ce800",
+            "difficultyLevel": "hard",
+            "_id": "679463519ed8a319dadd7c10",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "a83b4dfc-be2c-4fb1-b59b-98b45da5af1d",
+            "description": "Dummy-NAT",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 3,
+              "max": 3.5
+            },
+            "explanation": "DummyExplanation",
+            "explanationImageUrl": "",
+            "positive_marking": 4,
+            "negative_marking": 1,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "medium",
+            "_id": "679463519ed8a319dadd7c14",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          }
+        ],
+        "_id": "679463519ed8a319dadd7c07",
+        "id": "0a8f2499-0abd-4a6f-a153-f57ebd109a01"
+      },
+      {
+        "sectionName": "Section 2 : Maths",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "id": "a7c8fb3e-64b5-4a11-af5a-5c8d4958dd4b",
+            "description": "Dummy-TrueFalse",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67946753fb517b585778904c"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "67946753fb517b585778904d"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "DummyExpl",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "ac147e2c-cc33-bo54-aedb-fff7296fc3be",
+            "difficultyLevel": "medium",
+            "_id": "67946753fb517b585778904b",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "b648fbd2-c5fa-45f4-ba3e-40dddf993dc5",
+            "description": "Dummy-NAT",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 15.25,
+              "max": 15.25
+            },
+            "explanation": "DummyExple2",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 5,
+            "negative_marking": 2,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "hard",
+            "_id": "67946753fb517b585778904e",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "5db13d68-1357-4f74-a63a-09f3a928a576",
+            "description": "Dummy-MSQ",
+            "type": "multiple-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "67946753fb517b5857789050"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67946753fb517b5857789051"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "67946753fb517b5857789052"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "SimpleExpl",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "easy",
+            "_id": "67946753fb517b585778904f",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          }
+        ],
+        "_id": "67946753fb517b585778904a",
+        "id": "0a8f2499-0abd-4a6f-a153-f57ebd109a02"
+      },
+      {
+        "sectionName": "Section 3 : Environment",
+        "subject": "fb34e65c-cf9a-4349-83ff-015dea2027fc",
+        "questions": [
+          {
+            "description": "Dummy-TrueFalse",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679469acfb517b5857789108"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b5857789109"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "ExplrDummy",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "easy",
+            "_id": "679469acfb517b5857789107",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z",
+            "id": "e1f9d8fd-d6ae-4254-b201-80851c261f78"
+          },
+          {
+            "description": "Dummy-NAT",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 20,
+              "max": 25
+            },
+            "explanation": "ExplNAT",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 4,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679469acfb517b585778910a",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z",
+            "id": "05367c2d-84a2-484d-bb9f-cf5712d3d482"
+          },
+          {
+            "description": "Dummy-MCQ",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b585778910c"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b585778910d"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b585778910e"
+              },
+              {
+                "name": "Option4",
+                "value": "option4",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679469acfb517b585778910f"
+              },
+              {
+                "name": "Option5",
+                "value": "option5",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b5857789110"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Expl4",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679469acfb517b585778910b",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z",
+            "id": "cfd9eae9-8289-4073-9321-4771a08f6c5f"
+          }
+        ],
+        "_id": "679469acfb517b5857789106",
+        "id": "0a8f2499-0abd-4a6f-a153-f57ebd109a03"
+      }
+    ],
+    "duration": 60,
+    "maxMarks": 35,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+    "attemptedAllows": 4,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-01-31T03:45:00.000Z",
+    "endDate": "2025-02-21T04:45:00.000Z",
+    "analysisAvailableDate": "2025-02-01T22:22:00.000Z",
+    "id": "245d8786-a142-422d-8f31-f99e65b02de9",
+    "createdAt": "2025-01-25T04:06:41.621Z",
+    "updatedAt": "2025-01-25T04:33:48.791Z",
+    "__v": 0
+  },
+  {
+    "_id": "6798ff8814ae6f7329e2562e",
+    "name": "Testing Quiz Don't Delete Duplicate",
+    "syllabus": "This quiz will cover a wide range of topics",
+    "type": "Full Length",
+    "sections": [
+      {
+        "sectionName": "Section 1 : Algo",
+        "subject": "0a8f2499-0abd-4a6f-a153-f57ebd109a15",
+        "questions": [
+          {
+            "id": "1c2e3d41-b1a9-46e4-922f-e544dabe8c0e",
+            "description": "Dummy-TrueFalse",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c09"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0a"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "SimpleExplanation",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "easy",
+            "_id": "679463519ed8a319dadd7c08",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "2a3b4c5d-45dd-49be-9ee7-0bba360ce14d",
+            "description": "Dummy-MCQ",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0c"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0d"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0e"
+              },
+              {
+                "name": "Option4",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c0f"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "DummyExplanation",
+            "explanationImageUrl": "",
+            "positive_marking": 4,
+            "negative_marking": 2,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679463519ed8a319dadd7c0b",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "3b4c5d6e-efb4-4f94-a238-54ae1e5ecf6d",
+            "description": "Dummy-MSQ",
+            "type": "multiple-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c11"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c12"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679463519ed8a319dadd7c13"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Ano\\th erExplanation",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "ea0da557-5e1f-4f71-adf2-7f915a6ce800",
+            "difficultyLevel": "hard",
+            "_id": "679463519ed8a319dadd7c10",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "4c5d6e7f-be2c-4fb1-b59b-98b45da5af1d",
+            "description": "Dummy-NAT",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 3,
+              "max": 3.5
+            },
+            "explanation": "DummyExplanation",
+            "explanationImageUrl": "",
+            "positive_marking": 4,
+            "negative_marking": 1,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "medium",
+            "_id": "679463519ed8a319dadd7c14",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          }
+        ],
+        "_id": "679463519ed8a319dadd7c07",
+        "id": "5d6e7f8g-0abd-4a6f-a153-f57ebd109a01"
+      },
+      {
+        "sectionName": "Section 2 : Maths",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "id": "6e7f8g9h-64b5-4a11-af5a-5c8d4958dd4b",
+            "description": "Dummy-TrueFalse",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67946753fb517b585778904c"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "67946753fb517b585778904d"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "DummyExpl",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "ac147e2c-cc33-bo54-aedb-fff7296fc3be",
+            "difficultyLevel": "medium",
+            "_id": "67946753fb517b585778904b",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "7f8g9h0i-c5fa-45f4-ba3e-40dddf993dc5",
+            "description": "Dummy-NAT",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 15.25,
+              "max": 15.25
+            },
+            "explanation": "DummyExple2",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 5,
+            "negative_marking": 2,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "hard",
+            "_id": "67946753fb517b585778904e",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "8g9h0i1j-1357-4f74-a63a-09f3a928a576",
+            "description": "Dummy-MSQ",
+            "type": "multiple-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "67946753fb517b5857789050"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "67946753fb517b5857789051"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67946753fb517b5857789052"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "SimpleExpl",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "easy",
+            "_id": "67946753fb517b585778904f",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          }
+        ],
+        "_id": "67946753fb517b585778904a",
+        "id": "9h0i1j2k-0abd-4a6f-a153-f57ebd109a02"
+      },
+      {
+        "sectionName": "Section 3 : Environment",
+        "subject": "fb34e65c-cf9a-4349-83ff-015dea2027fc",
+        "questions": [
+          {
+            "id": "0i1j2k3l-d6ae-4254-b201-80851c261f78",
+            "description": "Dummy-TrueFalse",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679469acfb517b5857789108"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b5857789109"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "ExplrDummy",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "easy",
+            "_id": "679469acfb517b5857789107",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "1j2k3l4m-84a2-484d-bb9f-cf5712d3d482",
+            "description": "Dummy-NAT",
+            "type": "numerical",
+            "options": [],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": 20,
+              "max": 25
+            },
+            "explanation": "ExplNAT",
+            "explanationImageUrl": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+            "positive_marking": 4,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679469acfb517b585778910a",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          },
+          {
+            "id": "cfd9eae9-8289-4073-9321-4771a08f6c5g",
+            "description": "Dummy-MCQ",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Option1",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b585778910c"
+              },
+              {
+                "name": "Option2",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b585778910d"
+              },
+              {
+                "name": "Option3",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b585778910e"
+              },
+              {
+                "name": "Option4",
+                "value": "option4",
+                "isRightAnswer": true,
+                "type": "text",
+                "_id": "679469acfb517b585778910f"
+              },
+              {
+                "name": "Option5",
+                "value": "option5",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "679469acfb517b5857789110"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Expl4",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "679469acfb517b585778910b",
+            "createdAt": "2025-01-25T04:33:48.791Z",
+            "updatedAt": "2025-01-25T04:33:48.791Z"
+          }
+        ],
+        "_id": "679469acfb517b5857789106",
+        "id": "0a8f2499-0abd-4a6f-a153-f57ebd109a05"
+      }
+    ],
+    "duration": 60,
+    "maxMarks": 35,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://agrivision4u.s3.ap-south-1.amazonaws.com/package-posters/thumbnails/cftri/CFTRI+mega.svg",
+    "attemptedAllows": 2,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-06T03:45:00.000Z",
+    "endDate": "2025-02-15T04:45:00.000Z",
+    "analysisAvailableDate": "2025-02-07T06:45:00.000Z",
+    "id": "245d8786-a142-422d-8f31-f99e65b02de8",
+    "createdAt": "2025-02-05T04:06:41.621Z",
+    "updatedAt": "2025-02-05T04:33:48.791Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab5608f9bab60ac2038568",
+    "name": "ST-1 Food Technology",
+    "syllabus": "Food",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "Food Technology",
+        "subject": "7647000d-3282-402a-aa4e-cfa6d039c50b",
+        "questions": [
+          {
+            "description": "Hello",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab5608f9bab60ac203856b"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab5608f9bab60ac203856c"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 3,
+            "negative_marking": 1,
+            "topic": "1ce8384a-c85c-4966-9b89-462e5da3bb36",
+            "difficultyLevel": "easy",
+            "_id": "67ab5608f9bab60ac203856a",
+            "id": "ead1aa87-7e02-4a30-8bb5-2db731046588",
+            "createdAt": "2025-02-11T13:52:09.002Z",
+            "updatedAt": "2025-02-11T13:52:09.002Z"
+          }
+        ],
+        "_id": "67ab5608f9bab60ac2038569",
+        "id": "592a5031-ec0b-4ac9-adcd-0fe874eb7e6c"
+      }
+    ],
+    "duration": 30,
+    "maxMarks": 3,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "poster": "https://agrivision4u.s3.ap-south-1.amazonaws.com/Thumbnails+Test+Series/CFTRI+Free+Test+Series+2023.png",
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T13:49:41.968Z",
+    "endDate": "2025-02-12T13:49:00.000Z",
+    "analysisAvailableDate": "2025-02-12T13:49:00.000Z",
+    "id": "0325b5dc-c1cb-415d-a191-5923f43af3fb",
+    "createdAt": "2025-02-11T13:52:09.002Z",
+    "updatedAt": "2025-02-11T13:52:09.002Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab575dd11baf68f0d3669f",
+    "name": "test t",
+    "syllabus": "random",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "section math",
+        "subject": "0a8f2499-0abd-4a6f-a153-f57ebd109a15",
+        "questions": [
+          {
+            "description": "quest1",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab575dd11baf68f0d366a2"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab575dd11baf68f0d366a3"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 100,
+            "negative_marking": 39,
+            "topic": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+            "difficultyLevel": "easy",
+            "_id": "67ab575dd11baf68f0d366a1",
+            "id": "95910ee1-b343-4bdd-b5ec-b5a9f83677bb",
+            "createdAt": "2025-02-11T13:57:49.282Z",
+            "updatedAt": "2025-02-11T13:57:49.282Z"
+          }
+        ],
+        "_id": "67ab575dd11baf68f0d366a0",
+        "id": "7b3be7f4-d899-44bc-b3df-9bd7a93603ac"
+      }
+    ],
+    "duration": 30,
+    "maxMarks": 100,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T13:55:15.019Z",
+    "endDate": "2025-02-11T15:55:15.019Z",
+    "analysisAvailableDate": "2025-02-12T13:55:00.000Z",
+    "id": "fbfa13a4-c3ab-4ef4-9bc9-3efae0848f79",
+    "createdAt": "2025-02-11T13:57:49.283Z",
+    "updatedAt": "2025-02-11T13:57:49.283Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab5852d11baf68f0d367da",
+    "name": "www",
+    "syllabus": "wwww2",
+    "type": "Full Length",
+    "sections": [
+      {
+        "sectionName": "maths",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "description": "onequestion",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab5852d11baf68f0d367dd"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab5852d11baf68f0d367de"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 100,
+            "negative_marking": 1,
+            "topic": "52fb1e5a-28ba-4a7d-bf21-b13fe2d55e6f",
+            "difficultyLevel": "medium",
+            "_id": "67ab5852d11baf68f0d367dc",
+            "id": "32235e86-ded2-4ae0-a478-92571f098893",
+            "createdAt": "2025-02-11T14:01:54.160Z",
+            "updatedAt": "2025-02-11T14:01:54.160Z"
+          }
+        ],
+        "_id": "67ab5852d11baf68f0d367db",
+        "id": "72abf029-6d45-4d48-8a65-5643b380c2db"
+      }
+    ],
+    "duration": 19,
+    "maxMarks": 100,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T13:57:57.260Z",
+    "endDate": "2025-02-11T16:57:57.260Z",
+    "analysisAvailableDate": "2025-02-12T13:57:00.000Z",
+    "id": "128ae03b-d427-4902-8219-e76a90b8353d",
+    "createdAt": "2025-02-11T14:01:54.160Z",
+    "updatedAt": "2025-02-11T14:01:54.160Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab6bacd11baf68f0d36990",
+    "name": "klnln",
+    "syllabus": "lnjknwferdbn",
+    "type": "Full Length",
+    "sections": [
+      {
+        "sectionName": "section1211111",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "description": "ma\\operatorname{th}s1",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab6bacd11baf68f0d36993"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab6bacd11baf68f0d36994"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 100,
+            "negative_marking": 1,
+            "topic": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+            "difficultyLevel": "medium",
+            "_id": "67ab6bacd11baf68f0d36992",
+            "id": "57c75cac-af66-42ff-8485-09ee89ee69e1",
+            "createdAt": "2025-02-11T15:24:28.018Z",
+            "updatedAt": "2025-02-11T15:24:28.018Z"
+          }
+        ],
+        "_id": "67ab6bacd11baf68f0d36991",
+        "id": "fb87eb19-b51c-4386-b6a1-30e647008032"
+      }
+    ],
+    "duration": 20,
+    "maxMarks": 100,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T15:09:52.042Z",
+    "endDate": "2025-02-13T15:09:00.000Z",
+    "analysisAvailableDate": "2025-02-11T15:09:52.042Z",
+    "id": "f0b40dbe-ed8c-44af-b695-d69d977d84ce",
+    "createdAt": "2025-02-11T15:24:28.019Z",
+    "updatedAt": "2025-02-11T15:24:28.019Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab8814d11baf68f0d36b7e",
+    "name": "test11",
+    "syllabus": "syll",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "section 1",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "description": "question11",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab8814d11baf68f0d36b81"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab8814d11baf68f0d36b82"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 100,
+            "negative_marking": 1,
+            "topic": "3a3987d8-a229-4e38-8391-a514a7ff5b56",
+            "difficultyLevel": "easy",
+            "_id": "67ab8814d11baf68f0d36b80",
+            "id": "815b54d8-bc39-447d-892b-8f5bdb562d2a",
+            "createdAt": "2025-02-11T17:25:40.751Z",
+            "updatedAt": "2025-02-11T17:25:40.751Z"
+          }
+        ],
+        "_id": "67ab8814d11baf68f0d36b7f",
+        "id": "4e4c7f64-afa3-44bd-9ece-f98e0f7b1036"
+      }
+    ],
+    "duration": 60,
+    "maxMarks": 100,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "attemptedAllows": 2,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T17:21:21.471Z",
+    "endDate": "2025-02-12T17:21:00.000Z",
+    "analysisAvailableDate": "2025-02-11T17:21:21.471Z",
+    "id": "f2910256-4da6-4913-ae3f-aba3e20125b7",
+    "createdAt": "2025-02-11T17:25:40.751Z",
+    "updatedAt": "2025-02-11T17:25:40.751Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab9489d11baf68f0d36c3d",
+    "name": "manga",
+    "syllabus": "ijhilhn",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "ukhkuh",
+        "subject": "524c33fb-51ff-4b6c-b745-5af29ee85c42",
+        "questions": [
+          {
+            "description": "knbk",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab9489d11baf68f0d36c40"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab9489d11baf68f0d36c41"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 100,
+            "negative_marking": 1,
+            "topic": "kumbh",
+            "difficultyLevel": "easy",
+            "_id": "67ab9489d11baf68f0d36c3f",
+            "id": "72c7052e-7354-426e-8887-3e20e068fdb5",
+            "createdAt": "2025-02-11T18:18:49.691Z",
+            "updatedAt": "2025-02-11T18:18:49.691Z"
+          }
+        ],
+        "_id": "67ab9489d11baf68f0d36c3e",
+        "id": "ad0d647e-55a4-493c-accd-62c002cac0b1"
+      }
+    ],
+    "duration": 22,
+    "maxMarks": 100,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T17:25:52.228Z",
+    "endDate": "2025-02-12T17:25:00.000Z",
+    "analysisAvailableDate": "2025-02-11T17:25:52.228Z",
+    "id": "3c4403a4-3f3c-47d4-8a21-6140fdd66e9b",
+    "createdAt": "2025-02-11T18:18:49.692Z",
+    "updatedAt": "2025-02-11T18:18:49.692Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ab9558d11baf68f0d36e2c",
+    "name": "mangi",
+    "syllabus": "jn",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "ws",
+        "subject": "fb34e65c-cf9a-4349-83ff-015dea2027fc",
+        "questions": [
+          {
+            "description": "srrfvfd",
+            "type": "true-false",
+            "options": [
+              {
+                "name": "True",
+                "value": "true",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab9558d11baf68f0d36e2f"
+              },
+              {
+                "name": "False",
+                "value": "false",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ab9558d11baf68f0d36e30"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "",
+            "explanationImageUrl": "",
+            "positive_marking": 100,
+            "negative_marking": 1,
+            "topic": "jbk",
+            "difficultyLevel": "easy",
+            "_id": "67ab9558d11baf68f0d36e2e",
+            "id": "9306865e-6b36-47f3-bfca-c65115f926d4",
+            "createdAt": "2025-02-11T18:22:16.147Z",
+            "updatedAt": "2025-02-11T18:22:16.147Z"
+          }
+        ],
+        "_id": "67ab9558d11baf68f0d36e2d",
+        "id": "229cf1d4-621c-4a58-986a-01468aaeae49"
+      }
+    ],
+    "duration": 12,
+    "maxMarks": 100,
+    "isShuffled": true,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-11T18:20:27.081Z",
+    "endDate": "2025-02-12T18:20:00.000Z",
+    "analysisAvailableDate": "2025-02-11T18:20:27.081Z",
+    "id": "36e788a9-a1c3-4531-91ed-27f4ca3ecd04",
+    "createdAt": "2025-02-11T18:22:16.148Z",
+    "updatedAt": "2025-02-11T18:22:16.148Z",
+    "__v": 0
+  },
+  {
+    "_id": "67ac714bf9bab60ac203961a",
+    "name": "ST-1 Agriculture",
+    "syllabus": "Introduction, Terminologies, Revolution, Agri Institutes, Classification of Cropsand Weather and Climate",
+    "type": "Sectional",
+    "sections": [
+      {
+        "id": "3bc18646-0c0a-4b0c-88d1-71d698bbdb04",
+        "sectionName": "Agriculture",
+        "subject": "40b2f915-9e08-409e-8379-7d9a6ed540c1",
+        "questions": [
+          {
+            "id": "f866b2ca-6fad-48ca-b030-7edb6d0a8c5f",
+            "description": "Father of Modern Agriculture",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "NormanEBorlaug",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039622"
+              },
+              {
+                "name": "Petrodecrensenze",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039623"
+              },
+              {
+                "name": "K.Lchadda",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039624"
+              },
+              {
+                "name": "M.SSwaminathan",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039625"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Norman E Borlaug regarded as Father of Modern Agriculture.",
+            "explanationImageUrl": "",
+            "positive_marking": 1,
+            "negative_marking": 0.25,
+            "topic": "History",
+            "difficultyLevel": "easy",
+            "_id": "67ac714bf9bab60ac2039621",
+            "createdAt": "2025-02-17T14:23:53.145Z",
+            "updatedAt": "2025-02-17T14:23:53.145Z"
+          },
+          {
+            "id": "7138ee85-12e4-4dbf-81ab-c8d00a3b7d20",
+            "description": "The term Agriculture is derived from which language",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Greek",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203961d"
+              },
+              {
+                "name": "Latin",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203961e"
+              },
+              {
+                "name": "French",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203961f"
+              },
+              {
+                "name": "Arabic",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039620"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "The word agriculture is derived from Latin language.",
+            "explanationImageUrl": "",
+            "positive_marking": 1,
+            "negative_marking": 0.25,
+            "topic": "Introduction",
+            "difficultyLevel": "easy",
+            "_id": "67ac714bf9bab60ac203961c",
+            "createdAt": "2025-02-17T14:23:53.145Z",
+            "updatedAt": "2025-02-17T14:23:53.145Z"
+          },
+          {
+            "id": "6a8feb56-9faa-4d6b-9b01-4a3f74403dbb",
+            "description": "Agriculture is important for our country growth because it provides",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Agricultureplaysvitalroleingeneratingemployment",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039627"
+              },
+              {
+                "name": "Agricultureinfluenceonnationalincome",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039628"
+              },
+              {
+                "name": "Influencesinternalandexternaltradeandcommerce",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039629"
+              },
+              {
+                "name": "Allofabove",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203962a"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Agriculture plays an important role in employment generation,builds national income and influence trade and commerce both internally and externally.",
+            "explanationImageUrl": "",
+            "positive_marking": 1,
+            "negative_marking": 0.25,
+            "topic": "Introduction",
+            "difficultyLevel": "easy",
+            "_id": "67ac714bf9bab60ac2039626",
+            "createdAt": "2025-02-17T14:23:53.145Z",
+            "updatedAt": "2025-02-17T14:23:53.145Z"
+          },
+          {
+            "id": "c9c3993c-539c-4ebb-8451-fb6487448730",
+            "description": "India depends heavily on the agricultural sector, especially on the food production unit after 1960 crisis in food sector.Which revolution is responsible for sufficient food production in India?",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Whiterevolution",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203962c"
+              },
+              {
+                "name": "Greenrevolution",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203962d"
+              },
+              {
+                "name": "Bluerevolution",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203962e"
+              },
+              {
+                "name": "Pinkrevolution",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac203962f"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "Green revolution is responsible for the sufficient food production in India during the food production crisis.",
+            "explanationImageUrl": "",
+            "positive_marking": 1,
+            "negative_marking": 0.25,
+            "topic": "Introduction",
+            "difficultyLevel": "medium",
+            "_id": "67ac714bf9bab60ac203962b",
+            "createdAt": "2025-02-17T14:23:53.145Z",
+            "updatedAt": "2025-02-17T14:23:53.145Z"
+          },
+          {
+            "id": "4740bf1e-d8c0-4f10-b55d-6d47d91b4bdb",
+            "description": "NABARD was established in",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "1988",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039631"
+              },
+              {
+                "name": "1998",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039632"
+              },
+              {
+                "name": "1967",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039633"
+              },
+              {
+                "name": "1982",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67ac714bf9bab60ac2039634"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "National Bank for Agricultural and Rural development was established in 1982.",
+            "explanationImageUrl": "",
+            "positive_marking": 1,
+            "negative_marking": 0.25,
+            "topic": "Introduction",
+            "difficultyLevel": "hard",
+            "_id": "67ac714bf9bab60ac2039630",
+            "createdAt": "2025-02-17T14:23:53.145Z",
+            "updatedAt": "2025-02-17T14:23:53.145Z"
+          }
+        ],
+        "_id": "67ac714bf9bab60ac203961b"
+      }
+    ],
+    "duration": 5,
+    "maxMarks": 5,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": false,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-12T10:30:37.846Z",
+    "endDate": "2025-02-27T09:36:00.000Z",
+    "analysisAvailableDate": "2025-02-12T10:30:37.846Z",
+    "id": "a7dadf88-53a9-46d0-bec1-3e02d725808a",
+    "createdAt": "2025-02-12T10:00:43.145Z",
+    "updatedAt": "2025-02-17T14:23:53.145Z",
+    "__v": 0
+  },
+  {
+    "_id": "67b427e0270cde804b5404b9",
+    "name": "ST-1 Biology",
+    "syllabus": "Systematics of Animals",
+    "type": "Sectional",
+    "sections": [
+      {
+        "sectionName": "Biology",
+        "subject": "40b2f915-9e08-409e-8379-7d9a6ed540c1",
+        "questions": [
+          {
+            "description": "Who gave the transforming principle?",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "MaclynMcCarty",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404bc"
+              },
+              {
+                "name": "MarthaChase",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404bd"
+              },
+              {
+                "name": "FranklinStahl",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404be"
+              },
+              {
+                "name": "FrederickGriffith",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404bf"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "In 1928, Frederick Griffith, in a series of experiments with Streptococcus pneumoniae (bacterium responsible for pneumonia), witnessed a miraculous transformation in the bacteria. During the course of his experiment, a living organism (bacteria) had changed in physical form.",
+            "explanationImageUrl": "",
+            "positive_marking": 2,
+            "negative_marking": 1,
+            "topic": "Systematics of Animals",
+            "difficultyLevel": "easy",
+            "_id": "67b427e0270cde804b5404bb",
+            "id": "37aa4fc0-d87f-4233-a696-1bcbb1507a74",
+            "createdAt": "2025-02-18T06:25:36.238Z",
+            "updatedAt": "2025-02-18T06:25:36.238Z"
+          },
+          {
+            "description": "Which of the following was the first genetic material?",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "DNA",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c1"
+              },
+              {
+                "name": "RNA",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c2"
+              },
+              {
+                "name": "Protein",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c3"
+              },
+              {
+                "name": "dsDNA",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c4"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "RNA was the first genetic material. There is now enough evidence to suggest that essential life processes (such as metabolism, translation, splicing, etc.), evolved around RNA. RNA used to act as a genetic material as well as a catalyst (there are some important biochemical reactions in living systems that are catalysed by RNA catalysts and not by protein enzymes). But, RNA being a catalyst was reactive and hence unstable. Therefore, DNA has evolved from RNA with chemical modifications that make it more stable.",
+            "explanationImageUrl": "",
+            "positive_marking": 2,
+            "negative_marking": 1,
+            "topic": "Systematics of Animals",
+            "difficultyLevel": "easy",
+            "_id": "67b427e0270cde804b5404c0",
+            "id": "49084e28-c88c-4be9-9bc9-33432a88175c",
+            "createdAt": "2025-02-18T06:25:36.238Z",
+            "updatedAt": "2025-02-18T06:25:36.238Z"
+          },
+          {
+            "description": "Whose experiment showed that DNA replicates semiconservatively?",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "WatsonandCrick",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c6"
+              },
+              {
+                "name": "AlfredHersheyandMarthaChase",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c7"
+              },
+              {
+                "name": "MatthewMeselsonandFranklinStahl",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c8"
+              },
+              {
+                "name": "Noneoftheabove",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404c9"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "After the completion of replication, each DNA molecule would have one parental and one newly synthesised strand. This scheme was termed as semiconservative DNA replication. It is now proved that DNA replicates semiconservatively. It was shown first in Escherichia coli and subsequently in higher organisms, such as plants and human cells. Matthew Meselson and Franklin Stahl performed the experiment in 1958.",
+            "explanationImageUrl": "",
+            "positive_marking": 2,
+            "negative_marking": 1,
+            "topic": "Systematics of Animals",
+            "difficultyLevel": "easy",
+            "_id": "67b427e0270cde804b5404c5",
+            "id": "983d3596-416f-4901-a759-07a3030a8ff9",
+            "createdAt": "2025-02-18T06:25:36.238Z",
+            "updatedAt": "2025-02-18T06:25:36.238Z"
+          },
+          {
+            "description": "When Frederick Griffith in his experiment injected a mixture of heat-killed S and live R bacteria, mice-",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Micewaslive",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404cb"
+              },
+              {
+                "name": "Died",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404cc"
+              },
+              {
+                "name": "WasliveandherecoveredSbacteriafromit",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404cd"
+              },
+              {
+                "name": "Botha)andc)",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404ce"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "When he injected a mixture of heat-killed S and live R bacteria, the mice died. Moreover, he recovered living S bacteria from the dead mice. He concluded that the R strain bacteria had somehow been transformed by the heat-killed S strain bacteria. Some ‘transforming principle’, transferred from the heat-killed S strain, had enabled the R strain to synthesise a smooth polysaccharide coat and become virulent.",
+            "explanationImageUrl": "",
+            "positive_marking": 2,
+            "negative_marking": 1,
+            "topic": "Systematics of Animals",
+            "difficultyLevel": "easy",
+            "_id": "67b427e0270cde804b5404ca",
+            "id": "98ca64c5-33d2-43f4-928e-fe79f74af702",
+            "createdAt": "2025-02-18T06:25:36.240Z",
+            "updatedAt": "2025-02-18T06:25:36.240Z"
+          },
+          {
+            "description": "A molecule that can act as a genetic material must fulfil the following criteria-",
+            "type": "single-choice",
+            "options": [
+              {
+                "name": "Itshouldbestablechemicallyandstructurally.",
+                "value": "option1",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404d0"
+              },
+              {
+                "name": "Itshouldn^{\\prime}tprovidethescopeforslowchanges(mutation)thatarerequiredforevolution.",
+                "value": "option2",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404d1"
+              },
+              {
+                "name": "Itshouldbeabletogenerateitsreplica",
+                "value": "option3",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404d2"
+              },
+              {
+                "name": "Botha)andc)",
+                "value": "option4",
+                "isRightAnswer": false,
+                "type": "text",
+                "_id": "67b427e0270cde804b5404d3"
+              }
+            ],
+            "textAnswer": "",
+            "numericalAnswer": {
+              "min": null,
+              "max": null
+            },
+            "explanation": "A molecule that can act as a genetic material must fulfil the following criteria:\r\n(I)It should be able to generate its replica (Replication).\r\n(II) It should be stable chemically and structurally.\r\n(III) It should provide the scope for slow changes (mutation) that are required for evolution.\r\n(IV) It should be able to express itself in the form of 'Mendelian Characters’.",
+            "explanationImageUrl": "",
+            "positive_marking": 2,
+            "negative_marking": 1,
+            "topic": "Systematics of Animals",
+            "difficultyLevel": "easy",
+            "_id": "67b427e0270cde804b5404cf",
+            "id": "e15d7947-26a4-4fd0-be1f-20cf9e84715b",
+            "createdAt": "2025-02-18T06:25:36.240Z",
+            "updatedAt": "2025-02-18T06:25:36.240Z"
+          }
+        ],
+        "_id": "67b427e0270cde804b5404ba",
+        "id": "0a970f74-bdf6-4365-86f2-42b889af4a56"
+      }
+    ],
+    "duration": 10,
+    "maxMarks": 10,
+    "isShuffled": false,
+    "isNavigationAllowed": false,
+    "isPartialMarkingAllowed": false,
+    "isCalculatorAllowed": true,
+    "attemptedAllows": 3,
+    "isExtended": false,
+    "isLocked": false,
+    "startDate": "2025-02-18T06:13:48.935Z",
+    "endDate": "2025-02-28T06:13:00.000Z",
+    "analysisAvailableDate": "2025-02-18T06:13:48.935Z",
+    "id": "8e5d9e6c-6926-4f14-b1eb-63fd9429e389",
+    "createdAt": "2025-02-18T06:25:36.241Z",
+    "updatedAt": "2025-02-18T06:25:36.241Z",
+    "__v": 0
+  }
+]
