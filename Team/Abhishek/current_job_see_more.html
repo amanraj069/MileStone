@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Details</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="see_more_detail.css">
+    <link rel="stylesheet" href="current_job_see_more.css">
 </head>
 
 <body>
     <div class="container">
         <header>
-            <a href="#" class="back-button" onclick="goBack()" style="color: #1E90FF;">
-                <i class="fas fa-arrow-left"></i> Back to job listings
-            </a>
             <div class="logo">Job Details</div>
+            <button id="milestone-btn" onclick="milestone_Page()"> Milestone </button>
+            <button id="complain-btn"> Raise Complaint </button>
             <div></div> <!-- Empty div for spacing -->
         </header>
 
@@ -24,7 +23,7 @@
                 <div class="job-title-info">
                     <div class="deadline">Application Deadline: March 15, 2025</div>
                     <h1 class="job-title">Senior Frontend Developer</h1>
-                    <div class="company-name">TechSolutions Inc.</div>
+                    <div class="freelancer-name">Atul Khatri</div>
                     <div class="job-meta">
                         <div class="meta-item">
                             <i class="fas fa-map-marker-alt"></i>
@@ -48,28 +47,11 @@
                     <img src="company_logo.jpg" alt="xyz company" class="job-img">
                 </div>
             </div>
-            <div class="job-actions">
-                <button class="edit-button" id="editJobBtn">
-                    <i class="fas fa-edit"></i> Edit Job
-                </button>
-                <button class="delete-button">
-                    <i class="fas fa-trash"></i> Delete Job
-                </button>
-                <!-- deepak/vanya -->
-                <!-- <button class="apply-button"  id="applyNowBtn" onclick="openApplicationPage()">
-                    <i class="fas fa-paper-plane"></i> Apply Now
-                </button> -->
-            </div>
         </div>
 
         <div class="job-description">
             <div class="section-title">
                 Job Description
-                <div class="section-buttons">
-                    <button class="edit-button" id="editDescriptionBtn">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                </div>
             </div>
             <div class="description-text">
                 <p>We are looking for an experienced Frontend Developer to join our growing team. The ideal candidate
@@ -215,158 +197,6 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="applicants">
-            <div class="section-title">
-                Applicants (45)
-            </div>
-            <div class="applicants-list">
-                <div class="applicant-item">
-                    <div class="applicant-number">1</div>
-                    <img src="user_image.jpg" alt="Applicant" class="applicant-img">
-                    <div class="applicant-info">
-                        <div class="applicant-name">Ravi Krishan</div>
-                        <div class="applicant-title">Senior Frontend Developer</div>
-                        <div class="applicant-date">Applied on Feb 16, 2025 - 9:30 AM</div>
-                    </div>
-                    <button class="view-profile-btn" onclick="goProfile()">View Profile</button>
-                </div>
-                <div class="applicant-item">
-                    <div class="applicant-number">2</div>
-                    <img src="user_image.jpg" alt="Applicant" class="applicant-img">
-                    <div class="applicant-info">
-                        <div class="applicant-name">Suneeta Sharma</div>
-                        <div class="applicant-title">Lead Frontend Engineer</div>
-                        <div class="applicant-date">Applied on Feb 16, 2025 - 10:15 AM</div>
-                    </div>
-                    <button class="view-profile-btn">View Profile</button>
-                </div>
-                <div class="applicant-item">
-                    <div class="applicant-number">3</div>
-                    <img src="user_image.jpg" alt="Applicant" class="applicant-img">
-                    <div class="applicant-info">
-                        <div class="applicant-name">Aman Raj</div>
-                        <div class="applicant-title">React Developer</div>
-                        <div class="applicant-date">Applied on Feb 16, 2025 - 11:45 AM</div>
-                    </div>
-                    <button class="view-profile-btn">View Profile</button>
-                </div>
-                <div class="applicant-item">
-                    <div class="applicant-number">4</div>
-                    <img src="user_image.jpg" alt="Applicant" class="applicant-img">
-                    <div class="applicant-info">
-                        <div class="applicant-name">Amisha Patel</div>
-                        <div class="applicant-title">Frontend Architect</div>
-                        <div class="applicant-date">Applied on Feb 16, 2025 - 2:20 PM</div>
-                    </div>
-                    <button class="view-profile-btn">View Profile</button>
-                </div>
-                <div class="applicant-item">
-                    <div class="applicant-number">5</div>
-                    <img src="user_image.jpg" alt="Applicant" class="applicant-img">
-                    <div class="applicant-info">
-                        <div class="applicant-name">Vanya Awasthi</div>
-                        <div class="applicant-title">Senior Mobile Developer</div>
-                        <div class="applicant-date">Applied on Feb 16, 2025 - 3:05 PM</div>
-                    </div>
-                    <button class="view-profile-btn">View Profile</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Job Modal -->
-    <div class="modal-overlay" id="editJobModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">Edit Job Listing</div>
-                <button class="close-modal" id="closeEditJobModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Job Title</label>
-                    <input type="text" class="form-input" id="jobTitleInput" value="Senior Frontend Developer">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Company Name</label>
-                    <input type="text" class="form-input" id="companyNameInput" value="TechSolutions Inc.">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Location</label>
-                    <input type="text" class="form-input" id="locationInput"
-                        value="Bangalore (Remote option available)">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Job Type</label>
-                    <select class="form-input" id="jobTypeInput">
-                        <option value="Full-time" selected>Full-time</option>
-                        <option value="Part-time">Part-time</option>
-                        <option value="Contract">Contract</option>
-                        <option value="Freelance">Freelance</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Salary Range</label>
-                    <input type="text" class="form-input" id="salaryInput" value="$800-1700 per week">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Application Deadline</label>
-                    <input type="date" class="form-input" id="deadlineInput" value="2025-03-15">
-                </div>
-
-                <div class="warning-text">
-                    <i class="fas fa-exclamation-triangle"></i> Warning: Editing this job listing will result in removal
-                    and re-listing of the job. All current applications will be preserved.
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="cancel-btn" id="cancelEditJob">Cancel</button>
-                <button class="save-btn" id="saveEditJob">Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Description Modal -->
-    <div class="modal-overlay" id="editDescriptionModal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title">Edit Job Description</div>
-                <button class="close-modal" id="closeEditDescriptionModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Job Description</label>
-                    <textarea class="form-textarea" id="descriptionTextarea">We are looking for an experienced Frontend Developer to join our growing team. The ideal candidate will have strong experience with React, TypeScript, and NextJS, and be passionate about creating clean, efficient, and maintainable code.
-
-As a Senior Frontend Developer, you will be responsible for designing and implementing user interface components using React.js practices and workflows. You will work closely with the design team to ensure the technical feasibility of UI/UX designs, and collaborate with back-end developers to build the application.
-
-Responsibilities:
-- Develop new user-facing features using React.js
-- Build reusable components and front-end libraries for future use
-- Translate designs and wireframes into high-quality code
-- Optimize components for maximum performance across devices and browsers
-- Coordinate with various teams working on different layers of the infrastructure
-
-Requirements:
-- 5+ years of experience in front-end development
-- 3+ years of experience with React.js
-- Strong proficiency in JavaScript, TypeScript, and HTML/CSS
-- Experience with popular React workflows (Redux, Next.js)
-- Experience with responsive and adaptive design
-- Good understanding of asynchronous programming
-- Familiarity with Git and version control</textarea>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Skills Required (comma-separated)</label>
-                    <input type="text" class="form-input" id="skillsInput"
-                        value="React, TypeScript, NextJS, Redux, HTML5, CSS3, REST APIs, Git, Jest">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="cancel-btn" id="cancelEditDescription">Cancel</button>
-                <button class="save-btn" id="saveEditDescription">Save Changes</button>
-            </div>
-        </div>
     </div>
 
     <!-- Add Milestone Modal -->
@@ -374,7 +204,7 @@ Requirements:
         <div class="modal">
             <div class="modal-header">
                 <div class="modal-title">Add New Milestone</div>
-                <button class="close-modal" id="closeAddMilestoneModal">&times;</button>
+                <button class="close-modal" id="closeAddMilestoneModal">×</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -402,7 +232,7 @@ Requirements:
         <div class="modal">
             <div class="modal-header">
                 <div class="modal-title">Edit Milestone</div>
-                <button class="close-modal" id="closeEditMilestoneModal">&times;</button>
+                <button class="close-modal" id="closeEditMilestoneModal">×</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -421,42 +251,12 @@ Requirements:
             </div>
             <div class="modal-footer">
                 <button class="cancel-btn" id="cancelEditMilestone">Cancel</button>
-
-    <!-- apply now button for deepak/vanya - freelancer dashboard -->
-    <!-- Apply Modal
-    <div id="applyModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Apply for this Position</h3>
-                <span id="closeApplyModal" class="close-modal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="applicantName">Full Name*</label>
-                    <input type="text" id="applicantName" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantEmail">Email*</label>
-                    <input type="email" id="applicantEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantPhone">Phone Number*</label>
-                    <input type="tel" id="applicantPhone" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantBid">Your Bid Amount*</label>
-                    <input type="text" id="applicantBid" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantMessage">Cover Message*</label>
-                    <textarea id="applicantMessage" rows="5" required></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="cancelApply" class="secondary-button">Cancel</button>
-                <button id="submitApplication" class="apply-button">Submit Application</button>
+                <button class="save-btn" id="saveEditMilestone">Save Changes</button>
             </div>
         </div>
-    </div> -->
-<script src="see_more_detail.js"></script>
+    </div>
+
+    <script src="current_job_see_more.js"></script>
 </body>
+
+</html>
