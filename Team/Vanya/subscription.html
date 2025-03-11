@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Subscription Plans</h1>
+            <p>Unlock premium features with a plan that suits you.</p>
+        </header>
+
+        <section class="current-plan">
+            <h2>Your Plan</h2>
+            <p>Free Tier - Includes basic features. Upgrade for more!</p>
+            <button>Manage Subscription</button>
+        </section>
+
+        <section class="plan-options">
+            <h2>Choose Your Plan</h2>
+            <div class="plans">
+                <div class="plan-card">
+                    <h3>Basic</h3>
+                    <p class="price">$0/month</p>
+                    <p>Limited access, core functionality, ads included.</p>
+                    <button disabled>Current Plan</button>
+                </div>
+                <div class="plan-card">
+                    <h3>Pro</h3>
+                    <p class="price">$9.99/month</p>
+                    <p>Ad-free, advanced tools, priority support.</p>
+                    <button class="upgrade-btn">Upgrade to Pro</button>
+                </div>
+                <div class="plan-card">
+                    <h3>Enterprise</h3>
+                    <p class="price">Contact Us</p>
+                    <p>Custom solutions, team accounts, dedicated support.</p>
+                    <button class="quote-btn">Get a Quote</button>
+                </div>
+            </div>
+            <label><input type="checkbox"> Save 20% with yearly billing</label>
+        </section>
+
+        <section class="payment-details">
+            <p>Secure payments powered by Stripe.</p>
+            <a href="#">Add/Update Payment Method</a>
+        </section>
+
+        <footer>
+            <button class="confirm-btn">Confirm Upgrade</button>
+        </footer>
+    </div>
+</body>
+</html>
