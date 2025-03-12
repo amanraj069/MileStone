@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="admin_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar / Left Panel -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo-container">
+                <h2>Navigation</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" data-section="job-listings">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Job Listings</span>
+                    </li>
+                    <li data-section="freelancers">
+                        <i class="fas fa-users"></i>
+                        <span>Freelancers</span>
+                    </li>
+                    <li data-section="employers">
+                        <i class="fas fa-building"></i>
+                        <span>Employers</span>
+                    </li>
+                    <li data-section="complaints">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Complaints</span>
+                    </li>
+                    <li data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Job Listings Section -->
+            <section id="job-listings" class="section-content active">
+                <div class="filter-buttons">
+                    <button class="filter-btn active">All Jobs</button>
+                    <button class="filter-btn">Recent</button>
+                    <button class="filter-btn">Remote</button>
+                    <button class="filter-btn">Full-time</button>
+                    <button class="filter-btn">Part-time</button>
+                </div>
+                
+                <div class="jobs-container">
+                    <!-- Job Card 1 -->
+                    <div class="job-card">
+                        <div class="job-card-left">
+                            <div class="company-logo">
+                                <img src="company_logo.jpg" alt="Company Logo">
+                            </div>
+                        </div>
+                        <div class="job-card-center">
+                            <h3 class="job-title">Senior Frontend Developer</h3>
+                            <p class="job-salary">$800-1700</p>
+                            <div class="job-tags">
+                                <span class="job-tag">React</span>
+                                <span class="job-tag">TypeScript</span>
+                                <span class="job-tag">NextJS</span>
+                            </div>
+                            <div class="job-details">
+                                <span class="job-location"><i class="fas fa-map-marker-alt"></i> Bangalore <span class="status-dot green"></span></span>
+                                <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot green"></span></span>
+                                <span class="job-date"><i class="fas fa-clock"></i> Posted 2 days ago <span class="status-dot green"></span></span>
+                            </div>
+                        </div>
+                        <div class="job-card-right">
+                            <div class="applicants-badge">45 applicants</div>
+                            <button class="btn-see-more">See More</button>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 2 -->
+                    <div class="job-card">
+                        <div class="job-card-left">
+                            <div class="company-logo">
+                                <img src="company_logo.jpg" alt="Company Logo">
+                            </div>
+                        </div>
+                        <div class="job-card-center">
+                            <h3 class="job-title">UX/UI Designer</h3>
+                            <p class="job-salary">$80-500</p>
+                            <div class="job-tags">
+                                <span class="job-tag">Figma</span>
+                                <span class="job-tag">Adobe XD</span>
+                                <span class="job-tag">Sketch</span>
+                            </div>
+                            <div class="job-details">
+                                <span class="job-location"><i class="fas fa-map-marker-alt"></i> Mumbai <span class="status-dot green"></span></span>
+                                <span class="job-type"><i class="fas fa-briefcase"></i> Contract <span class="status-dot green"></span></span>
+                                <span class="job-date"><i class="fas fa-clock"></i> Posted 3 days ago <span class="status-dot green"></span></span>
+                            </div>
+                        </div>
+                        <div class="job-card-right">
+                            <div class="applicants-badge">32 applicants</div>
+                            <button class="btn-see-more">See More</button>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 3 -->
+                    <div class="job-card">
+                        <div class="job-card-left">
+                            <div class="company-logo">
+                                <img src="company_logo.jpg" alt="Company Logo">
+                            </div>
+                        </div>
+                        <div class="job-card-center">
+                            <h3 class="job-title">Full Stack Developer</h3>
+                            <p class="job-salary">$900-1900</p>
+                            <div class="job-tags">
+                                <span class="job-tag">JavaScript</span>
+                                <span class="job-tag">Node.js</span>
+                                <span class="job-tag">React</span>
+                            </div>
+                            <div class="job-details">
+                                <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote <span class="status-dot green"></span></span>
+                                <span class="job-type"><i class="fas fa-briefcase"></i> Full-time <span class="status-dot green"></span></span>
+                                <span class="job-date"><i class="fas fa-clock"></i> Posted 1 day ago <span class="status-dot green"></span></span>
+                            </div>
+                        </div>
+                        <div class="job-card-right">
+                            <div class="applicants-badge">27 applicants</div>
+                            <button class="btn-see-more">See More</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Freelancers Section -->
+            <section id="freelancers" class="section-content">
+                <h1>Freelancers</h1>
+                <div class="user-list">
+                    <!-- Freelancer 1 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="user_female.png" alt="Avatar">
+                        </div>
+                        <div class="user-info">
+                            <h3>Sarah Johnson</h3>
+                            <p class="user-title">Web Developer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5</span>
+                            </div>
+                            <p class="user-skills">HTML, CSS, JavaScript, React</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-primary"><i class="fas fa-comment"></i> Chat</button>
+                            <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Freelancer 2 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="user_image.jpg" alt="Avatar">
+                        </div>
+                        <div class="user-info">
+                            <h3>Michael Chen</h3>
+                            <p class="user-title">UI/UX Designer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
+                            <p class="user-skills">Figma, Adobe XD, Sketch, UI Design</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-primary"><i class="fas fa-comment"></i> Chat</button>
+                            <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Freelancer 3 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="user_female.png" alt="Avatar">
+                        </div>
+                        <div class="user-info">
+                            <h3>Emily Rodriguez</h3>
+                            <p class="user-title">Content Writer</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0</span>
+                            </div>
+                            <p class="user-skills">Copywriting, Blog Posts, Technical Writing</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-primary"><i class="fas fa-comment"></i> Chat</button>
+                            <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Employers Section -->
+            <section id="employers" class="section-content">
+                <h1>Employers</h1>
+                <div class="user-list">
+                    <!-- Employer 1 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="company_logo.jpg" alt="Company Logo">
+                        </div>
+                        <div class="user-info">
+                            <h3>TechSolutions Inc.</h3>
+                            <p class="user-title">Software Development Company</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5</span>
+                            </div>
+                            <p class="user-location">San Francisco, CA</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-primary"><i class="fas fa-comment"></i> Chat</button>
+                            <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Employer 2 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="company_logo.jpg" alt="Company Logo">
+                        </div>
+                        <div class="user-info">
+                            <h3>CreativeMinds</h3>
+                            <p class="user-title">Design Agency</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0</span>
+                            </div>
+                            <p class="user-location">New York, NY</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-primary"><i class="fas fa-comment"></i> Chat</button>
+                            <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+
+                    <!-- Employer 3 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <img src="company_logo.jpg" alt="Company Logo">
+                        </div>
+                        <div class="user-info">
+                            <h3>Digital Solutions</h3>
+                            <p class="user-title">Web Development Firm</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0</span>
+                            </div>
+                            <p class="user-location">Austin, TX</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-primary"><i class="fas fa-comment"></i> Chat</button>
+                            <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complaints Section -->
+            <section id="complaints" class="section-content">
+                <h1>Complaints</h1>
+                <div class="complaints-container">
+                    <!-- Complaint 1 -->
+                    <div class="complaint-card">
+                        <div class="complaint-header">
+                            <h3>Complaint #1253</h3>
+                            <span class="status pending">Pending</span>
+                        </div>
+                        <div class="complaint-body">
+                            <div class="parties">
+                                <div class="party">
+                                    <p><strong>Freelancer:</strong> Sarah Johnson</p>
+                                </div>
+                                <div class="party">
+                                    <p><strong>Employer:</strong> TechSolutions Inc.</p>
+                                </div>
+                            </div>
+                            <p class="complaint-desc"><strong>Issue:</strong> Delayed payments for completed work</p>
+                        </div>
+                        <div class="complaint-actions">
+                            <button class="btn-resolve">Resolve Dispute</button>
+                            <div class="contact-buttons">
+                                <button class="btn-contact freelancer">Contact Freelancer</button>
+                                <button class="btn-contact employer">Contact Employer</button>
+                            </div>
+                            <div class="rating-buttons">
+                                <button class="btn-rating freelancer">Change Freelancer Rating</button>
+                                <button class="btn-rating employer">Change Employer Rating</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint 2 -->
+                    <div class="complaint-card">
+                        <div class="complaint-header">
+                            <h3>Complaint #1254</h3>
+                            <span class="status in-progress">In Progress</span>
+                        </div>
+                        <div class="complaint-body">
+                            <div class="parties">
+                                <div class="party">
+                                    <p><strong>Freelancer:</strong> Michael Chen</p>
+                                </div>
+                                <div class="party">
+                                    <p><strong>Employer:</strong> CreativeMinds</p>
+                                </div>
+                            </div>
+                            <p class="complaint-desc"><strong>Issue:</strong> Work quality does not match project requirements</p>
+                        </div>
+                        <div class="complaint-actions">
+                            <button class="btn-resolve">Resolve Dispute</button>
+                            <div class="contact-buttons">
+                                <button class="btn-contact freelancer">Contact Freelancer</button>
+                                <button class="btn-contact employer">Contact Employer</button>
+                            </div>
+                            <div class="rating-buttons">
+                                <button class="btn-rating freelancer">Change Freelancer Rating</button>
+                                <button class="btn-rating employer">Change Employer Rating</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section-content">
+                <h1>Settings</h1>
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3>Account Settings</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" value="admin@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" value="********">
+                            </div>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Notification Settings</h3>
+                        <form class="settings-form">
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="email_notifications" checked>
+                                <label for="email_notifications">Email Notifications</label>
+                            </div>
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="job_alerts" checked>
+                                <label for="job_alerts">Job Alerts</label>
+                            </div>
+                            <div class="form-group checkbox">
+                                <input type="checkbox" id="message_notifications" checked>
+                                <label for="message_notifications">Message Notifications</label>
+                            </div>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Simple JavaScript to handle sidebar navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.sidebar nav ul li');
+            const sections = document.querySelectorAll('.section-content');
+            
+            // Handle navigation clicks
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // Remove active class from all items and sections
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked item and corresponding section
+                    this.classList.add('active');
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+            
+            // Sidebar hover effect
+            const sidebar = document.getElementById('sidebar');
+            
+            sidebar.addEventListener('mouseenter', function() {
+                this.classList.add('expanded');
+            });
+            
+            sidebar.addEventListener('mouseleave', function() {
+                this.classList.remove('expanded');
+            });
+            
+            // Filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
