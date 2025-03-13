@@ -51,9 +51,7 @@
                     <button class="filter-btn">Full-time</button>
                     <button class="filter-btn">Part-time</button>
                 </div>
-                
                 <div class="jobs-container">
-                    <!-- Job Card 1 -->
                     <div class="job-card">
                         <div class="job-card-left">
                             <div class="company-logo">
@@ -79,7 +77,6 @@
                             <button class="btn-see-more">See More</button>
                         </div>
                     </div>
-
                     <!-- Job Card 2 -->
                     <div class="job-card">
                         <div class="job-card-left">
@@ -140,7 +137,6 @@
             <section id="freelancers" class="section-content">
                 <h1>Freelancers</h1>
                 <div class="user-list">
-                    <!-- Freelancer 1 -->
                     <div class="user-card">
                         <div class="user-avatar">
                             <img src="user_female.png" alt="Avatar">
@@ -163,9 +159,8 @@
                             <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
                         </div>
                     </div>
-
-                    <!-- Freelancer 2 -->
-                    <div class="user-card">
+                     <!-- Freelancer 2 -->
+                     <div class="user-card">
                         <div class="user-avatar">
                             <img src="user_image.jpg" alt="Avatar">
                         </div>
@@ -218,7 +213,6 @@
             <section id="employers" class="section-content">
                 <h1>Employers</h1>
                 <div class="user-list">
-                    <!-- Employer 1 -->
                     <div class="user-card">
                         <div class="user-avatar">
                             <img src="company_logo.jpg" alt="Company Logo">
@@ -241,7 +235,6 @@
                             <button class="btn-danger"><i class="fas fa-trash"></i> Delete</button>
                         </div>
                     </div>
-
                     <!-- Employer 2 -->
                     <div class="user-card">
                         <div class="user-avatar">
@@ -296,7 +289,6 @@
             <section id="complaints" class="section-content">
                 <h1>Complaints</h1>
                 <div class="complaints-container">
-                    <!-- Complaint 1 -->
                     <div class="complaint-card">
                         <div class="complaint-header">
                             <h3>Complaint #1253</h3>
@@ -315,22 +307,23 @@
                         </div>
                         <div class="complaint-actions">
                             <button class="btn-resolve">Resolve Dispute</button>
-                            <div class="contact-buttons">
-                                <button class="btn-contact freelancer">Contact Freelancer</button>
-                                <button class="btn-contact employer">Contact Employer</button>
-                            </div>
-                            <div class="rating-buttons">
-                                <button class="btn-rating freelancer">Change Freelancer Rating</button>
-                                <button class="btn-rating employer">Change Employer Rating</button>
+                            <div class="additional-actions" style="display: block;">
+                                <div class="contact-buttons">
+                                    <button class="btn-contact freelancer">Contact Freelancer</button>
+                                    <button class="btn-contact employer">Contact Employer</button>
+                                </div>
+                                <div class="rating-buttons">
+                                    <button class="btn-rating freelancer">Change Freelancer Rating</button>
+                                    <button class="btn-rating employer">Change Employer Rating</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Complaint 2 -->
+                    <!-- Complaint Card 2 -->
                     <div class="complaint-card">
                         <div class="complaint-header">
                             <h3>Complaint #1254</h3>
-                            <span class="status in-progress">In Progress</span>
+                            <span class="status resolved">Resolved</span>
                         </div>
                         <div class="complaint-body">
                             <div class="parties">
@@ -341,58 +334,96 @@
                                     <p><strong>Employer:</strong> CreativeMinds</p>
                                 </div>
                             </div>
-                            <p class="complaint-desc"><strong>Issue:</strong> Work quality does not match project requirements</p>
+                            <p class="complaint-desc"><strong>Issue:</strong> Unpaid work for completed project</p>
                         </div>
                         <div class="complaint-actions">
                             <button class="btn-resolve">Resolve Dispute</button>
-                            <div class="contact-buttons">
-                                <button class="btn-contact freelancer">Contact Freelancer</button>
-                                <button class="btn-contact employer">Contact Employer</button>
-                            </div>
-                            <div class="rating-buttons">
-                                <button class="btn-rating freelancer">Change Freelancer Rating</button>
-                                <button class="btn-rating employer">Change Employer Rating</button>
+                            <div class="additional-actions" style="display: none;">
+                                <div class="contact-buttons">
+                                    <button class="btn-contact freelancer">Contact Freelancer</button>
+                                    <button class="btn-contact employer">Contact Employer</button>
+                                </div>
+                                <div class="rating-buttons">
+                                    <button class="btn-rating freelancer">Change Freelancer Rating</button>
+                                    <button class="btn-rating employer">Change Employer Rating</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </section>
 
             <!-- Settings Section -->
             <section id="settings" class="section-content">
-                <h1>Settings</h1>
                 <div class="settings-container">
-                    <div class="settings-card">
-                        <h3>Account Settings</h3>
-                        <form class="settings-form">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" value="admin@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" value="********">
-                            </div>
-                            <button type="submit" class="btn-primary">Save Changes</button>
-                        </form>
+                    <div class="settings-header">
+                        <h2>Settings</h2>
+                        <p>Manage your account and preferences</p>
                     </div>
-                    <div class="settings-card">
-                        <h3>Notification Settings</h3>
-                        <form class="settings-form">
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="email_notifications" checked>
-                                <label for="email_notifications">Email Notifications</label>
-                            </div>
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="job_alerts" checked>
-                                <label for="job_alerts">Job Alerts</label>
-                            </div>
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="message_notifications" checked>
-                                <label for="message_notifications">Message Notifications</label>
-                            </div>
-                            <button type="submit" class="btn-primary">Save Changes</button>
-                        </form>
+                    <div class="settings-tabs">
+                        <div class="settings-tab active" data-tab="profile">Profile</div>
+                        <div class="settings-tab" data-tab="account">Account</div>
+                        <div class="settings-tab" data-tab="notifications">Notifications</div>
+                    </div>
+                    <div class="settings-content">
+                        <!-- Profile Tab -->
+                        <div class="tab-content active" id="profile">
+                            <form class="settings-form">
+                                <div class="form-group">
+                                    <label for="full-name">Full Name</label>
+                                    <input type="text" id="full-name" class="form-control" value="Admin User">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-pic">Profile Picture</label>
+                                    <input type="file" id="profile-pic" class="form-control" accept="image/*">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="bio">Bio</label>
+                                    <textarea id="bio" class="form-control" rows="4">Administrator managing job listings and user disputes.</textarea>
+                                </div>
+                                <button type="submit" class="btn-save">Save Profile</button>
+                            </form>
+                        </div>
+                        <!-- Account Tab -->
+                        <div class="tab-content" id="account">
+                            <form class="settings-form">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="form-control" value="admin@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" class="form-control" value="********">
+                                </div>
+                                <button type="submit" class="btn-save">Save Account</button>
+                            </form>
+                        </div>
+                        <!-- Notifications Tab -->
+                        <div class="tab-content" id="notifications">
+                            <form class="settings-form">
+                                <div class="toggle-container">
+                                    <label class="toggle-label" for="email_notifications">Email Notifications</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="email_notifications" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-container">
+                                    <label class="toggle-label" for="job_alerts">Job Alerts</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="job_alerts" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="toggle-container">
+                                    <label class="toggle-label" for="message_notifications">Message Notifications</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="message_notifications" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn-save">Save Notifications</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -400,44 +431,54 @@
     </div>
 
     <script>
-        // Simple JavaScript to handle sidebar navigation
+        // Sidebar navigation
         document.addEventListener('DOMContentLoaded', function() {
             const navItems = document.querySelectorAll('.sidebar nav ul li');
             const sections = document.querySelectorAll('.section-content');
-            
-            // Handle navigation clicks
+            const sidebar = document.getElementById('sidebar');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const settingsTabs = document.querySelectorAll('.settings-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const resolveButtons = document.querySelectorAll('.btn-resolve');
+
+            // Navigation clicks
             navItems.forEach(item => {
                 item.addEventListener('click', function() {
-                    const sectionId = this.getAttribute('data-section');
-                    
-                    // Remove active class from all items and sections
                     navItems.forEach(nav => nav.classList.remove('active'));
                     sections.forEach(section => section.classList.remove('active'));
-                    
-                    // Add active class to clicked item and corresponding section
                     this.classList.add('active');
-                    document.getElementById(sectionId).classList.add('active');
+                    document.getElementById(this.getAttribute('data-section')).classList.add('active');
                 });
             });
-            
+
             // Sidebar hover effect
-            const sidebar = document.getElementById('sidebar');
-            
-            sidebar.addEventListener('mouseenter', function() {
-                this.classList.add('expanded');
-            });
-            
-            sidebar.addEventListener('mouseleave', function() {
-                this.classList.remove('expanded');
-            });
-            
+            sidebar.addEventListener('mouseenter', function() { this.classList.add('expanded'); });
+            sidebar.addEventListener('mouseleave', function() { this.classList.remove('expanded'); });
+
             // Filter buttons
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
+                });
+            });
+
+            // Settings tabs
+            settingsTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    settingsTabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+                });
+            });
+
+            // Resolve dispute button toggle
+            resolveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const actions = this.nextElementSibling;
+                    actions.style.display = actions.style.display === 'none' ? 'block' : 'none';
+                    this.textContent = this.textContent === 'Resolve Dispute' ? 'Resolve Dispute' : 'Close Actions';
                 });
             });
         });
