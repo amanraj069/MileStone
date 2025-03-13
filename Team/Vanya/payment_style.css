@@ -1,0 +1,277 @@
+/* Payment Content Styles */
+.main-content {
+    flex-grow: 1;
+    padding: 0 20px 20px 20px;
+    margin-left: 290px;
+    width: calc(100% - 290px);
+    background-color: #f0f5fa;
+}
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #e6eef8;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.content-header h2 {
+    font-size: 22px;
+    color: #1e3a8a;
+}
+
+.payment-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.payment-section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.payment-section h4 {
+    font-size: 18px;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #d0e1f9;
+    padding-bottom: 5px;
+}
+
+.payment-section h5 {
+    font-size: 16px;
+    color: #1e3a8a;
+    margin-bottom: 10px;
+}
+
+/* Subscription Details */
+.subscription-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.subscription-details p {
+    font-size: 14px;
+    color: #333;
+}
+
+.subscription-details p strong {
+    color: #1e3a8a;
+}
+
+.manage-subscription-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.manage-subscription-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Payment Methods */
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.payment-method i {
+    font-size: 24px;
+    color: #1e3a8a;
+}
+
+.payment-method span {
+    font-size: 14px;
+    color: #333;
+}
+
+.payment-method .expiry-date {
+    color: #666;
+    margin-left: auto;
+}
+
+.remove-method-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-method-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Add Payment Method Form */
+.add-payment-method {
+    margin-top: 20px;
+}
+
+#payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #1e3a8a;
+    font-weight: 500;
+}
+
+.form-group input {
+    border: 1px solid #d0e1f9;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 14px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 300px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-row .form-group input {
+    max-width: 150px;
+}
+
+.add-method-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.add-method-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Payment History Table */
+.payment-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.payment-history-table th,
+.payment-history-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #d0e1f9;
+}
+
+.payment-history-table th {
+    background-color: #e6eef8;
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+.payment-history-table td {
+    color: #333;
+}
+
+.payment-history-table .status.success {
+    color: #10b981;
+    font-weight: 500;
+}
+
+.payment-history-table .status.failed {
+    color: #ef4444;
+    font-weight: 500;
+}
+
+.payment-history-table .view-receipt {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.payment-history-table .view-receipt:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .payment-history-table {
+        font-size: 12px;
+    }
+
+    .payment-history-table th,
+    .payment-history-table td {
+        padding: 8px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-row .form-group input {
+        max-width: 100%;
+    }
+}
