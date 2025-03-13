@@ -7,7 +7,11 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname, "Public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "Public", "index.html"));
+  res.sendFile(path.join(__dirname, "Team", "Aman", "home.html"));
+});
+
+app.get("/chat", (req, res) => {
+  res.sendFile(path.join(__dirname, "Team", "Aman", "chat.html"));
 });
 
 app.listen(PORT, () => {
