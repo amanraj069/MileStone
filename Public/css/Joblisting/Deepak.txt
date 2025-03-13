@@ -1,1 +1,7 @@
-Yhan attributes dal dena taki aasani ho
+1. Job ID : Unique ID for the job
+2. Job title :
+2. Employer info : Employer’s name and details(Address). 
+3. Skills : List of required skills 
+4. Budget : Salary Range
+5. Duration : Job duration
+6. Posted date : The date when job was posted
