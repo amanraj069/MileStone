@@ -143,9 +143,9 @@ select:hover {
 .job-info {
     font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column; /* Changed to column to maintain the vertical layout */
+    flex-direction: column; 
     gap: 3px;
-    align-items: flex-start; /* Align items to the start for better layout */
+    align-items: flex-start; 
     font-size: 16px;
     color: #555;
     flex: 1;
@@ -233,6 +233,15 @@ select:hover {
     padding: 5px 12px;
     border-radius: 15px;
     font-size: 0.9rem;
+}
+
+.skill-tag {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.skill-tag:hover {
+    background-color: #e0e0e0;
 }
 
 .see-more-btn {

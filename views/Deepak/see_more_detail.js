@@ -1,4 +1,4 @@
-// Modal control functions
+
 function openModal(modalId) {
     document.getElementById(modalId).style.display = 'flex';
 }
@@ -7,7 +7,7 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
 }
 
-// Milestone functionality
+
 document.getElementById('addMilestoneBtn').addEventListener('click', function () {
     openModal('addMilestoneModal');
 });
@@ -45,7 +45,7 @@ document.getElementById('saveAddMilestone').addEventListener('click', function (
     closeModal('addMilestoneModal');
 });
 
-// Apply Now functionality
+
 document.getElementById('applyNowBtn').addEventListener('click', function () {
     openModal('applyModal');
 });
@@ -74,7 +74,7 @@ document.getElementById('submitApplication').addEventListener('click', function 
     closeModal('applyModal');
 });
 
-// Navigation function
+
 function goBack() {
     alert('Navigating back to job listings...');
     window.location.href = "job_listing.html";

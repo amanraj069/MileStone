@@ -45,16 +45,28 @@ header {
     padding: 30px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .job-title-section {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .job-title-info {
     flex: 1;
+}
+
+.job-img-container {
+    flex: 0 0 auto;
 }
 
 .deadline {
@@ -88,11 +100,11 @@ header {
     align-items: center;
     gap: 8px;
     color: #666;
-    font-size: 18px; /* Increased size */
+    font-size: 18px; 
 }
 
 .job-img-container {
-    width: 240px; /* Increased from 150px */
+    width: 240px; 
     height: 240px;
     margin-left: 30px;
 }
@@ -106,7 +118,7 @@ header {
 
 .job-actions {
     display: flex;
-    justify-content: flex-start; /* Apply button on left */
+    justify-content: flex-start; 
     gap: 1px;
     margin-top:1px;
 }
@@ -121,6 +133,14 @@ header {
     display: flex;
     align-items: center;
     gap: 5px;
+
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+}
+
+.apply-button i {
+    margin: 0;
 }
 
 .add-button {
@@ -218,7 +238,7 @@ header {
     color: #0a66c2;
 }
 
-/* Modal Styles */
+
 .modal-overlay {
     display: none;
     position: fixed;
@@ -322,10 +342,14 @@ header {
     }
 
     .job-img-container {
-        width: 150px;
-        height: 150px;
+        width: 250px;
+        height: 250px;
         margin-left: 0;
         margin-bottom: 15px;
+        margin: auto;
+
+        order: -1;
+        text-align: center;
     }
 
     .job-actions {
@@ -335,15 +359,17 @@ header {
     .apply-button {
         width: 100%;
         margin-top: 10px;
+        margin: auto;
+    }
+
+    .job-img {
+        max-width: 100%; 
+        height: auto;
     }
 }
 
 
-
-
-
-/* Specific styling for each meta-item */
-.meta-item:nth-child(1) { /* Location */
+.meta-item:nth-child(1) { 
     background-color: #e6f0fa;
     color: #2c5282;
     border-left: 4px solid #2c5282;
@@ -353,7 +379,7 @@ header {
     background-color: #bfdbfe;
 }
 
-.meta-item:nth-child(2) { /* Full-time Job */
+.meta-item:nth-child(2) { 
     background-color: #fefcbf;
     color: #744210;
     border-left: 4px solid #744210;
@@ -363,7 +389,7 @@ header {
     background-color: #faf089;
 }
 
-.meta-item:nth-child(3) { /* Salary */
+.meta-item:nth-child(3) { 
     background-color: #c6f6d5;
     color: #276749;
     border-left: 4px solid #276749;
@@ -374,7 +400,7 @@ header {
     background-color: #9ae6b4;
 }
 
-.meta-item:nth-child(4) { /* Posted on Date */
+.meta-item:nth-child(4) { 
     background-color: #edf2f7;
     color: #4a5568;
     border-left: 4px solid #4a5568;
