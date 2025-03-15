@@ -1,0 +1,120 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-overview {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.about-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.testimonials-section {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.testimonials-section h3 {
+    font-size: 18px;
+    color: #152c70;
+    margin-bottom: 15px;
+}
+
+.testimonial-card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.testimonial-card p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+}
+
+.reviewer-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    margin: 0;
+}
+
+.reviewer-role {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+.stars {
+    font-size: 14px;
+    color: #ffca08;
+}
+
+.stats-section {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.stats-section h3 {
+    font-size: 18px;
+    color: #152c70;
+    margin-bottom: 15px;
+}
+
+.stats-chart {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.chart-bar {
+    width: 20px;
+    background: #d81b60;
+    border-radius: 4px;
+    margin: 0 5px;
+}
+
+.chart-label {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+
+.stats-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333;
+}
+
+.stat-item span:last-child {
+    font-weight: bold;
+}
