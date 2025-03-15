@@ -127,6 +127,10 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/job-listings", (req, res) => {
+  res.sendFile(path.join(__dirname, "Team", "Deepak", "see_more_detail.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
