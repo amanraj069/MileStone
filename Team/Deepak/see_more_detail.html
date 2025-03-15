@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Details</title>
     <link rel="stylesheet" href="/css/Joblisting/see_more_detail.css">
 </head>
-
 <body>
     <div class="container">
         <header>
-        
+            <a href="#" class="back-button" onclick="goBack()">
+            </a>
             <div class="logo">Job Details</div>
-            <div></div> <!-- Empty div for spacing -->
+            <div></div>
         </header>
 
         <div class="job-header">
@@ -23,22 +22,10 @@
                     <h1 class="job-title">Senior Frontend Developer</h1>
                     <div class="company-name">TechSolutions Inc.</div>
                     <div class="job-meta">
-                        <div class="meta-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Bangalore (Remote option available)</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-briefcase"></i>
-                            <span>Full-time</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>₹66,400-₹141,100 per week</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Posted on Feb 16, 2025</span>
-                        </div>
+                        <div class="meta-item"><i class="fas fa-map-marker-alt"></i> Bangalore (Remote option available)</div>
+                        <div class="meta-item"><i class="fas fa-briefcase"></i> Full-time</div>
+                        <div class="meta-item"><i class="fas fa-rupee-sign"></i> ₹60,000-127,500 per week</div>
+                        <div class="meta-item"><i class="fas fa-clock"></i> Posted on Feb 16, 2025</div>
                     </div>
                 </div>
                 <div class="job-img-container">
@@ -46,7 +33,7 @@
                 </div>
             </div>
             <div class="job-actions">
-                <button class="apply-button" id="applyNowBtn">
+                <button class="apply-button" id="applyNowBtn" onclick="openModal('applyModal')">
                     <i class="fas fa-paper-plane"></i> Apply Now
                 </button>
             </div>
@@ -57,17 +44,12 @@
                 Job Description
             </div>
             <div class="description-text">
-                <p>We are looking for an experienced Frontend Developer to join our growing team. The ideal candidate
-                    will have strong experience with React, TypeScript, and NextJS, and be passionate about creating
-                    clean, efficient, and maintainable code.</p>
+                <p>We are looking for an experienced Frontend Developer to join our growing team. The ideal candidate will have strong experience with React, TypeScript, and NextJS, and be passionate about creating clean, efficient, and maintainable code.</p>
                 <br>
-                <p>As a Senior Frontend Developer, you will be responsible for designing and implementing user interface
-                    components using React.js practices and workflows. You will work closely with the design team to
-                    ensure the technical feasibility of UI/UX designs, and collaborate with back-end developers to build
-                    the application.</p>
+                <p>As a Senior Frontend Developer, you will be responsible for designing and implementing user interface components using React.js practices and workflows. You will work closely with the design team to ensure the technical feasibility of UI/UX designs, and collaborate with back-end developers to build the application.</p>
                 <br>
                 <p><strong>Responsibilities:</strong></p>
-                <ul style="margin-left: 20px; margin-top: 10px; margin-bottom: 10px;">
+                <ul>
                     <li>Develop new user-facing features using React.js</li>
                     <li>Build reusable components and front-end libraries for future use</li>
                     <li>Translate designs and wireframes into high-quality code</li>
@@ -76,7 +58,7 @@
                 </ul>
                 <br>
                 <p><strong>Requirements:</strong></p>
-                <ul style="margin-left: 20px; margin-top: 10px;">
+                <ul>
                     <li>5+ years of experience in front-end development</li>
                     <li>3+ years of experience with React.js</li>
                     <li>Strong proficiency in JavaScript, TypeScript, and HTML/CSS</li>
@@ -105,83 +87,82 @@
         <div class="milestones">
             <div class="section-title">
                 Project Milestones
+                <div class="section-buttons">
+                </div>
             </div>
             <table class="milestones-table">
                 <thead>
                     <tr>
-                        <th style="width: 50%;">Deliverable</th>
-                        <th style="width: 20%;">Deadline</th>
-                        <th style="width: 20%;">Payment</th>
+                        <th>Deliverable</th>
+                        <th>Deadline</th>
+                        <th>Payment</th>
                     </tr>
                 </thead>
                 <tbody id="milestones-tbody">
                     <tr>
                         <td>Initial setup and component architecture</td>
                         <td>Week 1</td>
-                        <td class="payment-column">₹24,900 (20%)</td>
+                        <td class="payment-column">₹22,500 (20%)</td>
                     </tr>
                     <tr>
                         <td>Core functionality implementation</td>
                         <td>Week 3</td>
-                        <td class="payment-column">₹37,350 (30%)</td>
+                        <td class="payment-column">₹33,750 (30%)</td>
                     </tr>
                     <tr>
                         <td>Integration with backend APIs</td>
                         <td>Week 5</td>
-                        <td class="payment-column">₹24,900 (20%)</td>
+                        <td class="payment-column">₹22,500 (20%)</td>
                     </tr>
                     <tr>
                         <td>Testing, bug fixing, and optimization</td>
                         <td>Week 7</td>
-                        <td class="payment-column">₹24,900 (20%)</td>
+                        <td class="payment-column">₹22,500 (20%)</td>
                     </tr>
                     <tr>
                         <td>Final delivery and documentation</td>
                         <td>Week 8</td>
-                        <td class="payment-column">₹12,450 (10%)</td>
+                        <td class="payment-column">₹11,250 (10%)</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <!-- Apply Modal -->
-    <div id="applyModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Apply for this Position</h3>
-                <span id="closeApplyModal" class="close-modal">×</span>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="applicantName">Full Name*</label>
-                    <input type="text" id="applicantName" required>
+        <!-- Apply Modal -->
+        <div class="modal-overlay" id="applyModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Apply for this Position</h3>
+                    <span id="closeApplyModal" class="close-modal">×</span>
                 </div>
-                <div class="form-group">
-                    <label for="applicantEmail">Email*</label>
-                    <input type="email" id="applicantEmail" required>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="applicantName">Full Name*</label>
+                        <input type="text" id="applicantName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantEmail">Email*</label>
+                        <input type="email" id="applicantEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantPhone">Phone Number*</label>
+                        <input type="tel" id="applicantPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantBid">Your Bid Amount (₹)*</label>
+                        <input type="text" id="applicantBid" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantMessage">Cover Message*</label>
+                        <textarea id="applicantMessage" rows="5" required></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="applicantPhone">Phone Number*</label>
-                    <input type="tel" id="applicantPhone" required>
+                <div class="modal-footer">
+                    <button id="cancelApply" class="cancel-btn">Cancel</button>
+                    <button id="submitApplication" class="apply-button">Submit Application</button>
                 </div>
-                <div class="form-group">
-                    <label for="applicantBid">Your Bid Amount*</label>
-                    <input type="text" id="applicantBid" required>
-                </div>
-                <div class="form-group">
-                    <label for="applicantMessage">Cover Message*</label>
-                    <textarea id="applicantMessage" rows="5" required></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="cancelApply" class="cancel-btn">Cancel</button>
-                <button id="submitApplication" class="apply-button">Submit Application</button>
             </div>
         </div>
     </div>
-
     <script src="see_more_detail.js"></script>
 </body>
-
 </html>

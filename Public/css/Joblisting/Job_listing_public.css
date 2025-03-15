@@ -141,7 +141,20 @@ select:hover {
 }
 
 .job-info {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* Changed to column to maintain the vertical layout */
+    gap: 3px;
+    align-items: flex-start; /* Align items to the start for better layout */
+    font-size: 16px;
+    color: #555;
     flex: 1;
+}
+
+.job-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .job-title {
@@ -172,16 +185,33 @@ select:hover {
 }
 
 .job-meta {
+    font-family: Arial, sans-serif;
     display: flex;
-    flex-wrap: wrap;
     gap: 15px;
-    color: #666;
-    font-size: 0.9rem;
+    align-items: center;
+    font-size: 16px;
+    color: #555;
 }
 
-.job-meta i {
-    margin-right: 5px;
-    color: #0a66c2;
+.job-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.location::before {
+    content: "📍";
+    color: #007bff;
+}
+
+.work::before {
+    content: "💼";
+    color: #007bff;
+}
+
+.clock::before {
+    content: "⏳";
+    color: #007bff;
 }
 
 .star-rating {
