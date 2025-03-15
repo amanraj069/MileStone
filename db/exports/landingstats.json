@@ -1,0 +1,65 @@
+[
+  {
+    "_id": "6790a0b29eb9e546617ade62",
+    "id": "6a47c26b-1a76-463d-954d-400c1ddd954c",
+    "name": "Quizzes",
+    "value": "1000+",
+    "createdAt": "2025-01-22T07:39:30.162Z",
+    "updatedAt": "2025-01-22T07:39:30.162Z",
+    "__v": 0
+  },
+  {
+    "_id": "6790eb08a8caaf3044c374f2",
+    "id": "2f689df6-7774-4baa-bc7b-efa7a18ef1fe",
+    "name": "Experts",
+    "value": "100+",
+    "createdAt": "2025-01-22T12:56:40.825Z",
+    "updatedAt": "2025-01-22T12:56:40.825Z",
+    "__v": 0
+  },
+  {
+    "_id": "6790eb1ea8caaf3044c374f4",
+    "id": "c86ad755-5ca4-4919-97c1-b3f2e9b4ded4",
+    "name": "Collaborations",
+    "value": "10+",
+    "createdAt": "2025-01-22T12:57:02.280Z",
+    "updatedAt": "2025-01-22T12:57:02.280Z",
+    "__v": 0
+  },
+  {
+    "_id": "6790eb32a8caaf3044c374f6",
+    "id": "e321f986-624f-4be1-9ed8-00c8602b4b8a",
+    "name": "Trainings Certification Course",
+    "value": "1000+",
+    "createdAt": "2025-01-22T12:57:22.062Z",
+    "updatedAt": "2025-01-22T12:57:22.062Z",
+    "__v": 0
+  },
+  {
+    "_id": "6790eb4ba8caaf3044c374f8",
+    "id": "03986bdc-1251-40f6-9064-c3db5db8b3ff",
+    "name": "Enrolled Students",
+    "value": "1000+",
+    "createdAt": "2025-01-22T12:57:47.133Z",
+    "updatedAt": "2025-01-22T12:57:47.133Z",
+    "__v": 0
+  },
+  {
+    "_id": "6790eb64a8caaf3044c374fa",
+    "id": "0502c42a-a00f-48c3-809b-7b599933dab2",
+    "name": "Success Ratio",
+    "value": "100%",
+    "createdAt": "2025-01-22T12:58:12.247Z",
+    "updatedAt": "2025-01-22T12:58:12.247Z",
+    "__v": 0
+  },
+  {
+    "_id": "6790eb86a8caaf3044c374fc",
+    "id": "c63d6f39-2e25-4e86-9398-6cd67634dbc5",
+    "name": "States",
+    "value": "20+",
+    "createdAt": "2025-01-22T12:58:46.072Z",
+    "updatedAt": "2025-01-22T12:58:46.072Z",
+    "__v": 0
+  }
+]

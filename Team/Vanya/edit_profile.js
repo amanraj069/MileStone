@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        editBtn.textContent = 'Save Profile';
+        // editBtn.textContent = 'Save Profile';
+        editBtn.innerHTML = 'Save Profile';
     }
 
     // Disable edit mode
@@ -202,7 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        editBtn.textContent = 'Edit Profile';
+        // editBtn.textContent = 'Edit Profile';
+        editBtn.innerHTML = 'Edit Profile';
     }
 
     // Toggle edit mode

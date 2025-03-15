@@ -1,0 +1,80 @@
+[
+  {
+    "_id": "6703cefbc30ee8e7eb27b698",
+    "id": "13749fe3-9167-4577-b36d-83a66d07dba2",
+    "userId": "7a7108fd-3903-47d3-a078-1cc3c8546b72",
+    "submissionId": "ed3f115f-e3e9-4451-85b4-f32a1b66c954",
+    "quizId": "7c1bc052-6431-4b12-9e9c-01fece317b13",
+    "marks": 6,
+    "correct": 2,
+    "incorrect": 2,
+    "skipped": 0,
+    "subjectTopicStats": [
+      {
+        "subjectName": "General Knowledge",
+        "topics": [
+          {
+            "topicName": "Geography",
+            "totalQuestions": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "marks": 4,
+            "_id": "6703cefbc30ee8e7eb27b69a"
+          }
+        ],
+        "_id": "6703cefbc30ee8e7eb27b699"
+      },
+      {
+        "subjectName": "World Heritage",
+        "topics": [
+          {
+            "topicName": "History",
+            "totalQuestions": 1,
+            "correctAnswers": 0,
+            "incorrectAnswers": 1,
+            "marks": -1,
+            "_id": "6703cefbc30ee8e7eb27b69c"
+          }
+        ],
+        "_id": "6703cefbc30ee8e7eb27b69b"
+      },
+      {
+        "subjectName": "Science",
+        "topics": [
+          {
+            "topicName": "Biology",
+            "totalQuestions": 1,
+            "correctAnswers": 1,
+            "incorrectAnswers": 0,
+            "marks": 3,
+            "_id": "6703cefbc30ee8e7eb27b69e"
+          },
+          {
+            "topicName": "Physics",
+            "totalQuestions": 1,
+            "correctAnswers": 0,
+            "incorrectAnswers": 1,
+            "marks": 0,
+            "_id": "6703cefbc30ee8e7eb27b69f"
+          }
+        ],
+        "_id": "6703cefbc30ee8e7eb27b69d"
+      }
+    ],
+    "difficultyWiseQuesPercentage": {
+      "easyQues": "50",
+      "mediumQues": "25",
+      "hardQues": "25",
+      "_id": "6703cefbc30ee8e7eb27b6a0"
+    },
+    "performacedifficultyWise": {
+      "easyQues": "100",
+      "mediumQues": "0",
+      "hardQues": "0",
+      "_id": "6703cefbc30ee8e7eb27b6a1"
+    },
+    "createdAt": "2024-10-07T12:07:23.483Z",
+    "updatedAt": "2024-10-07T12:07:23.483Z",
+    "__v": 0
+  }
+]

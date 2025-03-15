@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "66cf558350eaa42dcf2e82b5",
+    "id": "c06c3c5e-25d2-46a2-8268-469add9e9cf5",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+    "content": "Hello Rust",
+    "createdAt": "2024-08-28T16:51:15.461Z",
+    "updatedAt": "2024-08-28T16:51:15.461Z",
+    "__v": 0
+  },
+  {
+    "_id": "66e9b8d5d4c43b8bf0ff6478",
+    "id": "73cabcbc-e870-4b8d-b1f1-c3e024614e20",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+    "content": "Hello world",
+    "createdAt": "2024-09-17T17:13:57.088Z",
+    "updatedAt": "2024-09-17T17:13:57.088Z",
+    "__v": 0
+  },
+  {
+    "_id": "66ffab5013ec3e92a270b9f9",
+    "id": "ca573086-97a6-44ac-bd5b-3f3249afc56b",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+    "content": "tushar notes",
+    "createdAt": "2024-10-04T08:46:08.974Z",
+    "updatedAt": "2024-10-04T08:46:08.974Z",
+    "__v": 0
+  },
+  {
+    "_id": "66ffabbe13ec3e92a270ba0c",
+    "id": "c1d600a3-f658-4d90-a02a-bc8a88843509",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+    "content": "new notes",
+    "createdAt": "2024-10-04T08:47:58.872Z",
+    "updatedAt": "2024-10-04T08:47:58.872Z",
+    "__v": 0
+  },
+  {
+    "_id": "66ffac86ce5af05b21040c2e",
+    "id": "d5021e47-df67-4c05-85c2-c04044356bfd",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "a53e4e78-8121-44c1-bf7c-2a7f36c7a321",
+    "content": "test note",
+    "createdAt": "2024-10-04T08:51:18.125Z",
+    "updatedAt": "2024-10-04T08:51:18.125Z",
+    "__v": 0
+  },
+  {
+    "_id": "66ffacbace5af05b21040c33",
+    "id": "0d36b1a3-a86c-49e8-98a7-e1761e582f11",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+    "content": "notes algorithms",
+    "createdAt": "2024-10-04T08:52:10.629Z",
+    "updatedAt": "2024-10-04T08:52:10.629Z",
+    "__v": 0
+  },
+  {
+    "_id": "67001ce8ce13766ccc56e6a9",
+    "id": "28b79120-468d-4f02-b1b2-3e2ee43a2af4",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+    "content": "new notes",
+    "createdAt": "2024-10-04T16:50:48.125Z",
+    "updatedAt": "2024-10-04T16:50:48.125Z",
+    "__v": 0
+  },
+  {
+    "_id": "67001d7ace13766ccc56e6be",
+    "id": "8bd03062-f590-4769-b28a-1cdedf2dd0e3",
+    "userId": "66f6ca68f463933c984555c4",
+    "topicId": "e6b123f1-9f27-4a4b-b2e9-9f2e1b14a2d3",
+    "content": "hello notes",
+    "createdAt": "2024-10-04T16:53:14.543Z",
+    "updatedAt": "2024-10-04T16:53:14.543Z",
+    "__v": 0
+  }
+]

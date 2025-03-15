@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Milestones Tracker</title>
+    <link rel="stylesheet" href="milestone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Project Milestones</h1>
+            <button class="add-button" id="addMilestoneBtn">
+                <i class="fas fa-plus"></i> Add Milestone
+            </button>
+        </div>
+
+        <div class="progress-card">
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h3 class="progress-title">Project Completion</h3>
+                    <span class="progress-percentage" id="completionPercentage">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="completionProgressBar"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>Not Started</span>
+                    <span>In Progress</span>
+                    <span>Completed</span>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h3 class="progress-title">Payment Progress</h3>
+                    <span class="progress-amount" id="paymentProgress">₹0 of ₹0 (0%)</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="paymentProgressBar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="milestones-container" id="milestonesContainer">
+            <!-- Milestone cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Add/Edit Milestone Modal -->
+    <div class="modal-overlay" id="milestoneModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add New Milestone</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="milestoneForm">
+                    <input type="hidden" id="milestoneId">
+                    <div class="form-group">
+                        <label for="deliverable">Deliverable Description</label>
+                        <input type="text" id="deliverable" placeholder="eg : Complete feature X" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="deadline">Deadline</label>
+                        <input type="text" id="deadline" placeholder="eg : Week 2" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payment">Payment Amount (₹)</label>
+                            <input type="number" id="payment" placeholder="eg : 22500" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="percentage">Percentage (%)</label>
+                            <input type="number" id="percentage" placeholder="eg : 20" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="save-btn" id="saveBtn">Add Milestone</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal delete-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Confirm Delete</h2>
+                <button class="close-modal" id="closeDeleteModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this milestone?</p>
+                <input type="hidden" id="deleteId">
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" id="cancelDeleteBtn">Cancel</button>
+                    <button type="button" class="delete-btn" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="milestone.js"></script>
+</body>
+</html>

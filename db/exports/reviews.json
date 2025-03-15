@@ -1,0 +1,52 @@
+[
+  {
+    "_id": "66ea741aafe38d944dff8059",
+    "id": "99d99cac-3db2-40d6-9123-1c6e286cae6f",
+    "user": "cc888066-7e9f-425f-aba2-11e0ba72e71e",
+    "rating": "3",
+    "content": "Illum amet impedit odio dolores exercitationem ipsum maiores exercitationem voluptates. Eum corrupti voluptas deleniti excepturi provident. Non quibusdam numquam in.",
+    "createdAt": "2024-09-18T06:32:58.361Z",
+    "updatedAt": "2024-12-21T21:18:35.813Z",
+    "__v": 0
+  },
+  {
+    "_id": "66eb06e268763a3c8a82c85b",
+    "id": "4ad9433a-0711-4191-a1f5-3a1e21ac06ac",
+    "user": "44a72e30-270f-484e-97d8-8c242e258743",
+    "rating": "4",
+    "content": "Great course. Got to learn a lot of important stuffs.",
+    "createdAt": "2024-09-18T16:59:14.747Z",
+    "updatedAt": "2024-09-18T16:59:14.747Z",
+    "__v": 0
+  },
+  {
+    "_id": "675340f30877e571f06ca034",
+    "id": "1a9f83af-6956-42f6-b072-6620b5489196",
+    "user": "33871bc6-cbd5-4f7b-9a22-224f49bcfd06",
+    "rating": "5",
+    "content": "Voluptates consequatur accusantium dolorem saepe quidem harum. Saepe enim eius deserunt odit tempora tempora nobis provident quaerat. Exercitationem esse praesentium voluptatum quasi repellendus culpa minus inventore quas.",
+    "createdAt": "2024-12-06T18:22:43.098Z",
+    "updatedAt": "2024-12-06T18:22:43.098Z",
+    "__v": 0
+  },
+  {
+    "_id": "67555dfc76eeffe485facc1d",
+    "id": "d0c50369-bc9b-49ce-a82b-44abe5ecfae0",
+    "user": "b45116c7-650f-4d93-a9a5-5e1a7b8fd3fb",
+    "rating": "5",
+    "content": "Corrupti ratione odit animi quae quidem alias. Cupiditate placeat consequatur exercitationem suscipit tempore asperiores quidem dolores voluptate. Non inventore quasi iure rerum facilis omnis eveniet repellat.",
+    "createdAt": "2024-12-08T08:51:08.894Z",
+    "updatedAt": "2024-12-08T08:51:08.894Z",
+    "__v": 0
+  },
+  {
+    "_id": "67672dbb9dfba9321cec5c5e",
+    "id": "9dfa3da6-5d75-407f-a4a7-744fc3f61b60",
+    "user": "f46ceb8f-26bf-4a1a-8241-88ff5147d226",
+    "rating": "4.5",
+    "content": "Illo ut nostrum quidem repellendus. Debitis quos aspernatur at at. Vel at eius cumque.",
+    "createdAt": "2024-12-21T21:06:03.647Z",
+    "updatedAt": "2024-12-21T21:06:03.647Z",
+    "__v": 0
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "6701082d7c1851acf303a263",
+    "id": "c274a6f4-83ff-4819-922e-e1b5677a35d1",
+    "plan": "Basic",
+    "description": "This plan is designed for basic features",
+    "price": 20000,
+    "collegeSelection": true,
+    "sop": false,
+    "recommendations": false,
+    "financialGuidance": false,
+    "visaProcess": false,
+    "postArrivalSupport": false,
+    "__v": 0
+  },
+  {
+    "_id": "670108917c1851acf303a265",
+    "id": "90b24fbc-6360-4fe3-81af-9b8190f52fc5",
+    "plan": "Premium",
+    "description": "This plan is designed for Premium features",
+    "price": 35000,
+    "collegeSelection": true,
+    "sop": true,
+    "recommendations": true,
+    "financialGuidance": true,
+    "visaProcess": false,
+    "postArrivalSupport": false,
+    "__v": 0
+  },
+  {
+    "_id": "670108b87c1851acf303a267",
+    "id": "2356db6c-07b1-49f1-b605-8e51a84d0f35",
+    "plan": "Advance",
+    "description": "This plan is designed for Advance features",
+    "price": 50000,
+    "collegeSelection": true,
+    "sop": true,
+    "recommendations": true,
+    "financialGuidance": true,
+    "visaProcess": true,
+    "postArrivalSupport": true,
+    "__v": 0
+  }
+]

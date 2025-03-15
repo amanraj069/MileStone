@@ -1,0 +1,89 @@
+[
+  {
+    "_id": "671a33bbb4aea7ebf920f997",
+    "name": "Advanced",
+    "category": "eb022d05-4584-4481-9cf3-670dd1d0f431",
+    "id": "4028e163-f026-4e7f-beb1-a9f9de45d503",
+    "createdAt": "2024-10-24T11:47:07.386Z",
+    "updatedAt": "2024-12-23T15:09:16.299Z",
+    "__v": 0,
+    "courses": [
+      "1ab1f2f3-32d6-447b-ba4d-818d979bd344"
+    ]
+  },
+  {
+    "_id": "671a33f7b4aea7ebf920f99c",
+    "name": "Basic",
+    "category": "eb022d05-4584-4481-9cf3-670dd1d0f431",
+    "id": "63c91e04-3255-4848-99dc-d81978da4c5d",
+    "createdAt": "2024-10-24T11:48:07.455Z",
+    "updatedAt": "2024-12-23T15:09:01.561Z",
+    "__v": 0,
+    "courses": [
+      "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+      "0cfb1ac9-d7dd-4118-b046-735f9950e827",
+      "b69a39ee-816c-4dca-ad1d-8cf6586af8c7"
+    ]
+  },
+  {
+    "_id": "6759a838fb5d7939e7d638fa",
+    "name": "Saige Johnson",
+    "category": "eb022d05-4584-4481-9cf3-670dd1d0f431",
+    "courses": [],
+    "id": "bb017b14-9bd1-4df3-bbd4-4298ffda91bb",
+    "createdAt": "2024-12-11T14:56:56.804Z",
+    "updatedAt": "2024-12-11T14:56:56.804Z",
+    "__v": 0
+  },
+  {
+    "_id": "6759a8e6f96be491cc89bd5e",
+    "name": "Parker Blanda",
+    "category": "eb022d05-4584-4481-9cf3-670dd1d0f431",
+    "courses": [
+      "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+      "0cfb1ac9-d7dd-4118-b046-735f9950e827",
+      "b69a39ee-816c-4dca-ad1d-8cf6586af8c7"
+    ],
+    "id": "6ccdabc8-e5fd-4c9d-99c8-950dd31a412d",
+    "createdAt": "2024-12-11T14:59:50.283Z",
+    "updatedAt": "2024-12-24T09:03:20.079Z",
+    "__v": 0
+  },
+  {
+    "_id": "6759d888288af3a79dc9d351",
+    "name": "Javier Hammes",
+    "category": "eb022d05-4584-4481-9cf3-670dd1d0f431",
+    "courses": [
+      "b69a39ee-816c-4dca-ad1d-8cf6586af8c7"
+    ],
+    "id": "0f074de5-de31-4757-9a64-be654f8bbaef",
+    "createdAt": "2024-12-11T18:23:04.657Z",
+    "updatedAt": "2024-12-24T09:12:05.761Z",
+    "__v": 0
+  },
+  {
+    "_id": "6759d8db28082cc6f66bb407",
+    "name": "Sigmund Hilll",
+    "category": "4acc752a-0c00-49f0-bec0-ef1543818e4b",
+    "courses": [
+      "0cfb1ac9-d7dd-4118-b046-735f9950e827"
+    ],
+    "id": "2de58b55-afb1-4fa5-940a-e970a348dfc5",
+    "createdAt": "2024-12-11T18:24:27.374Z",
+    "updatedAt": "2024-12-23T15:06:55.609Z",
+    "__v": 0
+  },
+  {
+    "_id": "675a968c4c8221ea8076eb1c",
+    "name": "Paula O'Keefe",
+    "category": "dec38f95-ce10-4995-b6b0-b10471a17e93",
+    "courses": [
+      "1ab1f2f3-32d6-447b-ba4d-818d979bd344",
+      "0cfb1ac9-d7dd-4118-b046-735f9950e827"
+    ],
+    "id": "dba49737-e090-4758-816e-f2a0c1e7852b",
+    "createdAt": "2024-12-12T07:53:48.445Z",
+    "updatedAt": "2024-12-23T15:04:43.246Z",
+    "__v": 0
+  }
+]
