@@ -1,21 +1,35 @@
-/* Payment Content Styles */
-.main-content {
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: #f0f5fa;
+    color: #333;
+    overflow-x: hidden;
+  }
+  
+  /* Payment Content Styles */
+  .main-content {
     flex-grow: 1;
     padding: 10px 20px 20px 20px;
     margin-left: 290px;
     width: calc(100% - 290px);
     background-color: #f0f5fa;
-}
-
-.content-section {
+  }
+  
+  .content-section {
     display: none;
-}
-
-.content-section.active {
+  }
+  
+  .content-section.active {
     display: block;
-}
-
-.content-header {
+  }
+  
+  .content-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,58 +37,57 @@
     background-color: #e6eef8;
     padding: 10px 20px;
     border-radius: 8px;
-}
-
-.content-header h2 {
+  }
+  
+  .content-header h2 {
     font-size: 22px;
     color: #1e3a8a;
-}
+  }
   
-
-.payment-content {
+  .payment-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.payment-section {
+  }
+  
+  .payment-section {
     background-color: white;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.payment-section h4 {
+  }
+  
+  .payment-section h4 {
     font-size: 18px;
     color: #1e3a8a;
     margin-bottom: 15px;
     border-bottom: 1px solid #d0e1f9;
     padding-bottom: 5px;
-}
-
-.payment-section h5 {
+  }
+  
+  .payment-section h5 {
     font-size: 16px;
     color: #1e3a8a;
     margin-bottom: 10px;
-}
-
-/* Subscription Details */
-.subscription-details {
+  }
+  
+  /* Subscription Details */
+  .subscription-details {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.subscription-details p {
+  }
+  
+  .subscription-details p {
     font-size: 14px;
     color: #333;
-}
-
-.subscription-details p strong {
+  }
+  
+  .subscription-details p strong {
     color: #1e3a8a;
-}
-
-.manage-subscription-btn {
+  }
+  
+  .manage-subscription-btn {
     background-color: #2563eb;
     color: white;
     border: none;
@@ -85,45 +98,45 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: fit-content;
-}
-
-.manage-subscription-btn:hover {
+  }
+  
+  .manage-subscription-btn:hover {
     background-color: #1d4ed8;
-}
-
-/* Payment Methods */
-.payment-methods {
+  }
+  
+  /* Payment Methods */
+  .payment-methods {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
-}
-
-.payment-method {
+  }
+  
+  .payment-method {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px;
     background-color: #f9f9f9;
     border-radius: 4px;
-}
-
-.payment-method i {
+  }
+  
+  .payment-method i {
     font-size: 24px;
     color: #1e3a8a;
-}
-
-.payment-method span {
+  }
+  
+  .payment-method span {
     font-size: 14px;
     color: #333;
-}
-
-.payment-method .expiry-date {
+  }
+  
+  .payment-method .expiry-date {
     color: #666;
     margin-left: auto;
-}
-
-.remove-method-btn {
+  }
+  
+  .remove-method-btn {
     background-color: #ef4444;
     color: white;
     border: none;
@@ -132,36 +145,36 @@
     font-size: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.remove-method-btn:hover {
+  }
+  
+  .remove-method-btn:hover {
     background-color: #dc2626;
-}
-
-/* Add Payment Method Form */
-.add-payment-method {
+  }
+  
+  /* Add Payment Method Form */
+  .add-payment-method {
     margin-top: 20px;
-}
-
-#payment-form {
+  }
+  
+  #payment-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-.form-group {
+  }
+  
+  .form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
-}
-
-.form-group label {
+  }
+  
+  .form-group label {
     font-size: 14px;
     color: #1e3a8a;
     font-weight: 500;
-}
-
-.form-group input {
+  }
+  
+  .form-group input {
     border: 1px solid #d0e1f9;
     border-radius: 4px;
     padding: 8px;
@@ -169,22 +182,22 @@
     background-color: #fff;
     width: 100%;
     max-width: 300px;
-}
-
-.form-row {
+  }
+  
+  .form-row {
     display: flex;
     gap: 15px;
-}
-
-.form-row .form-group {
+  }
+  
+  .form-row .form-group {
     flex: 1;
-}
-
-.form-row .form-group input {
+  }
+  
+  .form-row .form-group input {
     max-width: 150px;
-}
-
-.add-method-btn {
+  }
+  
+  .add-method-btn {
     background-color: #2563eb;
     color: white;
     border: none;
@@ -195,90 +208,279 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: fit-content;
-}
-
-.add-method-btn:hover {
+  }
+  
+  .add-method-btn:hover {
     background-color: #1d4ed8;
-}
-
-/* Payment History Table */
-.payment-history-table {
+  }
+  
+  /* Payment History Table */
+  .payment-history-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
-}
-
-.payment-history-table th,
-.payment-history-table td {
+  }
+  
+  .payment-history-table th,
+  .payment-history-table td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #d0e1f9;
-}
-
-.payment-history-table th {
+  }
+  
+  .payment-history-table th {
     background-color: #e6eef8;
     color: #1e3a8a;
     font-weight: 600;
-}
-
-.payment-history-table td {
+  }
+  
+  .payment-history-table td {
     color: #333;
-}
-
-.payment-history-table .status.success {
+  }
+  
+  .payment-history-table .status.success {
     color: #10b981;
     font-weight: 500;
-}
-
-.payment-history-table .status.failed {
+  }
+  
+  .payment-history-table .status.failed {
     color: #ef4444;
     font-weight: 500;
-}
-
-.payment-history-table .view-receipt {
+  }
+  
+  .payment-history-table .view-receipt {
     color: #2563eb;
     text-decoration: none;
     font-weight: 500;
-}
-
-.payment-history-table .view-receipt:hover {
+  }
+  
+  .payment-history-table .view-receipt:hover {
     text-decoration: underline;
-}
-
-/* Responsive Styles */
-@media (max-width: 992px) {
-    header {
-        margin-left: 70px;
-        width: calc(100% - 70px);
-    }
-
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 900px) {
     .main-content {
-        margin-left: 70px;
-        width: calc(100% - 70px);
+      margin-left: 70px;
+      width: calc(100% - 70px);
+      padding: 10px 15px 15px 15px;
     }
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-        width: 100%;
+  
+    .content-header {
+      padding: 8px 15px;
     }
-
+  
+    .content-header h2 {
+      font-size: 20px;
+    }
+  
+    .payment-section {
+      padding: 15px;
+    }
+  
+    .payment-section h4 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+  
+    .payment-section h5 {
+      font-size: 14px;
+    }
+  
+    .subscription-details p {
+      font-size: 13px;
+    }
+  
+    .manage-subscription-btn,
+    .add-method-btn {
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+  
+    .payment-method {
+      padding: 8px;
+    }
+  
+    .payment-method i {
+      font-size: 20px;
+    }
+  
+    .payment-method span {
+      font-size: 13px;
+    }
+  
+    .remove-method-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+  
+    .form-group label {
+      font-size: 13px;
+    }
+  
+    .form-group input {
+      padding: 7px;
+      font-size: 13px;
+      max-width: 250px;
+    }
+  
+    .form-row .form-group input {
+      max-width: 120px;
+    }
+  
     .payment-history-table {
-        font-size: 12px;
+      font-size: 13px;
     }
-
+  
     .payment-history-table th,
     .payment-history-table td {
-        padding: 8px;
+      padding: 8px;
     }
-
+  }
+  
+  @media (max-width: 500px) {
+    .main-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 5px 10px 10px 10px;
+    }
+  
+    .content-header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 8px 10px;
+      gap: 10px;
+    }
+  
+    .content-header h2 {
+      font-size: 18px;
+    }
+  
+    .payment-section {
+      padding: 10px;
+    }
+  
+    .payment-section h4 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  
+    .payment-section h5 {
+      font-size: 13px;
+    }
+  
+    .subscription-details {
+      gap: 8px;
+    }
+  
+    .subscription-details p {
+      font-size: 12px;
+    }
+  
+    .manage-subscription-btn,
+    .add-method-btn {
+      padding: 6px 10px;
+      font-size: 12px;
+      width: 100%;
+    }
+  
+    .payment-methods {
+      gap: 8px;
+    }
+  
+    .payment-method {
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 6px;
+    }
+  
+    .payment-method i {
+      font-size: 18px;
+    }
+  
+    .payment-method span {
+      font-size: 12px;
+    }
+  
+    .payment-method .expiry-date {
+      margin-left: 0;
+      width: 100%;
+    }
+  
+    .remove-method-btn {
+      padding: 3px 6px;
+      font-size: 10px;
+      width: 100%;
+    }
+  
+    .add-payment-method {
+      margin-top: 15px;
+    }
+  
+    #payment-form {
+      gap: 10px;
+    }
+  
+    .form-group label {
+      font-size: 12px;
+    }
+  
+    .form-group input {
+      padding: 6px;
+      font-size: 12px;
+      max-width: 100%;
+    }
+  
     .form-row {
-        flex-direction: column;
-        gap: 10px;
+      flex-direction: column;
+      gap: 10px;
     }
-
+  
     .form-row .form-group input {
-        max-width: 100%;
+      max-width: 100%;
     }
-}
+  
+    .payment-history-table {
+      display: block;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+  
+    .payment-history-table th,
+    .payment-history-table td {
+      padding: 6px;
+      min-width: 100px;
+    }
+  
+    .payment-history-table thead {
+      display: none; /* Hide headers on mobile, use data labels instead */
+    }
+  
+    .payment-history-table tbody tr {
+      display: block;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #d0e1f9;
+    }
+  
+    .payment-history-table tbody td {
+      display: block;
+      text-align: right;
+      position: relative;
+      padding-left: 50%;
+      border: none;
+    }
+  
+    .payment-history-table tbody td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 6px;
+      font-weight: 600;
+      color: #1e3a8a;
+      text-align: left;
+    }
+  
+    .payment-history-table tbody td[data-label="Receipt"] {
+      text-align: center;
+      padding-left: 0;
+    }
+  }
