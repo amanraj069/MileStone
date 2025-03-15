@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Settings</title>
+    <title>Employer Profile Settings</title>
     <link rel="stylesheet" href="/Public/css/adminD/admin_page.css">
     <link rel="stylesheet" href="/Public/css/adminD/sidebar.css">
     <link rel="stylesheet" href="/Public/css/adminD/settings.css">
+    <style>
+        /* Inline basic icons for offline use */
+        .fa-edit::before { content: "✏️"; }
+        .fa-map-marker-alt::before { content: "📍"; }
+        .fa-globe::before { content: "🌐"; }
+        .fa-envelope::before { content: "✉️"; }
+        .fa-phone::before { content: "📞"; }
+        .fa-check-circle::before { content: "✅"; }
+        .fa-quote-left::before { content: "“"; }
+    </style>
 </head>
 <body>
     <div class="dashboard-wrapper">
@@ -77,66 +87,102 @@
         </div>
         <!-- Main Content -->
         <div class="main-content">
-            <section id="settings" class="section-content">
+            <section id="profile" class="section-content active">
                 <div class="profile-header">
-                    <h1>Profile</h1>
+                    <h1>Admin Profile</h1>
+                    <button class="edit-profile-btn"><i class="fa-edit"></i> Edit Profile</button>
                 </div>
                 <div class="profile-container">
                     <div class="profile-overview">
-                        <p class="about-text">At TechSolutions, we value collaboration, creativity, and continuous learning. We're always looking to work with talented freelancers who share our vision and can contribute to our growing portfolio of successful projects.</p>
+                        <div class="profile-logo">
+                            <img src="/Public/assets/user_image.jpg" alt="TechMonkey Assoc. Logo">
+                        </div>
+                        <div class="profile-details">
+                            <h2>Jaffa<span class="badge">Admin</span></h2>
+                            <p class="location"><i class="fa-map-marker-alt"></i> Hyderabad, India </p>
+                            <p class="website"><i class="fa-globe"></i> <a href="#">www.techmonkey.com</a></p>
+                            <p class="email"><i class="fa-envelope"></i> <a href="mailto:contact@techmonkey.com">contact@gm.com</a></p>
+                            <p class="phone"><i class="fa-phone"></i> +91 98765 43210</p>
+                            <div class="social-links">
+                                <a href="#" class="social-icon linkedin" aria-label="LinkedIn">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.366-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.017 2.017 0 01-2.015-2.015 2.017 2.017 0 112.015 2.015zM7.35 20.452H4.298V9h3.052v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451c.98 0 1.771-.774 1.771-1.729V1.729C24 .774 23.205 0 22.225 0z" fill="#0A66C2"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="social-icon twitter" aria-label="Twitter">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.396 0-.79-.023-1.17-.068 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 14.008-7.496 14.008-13.986 0-.21-.005-.42-.014-.63.961-.695 1.8-1.562 2.457-2.549z" fill="#1DA1F2"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="social-icon facebook" aria-label="Facebook">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796V24C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="social-icon instagram" aria-label="Instagram">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.133.277 2.65.596.566.381.96.862 1.212 1.212.32.517.535 1.284.597 2.65.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.277 2.133-.596 2.65-.381.566-.862.96-1.212 1.212-.517.32-1.284.535-2.65.597-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.133-.277-2.65-.596-.566-.381-.96-.862-1.212-1.212-.32-.517-.535-1.284-.597-2.65-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.277-2.133.596-2.65.381-.566.862-.96 1.212-1.212.517-.32 1.284-.535 2.65-.597 1.266-.058 1.646-.07 4.85-.07zm0 1.5c-3.032 0-3.415.013-4.615.07-.9.043-1.505.19-2.038.398-.617.241-1.142.56-1.635.987-.493.427-.746.918-.987 1.635-.207.533-.355 1.138-.398 2.038-.057 1.2-.07 1.583-.07 4.615s.013 3.415.07 4.615c.043.9.19 1.505.398 2.038.241.617.56 1.142.987 1.635.427.493.918.746 1.635.987.533.207 1.138.355 2.038.398 1.2.057 1.583.07 4.615.07s3.415-.013 4.615-.07c.9-.043 1.505-.19 2.038-.398.617-.241 1.142-.56 1.635-.987.493-.427.746-.918.987-1.635.207-.533.355-1.138.398-2.038.057-1.2.07-1.583.07-4.615s-.013-3.415-.07-4.615c-.043-.9-.19-1.505-.398-2.038-.241-.617-.56-1.142-.987-1.635-.427-.493-.918-.746-1.635-.987-.533-.207-1.138-.355-2.038-.398-1.2-.057-1.583-.07-4.615-.07z" fill="url(#paint0_linear)"/>
+                                        <path d="M12 7.023a4.977 4.977 0 100 9.954 4.977 4.977 0 000-9.954zm0 8.297a3.32 3.32 0 110-6.64 3.32 3.32 0 010 6.64z" fill="url(#paint0_linear)"/>
+                                        <circle cx="18.406" cy="5.594" r="1.406" fill="url(#paint0_linear)"/>
+                                        <defs>
+                                            <linearGradient id="paint0_linear" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#405DE6"/>
+                                                <stop offset="0.5" stop-color="#E1306C"/>
+                                                <stop offset="1" stop-color="#F77737"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="profile-content">
-                        <div class="testimonials-section">
-                            <h3>Testimonials & Reviews</h3>
-                            <div class="testimonial-card">
-                                <p>"Working with TechMonkey Assc. was a fantastic experience. The team was professional, responsive, and delivered high-quality work on time. I appreciated their attention to detail and willingness to go the extra mile to ensure the project's success."</p>
-                                <div class="reviewer-info">
-                                    <img src="https://via.placeholder.com/40" alt="Tushar Verma">
-                                    <div>
-                                        <p class="reviewer-name">Tushar Verma</p>
-                                        <p class="reviewer-role">UI/UX Designer</p>
-                                        <span class="stars">★★★★☆ 4.6</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="testimonial-card">
-                                <p>"They provided clear direction and timely feedback throughout the project, have a streamlined process that made collaboration efficient. I would definitely work with them again on future projects."</p>
-                                <div class="reviewer-info">
-                                    <img src="https://via.placeholder.com/40" alt="Sangeeta Setia">
-                                    <div>
-                                        <p class="reviewer-name">Sangeeta Setia</p>
-                                        <p class="reviewer-role">Full Stack Developer</p>
-                                        <span class="stars">★★★★☆ 3.9</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stats-section">
-                            <h3>RESPONSETIME ICS (%)</h3>
-                            <div class="stats-chart">
-                                <div class="chart-bar" style="height: 80%;">80%</div>
-                                <div class="chart-bar" style="height: 60%;">60%</div>
-                                <div class="chart-label">Response Rate</div>
-                                <div class="chart-label">Avg. Response Time</div>
-                            </div>
-                            <div class="stats-details">
-                                <div class="stat-item"><span>Member Since</span><span>Jan 2018</span></div>
-                                <div class="stat-item"><span>Projects Posted</span><span>27</span></div>
-                                <div class="stat-item"><span>Completed Projects</span><span>18</span></div>
-                                <div class="stat-item"><span>Active Projects</span><span>9</span></div>
-                                <div class="stat-item"><span>Freelancers Hired</span><span>21</span></div>
-                                <div class="stat-item"><span>Avg. Project Budget</span><span>INR 2,500</span></div>
-                                <div class="stat-item"><span>Payment Verification</span><span>✅ Verified</span></div>
-                                <div class="stat-item"><span>Response Rate</span><span>98%</span></div>
-                                <div class="stat-item"><span>Avg. Response Time</span><span>2.3 hours</span></div>
+                        <div class="profile-main">
+                            <div class="settings-section" id="personal-info">
+                                <h3>Personal Information</h3>
+                                <p>Username: techmonkey_user</p>
+                                <p>Email: contact@techmonkey.com</p>
+                                <p>Profile Picture: <img src="https://via.placeholder.com/40" alt="Profile Pic"></p>
+                                <p>Address: 1-5-1107/1,Himayatnagar,Hyderabad.</p>
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- Edit Profile Form -->
+                <div class="edit-profile-form" style="display: none;">
+                    <h2>Edit Profile</h2>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" class="form-control" value="techmonkey_user">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" value="contact@techmonkey.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-pic">Profile Picture URL</label>
+                            <input type="text" id="profile-pic" class="form-control" value="https://via.placeholder.com/40">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <input type="password" id="password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="recovery">Password Recovery</label>
+                            <select id="recovery" class="form-control">
+                                <option value="enabled">Enabled (via email)</option>
+                                <option value="disabled">Disabled</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                        <button type="button" class="btn-cancel">Cancel</button>
+                    </form>
                 </div>
             </section>
         </div>
     </div>
-    <script src="navigation.js"></script>
     <script src="settings.js"></script>
+    <script src="navigation.js"></script>
 </body>
 </html>

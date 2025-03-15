@@ -134,62 +134,125 @@
 .complaint-actions {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    align-items: flex-end;
 }
 
 .btn-resolve {
-    background-color: #4caf50;
+    background: linear-gradient(90deg, #2e7d32, #81c784);
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 10px 20px; /* Reduced horizontal padding from 8px to 6px */
+    border-radius: 10px;
+    height: 40px; /* Increased height */
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    min-width: 160px; /* Increased width */
 }
 
 .btn-resolve:hover {
-    background-color: #45a049;
+    background: linear-gradient(90deg, #2e7d32, #81c784);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn-resolve:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Special styling for resolved complaints */
+.complaint-card.resolved .btn-resolve {
+    background: linear-gradient(90deg, #455a64, #90a4ae);
+    cursor: default;
+}
+
+.complaint-card.resolved .btn-resolve:hover {
+    background: linear-gradient(90deg, #455a64, #90a4ae);
+    transform: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .additional-actions {
-    display: none; /* Hidden by default */
-    margin-top: 10px;
+    display: none;
+    margin-top: 8px;
+    width: 100%;
+    background: #f9fafb;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.contact-buttons, .rating-buttons {
+.action-buttons {
     display: flex;
-    justify-content: space-between; /* Equal spacing between buttons */
-    gap: 10px; /* Consistent gap */
+    justify-content: space-evenly;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Ensure spacing persists when visible */
+.additional-actions[style*="block"] {
+    display: block !important;
+}
+
+.additional-actions[style*="block"] .action-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 8px;
 }
 
 .btn-contact, .btn-rating {
-    flex: 1; /* Ensures buttons take equal width */
-    padding: 8px 16px;
-    border-radius: 6px;
+    flex: 1;
+    padding: 10px 30px; /* Reduced horizontal padding from 8px to 6px */
+    border-radius: 14px;
     border: none;
+    min-height:60px;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     text-align: center;
+    min-width: 110px; /* Increased width for these buttons */
 }
 
-.btn-contact {
-    background-color: #4aaeff;
+.btn-contact.freelancer {
+    background: linear-gradient(90deg, #1976d2, #42a5f5);
+    color: white;
+}
+
+.btn-contact.employer {
+    background: linear-gradient(90deg, #512da8, #9575cd);
     color: white;
 }
 
 .btn-contact:hover {
-    background-color: #1976d2;
+    background: linear-gradient(90deg, #1565c0, #1976d2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.btn-rating {
-    background-color: #fcbb5b;
+.btn-rating.freelancer {
+    background: linear-gradient(90deg, #ef6c00, #ffa726);
+    color: white;
+}
+
+.btn-rating.employer {
+    background: linear-gradient(90deg, #c2185b, #f06292);
     color: white;
 }
 
 .btn-rating:hover {
-    background-color: #f57c00;
+    background: linear-gradient(90deg, #e64a19, #ef6c00);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive Adjustments */
@@ -198,12 +261,19 @@
         flex-direction: column;
         gap: 10px;
     }
-
-    .contact-buttons, .rating-buttons {
+    .btn-resolve {
+        margin:auto;
+        width: 95%; 
+        height:40px;
+        border-radius: 15px;
+    }
+    .action-buttons {
         flex-direction: column;
+        gap: 6px;
     }
 
     .btn-contact, .btn-rating {
-        width: 100%; /* Full width on smaller screens */
+        width: 100%;
+        min-width: unset; /* Remove min-width on smaller screens */
     }
 }
