@@ -36,9 +36,10 @@ header {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
     color: #0a66c2;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .search-bar {
