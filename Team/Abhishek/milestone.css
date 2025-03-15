@@ -1,23 +1,4 @@
 /* Base Styles */
-:root {
-    --primary: #3b82f6;
-    --primary-hover: #2563eb;
-    --primary-light: #eff6ff;
-    --secondary: #f1f5f9;
-    --success: #10b981;
-    --success-light: #d1fae5;
-    --warning: #f59e0b;
-    --warning-light: #fef3c7;
-    --danger: #ef4444;
-    --danger-light: #fee2e2;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --border: #e2e8f0;
-    --background: #ffffff;
-    --card-background: #ffffff;
-    --radius: 0.5rem;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -27,7 +8,7 @@
 
 body {
     background-color: #f8fafc;
-    color: var(--text-primary);
+    color: #1e293b;
     line-height: 1.5;
 }
 
@@ -48,7 +29,7 @@ body {
 .title {
     font-size: 1.875rem;
     font-weight: 700;
-    color: var(--primary);
+    color: #3b82f6;
 }
 
 .add-button {
@@ -56,10 +37,10 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    background-color: var(--success);
+    background-color: #10b981;
     color: white;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 0.5rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -71,12 +52,12 @@ body {
 
 /* Progress Card Styles */
 .progress-card {
-    background-color: var(--card-background);
-    border-radius: var(--radius);
+    background-color: #ffffff;
+    border-radius: 0.5rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--border);
+    border: 1px solid #e2e8f0;
 }
 
 .progress-section {
@@ -106,7 +87,7 @@ body {
 
 .progress-bar-container {
     height: 0.5rem;
-    background-color: var(--secondary);
+    background-color: #f1f5f9;
     border-radius: 9999px;
     overflow: hidden;
     margin-bottom: 0.5rem;
@@ -114,7 +95,7 @@ body {
 
 .progress-bar {
     height: 100%;
-    background-color: var(--primary);
+    background-color: #3b82f6;
     border-radius: 9999px;
     width: 0%;
     transition: width 0.3s ease;
@@ -124,7 +105,7 @@ body {
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: var(--text-secondary);
+    color: #64748b;
 }
 
 /* Milestone Card Styles */
@@ -134,10 +115,10 @@ body {
 }
 
 .milestone-card {
-    background-color: var(--card-background);
-    border-radius: var(--radius);
+    background-color: #ffffff;
+    border-radius: 0.5rem;
     overflow: hidden;
-    border: 1px solid var(--border);
+    border: 1px solid #e2e8f0;
     border-left-width: 4px;
     transition: box-shadow 0.3s ease;
 }
@@ -147,15 +128,15 @@ body {
 }
 
 .milestone-card.completed {
-    border-left-color: var(--success);
+    border-left-color: #10b981;
 }
 
 .milestone-card.in-progress {
-    border-left-color: var(--warning);
+    border-left-color: #f59e0b;
 }
 
 .milestone-card.not-started {
-    border-left-color: var(--border);
+    border-left-color: #e2e8f0;
 }
 
 .milestone-content {
@@ -180,23 +161,11 @@ body {
     gap: 0.5rem;
 }
 
-.milestone-title i.fa-check-circle {
-    color: var(--success);
-}
-
-.milestone-title i.fa-clock {
-    color: var(--warning);
-}
-
-.milestone-title i.fa-circle-exclamation {
-    color: var(--text-secondary);
-}
-
 .milestone-deadline {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-secondary);
+    color: #64748b;
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
 }
@@ -215,7 +184,7 @@ body {
 }
 
 .status-label span:first-child {
-    color: var(--text-secondary);
+    color: #64748b;
 }
 
 .status-badge {
@@ -227,27 +196,27 @@ body {
 }
 
 .status-badge.completed {
-    background-color: var(--success-light);
-    color: var(--success);
+    background-color: #d1fae5;
+    color: #10b981;
 }
 
 .status-badge.in-progress {
-    background-color: var(--warning-light);
-    color: var(--warning);
+    background-color: #fef3c7;
+    color: #f59e0b;
 }
 
 .status-badge.not-started {
-    background-color: var(--secondary);
-    color: var(--text-secondary);
+    background-color: #f1f5f9;
+    color: #64748b;
 }
 
 .status-select {
     padding: 0.375rem 0.75rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
     font-size: 0.875rem;
     width: 100%;
-    background-color: var(--background);
+    background-color: #ffffff;
 }
 
 .milestone-payment {
@@ -259,14 +228,14 @@ body {
 .payment-amount {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--primary);
+    color: #3b82f6;
     margin-bottom: 0.5rem;
 }
 
 .payment-percentage {
     font-size: 0.875rem;
     font-weight: normal;
-    color: var(--text-secondary);
+    color: #64748b;
     margin-left: 0.25rem;
 }
 
@@ -276,8 +245,8 @@ body {
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 500;
-    background-color: var(--success-light);
-    color: var(--success);
+    background-color: #d1fae5;
+    color: #10b981;
     margin-top: 0.5rem;
 }
 
@@ -287,9 +256,9 @@ body {
     gap: 0.25rem;
     padding: 0.375rem 0.75rem;
     background-color: transparent;
-    color: var(--success);
-    border: 1px solid var(--success);
-    border-radius: var(--radius);
+    color: #10b981;
+    border: 1px solid #10b981;
+    border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
@@ -298,7 +267,7 @@ body {
 }
 
 .pay-button:hover:not(:disabled) {
-    background-color: var(--success-light);
+    background-color: #d1fae5;
 }
 
 .pay-button:disabled {
@@ -311,8 +280,8 @@ body {
     justify-content: flex-end;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background-color: var(--secondary);
-    border-top: 1px solid var(--border);
+    background-color: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
 }
 
 .action-button {
@@ -322,7 +291,7 @@ body {
     padding: 0.375rem 0.75rem;
     background-color: transparent;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 0.5rem;
     font-size: 0.875rem;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -333,11 +302,11 @@ body {
 }
 
 .edit-button {
-    color: var(--text-secondary);
+    color: #64748b;
 }
 
 .delete-button {
-    color: var(--danger);
+    color: #ef4444;
 }
 
 /* Modal Styles */
@@ -355,8 +324,8 @@ body {
 }
 
 .modal {
-    background-color: var(--background);
-    border-radius: var(--radius);
+    background-color: #ffffff;
+    border-radius: 0.5rem;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -371,7 +340,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .modal-title {
@@ -384,7 +353,7 @@ body {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: var(--text-secondary);
+    color: #64748b;
 }
 
 .modal-body {
@@ -410,8 +379,8 @@ label {
 input {
     width: 100%;
     padding: 0.625rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
     font-size: 1rem;
 }
 
@@ -425,28 +394,28 @@ input {
 .cancel-btn {
     padding: 0.625rem 1rem;
     background-color: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
     font-weight: 500;
     cursor: pointer;
 }
 
 .save-btn {
     padding: 0.625rem 1rem;
-    background-color: var(--primary);
+    background-color: #3b82f6;
     color: white;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 0.5rem;
     font-weight: 500;
     cursor: pointer;
 }
 
 .delete-btn {
     padding: 0.625rem 1rem;
-    background-color: var(--danger);
+    background-color: #ef4444;
     color: white;
     border: none;
-    border-radius: var(--radius);
+    border-radius: 0.5rem;
     font-weight: 500;
     cursor: pointer;
 }

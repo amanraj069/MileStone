@@ -16,6 +16,10 @@ body {
     margin: 0 auto;
 }
 
+a {
+    text-decoration: none;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -130,6 +134,16 @@ header {
 .applicant-title {
     font-size: 12px;
     color: #666;
+}
+
+.job-meta .icon {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.job-meta span {
+    display: inline-flex;
+    align-items: center;
 }
 
 .job-listings {

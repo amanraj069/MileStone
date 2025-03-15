@@ -41,10 +41,3 @@ window.addEventListener('scroll', function() {
         }
     });
 });
-
-
-function goJobListing() {
-    // You would normally use history.back() or redirect to a specific page
-    alert('Navigating back to Job Details page...');
-    window.location.href = "see_more_detail.html";
-}
