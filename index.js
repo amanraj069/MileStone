@@ -22,6 +22,10 @@ app.use("/", homeRouter);
 //   res.sendFile(path.join(__dirname, "Team", "Aman", "chat.html"));
 // });
 
+app.get("/job-listings", (req, res) => {
+  res.sendFile(path.join(__dirname, "Team", "Deepak", "Job_listing.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <link rel="stylesheet" href="/css/Joblisting/Job_listing_public.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="filters">
+            <h2>Filters</h2>
+            <div class="filter-section">
+                <h3>Sort By</h3>
+                <select id="sortSelect">
+                    <option value="salary-desc">Salary (High to Low)</option>
+                    <option value="salary-asc">Salary (Low to High)</option>
+                    <option value="date">Newest First</option>
+                    <option value="stars">Most Starred</option>
+                </select>
+            </div>
+            <div class="filter-section">
+                <h3>Experience Level</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="entry"> Entry Level</label>
+                    <label><input type="checkbox" value="mid"> Mid Level</label>
+                    <label><input type="checkbox" value="senior"> Senior Level</label>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h3>Skills</h3>
+                <div class="skills-container">
+                    <div class="skill-tag">JavaScript</div>
+                    <div class="skill-tag">Python</div>
+                    <div class="skill-tag">React</div>
+                    <div class="skill-tag">Node.js</div>
+                    <div class="skill-tag">SQL</div>
+                    <div class="skill-tag">AWS</div>
+                    <div class="skill-tag">Docker</div>
+                    <div class="skill-tag">Git</div>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h3>Job Type</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="full-time"> Full Time</label>
+                    <label><input type="checkbox" value="part-time"> Part Time</label>
+                    <label><input type="checkbox" value="contract"> Contract</label>
+                    <label><input type="checkbox" value="remote"> Remote</label>
+                </div>
+            </div>
+        </aside>
+        <main class="job-listings" id="jobList">
+            <h1>Available Positions</h1>
+            <script id="jobData" type="application/json">
+                [
+                    {"id": 1, "title": "Senior Frontend Developer", "salary": "800-1700", "date": "2025-03-08", "stars": 4, "skills": ["React", "TypeScript", "NextJS"], "type": "full-time", "experience": "senior", "location": "Bangalore"},
+                    {"id": 2, "title": "UX/UI Designer", "salary": "80-500", "date": "2025-03-07", "stars": 3, "skills": ["Figma", "Adobe XD", "Sketch"], "type": "contract", "experience": "mid", "location": "Mumbai"},
+                    {"id": 3, "title": "Backend Developer", "salary": "600-1200", "date": "2025-03-03", "stars": 5, "skills": ["Node.js", "Express", "MongoDB"], "type": "full-time", "experience": "mid", "location": "Remote"},
+                    {"id": 4, "title": "DevOps Engineer", "salary": "300-1000", "date": "2025-03-05", "stars": 4, "skills": ["Kubernetes", "Docker", "AWS"], "type": "full-time", "experience": "senior", "location": "Hyderabad"},
+                    {"id": 5, "title": "Data Scientist", "salary": "1000-2100", "date": "2025-03-07", "stars": 5, "skills": ["Python", "TensorFlow", "SQL"], "type": "full-time", "experience": "senior", "location": "Bangalore"},
+                    {"id": 6, "title": "Content Writer", "salary": "250-500", "date": "2025-03-06", "stars": 3, "skills": ["SEO", "WordPress", "Copywriting"], "type": "part-time", "experience": "entry", "location": "Remote"},
+                    {"id": 7, "title": "Social Media Manager", "salary": "300-950", "date": "2025-03-09", "stars": 4, "skills": ["Instagram", "TikTok", "Analytics"], "type": "part-time", "experience": "mid", "location": "Hyderabad"},
+                    {"id": 8, "title": "Mobile App Developer", "salary": "900-2000", "date": "2025-03-04", "stars": 5, "skills": ["React Native", "Flutter", "Firebase"], "type": "full-time", "experience": "senior", "location": "Delhi"},
+                    {"id": 9, "title": "Cloud Architect", "salary": "1200-2500", "date": "2025-03-08", "stars": 5, "skills": ["AWS", "Azure", "GCP"], "type": "full-time", "experience": "senior", "location": "Remote"},
+                    {"id": 10, "title": "Full Stack Developer", "salary": "700-1500", "date": "2025-03-07", "stars": 4, "skills": ["JavaScript", "Python", "React"], "type": "full-time", "experience": "mid", "location": "Pune"},
+                    {"id": 11, "title": "Cybersecurity Analyst", "salary": "600-1300", "date": "2025-03-06", "stars": 4, "skills": ["Linux", "Network Security", "SIEM"], "type": "full-time", "experience": "mid", "location": "Chennai"},
+                    {"id": 12, "title": "AI Engineer", "salary": "1100-2300", "date": "2025-03-05", "stars": 5, "skills": ["Python", "Machine Learning", "PyTorch"], "type": "full-time", "experience": "senior", "location": "Bangalore"},
+                    {"id": 13, "title": "Graphic Designer", "salary": "200-600", "date": "2025-03-08", "stars": 3, "skills": ["Photoshop", "Illustrator", "InDesign"], "type": "contract", "experience": "entry", "location": "Remote"},
+                    {"id": 14, "title": "Product Manager", "salary": "900-1800", "date": "2025-03-07", "stars": 4, "skills": ["Agile", "Scrum", "JIRA"], "type": "full-time", "experience": "senior", "location": "Mumbai"},
+                    {"id": 15, "title": "Database Administrator", "salary": "500-1100", "date": "2025-03-06", "stars": 4, "skills": ["SQL", "Oracle", "MySQL"], "type": "full-time", "experience": "mid", "location": "Hyderabad"},
+                    {"id": 16, "title": "QA Engineer", "salary": "400-900", "date": "2025-03-05", "stars": 3, "skills": ["Selenium", "JMeter", "Test Automation"], "type": "full-time", "experience": "mid", "location": "Pune"},
+                    {"id": 17, "title": "Blockchain Developer", "salary": "1000-2200", "date": "2025-03-08", "stars": 5, "skills": ["Solidity", "Ethereum", "Smart Contracts"], "type": "full-time", "experience": "senior", "location": "Remote"},
+                    {"id": 18, "title": "Technical Writer", "salary": "300-700", "date": "2025-03-07", "stars": 3, "skills": ["Docs", "Markdown", "API"], "type": "part-time", "experience": "entry", "location": "Delhi"},
+                    {"id": 19, "title": "Systems Analyst", "salary": "600-1400", "date": "2025-03-06", "stars": 4, "skills": ["UML", "BPMN", "ERP"], "type": "full-time", "experience": "mid", "location": "Chennai"},
+                    {"id": 20, "title": "Game Developer", "salary": "800-1600", "date": "2025-03-05", "stars": 5, "skills": ["Unity", "C#", "Unreal Engine"], "type": "full-time", "experience": "senior", "location": "Bangalore"},
+                    {"id": 21, "title": "Network Engineer", "salary": "500-1200", "date": "2025-03-08", "stars": 4, "skills": ["Cisco", "Routing", "Firewalls"], "type": "full-time", "experience": "mid", "location": "Mumbai"},
+                    {"id": 22, "title": "AR/VR Developer", "salary": "900-1900", "date": "2025-03-07", "stars": 5, "skills": ["Unity", "ARKit", "VR"], "type": "full-time", "experience": "senior", "location": "Remote"},
+                    {"id": 23, "title": "Junior Web Developer", "salary": "200-500", "date": "2025-03-09", "stars": 3, "skills": ["JavaScript", "HTML", "CSS"], "type": "full-time", "experience": "entry", "location": "Pune"},
+                    {"id": 24, "title": "Python Developer", "salary": "600-1300", "date": "2025-03-08", "stars": 4, "skills": ["Python", "Django", "Flask"], "type": "full-time", "experience": "mid", "location": "Remote"},
+                    {"id": 25, "title": "Senior QA Analyst", "salary": "700-1500", "date": "2025-03-07", "stars": 4, "skills": ["Selenium", "Cypress", "Postman"], "type": "full-time", "experience": "senior", "location": "Bangalore"},
+                    {"id": 26, "title": "Marketing Specialist", "salary": "400-900", "date": "2025-03-06", "stars": 3, "skills": ["SEO", "Google Analytics", "Content"], "type": "part-time", "experience": "mid", "location": "Delhi"},
+                    {"id": 27, "title": "Frontend Engineer", "salary": "700-1400", "date": "2025-03-05", "stars": 4, "skills": ["React", "Vue.js", "JavaScript"], "type": "full-time", "experience": "mid", "location": "Hyderabad"},
+                    {"id": 28, "title": "Data Analyst", "salary": "500-1100", "date": "2025-03-09", "stars": 4, "skills": ["SQL", "Excel", "Tableau"], "type": "full-time", "experience": "mid", "location": "Mumbai"},
+                    {"id": 29, "title": "Cloud Engineer", "salary": "800-1600", "date": "2025-03-08", "stars": 5, "skills": ["AWS", "Docker", "Terraform"], "type": "full-time", "experience": "senior", "location": "Remote"},
+                    {"id": 30, "title": "UI Designer", "salary": "300-700", "date": "2025-03-07", "stars": 3, "skills": ["Figma", "Sketch", "Adobe XD"], "type": "contract", "experience": "entry", "location": "Chennai"},
+                    {"id": 31, "title": "Backend Engineer", "salary": "600-1300", "date": "2025-03-06", "stars": 4, "skills": ["Node.js", "PostgreSQL", "Redis"], "type": "full-time", "experience": "mid", "location": "Pune"},
+                    {"id": 32, "title": "Machine Learning Engineer", "salary": "1000-2000", "date": "2025-03-05", "stars": 5, "skills": ["Python", "TensorFlow", "Keras"], "type": "full-time", "experience": "senior", "location": "Bangalore"},
+                    {"id": 33, "title": "SEO Specialist", "salary": "250-600", "date": "2025-03-09", "stars": 3, "skills": ["SEO", "SEM", "Analytics"], "type": "part-time", "experience": "entry", "location": "Remote"},
+                    {"id": 34, "title": "DevOps Specialist", "salary": "900-1800", "date": "2025-03-08", "stars": 4, "skills": ["Kubernetes", "Jenkins", "AWS"], "type": "full-time", "experience": "senior", "location": "Delhi"},
+                    {"id": 35, "title": "Full Stack Engineer", "salary": "800-1600", "date": "2025-03-07", "stars": 4, "skills": ["React", "Node.js", "MongoDB"], "type": "full-time", "experience": "mid", "location": "Hyderabad"},
+                    {"id": 36, "title": "Content Creator", "salary": "200-500", "date": "2025-03-06", "stars": 3, "skills": ["Copywriting", "Video Editing", "SEO"], "type": "contract", "experience": "entry", "location": "Mumbai"},
+                    {"id": 37, "title": "Network Administrator", "salary": "500-1100", "date": "2025-03-05", "stars": 4, "skills": ["Cisco", "LAN", "WAN"], "type": "full-time", "experience": "mid", "location": "Chennai"},
+                    {"id": 38, "title": "Senior Data Engineer", "salary": "1100-2300", "date": "2025-03-09", "stars": 5, "skills": ["Python", "Spark", "Hadoop"], "type": "full-time", "experience": "senior", "location": "Remote"},
+                    {"id": 39, "title": "Web Designer", "salary": "300-700", "date": "2025-03-08", "stars": 3, "skills": ["HTML", "CSS", "Figma"], "type": "part-time", "experience": "entry", "location": "Pune"},
+                    {"id": 40, "title": "Software Engineer", "salary": "700-1500", "date": "2025-03-07", "stars": 4, "skills": ["JavaScript", "React", "SQL"], "type": "full-time", "experience": "mid", "location": "Bangalore"}
+                ]
+            </script>
+        </main>
+    </div>
+    <script src="Job_listing_public.js"></script>
+</body>
+</html>
