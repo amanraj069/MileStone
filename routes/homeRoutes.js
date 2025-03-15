@@ -3,8 +3,8 @@ const homeController = require("./../controllers/homeController");
 
 const router = express.Router();
 
-
 router.route("/").get(homeController.getHome);
+router.route("/vanya").get(homeController.getVanya);
 
 // router
 //   .route("/:id")

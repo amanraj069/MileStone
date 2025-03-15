@@ -111,7 +111,7 @@ app.post("/login", (req, res) => {
         } else if (role === "Employer") {
           res.redirect("/employeeD");
         } else if (role === "Freelancer") {
-          res.redirect("/freelancerD");
+          res.redirect("/freelancerD/profile");
         }
       } else {
         res.send(
