@@ -1,11 +1,12 @@
 /* Payment Content Styles */
 .main-content {
     flex-grow: 1;
-    padding: 0 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
     margin-left: 290px;
     width: calc(100% - 290px);
     background-color: #f0f5fa;
 }
+
 .content-section {
     display: none;
 }
@@ -28,6 +29,7 @@
     font-size: 22px;
     color: #1e3a8a;
 }
+  
 
 .payment-content {
     display: flex;
@@ -245,6 +247,11 @@
 
 /* Responsive Styles */
 @media (max-width: 992px) {
+    header {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+
     .main-content {
         margin-left: 70px;
         width: calc(100% - 70px);
