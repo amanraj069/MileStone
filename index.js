@@ -128,7 +128,7 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/job-listings", (req, res) => {
-  res.sendFile(path.join(__dirname, "Team", "Deepak", "Job_listing.html"));
+  res.sendFile(path.join(__dirname, "Team", "Deepak", "see_more_detail.html"));
 });
 
 app.listen(PORT, () => {

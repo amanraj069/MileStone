@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <link rel="stylesheet" href="/css/Joblisting/Job_listing_public.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="filters">
+            <h2>Filters</h2>
+            <div class="filter-section">
+                <h3>Sort By</h3>
+                <select id="sortSelect">
+                    <option value="salary-desc">Salary (High to Low)</option>
+                    <option value="salary-asc">Salary (Low to High)</option>
+                    <option value="date">Newest First</option>
+                    <option value="stars">Most Starred</option>
+                </select>
+            </div>
+            <div class="filter-section">
+                <h3>Experience Level</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="entry"> Entry Level</label>
+                    <label><input type="checkbox" value="mid"> Mid Level</label>
+                    <label><input type="checkbox" value="senior"> Senior Level</label>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h3>Skills</h3>
+                <div class="skills-container">
+                    <div class="skill-tag">JavaScript</div>
+                    <div class="skill-tag">Python</div>
+                    <div class="skill-tag">React</div>
+                    <div class="skill-tag">Node.js</div>
+                    <div class="skill-tag">SQL</div>
+                    <div class="skill-tag">AWS</div>
+                    <div class="skill-tag">Docker</div>
+                    <div class="skill-tag">Git</div>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h3>Job Type</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" value="full-time"> Full Time</label>
+                    <label><input type="checkbox" value="part-time"> Part Time</label>
+                    <label><input type="checkbox" value="contract"> Contract</label>
+                    <label><input type="checkbox" value="remote"> Remote</label>
+                </div>
+            </div>
+        </aside>
+        <main class="job-listings" id="jobList">
+            <h1>Available Positions</h1>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Senior Frontend Developer</h2>
+                    <div class="job-price">₹70,500–₹140,000</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">NextJS</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Bangalore</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 7 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★☆☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">47 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                    
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">UX/UI Designer</h2>
+                    <div class="job-price">₹7000–₹45,500</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">Figma</span>
+                        <span class="tech-tag">Adobe XD</span>
+                        <span class="tech-tag">Sketch</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Mumbai</span>
+                        <span class="work">contract</span>
+                        <span class="clock">Posted 8 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★★☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">42 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Backend Developer</h2>
+                    <div class="job-price">₹55,200–₹104,500</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Remote</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 12 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★★★</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">32 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">DevOps Engineer</h2>
+                    <div class="job-price">₹26,100–₹87,550</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">Kubernetes</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">AWS</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Hyderabad</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 10 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★☆☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">66 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Full Stack Developer</h2>
+                    <div class="job-price">₹61,000–₹130,500</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">React</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Pune</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 8 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★★☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">55 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Data Scientist</h2>
+                    <div class="job-price">₹87,550–₹182,500</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">SQL</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Bangalore</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 8 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★★☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">38 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Content Writer</h2>
+                    <div class="job-price">₹22,500–₹43,500</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">SEO</span>
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Copywriting</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Remote</span>
+                        <span class="work">part-time</span>
+                        <span class="clock">Posted 9 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★☆☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications助力-count">25 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Mobile App Developer</h2>
+                    <div class="job-price">₹78,350–₹174,500</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">React Native</span>
+                        <span class="tech-tag">Flutter</span>
+                        <span class="tech-tag">Firebase</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Delhi</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 11 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★★☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">60 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+            <div class="job-card">
+                <div class="job-img-container">
+                    <img src="company_logo.jpg" alt="Company" class="job-img">
+                </div>
+                <div class="job-info">
+                    <h2 class="job-title">Cloud Architect</h2>
+                    <div class="job-price">₹104,500–₹215,400</div>
+                    <div class="job-tech">
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Azure</span>
+                        <span class="tech-tag">GCP</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="location">Remote</span>
+                        <span class="work">full-time</span>
+                        <span class="clock">Posted 7 days ago</span>
+                    </div>
+                    <div class="star-rating">★★★☆☆</div>
+                </div>
+                <div class="job-actions">
+                    <span class="applications-count">72 applicants</span>
+                    <a href="see_more_detail.html">
+                        <button class="see-more-btn">See More</button>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/js/Joblisting/Job_listing_public.js"></script>
+</body>
+</html>
