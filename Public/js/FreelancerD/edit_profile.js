@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const editBtn = document.querySelector(".edit-profile-btn");
+  const editBtn = document.getElementById("editProfileBtn");
   const profileContent = document.querySelector(".profile-content");
   let isEditing = false;
   let profileData = {};
