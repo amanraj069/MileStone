@@ -4,23 +4,16 @@ const fs = require("fs").promises;
 
 const getFreelancerData = async () => {
   try {
-    const data = await fs.readFile(
-      path.join(__dirname, "../data/freelancer_data.json"),
-      "utf8"
-    );
-    return JSON.parse(data);
+    const filePath = path.join(__dirname, "../data/freelancer_data.json");
+    const data = await fs.readFile(filePath, "utf8");
+    const parsedData = JSON.parse(data);
+    if (!parsedData.user || !parsedData.active_jobs) {
+      throw new Error("Invalid JSON structure: missing required fields");
+    }
+    return parsedData;
   } catch (error) {
     console.error("Error reading freelancer data:", error);
     throw error;
-  }
-};
-
-exports.getFreelancerProfile = async (req, res) => {
-  try {
-    const data = await getFreelancerData();
-    res.render("Vanya/profile", { user: data.user, profile: data.profile });
-  } catch (error) {
-    res.status(500).send("Server Error");
   }
 };
 
@@ -29,8 +22,18 @@ exports.getFreelancerActiveJobs = async (req, res) => {
     const data = await getFreelancerData();
     res.render("Vanya/active_job", {
       user: data.user,
-      active_jobs: data.active_jobs,
+      active_jobs: data.active_jobs || [],
     });
+  } catch (error) {
+    console.error("Error in getFreelancerActiveJobs:", error);
+    res.status(500).send("Server Error: Unable to load active jobs");
+  }
+};
+
+exports.getFreelancerProfile = async (req, res) => {
+  try {
+    const data = await getFreelancerData();
+    res.render("Vanya/profile", { user: data.user, profile: data.profile });
   } catch (error) {
     res.status(500).send("Server Error");
   }

@@ -56,6 +56,7 @@ body {
   font-size: 14px;
   margin-left: 10px;
   background-color: white;
+  cursor: pointer;
 }
 
 /* Job Cards Styles (Active Jobs) */
@@ -146,6 +147,8 @@ body {
   height: 100%;
   background-color: #2563eb;
   border-radius: 4px;
+  width: 0; /* Fallback for when inline style fails */
+  transition: width 0.3s ease-in-out; /* Smooth transition for dynamic updates */
 }
 
 .job-tech {
@@ -174,6 +177,10 @@ body {
 .job-deadline {
   font-size: 14px;
   color: #666;
+}
+
+.job-deadline i {
+  margin-right: 5px;
 }
 
 .job-price {
@@ -353,6 +360,7 @@ body {
   }
 }
 
+/* Project Files Button (if used elsewhere) */
 .project-files-btn {
   padding: 8px 15px;
   border-radius: 4px;
@@ -379,7 +387,7 @@ body {
   margin-right: 5px;
 }
 
-/* Responsive Adjustments */
+/* Responsive Adjustments for Project Files Button */
 @media (max-width: 900px) {
   .project-files-btn {
     padding: 7px 12px;
