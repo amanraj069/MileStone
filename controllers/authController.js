@@ -2,13 +2,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const db = require("../database.js");
 
-exports.getLogin = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "Aman", "login.html"));
-};
-
-exports.getSignup = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "Aman", "signup.html"));
-};
+// Note: getLogin and getSignup methods are no longer needed as they're handled directly in app.js
 
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -42,9 +36,8 @@ exports.postLogin = (req, res) => {
     [email, role],
     async (err, user) => {
       if (err || !user) {
-        return res.send(
-          '<script>alert("Invalid credentials"); window.location="/login";</script>'
-        );
+        // Redirect with error message
+        return res.redirect("/login?error=Invalid email or role");
       }
       const match = await bcrypt.compare(password, user.password);
       if (match) {
