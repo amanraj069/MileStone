@@ -1,18 +1,12 @@
-// routes/authRoutes.js
 const express = require("express");
 const authController = require("../controllers/authController");
-
 const router = express.Router();
 
-router.route("/login")
-  .get(authController.getLogin)
-  .post(authController.postLogin);
+// Handle POST requests for login and signup
+router.post("/login", authController.postLogin);
+router.post("/signup", authController.postSignup);
 
-router.route("/signup")
-  .get(authController.getSignup)
-  .post(authController.postSignup);
-
-router.route("/logout")
-  .get(authController.getLogout);
+// Handle logout
+router.get("/logout", authController.getLogout);
 
 module.exports = router;

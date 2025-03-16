@@ -1,17 +1,8 @@
-// controllers/authController.js
 const path = require("path");
 const bcrypt = require("bcrypt");
 const db = require("../database.js");
 
-exports.getLogin = (req, res) => {
-  // Pass error message if it exists
-  const error = req.query.error || "";
-  res.sendFile(path.join(__dirname, "../views", "Aman", "login.html"));
-};
-
-exports.getSignup = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "Aman", "signup.html"));
-};
+// Note: getLogin and getSignup methods are no longer needed as they're handled directly in app.js
 
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -22,6 +13,7 @@ exports.postSignup = async (req, res) => {
       [email, hashedPassword, role, name],
       (err) => {
         if (err) {
+          console.log("Signup error:", err);
           return res.send(
             '<script>alert("Email already exists"); window.location="/signup";</script>'
           );
@@ -30,6 +22,7 @@ exports.postSignup = async (req, res) => {
       }
     );
   } catch (error) {
+    console.log("Signup catch error:", error);
     res.send(
       '<script>alert("Error creating account"); window.location="/signup";</script>'
     );
@@ -53,14 +46,28 @@ exports.postLogin = (req, res) => {
           email: user.email,
           role: user.role,
           name: user.name,
+          authenticated: true,
         };
-        if (role === "Admin") {
-          res.redirect("/adminD/profile");
-        } else if (role === "Employer") {
-          res.redirect("/employerD/profile");
-        } else if (role === "Freelancer") {
-          res.redirect("/freelancerD/profile");
-        }
+        console.log(
+          "User logged in, session set:",
+          req.session.user,
+          "Session ID:",
+          req.sessionID
+        );
+        req.session.save((err) => {
+          if (err) {
+            console.error("Session save error:", err);
+            return res.status(500).send("Server error during login");
+          }
+          console.log(`Redirecting ${role} to dashboard`);
+          if (role === "Admin") {
+            res.redirect("/adminD/profile");
+          } else if (role === "Employer") {
+            res.redirect("/employerD/profile");
+          } else if (role === "Freelancer") {
+            res.redirect("/freelancerD/profile");
+          }
+        });
       } else {
         // Redirect with error message for incorrect password
         res.redirect("/login?error=Incorrect password");
@@ -70,6 +77,31 @@ exports.postLogin = (req, res) => {
 };
 
 exports.getLogout = (req, res) => {
-  req.session.destroy();
-  res.redirect("/");
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Logout error:", err);
+    }
+    res.redirect("/");
+  });
+};
+
+exports.getHome = (req, res) => {
+  let dashboardRoute = "";
+  if (req.session.user) {
+    switch (req.session.user.role) {
+      case "Admin":
+        dashboardRoute = "/adminD/profile";
+        break;
+      case "Employer":
+        dashboardRoute = "/employerD/profile";
+        break;
+      case "Freelancer":
+        dashboardRoute = "/freelancerD/profile";
+        break;
+    }
+  }
+  res.render("Aman/home", {
+    user: req.session.user || null,
+    dashboardRoute: dashboardRoute,
+  });
 };
