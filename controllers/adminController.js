@@ -1,4 +1,3 @@
-// controllers/adminController.js
 const path = require("path");
 
 exports.getAdminDashboard = (req, res) => {
