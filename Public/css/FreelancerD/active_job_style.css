@@ -11,7 +11,10 @@ body {
   color: #333;
   overflow-x: hidden;
 }
-
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar */
+}
 /* Main Content Styles */
 .main-content {
   flex-grow: 1;

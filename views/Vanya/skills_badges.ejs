@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Skills & Badges - FreelancePro</title>
-    <link
-      rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
-    />
+    <title>Skills & Badges</title>
+    <link rel="stylesheet" href="/css/FreelancerD/static_elements/sidebar.css" />
     <link rel="stylesheet" href="/css/FreelancerD/skills_badges_style.css" />
   </head>
   <body>
@@ -36,8 +33,8 @@
             <nav class="dashboard-nav">
               <ul>
                 <li class="nav-item">
-                  <a href="/freelancerD/active_job" class="nav-link"
-                    ><svg
+                  <a href="/freelancerD/active_job" class="nav-link">
+                    <svg
                       data-name="Layer 1"
                       width="22px"
                       height="22px"
@@ -55,13 +52,14 @@
                       />
                       <path
                         d="M27.91 32h-7.82a2.38 2.38 0 0 1-2.37-2.37v-2.46a2.37 2.37 0 0 1 2.37-2.37h7.82a2.37 2.37 0 0 1 2.37 2.37v2.48A2.38 2.38 0 0 1 27.91 32zm-7.82-5.2a.37.37 0 0 0-.37.37v2.48a.38.38 0 0 0 .37.37h7.82a.38.38 0 0 0 .37-.37v-2.48a.38.38 0 0 0-.37-.37z"
-                      /></svg
-                    ><span>Active Jobs</span></a
-                  >
+                      />
+                    </svg>
+                    <span>Active Jobs</span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/freelancerD/job_history" class="nav-link"
-                    ><svg
+                  <a href="/freelancerD/job_history" class="nav-link">
+                    <svg
                       width="40"
                       height="40"
                       viewBox="0 0 24 24"
@@ -70,13 +68,14 @@
                       stroke-width="2"
                     >
                       <circle cx="12" cy="13" r="10" />
-                      <path d="M12 6v6l4 2" /></svg
-                    ><span>Job History</span></a
-                  >
+                      <path d="M12 6v6l4 2" />
+                    </svg>
+                    <span>Job History</span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/freelancerD/profile" class="nav-link"
-                    ><svg
+                  <a href="/freelancerD/profile" class="nav-link">
+                    <svg
                       width="40"
                       height="40"
                       viewBox="0 0 24 24"
@@ -94,13 +93,14 @@
                         d="M4 21C4 17.6863 7.58172 15 12 15C16.4183 15 20 17.6863 20 21"
                         stroke="black"
                         stroke-width="2"
-                      /></svg
-                    ><span>Profile</span></a
-                  >
+                      />
+                    </svg>
+                    <span>Profile</span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/freelancerD/payment" class="nav-link"
-                    ><svg
+                  <a href="/freelancerD/payment" class="nav-link">
+                    <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -123,19 +123,14 @@
                         stroke="black"
                         stroke-width="2"
                       />
-                      <rect
-                        x="4"
-                        y="14"
-                        width="4"
-                        height="2"
-                        fill="black"
-                      /></svg
-                    ><span>Payments</span></a
-                  >
+                      <rect x="4" y="14" width="4" height="2" fill="black" />
+                    </svg>
+                    <span>Payments</span>
+                  </a>
                 </li>
                 <li class="nav-item active">
-                  <a href="/freelancerD/skills_badges" class="nav-link"
-                    ><svg
+                  <a href="/freelancerD/skills_badges" class="nav-link">
+                    <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -146,20 +141,21 @@
                         cx="12"
                         cy="8"
                         r="4"
-                        stroke="black"
+                        stroke="currentColor"
                         stroke-width="2"
                       />
                       <path
                         d="M8 14L6 22L12 18L18 22L16 14"
-                        stroke="black"
+                        stroke="currentColor"
                         stroke-width="2"
-                      /></svg
-                    ><span>Skills & Badges</span></a
-                  >
+                      />
+                    </svg>
+                    <span>Skills & Badges</span>
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/freelancerD/subscription" class="nav-link"
-                    ><svg
+                  <a href="/freelancerD/subscription" class="nav-link">
+                    <svg
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -176,9 +172,10 @@
                         stroke="black"
                         stroke-width="2"
                         stroke-linejoin="round"
-                      /></svg
-                    ><span>Subscription</span></a
-                  >
+                      />
+                    </svg>
+                    <span>Subscription</span>
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -193,11 +190,9 @@
       <div class="main-content">
         <!-- Skills & Badges Section -->
         <div id="skills-badges" class="content-section active">
-          <div class="content-header">
+          <div class="header">
             <h2>Skills & Badges</h2>
-            <p>
-              Earn badges by completing tasks and showcasing your expertise.
-            </p>
+            <p>Earn badges by completing tasks and showcasing your expertise.</p>
           </div>
 
           <div class="skills-badges-content">
@@ -206,10 +201,19 @@
               <h4>Your Skills</h4>
               <div class="skills-list">
                 <% skills_badges.skills.forEach(skill => { %>
-                <span class="skill-tag"><%= skill %></span>
+                  <span class="skill-tag"><%= skill %></span>
                 <% }); %>
               </div>
-              <button class="edit-skills-btn">Edit Skills</button>
+              <div class="add-skill">
+                <h5>Add a New Skill</h5>
+                <form id="add-skill-form">
+                  <div class="form-group">
+                    <label for="new-skill">Skill Name</label>
+                    <input type="text" id="new-skill" name="new-skill" placeholder="Enter skill name" required />
+                  </div>
+                  <button type="submit" class="add-skill-btn">Add Skill</button>
+                </form>
+              </div>
             </section>
 
             <!-- Badges -->
@@ -217,18 +221,12 @@
               <h4>Your Badges</h4>
               <div class="badges-grid">
                 <% skills_badges.badges.forEach(badge => { %>
-                <div class="badge-card">
-                  <img
-                    src="<%= badge.image %>"
-                    alt="<%= badge.title %>"
-                    class="badge-image"
-                  />
-                  <h5><%= badge.title %></h5>
-                  <p><%= badge.description %></p>
-                  <span class="badge-date"
-                    >Earned: <%= badge.date_earned %></span
-                  >
-                </div>
+                  <div class="badge-item">
+                    <img src="<%= badge.image %>" alt="<%= badge.title %>" />
+                    <h5><%= badge.title %></h5>
+                    <p><%= badge.description %></p>
+                    <span class="badge-date">Earned: <%= badge.date_earned %></span>
+                  </div>
                 <% }); %>
               </div>
             </section>
@@ -236,25 +234,16 @@
             <!-- Badge Progress -->
             <section class="badge-progress-section">
               <h4>Badge Progress</h4>
-              <div class="progress-list">
-                <% skills_badges.badge_progress.forEach(progress => { %>
-                <div class="progress-item">
-                  <div class="progress-details">
-                    <h5><%= progress.title %></h5>
-                    <p><%= progress.description %></p>
-                    <span class="progress-status"
-                      ><%= progress.progress %></span
-                    >
-                  </div>
+              <% skills_badges.badge_progress.forEach(progress => { %>
+                <div class="badge-progress-item">
+                  <h5><%= progress.title %></h5>
+                  <p><%= progress.description %></p>
                   <div class="progress-bar">
-                    <div
-                      class="progress-filled"
-                      style="width: <%= progress.percentage %>%"
-                    ></div>
+                    <div class="progress" style="width: <%= progress.percentage %>%;"></div>
                   </div>
+                  <span class="progress-status"><%= progress.progress %></span>
                 </div>
-                <% }); %>
-              </div>
+              <% }); %>
             </section>
           </div>
         </div>
