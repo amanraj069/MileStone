@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const db = require("../database.js");
 
 exports.getLogin = (req, res) => {
+  // Pass error message if it exists
+  const error = req.query.error || "";
   res.sendFile(path.join(__dirname, "../views", "Aman", "login.html"));
 };
 
@@ -41,9 +43,8 @@ exports.postLogin = (req, res) => {
     [email, role],
     async (err, user) => {
       if (err || !user) {
-        return res.send(
-          '<script>alert("Invalid credentials"); window.location="/login";</script>'
-        );
+        // Redirect with error message
+        return res.redirect("/login?error=Invalid email or role");
       }
       const match = await bcrypt.compare(password, user.password);
       if (match) {
@@ -61,9 +62,8 @@ exports.postLogin = (req, res) => {
           res.redirect("/freelancerD/profile");
         }
       } else {
-        res.send(
-          '<script>alert("Invalid credentials"); window.location="/login";</script>'
-        );
+        // Redirect with error message for incorrect password
+        res.redirect("/login?error=Incorrect password");
       }
     }
   );

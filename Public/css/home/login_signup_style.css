@@ -60,6 +60,13 @@ body {
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #03065d; /* Matches theme */
 }
 
 .form-group button {
@@ -98,6 +105,24 @@ body {
 
 .login-signup-link a:hover {
   text-decoration: underline;
+}
+
+.error {
+  min-height: 40px; /* Reserve space for error messages */
+  white-space: pre-line; /* Preserve line breaks from JS */
+  font-size: 13px;
+  margin: 10px 0;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+  text-align: left;
 }
 
 /* Right Side - Promotional Content */
@@ -181,7 +206,7 @@ body {
 .testimonial p {
   font-size: 14px;
   margin-bottom: 10px;
-  color: #fff;
+  color: #474747;
 }
 
 .testimonial .author {
