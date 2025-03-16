@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sidebar Dashboard</title>
-  <link rel="stylesheet" href="/Public/css/EmployerD/sidebar.css" />
-  <link rel="stylesheet" href="/Public/css/EmployerD/see_more_detail.css">
+  <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+  <link rel="stylesheet" href="/css/EmployerD/see_more_detail.css">
 </head>
 
 <body>
@@ -26,67 +26,73 @@
 
           <nav class="dashboard-nav">
             <ul>
-              <li class="nav-item">
-                <a href="profile.html" class="nav-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                  <span>Profile</span>
-                </a>
-              </li>
-              <li class="nav-item active">
-                <a href="job_listing.html" class="nav-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                  </svg>
-                  <span>Job Listings</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="current_jobs.html" class="nav-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                  </svg>
-                  <span>Current Active Jobs</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="previously_worked.html" class="nav-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  <span>Previously Worked</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="transaction.html" class="nav-link">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="6" width="20" height="12" stroke="black" stroke-width="2" />
-                    <line x1="2" y1="10" x2="22" y2="10" stroke="black" stroke-width="2" />
-                    <rect x="4" y="14" width="4" height="2" fill="black" />
-                  </svg>
-                  <span>Transaction History</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="subscription.html" class="nav-link">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 16h16l-1 4H5l-1-4z" stroke="black" stroke-width="2" />
-                    <path d="M4 10l4 4h8l4-4-4-4-4 4-4-4-4 4z" stroke="black" stroke-width="2"
-                      stroke-linejoin="round" />
-                  </svg>
-                  <span>Subscription</span>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a href="/employerD/profile" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="/employerD/job-listings" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        <span>Job Listings</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/employerD/current-jobs" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                        <span>Current Active Jobs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/employerD/previously-worked" class="nav-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Previously Worked</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/employerD/transaction-history" class="nav-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="6" width="20" height="12" stroke="black" stroke-width="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" stroke="black" stroke-width="2" />
+                            <rect x="4" y="14" width="4" height="2" fill="black" />
+                        </svg>
+                        <span>Transaction History</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/employerD/subscription" class="nav-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 16h16l-1 4H5l-1-4z" stroke="black" stroke-width="2" />
+                            <path d="M4 10l4 4h8l4-4-4-4-4 4-4-4-4 4z" stroke="black" stroke-width="2"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Subscription</span>
+                    </a>
+                </li>
             </ul>
-          </nav>
+        </nav>
 
           <button class="logout-btn">Logout</button>
         </div>
@@ -137,7 +143,7 @@
               </div>
             </div>
             <div class="job-img-container">
-              <img src="/Public/assets/company_logo.jpg" alt="xyz company" class="job-img">
+              <img src="/assets/company_logo.jpg" alt="xyz company" class="job-img">
             </div>
           </div>
           <div class="job-actions">
@@ -350,7 +356,7 @@
           <div class="applicants-list">
             <div class="applicant-item">
               <div class="applicant-number">1</div>
-              <img src="/Public/assets/user_image.jpg" alt="Applicant" class="applicant-img">
+              <img src="/assets/user_image.jpg" alt="Applicant" class="applicant-img">
               <div class="applicant-info">
                 <div class="applicant-name">Ravi Krishan</div>
                 <div class="applicant-title">Senior Frontend Developer</div>
@@ -360,7 +366,7 @@
             </div>
             <div class="applicant-item">
               <div class="applicant-number">2</div>
-              <img src="/Public/assets/user_female.png" alt="Applicant" class="applicant-img">
+              <img src="/assets/user_female.png" alt="Applicant" class="applicant-img">
               <div class="applicant-info">
                 <div class="applicant-name">Suneeta Sharma</div>
                 <div class="applicant-title">Lead Frontend Engineer</div>
@@ -370,7 +376,7 @@
             </div>
             <div class="applicant-item">
               <div class="applicant-number">3</div>
-              <img src="/Public/assets/user_image.jpg" alt="Applicant" class="applicant-img">
+              <img src="/assets/user_image.jpg" alt="Applicant" class="applicant-img">
               <div class="applicant-info">
                 <div class="applicant-name">Aman Raj</div>
                 <div class="applicant-title">React Developer</div>
@@ -380,7 +386,7 @@
             </div>
             <div class="applicant-item">
               <div class="applicant-number">4</div>
-              <img src="/Public/assets/user_female.png" alt="Applicant" class="applicant-img">
+              <img src="/assets/user_female.png" alt="Applicant" class="applicant-img">
               <div class="applicant-info">
                 <div class="applicant-name">Amisha Patel</div>
                 <div class="applicant-title">Frontend Architect</div>
@@ -390,7 +396,7 @@
             </div>
             <div class="applicant-item">
               <div class="applicant-number">5</div>
-              <img src="/Public/assets/user_female.png" alt="Applicant" class="applicant-img">
+              <img src="/assets/user_female.png" alt="Applicant" class="applicant-img">
               <div class="applicant-info">
                 <div class="applicant-name">Vanya Awasthi</div>
                 <div class="applicant-title">Senior Mobile Developer</div>
@@ -557,7 +563,7 @@ Requirements:
       </div>
     </div>
   </div>
-  <script src="/Public/js/EmployerD/see_more_detail.js"></script>
+  <script src="/js/EmployerD/see_more_detail.js"></script>
 </body>
 
 </html>
