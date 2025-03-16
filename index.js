@@ -1,4 +1,3 @@
-// index.js
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
@@ -6,12 +5,11 @@ const adminRouter = require("./routes/adminRoutes");
 const employerRouter = require("./routes/employerRoutes");
 const freelancerRouter = require("./routes/freelancerRoutes");
 const homeRouter = require("./routes/homeRoutes");
-const authRouter = require("./routes/authRoutes"); // New auth routes
+const authRouter = require("./routes/authRoutes");
 
 const app = express();
 const PORT = 3000;
 
-// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -23,7 +21,6 @@ app.use(
   })
 );
 
-// Middleware to check if user is logged in
 const isAuthenticated = (req, res, next) => {
   if (req.session.user) {
     next();
@@ -32,7 +29,6 @@ const isAuthenticated = (req, res, next) => {
   }
 };
 
-// Middleware to restrict access based on role
 const restrictToRole = (roles) => (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
@@ -47,14 +43,12 @@ const restrictToRole = (roles) => (req, res, next) => {
   next();
 };
 
-// Routes
-app.use("/", homeRouter); // Home-related routes
-app.use("/", authRouter); // Authentication routes
+app.use("/", homeRouter);
+app.use("/", authRouter);
 app.use("/adminD", restrictToRole(["Admin"]), adminRouter);
 app.use("/employerD", restrictToRole(["Employer"]), employerRouter);
 app.use("/freelancerD", restrictToRole(["Freelancer"]), freelancerRouter);
 
-// Set EJS as the view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 

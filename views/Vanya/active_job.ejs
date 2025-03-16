@@ -3,10 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Layout</title>
+    <title>Active Jobs - FreelancePro</title>
     <link rel="stylesheet" href="/css/FreelancerD/static_elements/header.css" />
-    <link rel="stylesheet" href="/css/FreelancerD/static_elements/sidebar.css" />
+    <link
+      rel="stylesheet"
+      href="/css/FreelancerD/static_elements/sidebar.css"
+    />
     <link rel="stylesheet" href="/css/FreelancerD/active_job_style.css" />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
   </head>
   <body>
     <div class="dashboard-wrapper">
@@ -30,8 +38,7 @@
                 />
               </svg>
             </div>
-            <div class="profile-name">Hey User!</div>
-
+            <div class="profile-name">Hey <%= user.name %>!</div>
             <nav class="dashboard-nav">
               <ul>
                 <li class="nav-item active">
@@ -215,7 +222,7 @@
                 fill="#152C70"
               />
             </svg>
-            <span class="username">Vanya Awasthi</span>
+            <span class="username"><%= user.name %></span>
           </div>
         </header>
 
@@ -234,39 +241,38 @@
           </div>
 
           <div class="job-cards">
-            <!-- Job Card 1 -->
+            <% active_jobs.forEach(job => { %>
             <div class="job-card">
               <div class="job-company-logo">
-                <img
-                  src="https://logo.clearbit.com/amazon.com"
-                  alt="Company Logo"
-                />
+                <img src="<%= job.logo %>" alt="<%= job.company %> Logo" />
               </div>
               <div class="job-info">
                 <div class="job-header">
-                  <h3 class="job-title">E-commerce Website Redesign</h3>
-                  <div class="job-company">Amazon</div>
+                  <h3 class="job-title"><%= job.title %></h3>
+                  <div class="job-company"><%= job.company %></div>
                 </div>
                 <div class="job-progress">
                   <div class="progress-label">
                     <span>Milestone Progress</span>
-                    <span>75%</span>
+                    <span><%= job.progress %>%</span>
                   </div>
                   <div class="progress-bar">
-                    <div class="progress-filled" style="width: 75%"></div>
+                    <div
+                      class="progress-filled"
+                      style="width: <%= job.progress %>%"
+                    ></div>
                   </div>
                 </div>
                 <div class="job-tech">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">JavaScript</span>
-                  <span class="tech-tag">React</span>
+                  <% job.tech.forEach(tech => { %>
+                  <span class="tech-tag"><%= tech %></span>
+                  <% }); %>
                 </div>
                 <div class="job-meta">
                   <div class="job-deadline">
-                    <i class="far fa-clock"></i> Due in 5 days
+                    <i class="far fa-clock"></i> <%= job.deadline %>
                   </div>
-                  <div class="job-price">Rs.4,500</div>
+                  <div class="job-price"><%= job.price %></div>
                 </div>
               </div>
               <div class="job-actions">
@@ -279,113 +285,8 @@
                 <button class="see-more-btn">See More</button>
               </div>
             </div>
-
-            <!-- Job Card 2 -->
-            <div class="job-card">
-              <div class="job-company-logo">
-                <img
-                  src="https://logo.clearbit.com/microsoft.com"
-                  alt="Company Logo"
-                />
-              </div>
-              <div class="job-info">
-                <div class="job-header">
-                  <h3 class="job-title">Custom Dashboard Development</h3>
-                  <div class="job-company">Microsoft</div>
-                </div>
-                <div class="job-progress">
-                  <div class="progress-label">
-                    <span>Milestone Progress</span>
-                    <span>40%</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-filled" style="width: 40%"></div>
-                  </div>
-                </div>
-                <div class="job-tech">
-                  <span class="tech-tag">JavaScript</span>
-                  <span class="tech-tag">Vue.js</span>
-                  <span class="tech-tag">Node.js</span>
-                  <span class="tech-tag">MongoDB</span>
-                </div>
-                <div class="job-meta">
-                  <div class="job-deadline">
-                    <i class="far fa-clock"></i> Due in 12 days
-                  </div>
-                  <div class="job-price">Rs.3,200</div>
-                </div>
-              </div>
-              <div class="job-actions">
-                <button class="chat-btn">
-                  <i class="fas fa-comment"></i> Chat
-                </button>
-                <button class="complaint-btn">
-                  <i class="fas fa-exclamation-circle"></i> Raise Issue
-                </button>
-                <button class="see-more-btn">See More</button>
-              </div>
-            </div>
-
-            <!-- Job Card 3 -->
-            <div class="job-card">
-              <div class="job-company-logo">
-                <img
-                  src="https://logo.clearbit.com/spotify.com"
-                  alt="Company Logo"
-                />
-              </div>
-              <div class="job-info">
-                <div class="job-header">
-                  <h3 class="job-title">Mobile App UI Enhancement</h3>
-                  <div class="job-company">Spotify</div>
-                </div>
-                <div class="job-progress">
-                  <div class="progress-label">
-                    <span>Milestone Progress</span>
-                    <span>90%</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="progress-filled" style="width: 90%"></div>
-                  </div>
-                </div>
-                <div class="job-tech">
-                  <span class="tech-tag">Flutter</span>
-                  <span class="tech-tag">Dart</span>
-                  <span class="tech-tag">Firebase</span>
-                </div>
-                <div class="job-meta">
-                  <div class="job-deadline">
-                    <i class="far fa-clock"></i> Due in 2 days
-                  </div>
-                  <div class="job-price">Rs.2,800</div>
-                </div>
-              </div>
-              <div class="job-actions">
-                <button class="chat-btn">
-                  <i class="fas fa-comment"></i> Chat
-                </button>
-                <button class="complaint-btn">
-                  <i class="fas fa-exclamation-circle"></i> Raise Issue
-                </button>
-                <button class="see-more-btn">See More</button>
-              </div>
-            </div>
+            <% }); %>
           </div>
-        </div>
-
-        <!-- Placeholder Sections -->
-        <div id="skills-badges" class="content-section" style="display: none">
-          <div class="content-header">
-            <h2>Skills & Badges</h2>
-          </div>
-          <p>This is the Skills & Badges section. Add skills and badges here.</p>
-        </div>
-
-        <div id="subscription" class="content-section" style="display: none">
-          <div class="content-header">
-            <h2>Subscription</h2>
-          </div>
-          <p>This is the Subscription section. Add subscription details here.</p>
         </div>
       </div>
     </div>
