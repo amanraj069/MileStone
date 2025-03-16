@@ -15,8 +15,12 @@ body {
     margin: 0 auto;
 }
 
+a {
+    text-decoration: none;
+}
+
 .section-title {
-    color: #0366d6;
+    color: #0a66c2;
     font-size: 28px;
     margin-bottom: 20px;
     font-weight: 600;
@@ -119,10 +123,11 @@ body {
     align-items: center;
     color: #757575;
     font-size: 14px;
+    color: #ffc107;
 }
 
 .star {
-    color: #ffc107;
+    
     margin-right: 3px;
 }
 

@@ -97,7 +97,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-function open_see_more_Page() {
-    window.location.href = "see_more_detail.html"; // Redirects to see_more_detail.html
-}

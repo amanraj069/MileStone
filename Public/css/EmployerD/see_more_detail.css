@@ -31,19 +31,6 @@ header {
     color: #0a66c2;
 }
 
-.back-arrow {
-    display: flex;
-    align-items: center;
-}
-
-.back-button {
-    text-decoration: none;
-    color: #666;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
 .job-header {
     background-color: white;
     border-radius: 8px;

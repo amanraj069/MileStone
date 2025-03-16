@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sidebar Dashboard</title>
   <link rel="stylesheet" href="/Public/css/EmployerD/sidebar.css" />
-  <link rel="stylesheet" href="/Public/css/EmployerD/milestone.css">
+  <link rel="stylesheet" href="/Public/css/EmployerD/chat.css" />
 </head>
 
 <body>
@@ -46,7 +46,7 @@
                   <span>Job Listings</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a href="current_jobs.html" class="nav-link">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -65,12 +65,13 @@
                   <span>Previously Worked</span>
                 </a>
               </li>
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a href="transaction.html" class="nav-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                    <line x1="1" y1="10" x2="23" y2="10"></line>
-                </svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="6" width="20" height="12" stroke="black" stroke-width="2" />
+                    <line x1="2" y1="10" x2="22" y2="10" stroke="black" stroke-width="2" />
+                    <rect x="4" y="14" width="4" height="2" fill="black" />
+                  </svg>
                   <span>Transaction History</span>
                 </a>
               </li>
@@ -94,106 +95,51 @@
 
     <div class="main-content">
       <div class="container">
-        <div class="header">
-          <h1 class="title">Payments & Milestones</h1>
-          <button class="add-button" id="addMilestoneBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg> Add Milestone
-          </button>
+        <div class="chat-list-panel">
+          <div class="chat-list-header">Chats</div>
+          <div class="chat-user">
+            <div class="chat-user-avatar">1</div>
+            <div class="chat-user-name">Aman Raj</div>
+          </div>
+          <div class="chat-user active">
+            <div class="chat-user-avatar">2</div>
+            <div class="chat-user-name">Abhishek Anand</div>
+          </div>
+          <div class="chat-user">
+            <div class="chat-user-avatar">3</div>
+            <div class="chat-user-name">Deepak Anuragi</div>
+          </div>
+          <div class="chat-user">
+            <div class="chat-user-avatar">4</div>
+            <div class="chat-user-name">Vanya Awasthi</div>
+          </div>
+          <div class="chat-user">
+            <div class="chat-user-avatar">5</div>
+            <div class="chat-user-name">E Jayanth</div>
+          </div>
+          <button class="dashboard-btn">Go to Dashboard</button>
         </div>
-
-        <div class="progress-card">
-          <div class="progress-section">
-            <div class="progress-header">
-              <h3 class="progress-title">Project Completion</h3>
-              <span class="progress-percentage" id="completionPercentage">0%</span>
-            </div>
-            <div class="progress-bar-container">
-              <div class="progress-bar" id="completionProgressBar"></div>
-            </div>
-            <div class="progress-labels">
-              <span>Not Started</span>
-              <span>In Progress</span>
-              <span>Completed</span>
-            </div>
+        <div class="chat-conversation-panel">
+          <div class="chat-header">
+            <div class="chat-header-avatar">B</div>
+            <div class="chat-header-name">Abhishek Anand</div>
           </div>
-
-          <div class="progress-section">
-            <div class="progress-header">
-              <h3 class="progress-title">Payment Progress</h3>
-              <span class="progress-amount" id="paymentProgress">₹0 of ₹0 (0%)</span>
+          <div class="chat-messages">
+            <div class="message received">Message sending 1</div>
+            <div class="message sent">message sending 2</div>
+            <div class="message received">
+              Sure, I’d be happy to help. What do you need?
             </div>
-            <div class="progress-bar-container">
-              <div class="progress-bar" id="paymentProgressBar"></div>
-            </div>
+            <div class="message sent">Can you explain it ?</div>
           </div>
-        </div>
-
-        <div class="milestones-container" id="milestonesContainer">
-          <!-- Milestone cards will be inserted here by JavaScript -->
-        </div>
-      </div>
-
-      <!-- Add/Edit Milestone Modal -->
-      <div class="modal-overlay" id="milestoneModal">
-        <div class="modal">
-          <div class="modal-header">
-            <h2 class="modal-title" id="modalTitle">Add New Milestone</h2>
-            <button class="close-modal" id="closeModal">×</button>
-          </div>
-          <div class="modal-body">
-            <form id="milestoneForm">
-              <input type="hidden" id="milestoneId">
-              <div class="form-group">
-                <label for="deliverable">Deliverable Description</label>
-                <input type="text" id="deliverable" placeholder="eg : Complete feature X" required>
-              </div>
-              <div class="form-group">
-                <label for="deadline">Deadline</label>
-                <input type="text" id="deadline" placeholder="eg : Week 2" required>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="payment">Payment Amount (₹)</label>
-                  <input type="number" id="payment" placeholder="eg : 22500" required>
-                </div>
-                <div class="form-group">
-                  <label for="percentage">Percentage (%)</label>
-                  <input type="number" id="percentage" placeholder="eg : 20" required>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-                <button type="submit" class="save-btn" id="saveBtn">Add Milestone</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Delete Confirmation Modal -->
-      <div class="modal-overlay" id="deleteModal">
-        <div class="modal delete-modal">
-          <div class="modal-header">
-            <h2 class="modal-title">Confirm Delete</h2>
-            <button class="close-modal" id="closeDeleteModal">×</button>
-          </div>
-          <div class="modal-body">
-            <p>Are you sure you want to delete this milestone?</p>
-            <input type="hidden" id="deleteId">
-            <div class="modal-footer">
-              <button type="button" class="cancel-btn" id="cancelDeleteBtn">Cancel</button>
-              <button type="button" class="delete-btn" id="confirmDeleteBtn">Delete</button>
-            </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Type a message..." />
+            <button>Send</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="/Public/js/EmployerD/milestone.js"></script>
 </body>
 
 </html>

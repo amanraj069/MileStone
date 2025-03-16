@@ -17,11 +17,6 @@ body {
     padding: 20px;
 }
 
-.back-button {
-    text-decoration: none;
-}
-
-
 .profile-header {
     background: white;
     border-radius: 10px;
@@ -80,6 +75,7 @@ body {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
 .btn-primary {
@@ -91,6 +87,12 @@ body {
     background-color: white;
     color: #0066cc;
     border: 1px solid #0066cc;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #0066cc;
+    color: white;
 }
 
 .stats-container {

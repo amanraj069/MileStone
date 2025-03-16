@@ -47,9 +47,8 @@ document.getElementById('saveEditJob').addEventListener('click', function () {
 // Delete job functionality
 document.querySelector('.delete-button').addEventListener('click', function () {
     if (confirm('Are you sure you want to delete this job posting? This action cannot be undone.')) {
-        alert('Job posting deleted successfully!');
-        // Normally would redirect to listings page
-        // window.location.href = 'job-listings.html';
+        // alert('Job posting deleted successfully!');
+        window.location.href = 'job_listing.html';
     }
 });
 
@@ -219,74 +218,3 @@ function handleDeleteMilestone(event) {
         row.remove();
     }
 }
-
-// Navigation function
-function goBack() {
-    // You would normally use history.back() or redirect to a specific page
-    alert('Navigating back to job listings...');
-    window.location.href = "job_listing.html";
-}
-
-function goProfile() {
-    // You would normally use history.back() or redirect to a specific page
-    alert('Navigating to Profile page...');
-    window.location.href = "view_profile.html";
-}
-
-// Apply Now functionality 
-// document.addEventListener("DOMContentLoaded", function () {
-
-//     // Apply Now button event listener
-//     const applyNowBtn = document.getElementById('applyNowBtn');
-//     if (applyNowBtn) {
-//         applyNowBtn.addEventListener('click', function () {
-//             const modal = document.getElementById('applyModal');
-//             if (modal) {
-//                 openModal('applyModal');
-//             } else {
-//                 console.error('Apply modal not found in the DOM');
-//             }
-//         });
-//     }
-    
-//     // Apply modal close buttons
-//     const closeApplyModal = document.getElementById('closeApplyModal');
-//     if (closeApplyModal) {
-//         closeApplyModal.addEventListener('click', function () {
-//             closeModal('applyModal');
-//         });
-//     }
-    
-//     const cancelApply = document.getElementById('cancelApply');
-//     if (cancelApply) {
-//         cancelApply.addEventListener('click', function () {
-//             closeModal('applyModal');
-//         });
-//     }
-    
-//     // Apply form submission
-//     const submitApplication = document.getElementById('submitApplication');
-//     if (submitApplication) {
-//         submitApplication.addEventListener('click', function () {
-//             const name = document.getElementById('applicantName').value.trim();
-//             const email = document.getElementById('applicantEmail').value.trim();
-//             const phone = document.getElementById('applicantPhone').value.trim();
-//             const bid = document.getElementById('applicantBid').value.trim();
-//             const message = document.getElementById('applicantMessage').value.trim();
-
-//             if (!name || !email || !phone || !bid || !message) {
-//                 alert('Please fill out all required fields');
-//                 return;
-//             }
-
-//             // Here you would normally send the application data to a server
-//             alert('Application submitted successfully!');
-//             closeModal('applyModal');
-//         });
-//     }
-// });/
-
-// // if modal doesnt work create separate html and connect them deepak/vanya
-// function openApplicationPage() {
-//     window.location.href = "apply_button.html"; // Redirects to apply.html
-// }

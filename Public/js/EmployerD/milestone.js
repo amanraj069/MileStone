@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Initial milestone
+    // Initial milestone (unchanged)
     let milestones = [
         {
             id: '1',
@@ -48,14 +48,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ];
 
-    // DOM Elements
+    // DOM Elements (unchanged)
     const milestonesContainer = document.getElementById('milestonesContainer');
     const completionProgressBar = document.getElementById('completionProgressBar');
     const completionPercentage = document.getElementById('completionPercentage');
     const paymentProgressBar = document.getElementById('paymentProgressBar');
     const paymentProgress = document.getElementById('paymentProgress');
 
-    // Modal Elements
+    // Modal Elements (unchanged)
     const milestoneModal = document.getElementById('milestoneModal');
     const modalTitle = document.getElementById('modalTitle');
     const milestoneForm = document.getElementById('milestoneForm');
@@ -66,11 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const percentageInput = document.getElementById('percentage');
     const saveBtn = document.getElementById('saveBtn');
 
-    // Delete Modal Elements
+    // Delete Modal Elements (unchanged)
     const deleteModal = document.getElementById('deleteModal');
     const deleteId = document.getElementById('deleteId');
 
-    // Buttons
+    // Buttons (unchanged)
     const addMilestoneBtn = document.getElementById('addMilestoneBtn');
     const closeModal = document.getElementById('closeModal');
     const cancelBtn = document.getElementById('cancelBtn');
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
-    // Render all milestones
+    // Render all milestones (unchanged)
     function renderMilestones() {
         milestonesContainer.innerHTML = '';
 
@@ -98,14 +98,29 @@ document.addEventListener('DOMContentLoaded', function () {
         // Status icon based on milestone status
         let statusIcon;
         if (milestone.status === 'completed') {
-            statusIcon = '<i class="fas fa-check-circle"></i>';
+            statusIcon = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            `;
         } else if (milestone.status === 'in-progress') {
-            statusIcon = '<i class="fas fa-clock"></i>';
+            statusIcon = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+            `;
         } else {
-            statusIcon = '<i class="fas fa-circle-exclamation"></i>';
+            statusIcon = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 8v4l3 3"></path>
+                </svg>
+            `;
         }
 
-        // Status badge text
+        // Status badge text (unchanged)
         let statusBadgeText;
         if (milestone.status === 'completed') {
             statusBadgeText = 'Completed';
@@ -115,14 +130,17 @@ document.addEventListener('DOMContentLoaded', function () {
             statusBadgeText = 'Not Started';
         }
 
-        // Payment or paid badge
+        // Payment or paid badge (unchanged)
         let paymentElement;
         if (milestone.paid) {
             paymentElement = `<span class="payment-badge">Paid</span>`;
         } else {
             paymentElement = `
                 <button class="pay-button" ${milestone.status !== 'completed' ? 'disabled' : ''} data-id="${milestone.id}">
-                    <i class="fas fa-credit-card"></i> Pay Now
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg> Pay Now
                 </button>
             `;
         }
@@ -135,7 +153,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         ${milestone.deliverable}
                     </h3>
                     <div class="milestone-deadline">
-                        <i class="fas fa-calendar"></i>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
                         <span>${milestone.deadline}</span>
                     </div>
                 </div>
@@ -163,23 +184,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
             <div class="milestone-footer">
                 <button class="action-button edit-button" data-id="${milestone.id}">
-                    <i class="fas fa-edit"></i> Edit
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg> Edit
                 </button>
                 <button class="action-button delete-button" data-id="${milestone.id}">
-                    <i class="fas fa-trash"></i> Delete
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg> Delete
                 </button>
             </div>
         `;
 
-        // Add event listeners to the card buttons
+        // Add event listeners to the card buttons (unchanged)
         setTimeout(() => {
-            // Status select change
             const statusSelect = card.querySelector('.status-select');
             statusSelect.addEventListener('change', function () {
                 updateMilestoneStatus(this.dataset.id, this.value);
             });
 
-            // Pay button
             const payButton = card.querySelector('.pay-button');
             if (payButton) {
                 payButton.addEventListener('click', function () {
@@ -187,13 +212,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            // Edit button
             const editButton = card.querySelector('.edit-button');
             editButton.addEventListener('click', function () {
                 openEditModal(this.dataset.id);
             });
 
-            // Delete button
             const deleteButton = card.querySelector('.delete-button');
             deleteButton.addEventListener('click', function () {
                 openDeleteModal(this.dataset.id);
@@ -203,9 +226,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return card;
     }
 
-    // Update progress bars
+    // Rest of the code remains unchanged
     function updateProgressBars() {
-        // Calculate completion percentage
         const totalPercentage = milestones.reduce((sum, m) => sum + m.percentage, 0);
         const completedPercentage = milestones
             .filter(m => m.status === 'completed')
@@ -213,7 +235,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const completionPercent = totalPercentage > 0 ? (completedPercentage / totalPercentage) * 100 : 0;
 
-        // Calculate payment progress
         const totalPayment = milestones.reduce((sum, m) => sum + m.payment, 0);
         const paidAmount = milestones
             .filter(m => m.paid)
@@ -221,7 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const paymentPercent = totalPayment > 0 ? (paidAmount / totalPayment) * 100 : 0;
 
-        // Update DOM elements
         completionProgressBar.style.width = `${completionPercent}%`;
         completionPercentage.textContent = `${Math.round(completionPercent)}%`;
 
@@ -229,7 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
         paymentProgress.textContent = `₹${paidAmount.toLocaleString('en-IN')} of ₹${totalPayment.toLocaleString('en-IN')} (${Math.round(paymentPercent)}%)`;
     }
 
-    // Update milestone status
     function updateMilestoneStatus(id, status) {
         const milestone = milestones.find(m => m.id === id);
         if (milestone) {
@@ -238,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Pay milestone
     function payMilestone(id) {
         const milestone = milestones.find(m => m.id === id);
         if (milestone && milestone.status === 'completed') {
@@ -247,7 +265,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Open add milestone modal
     function openAddModal() {
         modalTitle.textContent = 'Add New Milestone';
         saveBtn.textContent = 'Add Milestone';
@@ -256,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function () {
         milestoneModal.style.display = 'flex';
     }
 
-    // Open edit milestone modal
     function openEditModal(id) {
         const milestone = milestones.find(m => m.id === id);
         if (milestone) {
@@ -271,23 +287,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Open delete confirmation modal
     function openDeleteModal(id) {
         deleteId.value = id;
         deleteModal.style.display = 'flex';
     }
 
-    // Close milestone modal
     function closeMilestoneModal() {
         milestoneModal.style.display = 'none';
     }
 
-    // Close delete modal
     function closeDeleteConfirmModal() {
         deleteModal.style.display = 'none';
     }
 
-    // Save milestone (add or edit)
     function saveMilestone(e) {
         e.preventDefault();
 
@@ -303,7 +315,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (id) {
-            // Edit existing milestone
             const index = milestones.findIndex(m => m.id === id);
             if (index !== -1) {
                 milestones[index] = {
@@ -315,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             }
         } else {
-            // Add new milestone
             const newMilestone = {
                 id: Date.now().toString(),
                 deliverable,
@@ -332,7 +342,6 @@ document.addEventListener('DOMContentLoaded', function () {
         closeMilestoneModal();
     }
 
-    // Delete milestone
     function deleteMilestone() {
         const id = deleteId.value;
         milestones = milestones.filter(m => m.id !== id);
@@ -340,7 +349,6 @@ document.addEventListener('DOMContentLoaded', function () {
         closeDeleteConfirmModal();
     }
 
-    // Event Listeners
     addMilestoneBtn.addEventListener('click', openAddModal);
     closeModal.addEventListener('click', closeMilestoneModal);
     cancelBtn.addEventListener('click', closeMilestoneModal);
@@ -350,6 +358,5 @@ document.addEventListener('DOMContentLoaded', function () {
     cancelDeleteBtn.addEventListener('click', closeDeleteConfirmModal);
     confirmDeleteBtn.addEventListener('click', deleteMilestone);
 
-    // Initial render
     renderMilestones();
 });

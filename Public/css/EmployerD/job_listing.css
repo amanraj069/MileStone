@@ -16,6 +16,10 @@ body {
     margin: 0 auto;
 }
 
+a {
+    text-decoration: none;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -32,9 +36,10 @@ header {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
     color: #0a66c2;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .search-bar {
@@ -130,6 +135,16 @@ header {
 .applicant-title {
     font-size: 12px;
     color: #666;
+}
+
+.job-meta .icon {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.job-meta span {
+    display: inline-flex;
+    align-items: center;
 }
 
 .job-listings {

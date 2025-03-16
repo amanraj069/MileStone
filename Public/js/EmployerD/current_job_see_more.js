@@ -87,6 +87,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const complaintBtn = document.getElementById('complain-btn');
+    complaintBtn.addEventListener('click', function() {
+            alert(`Complaint submitted successfully!`);
+        });
+
     // Edit milestone modal control
     const closeEditMilestoneModal = document.getElementById('closeEditMilestoneModal');
     if (closeEditMilestoneModal) {
@@ -145,9 +150,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
-
-
-
-function milestone_Page() {
-    window.location.href = "milestone.html";
-}
