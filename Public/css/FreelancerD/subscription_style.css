@@ -3,161 +3,354 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background-color: #f4f4f4;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: #f0f5fa;
     color: #333;
     line-height: 1.6;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Header */
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.lock-icon {
-    font-size: 20px;
-}
-
-/* Sections */
-section {
-    margin-bottom: 20px;
-}
-
-h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #1a73e8;
-}
-
-p {
-    font-size: 16px;
-}
-
-/* Privacy Settings */
-.toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.toggle label {
-    font-size: 16px;
-}
-
-/* Security Features */
-.security-features ul {
-    list-style: none;
-}
-
-.security-features li {
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-/* Buttons */
-button {
+    overflow-x: hidden;
+  }
+  
+  /* Main Content Styles */
+  .main-content {
+    flex-grow: 1;
+    padding: 10px 20px 20px 20px;
+    margin-left: 290px;
+    width: calc(100% - 290px);
+    background-color: #f0f5fa;
+  }
+  
+  .content-section {
+    display: none;
+  }
+  
+  .content-section.active {
+    display: block;
+  }
+  
+  .content-header {
+    background-color: #e6eef8;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.save-btn, .confirm-btn {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.cancel-btn {
-    background-color: #ccc;
-    color: #333;
-}
-
-.upgrade-btn {
-    background-color: #1a73e8;
-    color: #fff;
-}
-
-.quote-btn {
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .content-header h2 {
+    font-size: 22px;
+    color: #1e3a8a;
+    margin-bottom: 5px;
+  }
+  
+  .content-header p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Sections */
+  section {
+    margin-bottom: 20px;
     background-color: #fff;
-    border: 1px solid #1a73e8;
-    color: #1a73e8;
-}
-
-button:disabled {
-    background-color: #e0e0e0;
-    cursor: not-allowed;
-}
-
-/* Plan Options */
-.plans {
-    display: flex;
-    justify-content: space-between;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h4 {
+    font-size: 18px;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #d0e1f9;
+    padding-bottom: 5px;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Current Plan */
+  .current-plan button {
+    background-color: #2563eb;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .current-plan button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Plan Options */
+  .plan-options h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-}
-
-.plan-card {
-    flex: 1;
+    margin-bottom: 15px;
+  }
+  
+  .plan-card {
     padding: 20px;
     background: #f9f9f9;
     border-radius: 8px;
     text-align: center;
-}
-
-.plan-card .price {
+  }
+  
+  .plan-card .price {
     font-size: 20px;
     font-weight: bold;
     color: #1a73e8;
     margin: 10px 0;
-}
-
-/* Links */
-a {
+  }
+  
+  .plan-card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .plan-card button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  
+  .plan-card button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+  }
+  
+  .upgrade-btn {
+    background-color: #1a73e8;
+    color: #fff;
+  }
+  
+  .upgrade-btn:hover {
+    background-color: #1557b0;
+  }
+  
+  .quote-btn {
+    background-color: #fff;
+    border: 1px solid #1a73e8;
+    color: #1a73e8;
+  }
+  
+  .quote-btn:hover {
+    background-color: #e6eef8;
+  }
+  
+  .billing-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Payment Details */
+  .payment-details p {
+    margin-bottom: 10px;
+  }
+  
+  .payment-details a {
     color: #1a73e8;
     text-decoration: none;
-}
-
-a:hover {
+    font-weight: 500;
+  }
+  
+  .payment-details a:hover {
     text-decoration: underline;
-}
-
-/* Footer */
-footer {
+  }
+  
+  /* Footer */
+  footer {
     text-align: center;
-    margin-top: 20px;
-}
-
-footer button {
-    margin: 0 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
+    padding: 10px 0;
+  }
+  
+  .confirm-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .confirm-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 900px) {
+    .main-content {
+      margin-left: 70px;
+      width: calc(100% - 70px);
+      padding: 10px 15px 15px 15px;
+    }
+  
+    .content-header {
+      padding: 8px 15px;
+    }
+  
+    .content-header h2 {
+      font-size: 20px;
+    }
+  
+    .content-header p {
+      font-size: 13px;
+    }
+  
+    section {
+      padding: 15px;
+    }
+  
+    h4 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+  
+    p {
+      font-size: 13px;
+    }
+  
+    .current-plan button {
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+  
+    .plan-options h3 {
+      font-size: 18px;
+    }
+  
     .plans {
-        flex-direction: column;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
     }
-
-    .container {
-        margin: 10px;
-        padding: 15px;
+  
+    .plan-card {
+      padding: 15px;
     }
-}
+  
+    .plan-card .price {
+      font-size: 18px;
+    }
+  
+    .plan-card p {
+      font-size: 13px;
+    }
+  
+    .plan-card button {
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+  
+    .billing-toggle {
+      font-size: 13px;
+    }
+  
+    .confirm-btn {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .main-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 5px 10px 10px 10px;
+    }
+  
+    .content-header {
+      padding: 8px 10px;
+    }
+  
+    .content-header h2 {
+      font-size: 18px;
+    }
+  
+    .content-header p {
+      font-size: 12px;
+    }
+  
+    section {
+      padding: 10px;
+    }
+  
+    h4 {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  
+    p {
+      font-size: 12px;
+    }
+  
+    .current-plan button {
+      padding: 6px 10px;
+      font-size: 12px;
+      width: 100%;
+    }
+  
+    .plan-options h3 {
+      font-size: 16px;
+    }
+  
+    .plans {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  
+    .plan-card {
+      padding: 10px;
+    }
+  
+    .plan-card .price {
+      font-size: 16px;
+    }
+  
+    .plan-card p {
+      font-size: 12px;
+    }
+  
+    .plan-card button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  
+    .billing-toggle {
+      font-size: 12px;
+      gap: 8px;
+    }
+  
+    .payment-details a {
+      font-size: 12px;
+    }
+  
+    .confirm-btn {
+      padding: 8px 15px;
+      font-size: 13px;
+      width: 100%;
+    }
+  }

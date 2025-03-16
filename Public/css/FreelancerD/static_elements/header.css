@@ -1,134 +1,135 @@
+/* Base Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
-  body {
-    background-color: #f0f5fa;
-    color: #333;
-    overflow-x: hidden;
-  }
-  
-  .sidebar-container {
-    max-width: 290px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* Header Styles */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  /* margin-left: 290px; */
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2563eb;
+  white-space: nowrap;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin: 0 20px;
+  min-width: 0; /* Prevents overflow on small screens */
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.user-profile svg {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 30px;
-    margin-left: 290px;
-    width: calc(100% - 290px);
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2563eb;
-  }
-  
-  .search-bar {
-    flex-grow: 1;
-    margin: 0 20px;
-  }
-  
-  .search-input {
+    /* margin-left: 70px; */
     width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #f9f9f9;
+    padding: 15px;
   }
-  
-  .user-profile {
-    display: flex;
-    align-items: center;
+
+  .logo {
+    font-size: 20px;
   }
-  
-  .profile-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-    background-color: #e6eef8;
+
+  .search-bar {
+    margin: 0 15px;
   }
-  
+
+  .search-input {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .user-profile svg {
+    width: 35px;
+    height: 35px;
+  }
+
   .username {
-    font-weight: 600;
-    font-size: 16px;
-    color: #333;
+    font-size: 14px;
   }
-  
-  
-  .content {
-    display: flex;
-    gap: 20px;
+}
+
+@media (max-width: 500px) {
+  header {
+    margin-left: 0;
+    width: 100%;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    position: relative; /* Avoids overlap with horizontal sidebar */
   }
-  
-  
-  
-  
-  /* 
-  
-  #search-icon {
+
+  .logo {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .search-bar {
+    margin: 0;
+    width: 100%;
+  }
+
+  .search-input {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .user-profile {
+    justify-content: center;
+  }
+
+  .user-profile svg {
     width: 30px;
     height: 30px;
-    object-fit: cover;
   }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #0a66c2;
+
+  .username {
+    font-size: 13px;
   }
-  
-  .search-bar {
-    flex-grow: 1;
-    margin: 0 20px;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .filters {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .filter-btn {
-    padding: 8px 15px;
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .filter-btn:hover {
-    background-color: #f3f3f3;
-  }
-  
-  .filter-btn.active {
-    background-color: #0a66c2;
-    color: white;
-    border-color: #0a66c2;
-  } */
+}

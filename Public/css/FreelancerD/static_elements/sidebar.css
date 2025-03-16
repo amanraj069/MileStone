@@ -8,31 +8,33 @@
   body {
     background-color: #f0f5fa;
     color: #333;
-    overflow-x: hidden;
   }
   
-  .sidebar-container {
-    max-width: 290px;
-    margin: 0 auto;
+  .dashboard-wrapper {
     display: flex;
-    flex-direction: column;
     min-height: 100vh;
   }
   
-  .left-panel {
+  .sidebar-container {
+    width: 290px;
     background-color: #e6eef8;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 200;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .left-panel {
     width: 290px;
     height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 30px;
-    z-index: 200;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
   }
   
   .left-panel::-webkit-scrollbar {
@@ -134,7 +136,30 @@
     background-color: #1d4ed8;
   }
   
+  .main-content {
+    margin-left: 290px;
+    padding: 20px;
+    width: calc(100% - 290px);
+    background-color: #fff;
+    min-height: 100vh;
+  }
+  
+  .main-content h1 {
+    font-size: 24px;
+    color: #152c70;
+    margin-bottom: 20px;
+  }
+  
+  .main-content p {
+    font-size: 16px;
+    color: #666;
+  }
+  
   @media (max-width: 900px) {
+    .sidebar-container {
+      width: 70px;
+    }
+  
     .left-panel {
       width: 70px;
       padding-top: 20px;
@@ -180,13 +205,24 @@
       content: "↩";
       font-size: 20px;
     }
+  
+    .main-content {
+      margin-left: 70px;
+      width: calc(100% - 70px);
+    }
   }
   
   @media (max-width: 500px) {
-    .sidebar-container {
-      max-width: 100%;
-      margin: 0;
+    .dashboard-wrapper {
+      flex-direction: column;
     }
+  
+    .sidebar-container {
+      width: 100%;
+      position: relative;
+      height: auto;
+    }
+  
     .left-panel {
       width: 100%;
       height: 100px;
@@ -237,5 +273,11 @@
     .logout-btn::after {
       content: none;
     }
+  
+    .main-content {
+      margin-left: 0;
+      width: 100%;
+      min-height: auto;
+    }
   }
-
+  
