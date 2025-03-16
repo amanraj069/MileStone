@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sidebar Dashboard</title>
     <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-    <link rel="stylesheet" href="/css/EmployerD/current_jobs.css" />
+    <link rel="stylesheet" href="/css/EmployerD/milestone.css" />
   </head>
 
   <body>
@@ -83,7 +83,7 @@
                     <span>Job Listings</span>
                   </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a href="/employerD/current-jobs" class="nav-link">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +120,7 @@
                     <span>Previously Worked</span>
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                   <a href="/employerD/transaction-history" class="nav-link">
                     <svg
                       width="24"
@@ -184,142 +184,146 @@
 
       <div class="main-content">
         <div class="container">
-          <h1 class="section-title">Currently Working Freelancers</h1>
-
-          <div class="search-bar">
-            <input
-              type="text"
-              class="search-input"
-              placeholder="Search freelancers, skills..."
-            />
-            <button class="search-btn">
+          <div class="header">
+            <h1 class="title">Payments & Milestones</h1>
+            <button class="add-button" id="addMilestoneBtn">
               <svg
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
-                fill="currentColor"
-                class="icon"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
-                <path
-                  d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-8.73 6.52 6.52 0 0 0-9.2 0 6.52 6.52 0 0 0 0 9.2 6.5 6.5 0 0 0 8.73-1.48l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"
-                />
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
+              Add Milestone
             </button>
           </div>
 
-          <div class="freelancer-list">
-            <div class="freelancer-card" data-Since="45" data-rating="4.7">
-              <div class="card-header">
-                <img
-                  src="/assets/user_female.png"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div class="freelancer-info">
-                  <a href="view_profile.html" class="freelancer-name"
-                    >Sneha Iyer</a
-                  >
-                  <div class="rating">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <span>4.7</span>
+          <div class="progress-card">
+            <div class="progress-section">
+              <div class="progress-header">
+                <h3 class="progress-title">Project Completion</h3>
+                <span class="progress-percentage" id="completionPercentage"
+                  >0%</span
+                >
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar" id="completionProgressBar"></div>
+              </div>
+              <div class="progress-labels">
+                <span>Not Started</span>
+                <span>In Progress</span>
+                <span>Completed</span>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-header">
+                <h3 class="progress-title">Payment Progress</h3>
+                <span class="progress-amount" id="paymentProgress"
+                  >₹0 of ₹0 (0%)</span
+                >
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar" id="paymentProgressBar"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="milestones-container" id="milestonesContainer">
+            <!-- Milestone cards will be inserted here by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Add/Edit Milestone Modal -->
+        <div class="modal-overlay" id="milestoneModal">
+          <div class="modal">
+            <div class="modal-header">
+              <h2 class="modal-title" id="modalTitle">Add New Milestone</h2>
+              <button class="close-modal" id="closeModal">×</button>
+            </div>
+            <div class="modal-body">
+              <form id="milestoneForm">
+                <input type="hidden" id="milestoneId" />
+                <div class="form-group">
+                  <label for="deliverable">Deliverable Description</label>
+                  <input
+                    type="text"
+                    id="deliverable"
+                    placeholder="eg : Complete feature X"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="deadline">Deadline</label>
+                  <input
+                    type="text"
+                    id="deadline"
+                    placeholder="eg : Week 2"
+                    required
+                  />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="payment">Payment Amount (₹)</label>
+                    <input
+                      type="number"
+                      id="payment"
+                      placeholder="eg : 22500"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="percentage">Percentage (%)</label>
+                    <input
+                      type="number"
+                      id="percentage"
+                      placeholder="eg : 20"
+                      required
+                    />
                   </div>
                 </div>
-                <div>
-                  <button class="mark-finished-btn">Mark Finished</button>
+                <div class="modal-footer">
+                  <button type="button" class="cancel-btn" id="cancelBtn">
+                    Cancel
+                  </button>
+                  <button type="submit" class="save-btn" id="saveBtn">
+                    Add Milestone
+                  </button>
                 </div>
-              </div>
-              <div class="card-body">
-                <div class="skills">
-                  <span class="skill-tag">Shopify</span>
-                  <span class="skill-tag">Liquid</span>
-                  <span class="skill-tag">E-commerce</span>
-                </div>
-                <div class="project-info">
-                  <p class="info-label">Working on:</p>
-                  <p class="project-name">Online Store Redesign</p>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="Since-date">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon"
-                  >
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                    />
-                  </svg>
-                  <span>Since 4 days</span>
-                </div>
-                <a href="/employerD/current-jobs/chat"
-                  ><button class="chat-btn">Chat</button></a
-                >
-                <a href="/employerD/current-jobs/see_more"
-                  ><button class="see-more-btn">See More</button></a
-                >
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal-overlay" id="deleteModal">
+          <div class="modal delete-modal">
+            <div class="modal-header">
+              <h2 class="modal-title">Confirm Delete</h2>
+              <button class="close-modal" id="closeDeleteModal">×</button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete this milestone?</p>
+              <input type="hidden" id="deleteId" />
+              <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="cancelDeleteBtn">
+                  Cancel
+                </button>
+                <button type="button" class="delete-btn" id="confirmDeleteBtn">
+                  Delete
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/EmployerD/current_jobs.js"></script>
+    <script src="/js/EmployerD/milestone.js"></script>
   </body>
 </html>

@@ -54,9 +54,9 @@ exports.postLogin = (req, res) => {
           name: user.name,
         };
         if (role === "Admin") {
-          res.redirect("/adminD");
+          res.redirect("/adminD/profile");
         } else if (role === "Employer") {
-          res.redirect("/employerD");
+          res.redirect("/employerD/profile");
         } else if (role === "Freelancer") {
           res.redirect("/freelancerD/profile");
         }
