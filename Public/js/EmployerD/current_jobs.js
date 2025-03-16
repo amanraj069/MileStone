@@ -19,8 +19,3 @@ searchInput.addEventListener('input', (e) => {
         card.style.display = isMatch ? 'block' : 'none';
     });
 });
-
-
-function see_more_Page() {
-    window.location.href = "current_job_see_more.html"; // Redirects to see_more_detail.html
-}
