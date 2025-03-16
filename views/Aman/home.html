@@ -1,4 +1,3 @@
-<!-- views/Aman/home.html -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,34 +15,14 @@
         <button class="svg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="100"
-            height="100"
-            viewBox="0,0,255.98958,255.98958"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
           >
-            <g
+            <path
               fill="#ffffff"
-              fill-rule="nonzero"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="butt"
-              stroke-linejoin="miter"
-              stroke-miterlimit="10"
-              stroke-dasharray=""
-              stroke-dashoffset="0"
-              font-family="none"
-              font-weight="none"
-              font-size="none"
-              text-anchor="none"
-              style="mix-blend-mode: normal"
-            >
-              <g transform="scale(2,2)">
-                <path
-                  d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z"
-                ></path>
-              </g>
-            </g>
+              d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14z"
+            />
           </svg>
         </button>
       </div>
@@ -58,11 +37,17 @@
       <!-- Hero Section -->
       <section class="hero">
         <div class="hero-content">
-          <h1>Welcome to Milestone</h1>
-          <p>Empower your career or business with top freelance talent.</p>
+          <h1 data-animation="animate-slideInDown">Welcome to Milestone</h1>
+          <p data-animation="animate-fadeInUp">
+            Empower your career or business with top freelance talent.
+          </p>
           <div class="hero-buttons">
-            <button class="btn-primary">Find Talent</button>
-            <button class="btn-secondary">Post a Job</button>
+            <button class="btn-primary" data-animation="animate-fadeInUp">
+              Find Talent
+            </button>
+            <button class="btn-secondary" data-animation="animate-fadeInUp">
+              Post a Job
+            </button>
           </div>
         </div>
       </section>
@@ -70,42 +55,51 @@
       <!-- Find Your Perfect Freelance Match Section -->
       <section class="find-match-section">
         <div class="section-container">
-          <h2>Find Your Perfect Freelance Match</h2>
-          <p>
-            Connect with top talent or discover exciting projects that match
-            your skills.
+          <h2 data-animation="animate-slideInLeft">
+            Find Your Perfect Freelance Match
+          </h2>
+          <p data-animation="animate-fadeInUp">
+            Connect with top talent or discover exciting projects that match your
+            skills.
           </p>
           <div class="category-grid">
-            <button class="category-card">
+            <button class="category-card" data-animation="animate-fadeInUp">
               <span class="icon">💻</span> Web Development
             </button>
-            <button class="category-card">
+            <button class="category-card" data-animation="animate-fadeInUp">
               <span class="icon">🎨</span> Graphic Design
             </button>
-            <button class="category-card">
+            <button class="category-card" data-animation="animate-fadeInUp">
               <span class="icon">✍️</span> Content Writing
             </button>
-            <button class="category-card">
+            <button class="category-card" data-animation="animate-fadeInUp">
               <span class="icon">📱</span> Mobile Apps
             </button>
-            <button class="category-card">
+            <button class="category-card" data-animation="animate-fadeInUp">
               <span class="icon">📊</span> Data Analysis
             </button>
-            <button class="category-card">
+            <button class="category-card" data-animation="animate-fadeInUp">
               <span class="icon">🎥</span> Video Editing
             </button>
           </div>
-          <button class="explore-btn">Explore All Categories</button>
+          <button class="explore-btn" data-animation="animate-fadeInUp">
+            Explore All Categories
+          </button>
         </div>
       </section>
 
       <!-- Top Freelancers Section -->
       <section class="top-freelancers-section">
         <div class="section-container">
-          <h2>Top Freelancers</h2>
+          <h2 data-animation="animate-slideInRight">Top Freelancers</h2>
           <div class="freelancer-list">
-            <div class="freelancer-card">
-              <img src="profile.png" alt="Aman Raj" class="freelancer-img" />
+            <div class="freelancer-card" data-animation="animate-fadeInUp">
+              <img
+                src="./assets/profile.png"
+                alt="Aman Raj"
+                class="freelancer-img"
+                onerror="this.src='./assets/default-profile.png';"
+              />
               <div class="freelancer-info">
                 <h3>Aman Raj</h3>
                 <p><strong>Full Stack Developer</strong></p>
@@ -114,11 +108,12 @@
                 <button class="hire-btn">Hire Now</button>
               </div>
             </div>
-            <div class="freelancer-card">
+            <div class="freelancer-card" data-animation="animate-fadeInUp">
               <img
-                src="profile.png"
+                src="./assets/profile.png"
                 alt="Vanya Awasthi"
                 class="freelancer-img"
+                onerror="this.src='./assets/default-profile.png';"
               />
               <div class="freelancer-info">
                 <h3>Vanya Awasthi</h3>
@@ -128,11 +123,12 @@
                 <button class="hire-btn">Hire Now</button>
               </div>
             </div>
-            <div class="freelancer-card">
+            <div class="freelancer-card" data-animation="animate-fadeInUp">
               <img
-                src="profile.png"
+                src="./assets/profile.png"
                 alt="Deepak Anuragi"
                 class="freelancer-img"
+                onerror="this.src='./assets/default-profile.png';"
               />
               <div class="freelancer-info">
                 <h3>Deepak Anuragi</h3>
@@ -149,23 +145,23 @@
       <!-- Featured Jobs Section -->
       <section class="featured-jobs">
         <div class="section-container">
-          <h2>Featured Job Opportunities</h2>
+          <h2 data-animation="animate-slideInLeft">Featured Job Opportunities</h2>
           <div class="jobs-grid">
-            <div class="job-card">
+            <div class="job-card" data-animation="animate-fadeInUp">
               <h3>Frontend Developer</h3>
               <p><strong>Tech:</strong> React, TypeScript, CSS</p>
               <p><strong>Budget:</strong> ₹30,000 - ₹40,000</p>
               <p><strong>Duration:</strong> 2 months</p>
               <button class="view-btn">View Details</button>
             </div>
-            <div class="job-card">
+            <div class="job-card" data-animation="animate-fadeInUp">
               <h3>Graphic Designer</h3>
               <p><strong>Tech:</strong> Photoshop, Illustrator</p>
               <p><strong>Budget:</strong> ₹15,000 - ₹25,000</p>
               <p><strong>Duration:</strong> 1 month</p>
               <button class="view-btn">View Details</button>
             </div>
-            <div class="job-card">
+            <div class="job-card" data-animation="animate-fadeInUp">
               <h3>Data Analyst</h3>
               <p><strong>Tech:</strong> Python, SQL, Excel</p>
               <p><strong>Budget:</strong> ₹25,000 - ₹35,000</p>
@@ -173,16 +169,18 @@
               <button class="view-btn">View Details</button>
             </div>
           </div>
-          <a href="#" class="see-all-jobs">See All Jobs →</a>
+          <a href="#" class="see-all-jobs" data-animation="animate-fadeInUp">
+            See All Jobs →
+          </a>
         </div>
       </section>
 
       <!-- Success Stories Section -->
       <section class="success-stories">
         <div class="section-container">
-          <h2>Success Stories</h2>
+          <h2 data-animation="animate-slideInRight">Success Stories</h2>
           <div class="stories-grid">
-            <div class="story-card">
+            <div class="story-card" data-animation="animate-fadeInUp">
               <h3>Transforming Businesses</h3>
               <p>
                 "Milestone helped us find a developer who transformed our
@@ -190,7 +188,7 @@
               </p>
               <p class="author">- John Doe, CEO of ShopEasy</p>
             </div>
-            <div class="story-card">
+            <div class="story-card" data-animation="animate-fadeInUp">
               <h3>Boosting Creativity</h3>
               <p>
                 "The designers on Milestone brought our brand to life with
@@ -205,9 +203,9 @@
       <!-- Latest Blog Posts Section -->
       <section class="blog-posts">
         <div class="section-container">
-          <h2>Latest Blog Posts</h2>
+          <h2 data-animation="animate-slideInLeft">Latest Blog Posts</h2>
           <div class="posts-grid">
-            <div class="post-card">
+            <div class="post-card" data-animation="animate-fadeInUp">
               <h3>Top 10 Skills for Freelancers in 2025</h3>
               <p>
                 Discover the most in-demand skills to boost your freelance
@@ -215,7 +213,7 @@
               </p>
               <a href="#" class="read-more">Read More →</a>
             </div>
-            <div class="post-card">
+            <div class="post-card" data-animation="animate-fadeInUp">
               <h3>How to Price Your Freelance Services</h3>
               <p>Learn the best strategies for setting competitive rates.</p>
               <a href="#" class="read-more">Read More →</a>
@@ -227,23 +225,23 @@
       <!-- FAQ Section -->
       <section class="faq-section">
         <div class="section-container">
-          <h2>Frequently Asked Questions</h2>
+          <h2 data-animation="animate-slideInRight">Frequently Asked Questions</h2>
           <div class="faq-grid">
-            <div class="faq-card">
+            <div class="faq-card" data-animation="animate-fadeInUp">
               <h3>How do I hire a freelancer?</h3>
               <p>
                 Simply sign up, post a job, and browse profiles to find the
                 perfect match.
               </p>
             </div>
-            <div class="faq-card">
+            <div class="faq-card" data-animation="animate-fadeInUp">
               <h3>What payment methods are available?</h3>
               <p>
                 We support secure payments via bank transfer, PayPal, and
                 escrow.
               </p>
             </div>
-            <div class="faq-card">
+            <div class="faq-card" data-animation="animate-fadeInUp">
               <h3>How are freelancers verified?</h3>
               <p>
                 All freelancers undergo a screening process to ensure quality
@@ -257,30 +255,66 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="footer-container">
+        <div class="footer-container">
         <div class="footer-section footer-logo">
-          <h3 class="footer-title">Milestone</h3>
-          <p class="centered">
+            <h3 class="footer-title">Milestone</h3>
+            <p>
             Your go-to platform for hiring top freelancers. We'll fill some more
             content here according to our need or we can remove this section if
             not required.
-          </p>
+            </p>
         </div>
         <div class="footer-section footer-links">
-          <h3 class="footer-title">Quick Links</h3>
-          <div class="quick-links">
+            <h3 class="footer-title">Quick Links</h3>
+            <div class="quick-links">
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/login">Sign in</a></li>
-              <li><a href="#">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/login">Sign in</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
-          </div>
+            </div>
         </div>
-      </div>
-      <div class="footer-bottom">
+        </div>
+        <div class="footer-bottom">
         <p>© 2025 Milestone. All rights reserved.</p>
-      </div>
+        </div>
     </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1, // Trigger when 10% visible for smoother entry
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+            const animation = entry.target.dataset.animation;
+            if (animation) {
+                entry.target.classList.add(animation);
+                // Reduced delay for more professional timing
+                const children = entry.target.querySelectorAll("[data-animation]");
+                children.forEach((child, index) => {
+                setTimeout(() => {
+                    child.classList.add(child.dataset.animation);
+                }, index * 100); // 100ms delay instead of 200ms
+                });
+            }
+            observer.unobserve(entry.target);
+            }
+        });
+        }, observerOptions);
+
+        const elements = document.querySelectorAll("[data-animation]");
+        elements.forEach((element) => {
+        observer.observe(element);
+        });
+
+        console.log("Animation observer initialized for", elements.length, "elements");
+    });
+    </script>
   </body>
 </html>

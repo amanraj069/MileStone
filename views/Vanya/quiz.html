@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Quiz - FreelancePro</title>
+    <link rel="stylesheet" href="/css/FreelancerD/quiz_style.css" />
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      
+
+        <div id="quiz" class="content-section active">
+          <div class="content-header">
+            <h2>Skill Quiz</h2>
+            <p>Test your skills to earn badges!</p>
+          </div>
+
+          <div class="quiz-content">
+            <h4>Select Your Field</h4>
+            <select id="quiz-field">
+              <option value="" disabled selected>Choose a skill</option>
+              <option value="html">HTML5</option>
+              <option value="css">CSS3</option>
+              <option value="javascript">JavaScript</option>
+              <option value="react">React</option>
+              <option value="typescript">TypeScript</option>
+              <option value="angular">Angular</option>
+              <option value="nodejs">Node.js</option>
+              <option value="git">Git</option>
+            </select>
+
+            <button id="start-quiz-btn">Start Quiz</button>
+
+            <div id="quiz-questions" style="display: none;">
+              <!-- Dynamically populated via JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Basic script to show quiz questions (expand as needed)
+      document.getElementById("start-quiz-btn").addEventListener("click", () => {
+        const field = document.getElementById("quiz-field").value;
+        if (field) {
+          document.getElementById("quiz-questions").style.display = "block";
+          // Fetch or load quiz questions based on 'field' here
+          alert(`Starting quiz for ${field}`);
+        } else {
+          alert("Please select a skill first!");
+        }
+      });
+    </script>
+  </body>
+</html>
