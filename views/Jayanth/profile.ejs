@@ -4,32 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Employer Profile</title>
-    <link rel="stylesheet" href="/css/adminD/admin_page.css" />
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
     <link rel="stylesheet" href="/css/adminD/profile.css" />
-    <style>
-      .fa-edit::before {
-        content: "✏️";
-      }
-      .fa-map-marker-alt::before {
-        content: "📍";
-      }
-      .fa-globe::before {
-        content: "🌐";
-      }
-      .fa-envelope::before {
-        content: "✉️";
-      }
-      .fa-phone::before {
-        content: "📞";
-      }
-      .fa-check-circle::before {
-        content: "✅";
-      }
-      .fa-quote-left::before {
-        content: "“";
-      }
-    </style>
   </head>
   <body>
     <div class="dashboard-wrapper">
@@ -153,7 +129,7 @@
                     <span>Complaints</span>
                   </a>
                 </li>
-                <li class="nav-item" data-section="profile">
+                <li class="nav-item active" data-section="profile">
                   <a href="/adminD/profile" class="nav-link">
                     <svg
                       width="24"
@@ -188,7 +164,11 @@
           <div class="profile-header">
             <h1><%= profile.role %> Profile</h1>
             <button class="edit-profile-btn">
-              <i class="fa-edit"></i> Edit Profile
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+              Edit Profile
             </button>
           </div>
           <div class="profile-container">
@@ -203,18 +183,32 @@
                   >
                 </h2>
                 <p class="location">
-                  <i class="fa-map-marker-alt"></i> <%= profile.location %>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" />
+                    <circle cx="12" cy="9" r="2" />
+                  </svg>
+                  <%= profile.location %>
                 </p>
                 <p class="website">
-                  <i class="fa-globe"></i>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
                   <a href="<%= profile.website %>"><%= profile.website %></a>
                 </p>
                 <p class="email">
-                  <i class="fa-envelope"></i>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <path d="M22 6l-10 7L2 6" />
+                  </svg>
                   <a href="mailto:<%= profile.email %>"><%= profile.email %></a>
                 </p>
                 <p class="phone">
-                  <i class="fa-phone"></i> <%= profile.phone %>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  <%= profile.phone %>
                 </p>
                 <div class="social-links">
                   <a
@@ -381,7 +375,6 @@
         </section>
       </div>
     </div>
-    <script src="/js/adminD/navigation.js"></script>
     <script src="/js/adminD/profile.js"></script>
   </body>
 </html>
