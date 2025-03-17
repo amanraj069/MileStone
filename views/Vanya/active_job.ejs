@@ -41,6 +41,31 @@
             <div class="profile-name">Hey <%= user.name %>!</div>
             <nav class="dashboard-nav">
               <ul>
+                <li class="nav-item">
+                  <a href="/freelancerD/profile" class="nav-link">
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12"
+                        cy="7"
+                        r="4"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M4 21C4 17.6863 7.58172 15 12 15C16.4183 15 20 17.6863 20 21"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                    </svg>
+                    <span>Profile</span>
+                  </a>
+                </li>
                 <li class="nav-item active">
                   <a href="/freelancerD/active_job" class="nav-link">
                     <svg
@@ -82,31 +107,7 @@
                     <span>Job History</span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="/freelancerD/profile" class="nav-link">
-                    <svg
-                      width="40"
-                      height="40"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="12"
-                        cy="7"
-                        r="4"
-                        stroke="black"
-                        stroke-width="2"
-                      />
-                      <path
-                        d="M4 21C4 17.6863 7.58172 15 12 15C16.4183 15 20 17.6863 20 21"
-                        stroke="black"
-                        stroke-width="2"
-                      />
-                    </svg>
-                    <span>Profile</span>
-                  </a>
-                </li>
+                
                 <li class="nav-item">
                   <a href="/freelancerD/payment" class="nav-link">
                     <svg
@@ -198,8 +199,8 @@
       <!-- Main Content Area -->
       <div class="main-content">
         <!-- Header -->
-        <header>
-          <div class="logo">FreelancePro</div>
+        <header class="header">
+          <h2>Milestone</h2>
           <div class="search-bar">
             <input
               type="text"
