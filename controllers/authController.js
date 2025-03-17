@@ -2,8 +2,6 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const db = require("../database.js");
 
-// Note: getLogin and getSignup methods are no longer needed as they're handled directly in app.js
-
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
@@ -90,7 +88,7 @@ exports.getHome = (req, res) => {
   if (req.session.user) {
     switch (req.session.user.role) {
       case "Admin":
-        dashboardRoute = "/adminD/profile";
+        dashboardRoute = "/adminD/settings";
         break;
       case "Employer":
         dashboardRoute = "/employerD/profile";

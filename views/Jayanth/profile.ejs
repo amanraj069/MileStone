@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Employer Profile Settings</title>
-    <link rel="stylesheet" href="/Public/css/adminD/admin_page.css" />
-    <link rel="stylesheet" href="/Public/css/adminD/sidebar.css" />
-    <link rel="stylesheet" href="/Public/css/adminD/settings.css" />
+    <title>Employer Profile</title>
+    <link rel="stylesheet" href="/css/adminD/admin_page.css" />
+    <link rel="stylesheet" href="/css/adminD/sidebar.css" />
+    <link rel="stylesheet" href="/css/adminD/profile.css" />
     <style>
       .fa-edit::before {
         content: "✏️";
@@ -33,7 +33,6 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <!-- Embedded Sidebar -->
       <div class="sidebar-container">
         <div class="content">
           <div class="left-panel">
@@ -53,7 +52,9 @@
                 />
               </svg>
             </div>
-            <div class="profile-name">Hey User!</div>
+            <div class="profile-name">
+              Hey <%= user ? user.name : 'User' %>!
+            </div>
             <nav class="dashboard-nav">
               <ul>
                 <li class="nav-item" data-section="job-listings">
@@ -152,8 +153,8 @@
                     <span>Complaints</span>
                   </a>
                 </li>
-                <li class="nav-item" data-section="settings">
-                  <a href="/adminD/settings" class="nav-link">
+                <li class="nav-item" data-section="profile">
+                  <a href="/adminD/profile" class="nav-link">
                     <svg
                       width="24"
                       height="24"
@@ -173,7 +174,7 @@
                         stroke-linecap="round"
                       />
                     </svg>
-                    <span>Settings</span>
+                    <span>Profile</span>
                   </a>
                 </li>
               </ul>
@@ -182,11 +183,10 @@
           </div>
         </div>
       </div>
-      <!-- Main Content -->
       <div class="main-content">
         <section id="profile" class="section-content active">
           <div class="profile-header">
-            <h1>Admin Profile</h1>
+            <h1><%= profile.role %> Profile</h1>
             <button class="edit-profile-btn">
               <i class="fa-edit"></i> Edit Profile
             </button>
@@ -194,27 +194,31 @@
           <div class="profile-container">
             <div class="profile-overview">
               <div class="profile-logo">
-                <img
-                  src="/Public/assets/user_image.jpg"
-                  alt="TechMonkey Assoc. Logo"
-                />
+                <img src="<%= profile.logo %>" alt="Profile Logo" />
               </div>
               <div class="profile-details">
-                <h2>Jaffa<span class="badge">Admin</span></h2>
+                <h2>
+                  <%= profile.name %><span class="badge"
+                    ><%= profile.role %></span
+                  >
+                </h2>
                 <p class="location">
-                  <i class="fa-map-marker-alt"></i> Hyderabad, India
+                  <i class="fa-map-marker-alt"></i> <%= profile.location %>
                 </p>
                 <p class="website">
-                  <i class="fa-globe"></i> <a href="#">www.techmonkey.com</a>
+                  <i class="fa-globe"></i>
+                  <a href="<%= profile.website %>"><%= profile.website %></a>
                 </p>
                 <p class="email">
                   <i class="fa-envelope"></i>
-                  <a href="mailto:contact@techmonkey.com">contact@gm.com</a>
+                  <a href="mailto:<%= profile.email %>"><%= profile.email %></a>
                 </p>
-                <p class="phone"><i class="fa-phone"></i> +91 98765 43210</p>
+                <p class="phone">
+                  <i class="fa-phone"></i> <%= profile.phone %>
+                </p>
                 <div class="social-links">
                   <a
-                    href="#"
+                    href="<%= profile.socialLinks.linkedin %>"
                     class="social-icon linkedin"
                     aria-label="LinkedIn"
                   >
@@ -231,7 +235,11 @@
                       />
                     </svg>
                   </a>
-                  <a href="#" class="social-icon twitter" aria-label="Twitter">
+                  <a
+                    href="<%= profile.socialLinks.twitter %>"
+                    class="social-icon twitter"
+                    aria-label="Twitter"
+                  >
                     <svg
                       width="24"
                       height="24"
@@ -246,7 +254,7 @@
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="<%= profile.socialLinks.facebook %>"
                     class="social-icon facebook"
                     aria-label="Facebook"
                   >
@@ -264,7 +272,7 @@
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="<%= profile.socialLinks.instagram %>"
                     class="social-icon instagram"
                     aria-label="Instagram"
                   >
@@ -312,23 +320,19 @@
             </div>
             <div class="profile-content">
               <div class="profile-main">
-                <div class="settings-section" id="personal-info">
+                <div class="profile-section" id="personal-info">
                   <h3>Personal Information</h3>
-                  <p>Username: techmonkey_user</p>
-                  <p>Email: contact@techmonkey.com</p>
+                  <p>Username: <%= profile.username %></p>
+                  <p>Email: <%= profile.email %></p>
                   <p>
                     Profile Picture:
-                    <img
-                      src="https://via.placeholder.com/40"
-                      alt="Profile Pic"
-                    />
+                    <img src="<%= profile.profilePic %>" alt="Profile Pic" />
                   </p>
-                  <p>Address: 1-5-1107/1,Himayatnagar,Hyderabad.</p>
+                  <p>Address: <%= profile.address %></p>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Edit Profile Form -->
           <div class="edit-profile-form" style="display: none">
             <h2>Edit Profile</h2>
             <form id="profile-form">
@@ -338,7 +342,7 @@
                   type="text"
                   id="username"
                   class="form-control"
-                  value="techmonkey_user"
+                  value="<%= profile.username %>"
                 />
               </div>
               <div class="form-group">
@@ -347,7 +351,7 @@
                   type="email"
                   id="email"
                   class="form-control"
-                  value="contact@techmonkey.com"
+                  value="<%= profile.email %>"
                 />
               </div>
               <div class="form-group">
@@ -356,7 +360,7 @@
                   type="text"
                   id="profile-pic"
                   class="form-control"
-                  value="https://via.placeholder.com/40"
+                  value="<%= profile.profilePic %>"
                 />
               </div>
               <div class="form-group">
@@ -377,7 +381,7 @@
         </section>
       </div>
     </div>
-    <script src="/Public/js/adminD/navigation.js"></script>
-    <script src="/Public/js/adminD/settings.js"></script>
+    <script src="/js/adminD/navigation.js"></script>
+    <script src="/js/adminD/profile.js"></script>
   </body>
 </html>

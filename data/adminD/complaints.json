@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1253",
+    "status": "pending",
+    "freelancer": "Sarah Johnson",
+    "employer": "TechSolutions Inc.",
+    "issue": "Delayed payments for completed work"
+  },
+  {
+    "id": "1254",
+    "status": "in-progress",
+    "freelancer": "Michael Chen",
+    "employer": "CreativeMinds",
+    "issue": "Work quality does not match project requirements"
+  },
+  {
+    "id": "1256",
+    "status": "resolved",
+    "freelancer": "Alex Brown",
+    "employer": "TechInnovate",
+    "issue": "Disagreement on project timeline"
+  }
+]
