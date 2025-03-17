@@ -1,13 +1,8 @@
-// controllers/homeController.js
 const path = require("path");
-const fs = require("fs").promises; // Use promises for async file reading
+const fs = require("fs").promises; 
 
 exports.getHome = (req, res) => {
   res.sendFile(path.join(__dirname, "../views", "Aman", "home.html"));
-};
-
-exports.getVanya = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "Vanya", "active_job.html"));
 };
 
 exports.getJobListing = async (req, res) => {
@@ -26,7 +21,7 @@ exports.getJobListing = async (req, res) => {
 
 exports.getJobDetails = async (req, res) => {
   try {
-    const jobId = parseInt(req.query.jobId, 10); // Get jobId from query parameter
+    const jobId = parseInt(req.query.jobId, 10); 
     const jobsData = await fs.readFile(
       path.join(__dirname, "../data", "posted_jobs.json"),
       "utf8"
