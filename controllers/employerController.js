@@ -121,11 +121,7 @@ exports.getmilestoneCurrentjob = (req, res) => {
     path.join(__dirname, "../views/Abhishek/Additional/milestone.html")
   );
 };
-exports.getCurrentJobProfile = (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../views/Abhishek/Additional/view_profile.html")
-  );
-};
+
 exports.getDetailsofAppliers = (req, res) => {
   res.sendFile(
     path.join(__dirname, "../views/Abhishek/Additional/view_profile.html")
