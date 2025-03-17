@@ -1,8 +1,10 @@
 const express = require("express");
-const authController = require("../controllers/authController");
+const homeController = require("../controllers/homeController");
 
 const router = express.Router();
 
-router.get("/", authController.getHome);
+router.get("/", homeController.getHome);
+router.get("/jobs", homeController.getJobListing);
+router.get("/jobs/details", homeController.getJobDetails);
 
 module.exports = router;
