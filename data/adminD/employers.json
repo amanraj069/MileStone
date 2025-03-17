@@ -5,7 +5,7 @@
     "type": "Software Development Company",
     "rating": 4.5,
     "location": "San Francisco, CA",
-    "logo": "/Public/assets/company_logo.jpg"
+    "logo": "/assets/company_logo.jpg"
   },
   {
     "id": "2",
@@ -13,7 +13,7 @@
     "type": "Design Agency",
     "rating": 4.0,
     "location": "New York, NY",
-    "logo": "/Public/assets/company_logo.jpg"
+    "logo": "/assets/company_logo.jpg"
   },
   {
     "id": "3",
@@ -21,6 +21,6 @@
     "type": "Web Development Firm",
     "rating": 5.0,
     "location": "Austin, TX",
-    "logo": "/Public/assets/amazon-web-services-logo.png"
+    "logo": "/assets/amazon-web-services-logo.png"
   }
 ]

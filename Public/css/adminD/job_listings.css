@@ -106,7 +106,7 @@
 .job-details {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 230px;
   font-size: 13px;
   color: #666;
 }
