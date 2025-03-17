@@ -11,15 +11,10 @@ body {
   color: #333;
   overflow-x: hidden;
 }
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar */
 }
-
 /* Main Content Styles */
 .main-content {
   flex-grow: 1;
@@ -64,6 +59,7 @@ body {
   font-size: 14px;
   margin-left: 10px;
   background-color: white;
+  cursor: pointer;
 }
 
 /* Job Cards Styles (Active Jobs) */
@@ -130,24 +126,6 @@ body {
   font-size: 14px;
 }
 
-.job-status {
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.job-status.completed {
-  color: #16a34a; /* Green */
-}
-
-.job-status.cancelled {
-  color: #dc2626; /* Red */
-}
-
-.job-status.archived {
-  color: #6b7280; /* Gray */
-}
-
 .job-progress {
   margin-bottom: 15px;
 }
@@ -172,6 +150,8 @@ body {
   height: 100%;
   background-color: #2563eb;
   border-radius: 4px;
+  width: 0; /* Fallback for when inline style fails */
+  transition: width 0.3s ease-in-out; /* Smooth transition for dynamic updates */
 }
 
 .job-tech {
@@ -197,40 +177,19 @@ body {
   margin-top: 10px;
 }
 
-.job-deadline,
-.job-date {
+.job-deadline {
   font-size: 14px;
   color: #666;
+}
+
+.job-deadline i {
+  margin-right: 5px;
 }
 
 .job-price {
   font-weight: 600;
   color: #2563eb;
   font-size: 16px;
-}
-
-.job-rating {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.rating-stars i {
-  color: #f4a261; /* Orange */
-  font-size: 14px;
-}
-
-.rating-score {
-  font-size: 14px;
-  color: #666;
-}
-
-.job-cancel-reason {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #dc2626;
-  font-style: italic;
 }
 
 .job-actions {
@@ -245,8 +204,7 @@ body {
 
 .chat-btn,
 .complaint-btn,
-.see-more-btn,
-.project-files-btn {
+.see-more-btn {
   padding: 8px 15px;
   border-radius: 4px;
   border: none;
@@ -289,61 +247,16 @@ body {
   background-color: #1d4ed8;
 }
 
-.project-files-btn {
-  background-color: #e6eef8;
-  color: #2563eb;
-}
-
-.project-files-btn:hover {
-  background-color: #d0e1f9;
-}
-
 .chat-btn i,
-.complaint-btn i,
-.project-files-btn i {
+.complaint-btn i {
   margin-right: 5px;
 }
 
-/* Pagination Styles */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.pagination-btn {
-  padding: 8px 12px;
-  border: 1px solid #d0e1f9;
-  border-radius: 4px;
-  background-color: white;
-  color: #333;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.pagination-btn:hover {
-  background-color: #e6eef8;
-}
-
-.pagination-btn.active {
-  background-color: #2563eb;
-  color: white;
-  border-color: #2563eb;
-}
-
-.pagination-separator {
-  font-size: 14px;
-  color: #666;
-}
-
 /* Responsive Styles */
-@media (max-width: 1200px) {
+@media (max-width: 900px) {
   .main-content {
-    margin-left: 200px;
-    width: calc(100% - 200px);
+    margin-left: 70px;
+    width: calc(100% - 70px);
   }
 
   .job-actions {
@@ -352,93 +265,8 @@ body {
 
   .chat-btn,
   .complaint-btn,
-  .see-more-btn,
-  .project-files-btn {
+  .see-more-btn {
     padding: 7px 12px;
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 992px) {
-  header {
-    margin-left: 70px;
-    width: calc(100% - 70px);
-  }
-
-  .left-panel {
-    width: 70px;
-    padding-top: 20px;
-  }
-
-  .main-content {
-    margin-left: 70px;
-    width: calc(100% - 70px);
-  }
-
-  .profile-img-container {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 30px;
-  }
-
-  .dashboard-nav .nav-item {
-    padding-left: 0;
-    justify-content: center;
-  }
-
-  .dashboard-nav .nav-item span {
-    display: none;
-  }
-
-  .dashboard-nav .nav-item i {
-    margin-right: 0;
-  }
-
-  .dashboard-nav .nav-link {
-    padding-left: 0;
-    justify-content: center;
-  }
-
-  .dashboard-nav .nav-link span {
-    display: none;
-  }
-
-  .dashboard-nav .nav-link i {
-    margin-right: 0;
-  }
-
-  .logout-btn {
-    padding: 8px;
-    font-size: 14px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-  }
-
-  .logout-btn::after {
-    content: "↩";
-  }
-
-  .logout-btn span {
-    display: none;
-  }
-
-  .subscription-card {
-    display: none;
-  }
-
-  .job-actions {
-    width: 100px;
-  }
-
-  .chat-btn,
-  .complaint-btn,
-  .see-more-btn,
-  .project-files-btn {
-    padding: 7px 10px;
     font-size: 13px;
   }
 
@@ -452,43 +280,32 @@ body {
   }
 }
 
-@media (max-width: 768px) {
-  header {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .left-panel {
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding: 15px;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-
+@media (max-width: 500px) {
   .main-content {
     margin-left: 0;
     width: 100%;
-    padding: 0 10px 10px 10px; /* Reduced padding for mobile */
+    padding: 0 10px 10px 10px;
   }
 
-  .profile-img-container {
-    margin-bottom: 0;
-    margin-right: 15px;
+  .content-header {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
   }
 
-  .dashboard-nav {
-    display: none;
+  .content-header h2 {
+    font-size: 18px;
   }
 
-  .subscription-card {
-    display: none;
+  .sorting {
+    width: 100%;
+    justify-content: flex-end;
   }
 
-  .logout-btn {
-    margin: 0;
+  .sort-select {
+    padding: 6px 10px;
+    font-size: 12px;
+    width: 100%;
   }
 
   .job-card {
@@ -514,30 +331,9 @@ body {
 
   .chat-btn,
   .complaint-btn,
-  .see-more-btn,
-  .project-files-btn {
+  .see-more-btn {
     flex: 1;
     padding: 6px 8px;
-    font-size: 12px;
-  }
-
-  .content-header {
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .content-header h2 {
-    font-size: 18px;
-  }
-
-  .sorting {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .sort-select {
-    padding: 6px 10px;
     font-size: 12px;
   }
 
@@ -546,9 +342,7 @@ body {
   }
 
   .job-company,
-  .job-status,
   .job-deadline,
-  .job-date,
   .progress-label {
     font-size: 13px;
   }
@@ -562,82 +356,54 @@ body {
     font-size: 15px;
   }
 
-  .pagination {
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-
-  .pagination-btn {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-}
-
-@media (max-width: 576px) {
-  .main-content {
-    padding: 0 5px 5px 5px; /* Minimal padding for very small screens */
-  }
-
-  .content-header {
-    padding: 8px;
-  }
-
-  .content-header h2 {
-    font-size: 16px;
-  }
-
-  .sort-select {
-    padding: 5px 8px;
-    font-size: 12px;
-    width: 100%; /* Full width on very small screens */
-  }
-
-  .sorting {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .job-card {
-    padding: 10px;
-  }
-
-  .job-company-logo {
-    width: 50px;
-    height: 50px;
-  }
-
-  .job-title {
-    font-size: 14px;
-  }
-
   .job-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
   }
+}
 
-  .job-price {
-    font-size: 14px;
-  }
+/* Project Files Button (if used elsewhere) */
+.project-files-btn {
+  padding: 8px 15px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #e6eef8;
+  color: #2563eb;
+}
 
-  .job-actions {
-    gap: 5px;
-  }
+.project-files-btn:hover {
+  background-color: #d0e1f9;
+}
 
-  .chat-btn,
-  .complaint-btn,
-  .see-more-btn,
+.project-files-btn i {
+  margin-right: 5px;
+}
+
+/* Responsive Adjustments for Project Files Button */
+@media (max-width: 900px) {
   .project-files-btn {
-    padding: 5px 6px;
-    font-size: 11px;
-  }
-
-  .pagination {
-    gap: 3px;
-  }
-
-  .pagination-btn {
-    padding: 5px 8px;
-    font-size: 11px;
+    padding: 7px 12px;
+    font-size: 13px;
   }
 }
+
+@media (max-width: 500px) {
+  .project-files-btn {
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+
+

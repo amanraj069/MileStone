@@ -1,6 +1,129 @@
-// controllers/employerController.js
 const path = require("path");
+const fs = require("fs").promises;
 
-exports.getEmployerDashboard = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "employerD", "employer.html"));
+const getProfileData = async () => {
+  const filePath = path.join(__dirname, "../data/EmployerD/profile.json");
+  const data = await fs.readFile(filePath, "utf8");
+  return JSON.parse(data);
+};
+
+const getTransactionData = async () => {
+  const filePath = path.join(__dirname, "../data/EmployerD/transaction.json");
+  const data = await fs.readFile(filePath, "utf8");
+  return JSON.parse(data);
+};
+
+const getJobsData = async () => {
+  const filePath = path.join(__dirname, "../data/EmployerD/jobs.json");
+  const data = await fs.readFile(filePath, "utf8");
+  return JSON.parse(data);
+};
+
+exports.getEmployerProfile = async (req, res) => {
+  try {
+    const profileData = await getProfileData();
+    res.render("Abhishek/profile", { data: profileData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.getJobListings = async (req, res) => {
+  try {
+    const jobsData = await getJobsData();
+    res.render("Abhishek/job_listing", { jobs: jobsData.jobs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.getCurrentJobs = (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/Abhishek/current_jobs.html"));
+};
+
+exports.getPreviouslyWorked = (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../views/Abhishek/previously_worked.html")
+  );
+};
+
+exports.getTransactionHistory = async (req, res) => {
+  try {
+    const transactionData = await getTransactionData();
+    res.render("Abhishek/transaction", {
+      transactions: transactionData.transactions,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.getSubscription = async (req, res) => {
+  try {
+    const profileData = await getProfileData();
+    res.render("Abhishek/subscription", { data: profileData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.getChatsCurrentJobs = (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+};
+
+exports.getSeemoreCurrentJobs = (req, res) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      "../views/Abhishek/Additional/current_job_see_more.html"
+    )
+  );
+};
+
+exports.geSeemoreJoblistings = async (req, res) => {
+  try {
+    const jobsData = await getJobsData();
+    const jobId = req.params.jobId;
+    const job = jobsData.jobs.find((j) => j.id === jobId);
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+    res.render("Abhishek/Additional/see_more_detail", { job });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.getmilestoneTransactionHistory = async (req, res) => {
+  try {
+    const transactionData = await getTransactionData();
+    const transactionId = "txn1"; // Note: This should probably use req.params.txnId
+    const transaction = transactionData.transactions.find(
+      (t) => t.id === transactionId
+    );
+    if (!transaction) {
+      return res.status(404).send("Transaction not found");
+    }
+    res.render("Abhishek/Additional/milestone", { transaction });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.getmilestoneCurrentjob = (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../views/Abhishek/Additional/milestone.html")
+  );
+};
+
+exports.getDetailsofAppliers = (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "../views/Abhishek/Additional/view_profile.html")
+  );
 };

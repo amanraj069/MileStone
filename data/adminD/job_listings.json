@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Senior Frontend Developer",
+    "salary": "$800-1700",
+    "tags": ["React", "TypeScript", "NextJS"],
+    "location": "Bangalore",
+    "type": "Full-time",
+    "posted": "2 days ago",
+    "applicants": 45,
+    "companyLogo": "/Public/assets/company_logo.jpg",
+    "status": "active"
+  },
+  {
+    "id": "2",
+    "title": "Backend Developer",
+    "salary": "$1000-2000",
+    "tags": ["Node.js", "Express", "MongoDB"],
+    "location": "Remote",
+    "type": "Full-time",
+    "posted": "5 days ago",
+    "applicants": 32,
+    "companyLogo": "/Public/assets/company_logo.jpg",
+    "status": "active"
+  },
+  {
+    "id": "3",
+    "title": "UI/UX Designer",
+    "salary": "$600-1200",
+    "tags": ["Figma", "Adobe XD", "Sketch"],
+    "location": "Mumbai",
+    "type": "Part-time",
+    "posted": "1 day ago",
+    "applicants": 18,
+    "companyLogo": "/Public/assets/company_logo.jpg",
+    "status": "active"
+  }
+]

@@ -1,0 +1,131 @@
+<!-- views/Deepak/see_more_detail.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - <%= job.job_title %></title>
+    <link rel="stylesheet" href="/css/Joblisting/see_more_detail.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/jobs" class="back-button">Back</a>
+            <div class="logo">Job Details</div>
+            <div></div>
+        </header>
+
+        <div class="job-header">
+            <div class="job-title-section">
+                <div class="job-title-info">
+                    <div class="deadline">Application Deadline: <%= job.deadline %></div>
+                    <h1 class="job-title"><%= job.job_title %></h1>
+                    <div class="company-name"><%= job.company_name %></div>
+                    <div class="job-meta">
+                        <div class="meta-item"><i class="fas fa-map-marker-alt"></i> <%= job.location %></div>
+                        <div class="meta-item"><i class="fas fa-briefcase"></i> <%= job.job_type %></div>
+                        <div class="meta-item"><i class="fas fa-rupee-sign"></i> <%= job.salary_range %></div>
+                        <div class="meta-item"><i class="fas fa-clock"></i> Posted on <%= job.posted_date %></div>
+                    </div>
+                    <div class="job-actions">
+                        <button class="apply-button" id="applyNowBtn" onclick="openModal('applyModal')">
+                            <i class="fas fa-paper-plane"></i> Apply Now
+                        </button>
+                    </div>
+                </div>
+                <div class="job-img-container">
+                    <img src="<%= job.image %>" alt="<%= job.company_name %>" class="job-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="job-description">
+            <div class="section-title">Job Description</div>
+            <div class="description-text">
+                <p><%= job.description.intro %></p>
+                <br>
+                <p><strong>Responsibilities:</strong></p>
+                <ul>
+                    <% job.description.responsibilities.forEach(responsibility => { %>
+                        <li><%= responsibility %></li>
+                    <% }) %>
+                </ul>
+                <br>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <% job.description.requirements.forEach(requirement => { %>
+                        <li><%= requirement %></li>
+                    <% }) %>
+                </ul>
+                <div class="skills-required">
+                    <div class="skills-title">Technical Skills:</div>
+                    <div class="skills-tags">
+                        <% job.description.skills.forEach(skill => { %>
+                            <span class="skill-tag"><%= skill %></span>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="milestones">
+            <div class="section-title">Project Milestones</div>
+            <table class="milestones-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Deadline</th>
+                        <th>Payment</th>
+                    </tr>
+                </thead>
+                <tbody id="milestones-tbody">
+                    <% job.milestones.forEach(milestone => { %>
+                        <tr>
+                            <td><%= milestone.deliverable %></td>
+                            <td><%= milestone.deadline %></td>
+                            <td class="payment-column"><%= milestone.payment %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Apply Modal -->
+        <div class="modal-overlay" id="applyModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Apply for <%= job.job_title %></h3>
+                    <span id="closeApplyModal" class="close-modal">×</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="applicantName">Full Name*</label>
+                        <input type="text" id="applicantName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantEmail">Email*</label>
+                        <input type="email" id="applicantEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantPhone">Phone Number*</label>
+                        <input type="tel" id="applicantPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantBid">Your Bid Amount (₹)*</label>
+                        <input type="text" id="applicantBid" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicantMessage">Cover Message*</label>
+                        <textarea id="applicantMessage" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelApply" class="cancel-btn">Cancel</button>
+                    <button id="submitApplication" class="apply-button">Submit Application</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/Joblisting/see_more_detail.js"></script>
+</body>
+</html>

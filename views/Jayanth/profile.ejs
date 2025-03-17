@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employer Profile</title>
+    <link rel="stylesheet" href="/css/adminD/sidebar.css" />
+    <link rel="stylesheet" href="/css/adminD/profile.css" />
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <div class="sidebar-container">
+        <div class="content">
+          <div class="left-panel">
+            <div class="profile-img-container">
+              <svg
+                width="130px"
+                height="130px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6ZM17.8946 17.4473L17.0002 17C17.8946 17.4473 17.8939 17.4487 17.8939 17.4487L17.8932 17.4502L17.8916 17.4532L17.8882 17.46L17.88 17.4756C17.8739 17.4871 17.8666 17.5004 17.858 17.5155C17.8409 17.5458 17.8186 17.5832 17.7906 17.6267C17.7346 17.7138 17.6558 17.8254 17.5497 17.9527C17.3369 18.208 17.0163 18.5245 16.5549 18.8321C15.6228 19.4534 14.1751 20 12.0001 20C8.31494 20 6.76549 18.4304 6.26653 17.7115C5.96463 17.2765 5.99806 16.7683 6.18066 16.4031C6.91705 14.9303 8.42234 14 10.069 14H13.7642C15.5134 14 17.1124 14.9883 17.8947 16.5528C18.0354 16.8343 18.0354 17.1657 17.8946 17.4473Z"
+                  fill="#152C70"
+                />
+              </svg>
+            </div>
+            <div class="profile-name">
+              Hey <%= user ? user.name : 'User' %>!
+            </div>
+            <nav class="dashboard-nav">
+              <ul>
+                <li class="nav-item" data-section="job-listings">
+                  <a href="/adminD/job_listings" class="nav-link">
+                    <svg
+                      data-name="Layer 1"
+                      width="22px"
+                      height="22px"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 48 48"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M41.93 41.34H6.07a4.28 4.28 0 0 1-4.28-4.28V17.82a4.28 4.28 0 0 1 4.28-4.28h35.86a4.29 4.29 0 0 1 4.29 4.28v19.24a4.29 4.29 0 0 1-4.29 4.28zM6.07 15.54a2.28 2.28 0 0 0-2.28 2.28v19.24a2.28 2.28 0 0 0 2.28 2.28h35.86a2.29 2.29 0 0 0 2.29-2.28V17.82a2.29 2.29 0 0 0-2.29-2.28z"
+                      />
+                      <path
+                        d="M34 14.54h-2v-2a3.93 3.93 0 0 0-4-3.88h-8a3.93 3.93 0 0 0-4 3.92v2h-2v-2a5.93 5.93 0 0 1 6-5.92h8a5.93 5.93 0 0 1 6 5.92zM19.64 26.88a1 1 0 0 1-.34-.06L2.43 20.77a1 1 0 1 1 .68-1.88L20 24.94a1 1 0 0 1-.33 1.94zM28.36 26.88a1 1 0 0 1-.36-1.94l16.86-6.05a1 1 0 1 1 .68 1.88L28.7 26.82a1 1 0 0 1-.34.06z"
+                      />
+                      <path
+                        d="M27.91 32h-7.82a2.38 2.38 0 0 1-2.37-2.37v-2.46a2.37 2.37 0 0 1 2.37-2.37h7.82a2.37 2.37 0 0 1 2.37 2.37v2.48A2.38 2.38 0 0 1 27.91 32zm-7.82-5.2a.37.37 0 0 0-.37.37v2.48a.38.38 0 0 0 .37.37h7.82a.38.38 0 0 0 .37-.37v-2.48a.38.38 0 0 0-.37-.37z"
+                      />
+                    </svg>
+                    <span>Job Listings</span>
+                  </a>
+                </li>
+                <li class="nav-item" data-section="freelancers">
+                  <a href="/adminD/freelancers" class="nav-link">
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="12" cy="13" r="10" />
+                      <path d="M12 6v6l4 2" />
+                    </svg>
+                    <span>Freelancers</span>
+                  </a>
+                </li>
+                <li class="nav-item" data-section="employers">
+                  <a href="/adminD/employers" class="nav-link">
+                    <svg
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12"
+                        cy="7"
+                        r="4"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M4 21C4 17.6863 7.58172 15 12 15C16.4183 15 20 17.6863 20 21"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                    </svg>
+                    <span>Employers</span>
+                  </a>
+                </li>
+                <li class="nav-item" data-section="complaints">
+                  <a href="/adminD/complaints" class="nav-link">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        x="2"
+                        y="6"
+                        width="20"
+                        height="12"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <line
+                        x1="2"
+                        y1="10"
+                        x2="22"
+                        y2="10"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <rect x="4" y="14" width="4" height="2" fill="black" />
+                    </svg>
+                    <span>Complaints</span>
+                  </a>
+                </li>
+                <li class="nav-item active" data-section="profile">
+                  <a href="/adminD/profile" class="nav-link">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2l8 4v6c0 5-3 9-8 10-5-1-8-5-8-10V6l8-4z"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M10 12l2 3 3-5"
+                        stroke="black"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                    <span>Profile</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <button class="logout-btn">Logout</button>
+          </div>
+        </div>
+      </div>
+      <div class="main-content">
+        <section id="profile" class="section-content active">
+          <div class="profile-header">
+            <h1><%= profile.role %> Profile</h1>
+            <button class="edit-profile-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+              Edit Profile
+            </button>
+          </div>
+          <div class="profile-container">
+            <div class="profile-overview">
+              <div class="profile-logo">
+                <img src="<%= profile.logo %>" alt="Profile Logo" />
+              </div>
+              <div class="profile-details">
+                <h2>
+                  <%= profile.name %><span class="badge"
+                    ><%= profile.role %></span
+                  >
+                </h2>
+                <p class="location">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" />
+                    <circle cx="12" cy="9" r="2" />
+                  </svg>
+                  <%= profile.location %>
+                </p>
+                <p class="website">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                  <a href="<%= profile.website %>"><%= profile.website %></a>
+                </p>
+                <p class="email">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <path d="M22 6l-10 7L2 6" />
+                  </svg>
+                  <a href="mailto:<%= profile.email %>"><%= profile.email %></a>
+                </p>
+                <p class="phone">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  <%= profile.phone %>
+                </p>
+                <div class="social-links">
+                  <a
+                    href="<%= profile.socialLinks.linkedin %>"
+                    class="social-icon linkedin"
+                    aria-label="LinkedIn"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.366-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.017 2.017 0 01-2.015-2.015 2.017 2.017 0 112.015 2.015zM7.35 20.452H4.298V9h3.052v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451c.98 0 1.771-.774 1.771-1.729V1.729C24 .774 23.205 0 22.225 0z"
+                        fill="#0A66C2"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="<%= profile.socialLinks.twitter %>"
+                    class="social-icon twitter"
+                    aria-label="Twitter"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.396 0-.79-.023-1.17-.068 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 14.008-7.496 14.008-13.986 0-.21-.005-.42-.014-.63.961-.695 1.8-1.562 2.457-2.549z"
+                        fill="#1DA1F2"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="<%= profile.socialLinks.facebook %>"
+                    class="social-icon facebook"
+                    aria-label="Facebook"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796V24C19.612 23.027 24 18.062 24 12.073z"
+                        fill="#1877F2"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="<%= profile.socialLinks.instagram %>"
+                    class="social-icon instagram"
+                    aria-label="Instagram"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.133.277 2.65.596.566.381.96.862 1.212 1.212.32.517.535 1.284.597 2.65.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.277 2.133-.596 2.65-.381.566-.862.96-1.212 1.212-.517.32-1.284.535-2.65.597-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.133-.277-2.65-.596-.566-.381-.96-.862-1.212-1.212-.32-.517-.535-1.284-.597-2.65-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.277-2.133.596-2.65.381-.566.862-.96 1.212-1.212.517-.32 1.284-.535 2.65-.597 1.266-.058 1.646-.07 4.85-.07zm0 1.5c-3.032 0-3.415.013-4.615.07-.9.043-1.505.19-2.038.398-.617.241-1.142.56-1.635.987-.493.427-.746.918-.987 1.635-.207.533-.355 1.138-.398 2.038-.057 1.2-.07 1.583-.07 4.615s.013 3.415.07 4.615c.043.9.19 1.505.398 2.038.241.617.56 1.142.987 1.635.427.493.918.746 1.635.987.533.207 1.138.355 2.038.398 1.2.057 1.583.07 4.615.07s3.415-.013 4.615-.07c.9-.043 1.505-.19 2.038-.398.617-.241 1.142-.56 1.635-.987.493-.427.746-.918.987-1.635.207-.533.355-1.138.398-2.038.057-1.2.07-1.583.07-4.615s-.013-3.415-.07-4.615c-.043-.9-.19-1.505-.398-2.038-.241-.617-.56-1.142-.987-1.635-.427-.493-.918-.746-1.635-.987-.533-.207-1.138-.355-2.038-.398-1.2-.057-1.583-.07-4.615-.07z"
+                        fill="url(#paint0_linear)"
+                      />
+                      <path
+                        d="M12 7.023a4.977 4.977 0 100 9.954 4.977 4.977 0 000-9.954zm0 8.297a3.32 3.32 0 110-6.64 3.32 3.32 0 010 6.64z"
+                        fill="url(#paint0_linear)"
+                      />
+                      <circle
+                        cx="18.406"
+                        cy="5.594"
+                        r="1.406"
+                        fill="url(#paint0_linear)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear"
+                          x1="2"
+                          y1="2"
+                          x2="22"
+                          y2="22"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stop-color="#405DE6" />
+                          <stop offset="0.5" stop-color="#E1306C" />
+                          <stop offset="1" stop-color="#F77737" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="profile-content">
+              <div class="profile-main">
+                <div class="profile-section" id="personal-info">
+                  <h3>Personal Information</h3>
+                  <p>Username: <%= profile.username %></p>
+                  <p>Email: <%= profile.email %></p>
+                  <p>
+                    Profile Picture:
+                    <img src="<%= profile.profilePic %>" alt="Profile Pic" />
+                  </p>
+                  <p>Address: <%= profile.address %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="edit-profile-form" style="display: none">
+            <h2>Edit Profile</h2>
+            <form id="profile-form">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  class="form-control"
+                  value="<%= profile.username %>"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  value="<%= profile.email %>"
+                />
+              </div>
+              <div class="form-group">
+                <label for="profile-pic">Profile Picture URL</label>
+                <input
+                  type="text"
+                  id="profile-pic"
+                  class="form-control"
+                  value="<%= profile.profilePic %>"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="password" id="password" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="recovery">Password Recovery</label>
+                <select id="recovery" class="form-control">
+                  <option value="enabled">Enabled (via email)</option>
+                  <option value="disabled">Disabled</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary">Save Changes</button>
+              <button type="button" class="btn-cancel">Cancel</button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="/js/adminD/profile.js"></script>
+  </body>
+</html>
