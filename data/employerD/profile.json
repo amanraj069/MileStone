@@ -1,0 +1,20 @@
+{
+  "subscription": {
+    "tier": "Free",
+    "description": "Includes basic features. Upgrade for more!"
+  },
+  "profile": {
+    "companyName": "TechMonkey Assc.",
+    "location": "Bangalore, India (Remote options available)",
+    "website": "www.techmonkey.com",
+    "email": "contact@techmonkey.com",
+    "phone": "+91 98765 43210",
+    "socialLinks": {
+      "linkedin": "https://linkedin.com/company/techmonkey",
+      "twitter": "https://twitter.com/techmonkey",
+      "facebook": "https://facebook.com/techmonkey",
+      "instagram": "https://instagram.com/techmonkey"
+    },
+    "about": "TechSolutions Inc. is a leading technology company specializing in web and mobile application development. Founded in 2010, we've grown from a small startup to a team of over 100 talented professionals working on cutting-edge projects for clients worldwide.\n\nWe believe in creating innovative solutions that help businesses thrive in the digital landscape. Our team is passionate about delivering high-quality products that exceed client expectations and provide exceptional user experiences.\n\nAt TechSolutions, we value collaboration, creativity, and continuous learning. We're always looking to work with talented freelancers who share our vision and can contribute to our growing portfolio of successful projects."
+  }
+}

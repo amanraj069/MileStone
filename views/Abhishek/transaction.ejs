@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sidebar Dashboard</title>
     <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-    <link rel="stylesheet" href="/css/EmployerD/milestone.css" />
+    <link rel="stylesheet" href="/css/EmployerD/transaction.css" />
   </head>
 
   <body>
@@ -184,146 +184,61 @@
 
       <div class="main-content">
         <div class="container">
-          <div class="header">
-            <h1 class="title">Payments & Milestones</h1>
-            <button class="add-button" id="addMilestoneBtn">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Add Milestone
+          <h1>Transaction History</h1>
+
+          <div class="filter-container">
+            <button class="filter-button active" data-filter="all">
+              All Transactions
             </button>
+            <button class="filter-button" data-filter="completed">
+              Completed
+            </button>
+            <button class="filter-button" data-filter="pending">Pending</button>
           </div>
 
-          <div class="progress-card">
-            <div class="progress-section">
-              <div class="progress-header">
-                <h3 class="progress-title">Project Completion</h3>
-                <span class="progress-percentage" id="completionPercentage"
-                  >0%</span
-                >
-              </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar" id="completionProgressBar"></div>
-              </div>
-              <div class="progress-labels">
-                <span>Not Started</span>
-                <span>In Progress</span>
-                <span>Completed</span>
-              </div>
-            </div>
-
-            <div class="progress-section">
-              <div class="progress-header">
-                <h3 class="progress-title">Payment Progress</h3>
-                <span class="progress-amount" id="paymentProgress"
-                  >₹0 of ₹0 (0%)</span
-                >
-              </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar" id="paymentProgressBar"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="milestones-container" id="milestonesContainer">
-            <!-- Milestone cards will be inserted here by JavaScript -->
-          </div>
-        </div>
-
-        <!-- Add/Edit Milestone Modal -->
-        <div class="modal-overlay" id="milestoneModal">
-          <div class="modal">
-            <div class="modal-header">
-              <h2 class="modal-title" id="modalTitle">Add New Milestone</h2>
-              <button class="close-modal" id="closeModal">×</button>
-            </div>
-            <div class="modal-body">
-              <form id="milestoneForm">
-                <input type="hidden" id="milestoneId" />
-                <div class="form-group">
-                  <label for="deliverable">Deliverable Description</label>
-                  <input
-                    type="text"
-                    id="deliverable"
-                    placeholder="eg : Complete feature X"
-                    required
+          <div class="transactions-grid" id="transactions-container">
+            <% transactions.forEach(transaction => { %>
+            <div
+              class="transaction-card"
+              data-status="<%= transaction.status %>"
+            >
+              <div class="card-header">
+                <div class="freelancer-info">
+                  <img
+                    src="<%= transaction.freelancerAvatar %>"
+                    alt="<%= transaction.freelancerName %>"
+                    class="avatar"
                   />
-                </div>
-                <div class="form-group">
-                  <label for="deadline">Deadline</label>
-                  <input
-                    type="text"
-                    id="deadline"
-                    placeholder="eg : Week 2"
-                    required
-                  />
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="payment">Payment Amount (₹)</label>
-                    <input
-                      type="number"
-                      id="payment"
-                      placeholder="eg : 22500"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="percentage">Percentage (%)</label>
-                    <input
-                      type="number"
-                      id="percentage"
-                      placeholder="eg : 20"
-                      required
-                    />
+                  <div class="freelancer-name">
+                    <%= transaction.freelancerName %>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="cancel-btn" id="cancelBtn">
-                    Cancel
-                  </button>
-                  <button type="submit" class="save-btn" id="saveBtn">
-                    Add Milestone
-                  </button>
+                <span class="status-badge status-<%= transaction.status %>">
+                  <%= transaction.status === 'completed' ? 'Paid' : 'Pending' %>
+                </span>
+              </div>
+              <div class="card-body">
+                <div class="project-title"><%= transaction.projectTitle %></div>
+                <div class="amount">
+                  ₹<%= transaction.amount.toLocaleString() %>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <!-- Delete Confirmation Modal -->
-        <div class="modal-overlay" id="deleteModal">
-          <div class="modal delete-modal">
-            <div class="modal-header">
-              <h2 class="modal-title">Confirm Delete</h2>
-              <button class="close-modal" id="closeDeleteModal">×</button>
-            </div>
-            <div class="modal-body">
-              <p>Are you sure you want to delete this milestone?</p>
-              <input type="hidden" id="deleteId" />
-              <div class="modal-footer">
-                <button type="button" class="cancel-btn" id="cancelDeleteBtn">
-                  Cancel
-                </button>
-                <button type="button" class="delete-btn" id="confirmDeleteBtn">
-                  Delete
-                </button>
+                <div class="date">
+                  <%= transaction.status === 'completed' ? 'Paid on' : 'Due on'
+                  %> <%= transaction.date %>
+                </div>
+              </div>
+              <div class="card-footer">
+                <a
+                  href="/employerD/transaction-history/milestone/<%= transaction.id %>"
+                  ><button class="btn btn-outline">View Details</button></a
+                >
               </div>
             </div>
+            <% }) %>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/EmployerD/milestone.js"></script>
+    <script src="/js/EmployerD/transaction.js"></script>
   </body>
 </html>

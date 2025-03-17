@@ -213,7 +213,11 @@
           <div id="editProfileForm" class="edit-form">
             <div class="form-group">
               <label for="companyName">Company Name</label>
-              <input type="text" id="companyName" value="TechMonkey Assc." />
+              <input
+                type="text"
+                id="companyName"
+                value="<%= data.profile.companyName %>"
+              />
             </div>
 
             <div class="form-group">
@@ -221,23 +225,31 @@
               <input
                 type="text"
                 id="location"
-                value="Bangalore, India (Remote options available)"
+                value="<%= data.profile.location %>"
               />
             </div>
 
             <div class="form-group">
               <label for="website">Website</label>
-              <input type="text" id="website" value="www.techmonkey.com" />
+              <input
+                type="text"
+                id="website"
+                value="<%= data.profile.website %>"
+              />
             </div>
 
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" id="email" value="contact@techmonkey.com" />
+              <input
+                type="email"
+                id="email"
+                value="<%= data.profile.email %>"
+              />
             </div>
 
             <div class="form-group">
               <label for="phone">Phone</label>
-              <input type="text" id="phone" value="+91 98765 43210" />
+              <input type="text" id="phone" value="<%= data.profile.phone %>" />
             </div>
 
             <div class="form-group">
@@ -263,7 +275,7 @@
                 <input
                   type="text"
                   id="linkedinUrl"
-                  value="https://linkedin.com/company/techmonkey"
+                  value="<%= data.profile.socialLinks.linkedin %>"
                 />
               </div>
               <div class="social-link-edit">
@@ -285,7 +297,7 @@
                 <input
                   type="text"
                   id="twitterUrl"
-                  value="https://twitter.com/techmonkey"
+                  value="<%= data.profile.socialLinks.twitter %>"
                 />
               </div>
               <div class="social-link-edit">
@@ -307,7 +319,7 @@
                 <input
                   type="text"
                   id="facebookUrl"
-                  value="https://facebook.com/techmonkey"
+                  value="<%= data.profile.socialLinks.facebook %>"
                 />
               </div>
               <div class="social-link-edit">
@@ -331,7 +343,7 @@
                 <input
                   type="text"
                   id="instagramUrl"
-                  value="https://instagram.com/techmonkey"
+                  value="<%= data.profile.socialLinks.instagram %>"
                 />
               </div>
             </div>
@@ -339,11 +351,7 @@
             <div class="form-group">
               <label for="aboutContent">About</label>
               <textarea id="aboutContent" rows="8">
-TechSolutions Inc. is a leading technology company specializing in web and mobile application development. Founded in 2010, we've grown from a small startup to a team of over 100 talented professionals working on cutting-edge projects for clients worldwide.
-    
-    We believe in creating innovative solutions that help businesses thrive in the digital landscape. Our team is passionate about delivering high-quality products that exceed client expectations and provide exceptional user experiences.
-    
-    At TechSolutions, we value collaboration, creativity, and continuous learning. We're always looking to work with talented freelancers who share our vision and can contribute to our growing portfolio of successful projects.</textarea
+<%= data.profile.about %></textarea
               >
             </div>
           </div>
@@ -360,7 +368,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
             <div class="profile-info">
               <div class="profile-header">
                 <h2 class="company-name" id="companyNameDisplay">
-                  TechMonkey Assc.
+                  <%= data.profile.companyName %>
                 </h2>
                 <div class="top-employer-badge">
                   <svg
@@ -400,9 +408,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                   ></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span id="locationDisplay"
-                  >Bangalore, India (Remote options available)</span
-                >
+                <span id="locationDisplay"><%= data.profile.location %></span>
               </div>
 
               <div class="website">
@@ -423,7 +429,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                     d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
                   ></path>
                 </svg>
-                <a href="#" id="websiteDisplay">www.techmonkey.com</a>
+                <a href="#" id="websiteDisplay"><%= data.profile.website %></a>
               </div>
 
               <div class="contact">
@@ -443,7 +449,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                   ></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span id="emailDisplay">contact@techmonkey.com</span>
+                <span id="emailDisplay"><%= data.profile.email %></span>
               </div>
 
               <div class="contact">
@@ -462,13 +468,13 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                     d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
                   ></path>
                 </svg>
-                <span id="phoneDisplay">+91 98765 43210</span>
+                <span id="phoneDisplay"><%= data.profile.phone %></span>
               </div>
 
               <div class="social-links" id="socialLinksDisplay">
                 <div class="social-link-container">
                   <a
-                    href="https://linkedin.com/company/techmonkey"
+                    href="<%= data.profile.socialLinks.linkedin %>"
                     class="social-link"
                     data-platform="linkedin"
                   >
@@ -494,7 +500,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                 </div>
                 <div class="social-link-container">
                   <a
-                    href="https://twitter.com/techmonkey"
+                    href="<%= data.profile.socialLinks.twitter %>"
                     class="social-link"
                     data-platform="twitter"
                   >
@@ -518,7 +524,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                 </div>
                 <div class="social-link-container">
                   <a
-                    href="https://facebook.com/techmonkey"
+                    href="<%= data.profile.socialLinks.facebook %>"
                     class="social-link"
                     data-platform="facebook"
                   >
@@ -542,7 +548,7 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
                 </div>
                 <div class="social-link-container">
                   <a
-                    href="https://instagram.com/techmonkey"
+                    href="<%= data.profile.socialLinks.instagram %>"
                     class="social-link"
                     data-platform="instagram"
                   >
@@ -592,30 +598,13 @@ TechSolutions Inc. is a leading technology company specializing in web and mobil
           <div class="grid-container">
             <div>
               <div class="about-section">
-                <h3 class="section-title">About TechMonkey Assc.</h3>
+                <h3 class="section-title">
+                  About <%= data.profile.companyName %>
+                </h3>
                 <div class="about-content" id="aboutContentDisplay">
-                  <p>
-                    TechSolutions Inc. is a leading technology company
-                    specializing in web and mobile application development.
-                    Founded in 2010, we've grown from a small startup to a team
-                    of over 100 talented professionals working on cutting-edge
-                    projects for clients worldwide.
-                  </p>
-                  <br />
-                  <p>
-                    We believe in creating innovative solutions that help
-                    businesses thrive in the digital landscape. Our team is
-                    passionate about delivering high-quality products that
-                    exceed client expectations and provide exceptional user
-                    experiences.
-                  </p>
-                  <br />
-                  <p>
-                    At TechSolutions, we value collaboration, creativity, and
-                    continuous learning. We're always looking to work with
-                    talented freelancers who share our vision and can contribute
-                    to our growing portfolio of successful projects.
-                  </p>
+                  <%- data.profile.about.split('\n\n').map(paragraph => `
+                  <p>${paragraph}</p>
+                  `).join('') %>
                 </div>
               </div>
 

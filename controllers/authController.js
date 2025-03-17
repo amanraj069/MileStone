@@ -88,7 +88,7 @@ exports.getHome = (req, res) => {
   if (req.session.user) {
     switch (req.session.user.role) {
       case "Admin":
-        dashboardRoute = "/adminD/settings";
+        dashboardRoute = "/adminD/profile";
         break;
       case "Employer":
         dashboardRoute = "/employerD/profile";

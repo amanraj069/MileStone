@@ -1,0 +1,128 @@
+{
+  "transactions": [
+    {
+      "id": "txn1",
+      "freelancerName": "Aman Raj",
+      "freelancerAvatar": "/assets/user_image.jpg",
+      "projectTitle": "Mobile App UI Design",
+      "amount": 18000,
+      "status": "completed",
+      "date": "Mar 09, 2025",
+      "milestones": [
+        {
+          "id": "m1",
+          "deliverable": "Initial UI Mockups",
+          "deadline": "Week 1",
+          "payment": 6000,
+          "percentage": 33.33,
+          "status": "completed"
+        },
+        {
+          "id": "m2",
+          "deliverable": "Final UI Design",
+          "deadline": "Week 2",
+          "payment": 12000,
+          "percentage": 66.67,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "txn2",
+      "freelancerName": "Priya Sharma",
+      "freelancerAvatar": "/assets/user_image.jpg",
+      "projectTitle": "E-commerce Website Development",
+      "amount": 25000,
+      "status": "pending",
+      "date": "Apr 15, 2025",
+      "milestones": [
+        {
+          "id": "m3",
+          "deliverable": "Frontend Design",
+          "deadline": "Week 1",
+          "payment": 8000,
+          "percentage": 32,
+          "status": "completed"
+        },
+        {
+          "id": "m4",
+          "deliverable": "Backend Integration",
+          "deadline": "Week 3",
+          "payment": 10000,
+          "percentage": 40,
+          "status": "pending"
+        },
+        {
+          "id": "m5",
+          "deliverable": "Testing and Deployment",
+          "deadline": "Week 4",
+          "payment": 7000,
+          "percentage": 28,
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "txn3",
+      "freelancerName": "Rohan Patel",
+      "freelancerAvatar": "/assets/user_image.jpg",
+      "projectTitle": "Logo and Branding Design",
+      "amount": 12000,
+      "status": "completed",
+      "date": "Feb 20, 2025",
+      "milestones": [
+        {
+          "id": "m6",
+          "deliverable": "Concept Sketches",
+          "deadline": "Day 3",
+          "payment": 4000,
+          "percentage": 33.33,
+          "status": "completed"
+        },
+        {
+          "id": "m7",
+          "deliverable": "Final Logo Design",
+          "deadline": "Day 7",
+          "payment": 8000,
+          "percentage": 66.67,
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "txn4",
+      "freelancerName": "Sneha Gupta",
+      "freelancerAvatar": "/assets/user_image.jpg",
+      "projectTitle": "SEO Optimization",
+      "amount": 15000,
+      "status": "in-progress",
+      "date": "Mar 25, 2025",
+      "milestones": [
+        {
+          "id": "m8",
+          "deliverable": "Keyword Research",
+          "deadline": "Week 1",
+          "payment": 5000,
+          "percentage": 33.33,
+          "status": "completed"
+        },
+        {
+          "id": "m9",
+          "deliverable": "On-page Optimization",
+          "deadline": "Week 2",
+          "payment": 5000,
+          "percentage": 33.33,
+          "status": "in-progress"
+        },
+        {
+          "id": "m10",
+          "deliverable": "Performance Report",
+          "deadline": "Week 3",
+          "payment": 5000,
+          "percentage": 33.33,
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}
