@@ -4,7 +4,6 @@ const employerController = require("../controllers/employerController");
 const router = express.Router();
 
 router.route("/").get(employerController.getEmployerProfile);
-
 router.route("/profile").get(employerController.getEmployerProfile);
 
 router.route("/job-listings").get(employerController.getJobListings);
@@ -13,7 +12,8 @@ router
   .get(employerController.geSeemoreJoblistings);
 router
   .route("/job-listings/see_more/view_profile")
-  .get(employerController.getCurrentJobProfile);
+  .get(employerController.getDetailsofAppliers); // Fixed: Changed to getDetailsofAppliers
+
 router.route("/current-jobs").get(employerController.getCurrentJobs);
 router.route("/current-jobs/chat").get(employerController.getChatsCurrentJobs);
 router
