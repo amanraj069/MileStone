@@ -4,7 +4,7 @@ const fs = require("fs").promises;
 
 const getFreelancerData = async () => {
   try {
-    const filePath = path.join(__dirname, "../data/freelancer_data.json");
+    const filePath = path.join(__dirname, "../data/freelancerD/data.json");
     const data = await fs.readFile(filePath, "utf8");
     const parsedData = JSON.parse(data);
     if (!parsedData.user || !parsedData.active_jobs) {

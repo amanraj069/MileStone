@@ -19,9 +19,6 @@ router.route("/current-jobs/chat").get(employerController.getChatsCurrentJobs);
 router
   .route("/current-jobs/see_more")
   .get(employerController.getSeemoreCurrentJobs);
-router
-  .route("/current-jobs/see_more/view_details")
-  .get(employerController.getDetailsofAppliers);
 
 router
   .route("/current-jobs/see_more/milestone")
