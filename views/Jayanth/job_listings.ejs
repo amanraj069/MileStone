@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Job Listings</title>
-    <link rel="stylesheet" href="/css/adminD/admin_page.css" />
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
     <link rel="stylesheet" href="/css/adminD/job_listings.css" />
   </head>
@@ -34,7 +33,7 @@
             </div>
             <nav class="dashboard-nav">
               <ul>
-                <li class="nav-item" data-section="job-listings">
+                <li class="nav-item active" data-section="job-listings">
                   <a href="/adminD/job_listings" class="nav-link">
                     <svg
                       data-name="Layer 1"
@@ -186,18 +185,30 @@
                   <% }) %>
                 </div>
                 <div class="job-details">
-                  <span class="job-location"
-                    ><i class="fas fa-map-marker-alt"></i> <%= job.location %>
-                    <span class="status-dot green"></span
-                  ></span>
-                  <span class="job-type"
-                    ><i class="fas fa-briefcase"></i> <%= job.type %>
-                    <span class="status-dot green"></span
-                  ></span>
-                  <span class="job-date"
-                    ><i class="fas fa-clock"></i> Posted <%= job.posted %>
-                    <span class="status-dot green"></span
-                  ></span>
+                  <span class="job-location">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" />
+                      <circle cx="12" cy="9" r="2" />
+                    </svg>
+                    <%= job.location %>
+                    <span class="status-dot green"></span>
+                  </span>
+                  <span class="job-type">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="4" width="18" height="14" rx="2" ry="2" />
+                      <line x1="3" y1="8" x2="21" y2="8" />
+                    </svg>
+                    <%= job.type %>
+                    <span class="status-dot green"></span>
+                  </span>
+                  <span class="job-date">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 6V12L16 14" />
+                    </svg>
+                    Posted <%= job.posted %>
+                    <span class="status-dot green"></span>
+                  </span>
                 </div>
               </div>
               <div class="job-card-right">
@@ -212,7 +223,6 @@
         </section>
       </div>
     </div>
-    <script src="/js/adminD/navigation.js"></script>
     <script src="/js/adminD/job_listings.js"></script>
   </body>
 </html>
