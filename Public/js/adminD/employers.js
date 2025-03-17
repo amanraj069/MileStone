@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     chatButtons.forEach(button => {
         button.addEventListener('click', function() {
-            console.log('Chat button clicked'); // Replace with actual chat logic
+            console.log('Chat button clicked'); 
         });
     });
 
     deleteButtons.forEach(button => {
         button.addEventListener('click', function() {
-            console.log('Delete button clicked'); // Replace with actual delete logic
+            alert('Delete button clicked'); 
         });
     });
 });
