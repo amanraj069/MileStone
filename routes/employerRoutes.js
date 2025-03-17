@@ -11,8 +11,8 @@ router
   .route("/job-listings/see_more/:jobId")
   .get(employerController.geSeemoreJoblistings);
 router
-  .route("/job-listings/see_more/view_profile")
-  .get(employerController.getDetailsofAppliers); // Fixed: Changed to getDetailsofAppliers
+  .route("/job-listings/see_more/job/view_profile")
+  .get(employerController.getDetailsofAppliers); 
 
 router.route("/current-jobs").get(employerController.getCurrentJobs);
 router.route("/current-jobs/chat").get(employerController.getChatsCurrentJobs);
