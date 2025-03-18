@@ -1,0 +1,768 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+  overflow-x: hidden;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 290px;
+  width: calc(100% - 290px);
+  background-color: #f7f9fc;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.edit-button {
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #0d47a1;
+}
+
+.edit-form {
+  display: none;
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.edit-form.active {
+  display: block;
+}
+
+.profile-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #1e88e5;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e88e5;
+  margin: 0;
+}
+
+.top-freelancer-badge {
+  background-color: #ffc107;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.title {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.location,
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.rating {
+  font-size: 21px;
+  color: #ffc107;
+}
+
+.rating-count {
+  color: #666;
+  font-size: 14px;
+}
+
+.projects-completed {
+  margin-top: 10px;
+  color: #1e88e5;
+  font-weight: bold;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.about-section,
+.skills-section,
+.experience-section,
+.education-section,
+.portfolio-section,
+.testimonials-section,
+.stats-section {
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  color: #1e88e5;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.about-content {
+  line-height: 1.8;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  background-color: #e3f2fd;
+  color: #1e88e5;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+.experience-item,
+.education-item {
+  margin-bottom: 15px;
+}
+
+.experience-item h5,
+.education-item h5 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.experience-date,
+.education-date {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.portfolio-item {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+}
+
+.portfolio-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.portfolio-item h5 {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.portfolio-link {
+  color: #1e88e5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.portfolio-link:hover {
+  text-decoration: underline;
+}
+
+.testimonial {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.testimonial::before {
+  content: '"';
+  font-size: 60px;
+  color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  line-height: 1;
+}
+
+.testimonial-content {
+  margin-bottom: 15px;
+  padding-left: 25px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.author-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.author-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-weight: 600;
+}
+
+.author-job {
+  font-size: 14px;
+  color: #666;
+}
+
+.testimonial-rating {
+  color: #ffc107;
+  margin-top: 5px;
+}
+
+.stats-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.stats-item:last-child {
+  border-bottom: none;
+}
+
+.stats-label {
+  color: #666;
+}
+
+.stats-value {
+  font-weight: bold;
+  color: #1e88e5;
+}
+
+.edit-profile-btn {
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.edit-profile-btn:hover {
+  background-color: #0d47a1;
+}
+
+/* Edit Mode Styles */
+.editing .editable-field,
+.editing .skill-input {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.editing textarea.editable-field {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.skills-edit,
+.experience-edit,
+.education-edit,
+.portfolio-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.experience-edit-item,
+.education-edit-item,
+.portfolio-edit-item {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.add-btn {
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 10px;
+}
+
+.add-btn:hover {
+  background-color: #0d47a1;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: 2fr 1fr; /* Two-column layout on larger screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 70px; /* Adjust for collapsed sidebar */
+    width: calc(100% - 70px); /* Adjust width */
+    padding: 15px; /* Reduce padding */
+  }
+
+  .container {
+    padding: 5px; /* Reduce padding in the container */
+  }
+
+  .profile-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px; /* Reduce padding */
+  }
+
+  .profile-image {
+    width: 120px; /* Smaller image */
+    height: 120px;
+  }
+
+  .profile-info {
+    min-width: 100%; /* Full width on mobile */
+  }
+
+  .profile-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .profile-header h2 {
+    font-size: 20px; /* Smaller header */
+  }
+
+  .rating-section {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .rating {
+    font-size: 18px; /* Smaller rating stars */
+  }
+
+  .rating-count {
+    font-size: 12px;
+  }
+
+  .about-section,
+  .skills-section,
+  .experience-section,
+  .education-section,
+  .portfolio-section,
+  .testimonials-section,
+  .stats-section {
+    padding: 15px; /* Reduce padding */
+  }
+
+  .section-title {
+    font-size: 18px; /* Smaller section titles */
+  }
+
+  .skills-list {
+    gap: 8px; /* Smaller gap between skills */
+  }
+
+  .skill-tag {
+    font-size: 12px; /* Smaller skill tags */
+    padding: 4px 8px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust portfolio items */
+    gap: 15px;
+  }
+
+  .portfolio-item {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .portfolio-item h5 {
+    font-size: 14px; /* Smaller portfolio title */
+  }
+
+  .testimonial {
+    padding: 15px; /* Reduce padding */
+  }
+
+  .testimonial::before {
+    font-size: 40px; /* Smaller quote mark */
+    top: 5px;
+    left: 5px;
+  }
+
+  .testimonial-content {
+    padding-left: 20px; /* Adjust padding */
+    font-size: 14px; /* Smaller text */
+  }
+
+  .author-image {
+    width: 40px; /* Smaller author image */
+    height: 40px;
+  }
+
+  .author-name {
+    font-size: 14px; /* Smaller author name */
+  }
+
+  .author-job {
+    font-size: 12px; /* Smaller job title */
+  }
+
+  .stats-item {
+    padding: 10px 0; /* Reduce padding */
+  }
+
+  .stats-label,
+  .stats-value {
+    font-size: 14px; /* Smaller text */
+  }
+
+  .edit-profile-btn,
+  .edit-button {
+    padding: 8px 16px; /* Smaller button */
+    font-size: 14px;
+  }
+
+  .add-btn {
+    padding: 6px 12px; /* Smaller add button */
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-content {
+    margin-left: 0; /* No sidebar margin on very small screens */
+    width: 100%; /* Full width */
+    padding: 10px; /* Further reduce padding */
+  }
+
+  .container {
+    padding: 0; /* Remove container padding */
+  }
+
+  .profile-section {
+    padding: 15px; /* Further reduce padding */
+  }
+
+  .profile-image {
+    width: 100px; /* Even smaller image */
+    height: 100px;
+  }
+
+  .profile-header h2 {
+    font-size: 18px; /* Even smaller header */
+  }
+
+  .title {
+    font-size: 16px; /* Smaller title */
+  }
+
+  .location,
+  .contact {
+    font-size: 14px; /* Smaller text */
+  }
+
+  .rating {
+    font-size: 16px; /* Even smaller rating stars */
+  }
+
+  .rating-count {
+    font-size: 10px;
+  }
+
+  .projects-completed {
+    font-size: 14px; /* Smaller text */
+  }
+
+  .about-section,
+  .skills-section,
+  .experience-section,
+  .education-section,
+  .portfolio-section,
+  .testimonials-section,
+  .stats-section {
+    padding: 10px; /* Further reduce padding */
+  }
+
+  .section-title {
+    font-size: 16px; /* Even smaller section titles */
+  }
+
+  .about-content {
+    font-size: 14px; /* Smaller text */
+    line-height: 1.6; /* Adjust line height */
+  }
+
+  .skill-tag {
+    font-size: 10px; /* Even smaller skill tags */
+    padding: 3px 6px;
+  }
+
+  .experience-item h5,
+  .education-item h5 {
+    font-size: 14px; /* Smaller headings */
+  }
+
+  .experience-date,
+  .education-date {
+    font-size: 12px; /* Smaller dates */
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+    gap: 10px;
+  }
+
+  .portfolio-item {
+    padding: 8px; /* Further reduce padding */
+  }
+
+  .portfolio-item h5 {
+    font-size: 12px; /* Even smaller portfolio title */
+  }
+
+  .portfolio-link {
+    font-size: 12px; /* Smaller link */
+  }
+
+  .testimonial {
+    padding: 10px; /* Further reduce padding */
+  }
+
+  .testimonial::before {
+    font-size: 30px; /* Even smaller quote mark */
+  }
+
+  .testimonial-content {
+    padding-left: 15px; /* Adjust padding */
+    font-size: 12px; /* Even smaller text */
+  }
+
+  .author-image {
+    width: 30px; /* Even smaller author image */
+    height: 30px;
+  }
+
+  .author-name {
+    font-size: 12px; /* Even smaller author name */
+  }
+
+  .author-job {
+    font-size: 10px; /* Even smaller job title */
+  }
+
+  .stats-label,
+  .stats-value {
+    font-size: 12px; /* Even smaller text */
+  }
+
+  .edit-profile-btn,
+  .edit-button {
+    padding: 6px 12px; /* Even smaller button */
+    font-size: 12px;
+  }
+
+  .add-btn {
+    padding: 5px 10px; /* Even smaller add button */
+    font-size: 10px;
+  }
+
+  .editing .editable-field,
+  .editing .skill-input {
+    padding: 6px 10px; /* Smaller input fields */
+    font-size: 12px;
+  }
+
+  .editing textarea.editable-field {
+    min-height: 60px; /* Smaller textarea */
+  }
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar */
+}
+
+.resume-section, .skills-test-section {
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.resume-content form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resume-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.resume-link {
+  color: #152C70;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.resume-link:hover {
+  text-decoration: underline;
+}
+
+.upload-btn, .delete-resume-btn, .test-btn {
+  background: #152C70;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.upload-btn:hover, .delete-resume-btn:hover, .test-btn:hover {
+  background: #1a3a8c;
+}
+
+.skills-test-content {
+  margin-top: 15px;
+}
+
+.test-item {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.test-actions {
+  margin-top: 15px;
+}

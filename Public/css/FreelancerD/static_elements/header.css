@@ -1,0 +1,106 @@
+/* Base Styles for Header */
+.header {
+  display: flex;
+  justify-content: space-between; /* Align title, search bar, and user profile on the same line */
+  align-items: center;
+  background-color: #f0f5fa; /* Light blue background from the image */
+  padding: 10px 20px; /* Padding to match the image's spacing */
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Title */
+.header h2 {
+  font-size: 24px;
+  color: #1e3a8a; /* Prevent extra line height */
+}
+
+/* Search Bar */
+.search-bar {
+  flex-grow: 1; 
+  margin: 0 20px; /* Space between title and user profile */
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #d0e1f9; /* Light blue border matching the image */
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+  background-color: white; /* White background for the input */
+}
+
+.search-input:focus {
+  border-color: #1e88e5; /* Highlight border on focus */
+  outline: none;
+}
+
+/* User Profile */
+.user-profile {
+  display: flex;
+  align-items: center;
+  background-color: #f0f5fa; /* Light blue background for consistency */
+  padding: 5px 10px; /* Padding to match the image */
+  border-radius: 20px; /* Rounded corners for the user profile section */
+}
+
+.user-profile svg {
+  width: 40px;
+  height: 40px;
+  fill: #152C70; /* Dark blue for the icon */
+  margin-right: 10px;
+  border-radius: 50%; /* Circular avatar */
+}
+
+.username {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch; /* Stretch items for full width */
+    gap: 15px; /* Space between stacked elements */
+    padding: 15px;
+  }
+
+  .header h2 {
+    margin-bottom: 10px; /* Space below title on mobile */
+  }
+
+  .search-bar {
+    margin: 0; /* Remove horizontal margins on mobile */
+    width: 100%; /* Full width on mobile */
+  }
+
+  .user-profile {
+    width: 100%; /* Full width on mobile */
+    justify-content: flex-start; /* Align icon and name to the left */
+    padding: 10px; /* Adjusted padding for mobile */
+  }
+}
+
+@media (max-width: 500px) {
+  .header h2 {
+    font-size: 20px; /* Adjust for smaller screens */
+  }
+
+  .search-input {
+    padding: 8px 12px; /* Slightly smaller padding */
+    font-size: 12px;
+  }
+
+  .user-profile svg {
+    width: 32px; /* Smaller icon */
+    height: 32px;
+  }
+
+  .username {
+    font-size: 14px; /* Smaller text */
+  }
+}

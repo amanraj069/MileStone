@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "name": "Aanchal",
+    "title": "Web Developer",
+    "rating": 4.5,
+    "skills": ["HTML", "CSS", "JavaScript", "React"],
+    "avatar": "/assets/user_female.png"
+  },
+  {
+    "id": "2",
+    "name": "Deepak Anuragi",
+    "title": "Graphic Designer",
+    "rating": 3.5,
+    "skills": ["Adobe Photoshop", "Illustrator", "InDesign"],
+    "avatar": "/assets/user_image.jpg"
+  }
+]

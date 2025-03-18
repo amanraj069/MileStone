@@ -1,0 +1,251 @@
+{
+  "user": {
+    "id": 1,
+    "name": "Vanya Awasthi",
+    "email": "vanya.awasthi@email.com",
+    "role": "Freelancer"
+  },
+  "profile": {
+    "title": "Frontend Developer",
+    "location": "Pune, Maharashtra",
+    "rating": "4.8/5",
+    "reviews": 120,
+    "projects_completed": 50,
+    "phone": "+91 8757462008",
+    "about": "I am a passionate Frontend Developer with over 5 years of experience in building responsive and user-friendly web applications. I specialize in React, JavaScript, and modern CSS frameworks. My goal is to create seamless digital experiences that delight users and meet business objectives.",
+    "skills": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "React",
+      "TypeScript",
+      "Angular",
+      "Node.js",
+      "Git"
+    ],
+    "experience": [
+      {
+        "title": "Senior Frontend Developer - Google",
+        "date": "Jan 2022 - Present",
+        "description": "Led the development of search page enhancements, improving user engagement by 30%. Collaborated with UX designers to implement responsive designs using React and TypeScript."
+      },
+      {
+        "title": "Frontend Developer - Airbnb",
+        "date": "Jun 2019 - Dec 2021",
+        "description": "Developed and maintained the booking system UI, integrating Angular and SCSS to create a seamless user experience. Reduced page load time by 20% through optimization techniques."
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor of Science in Computer Science",
+        "institution": "University of California, Berkeley",
+        "date": "2015 - 2019"
+      }
+    ],
+    "portfolio": [
+      {
+        "title": "E-commerce Website Redesign",
+        "description": "A responsive e-commerce platform built with React and Node.js.",
+        "image": "/assets/portfolio/ecom_portfolio.png",
+        "link": "https://github.com/evershopcommerce/evershop"
+      },
+      {
+        "title": "Booking System UI",
+        "description": "Modern booking system UI developed using Angular and SCSS.",
+        "image": "/assets/portfolio/bookingsys_portfolio.png",
+        "link": "https://github.com/SakerDakak/Salonek"
+      },
+      {
+        "title": "Stream UI Optimization",
+        "description": "Optimized streaming platform UI with React and Redux.",
+        "image": "/assets/portfolio/streaming_portfolio.png",
+        "link": "https://github.com/Open-Streaming-Platform/open-streaming-platform"
+      }
+    ]
+  },
+  "active_jobs": [
+    {
+      "id": 1,
+      "title": "E-commerce Website Redesign",
+      "company": "Amazon",
+      "logo": "/assets/company_logo.jpg",
+      "progress": 75,
+      "tech": ["HTML5", "CSS3", "JavaScript", "React"],
+      "deadline": "Due in 5 days",
+      "price": "Rs.4,500"
+    },
+    {
+      "id": 2,
+      "title": "Custom Dashboard Development",
+      "company": "Microsoft",
+      "logo": "/assets/company_logo.jpg",
+      "progress": 40,
+      "tech": ["JavaScript", "Vue.js", "Node.js", "MongoDB"],
+      "deadline": "Due in 12 days",
+      "price": "Rs.3,200"
+    },
+    {
+      "id": 3,
+      "title": "Mobile App UI Enhancement",
+      "company": "Spotify",
+      "logo": "/assets/company_logo.jpg",
+      "progress": 90,
+      "tech": ["Flutter", "Dart", "Firebase"],
+      "deadline": "Due in 2 days",
+      "price": "Rs.2,800"
+    }
+  ],
+  "job_history": [
+    {
+      "id": 4,
+      "title": "Frontend Development for Search Page",
+      "company": "Google",
+      "logo": "/assets/company_logo.jpg",
+      "status": "Completed",
+      "tech": ["HTML5", "CSS3", "JavaScript", "React"],
+      "date": "Jan 12, 2025 - Feb 15, 2025",
+      "price": "Rs.5,800",
+      "rating": "4.5/5"
+    },
+    {
+      "id": 5,
+      "title": "Booking System Redesign",
+      "company": "Airbnb",
+      "logo": "/assets/company_logo.jpg",
+      "status": "Cancelled",
+      "tech": ["Angular", "TypeScript", "SCSS"],
+      "date": "Dec 05, 2024 - Dec 15, 2024",
+      "price": "Rs.2,000 (Partial)",
+      "cancel_reason": "Project requirements changed significantly"
+    },
+    {
+      "id": 6,
+      "title": "Stream UI Optimization",
+      "company": "Netflix",
+      "logo": "/assets/company_logo.jpg",
+      "status": "Completed",
+      "tech": ["JavaScript", "React", "Redux", "Node.js"],
+      "date": "Oct 10, 2024 - Nov 25, 2024",
+      "price": "Rs.7,200",
+      "rating": "5.0/5"
+    }
+  ],
+  "payments": {
+    "subscription": {
+      "plan": "Pro Plan",
+      "amount": "Rs.29.99/month",
+      "next_billing_date": "April 7, 2025"
+    },
+    "methods": [
+      {
+        "type": "Visa",
+        "last_four": "1234",
+        "expiry": "12/25"
+      },
+      {
+        "type": "Mastercard",
+        "last_four": "5678",
+        "expiry": "09/24"
+      }
+    ],
+    "history": [
+      {
+        "date": "Mar 7, 2025",
+        "description": "Pro Plan Subscription",
+        "amount": "Rs.29.99",
+        "status": "Success",
+        "receipt_link": "#"
+      },
+      {
+        "date": "Feb 7, 2025",
+        "description": "Pro Plan Subscription",
+        "amount": "Rs.29.99",
+        "status": "Success",
+        "receipt_link": "#"
+      },
+      {
+        "date": "Jan 7, 2025",
+        "description": "Pro Plan Subscription",
+        "amount": "Rs.29.99",
+        "status": "Failed",
+        "receipt_link": "#"
+      }
+    ]
+  },
+  "skills_badges": {
+    "skills": [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "React",
+      "TypeScript",
+      "Angular",
+      "Node.js",
+      "Git"
+    ],
+    "badges": [
+      {
+        "title": "Top Freelancer",
+        "description": "Earned for completing 50+ projects with a 4.5+ rating",
+        "image": "/assets/portfolio/topfreelancer_badge.png",
+        "date_earned": "Jan 2025"
+      },
+      {
+        "title": "Rising Star",
+        "description": "Earned for completing 10 projects within first 3 months",
+        "image": "/assets/portfolio/risingstar_badge.png",
+        "date_earned": "Aug 2024"
+      },
+      {
+        "title": "Code Master",
+        "description": "Earned for expertise in 5+ programming languages",
+        "image": "/assets/portfolio/codemaster_badge.png",
+        "date_earned": "Nov 2024"
+      }
+    ],
+    "badge_progress": [
+      {
+        "title": "Client Favorite",
+        "description": "Receive 20 five-star reviews",
+        "progress": "18/20",
+        "percentage": 90
+      },
+      {
+        "title": "Project Titan",
+        "description": "Complete 100 projects",
+        "progress": "50/100",
+        "percentage": 50
+      },
+      {
+        "title": "Speedy Deliverer",
+        "description": "Deliver 10 projects ahead of schedule",
+        "progress": "7/10",
+        "percentage": 70
+      }
+    ]
+  },
+  "subscription": {
+    "current_plan": {
+      "name": "Free Tier",
+      "description": "Includes basic features. Upgrade for more!",
+      "price": "Rs.0/month"
+    },
+    "available_plans": [
+      {
+        "name": "Basic",
+        "price": "Rs.0/month",
+        "description": "Limited access, core functionality, ads included."
+      },
+      {
+        "name": "Pro",
+        "price": "Rs.9.99/month",
+        "description": "Ad-free, advanced tools, priority support."
+      },
+      {
+        "name": "Enterprise",
+        "price": "Contact Us",
+        "description": "Custom solutions, team accounts, dedicated support."
+      }
+    ]
+  }
+}

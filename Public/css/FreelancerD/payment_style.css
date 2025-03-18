@@ -1,0 +1,537 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Main Content Styles */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 290px;
+  width: calc(100% - 290px);
+  background-color: #f7f9fc;
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+/* Header and Content Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: #e6eef8;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+
+.content-header h2 {
+  font-size: 24px;
+  color: #1e3a8a; /* Matching freelancer branding color from skills_badges.css */
+}
+
+.content-header p {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+/* Payment Content Styles */
+.payment-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Matching gap from skills_badges.css */
+}
+
+/* Section Styles */
+.payment-section {
+  background-color: white;
+  border-radius: 12px; /* Matching border-radius from skills_badges.css */
+  padding: 25px; /* Matching padding from skills_badges.css */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Matching shadow from skills_badges.css */
+}
+
+.payment-section h4 {
+  font-size: 20px; /* Matching font size from skills_badges.css */
+  color: #1e3a8a; /* Matching color from skills_badges.css */
+  margin-bottom: 15px;
+  border-bottom: 1px solid #d0e1f9;
+  padding-bottom: 8px;
+}
+
+.payment-section h5 {
+  font-size: 16px;
+  color: #1e3a8a; /* Matching color from skills_badges.css */
+  margin-bottom: 10px;
+}
+
+/* Subscription Details */
+.subscription-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subscription-details p {
+  font-size: 14px;
+  color: #333;
+}
+
+.subscription-details p strong {
+  color: #1e3a8a; /* Matching color from skills_badges.css */
+}
+
+.manage-subscription-btn {
+  background-color: #1e3a8a; /* Matching button color from skills_badges.css */
+  color: white;
+  border: none;
+  border-radius: 6px; /* Matching border-radius from skills_badges.css */
+  padding: 10px 20px; /* Matching padding from skills_badges.css */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.manage-subscription-btn:hover {
+  background-color: #0d47a1; /* Matching hover color from skills_badges.css */
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Matching gap from skills_list in skills_badges.css */
+  margin-bottom: 20px;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px; /* Slightly adjusted for consistency */
+  background-color: #f9f9f9;
+  border-radius: 8px; /* Matching border-radius from badge-item in skills_badges.css */
+  transition: transform 0.3s, box-shadow 0.3s; /* Adding hover effect like badge-item */
+}
+
+.payment-method:hover {
+  transform: translateY(-5px); /* Matching hover effect from badge-item */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Matching hover shadow */
+}
+
+.payment-method i {
+  font-size: 24px;
+  color: #1e3a8a; /* Matching color from skills_badges.css */
+}
+
+.payment-method span {
+  font-size: 14px;
+  color: #333;
+}
+
+.payment-method .expiry-date {
+  color: #7f8c8d; /* Matching secondary color from skills_badges.css */
+  margin-left: auto;
+}
+
+.remove-method-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px; /* Matching border-radius from skills_badges.css */
+  padding: 6px 12px; /* Adjusted for consistency */
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-method-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Add Payment Method Form */
+.add-payment-method {
+  margin-top: 20px;
+}
+
+#payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #1e3a8a; /* Matching color from skills_badges.css */
+  font-weight: 500;
+}
+
+.form-group input {
+  border: 1px solid #d0e1f9;
+  border-radius: 6px; /* Matching border-radius from skills_badges.css */
+  padding: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 300px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #1e3a8a; /* Matching focus color from skills_badges.css */
+  outline: none;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-row .form-group input {
+  max-width: 150px;
+}
+
+.add-method-btn {
+  background-color: #1e3a8a; /* Matching button color from skills_badges.css */
+  color: white;
+  border: none;
+  border-radius: 6px; /* Matching border-radius */
+  padding: 10px 20px; /* Matching padding */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.add-method-btn:hover {
+  background-color: #0d47a1; /* Matching hover color */
+}
+
+/* Payment History Table */
+.payment-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.payment-history-table th,
+.payment-history-table td {
+  padding: 12px; /* Adjusted for consistency with other elements */
+  text-align: left;
+  border-bottom: 1px solid #d0e1f9;
+}
+
+.payment-history-table th {
+  background-color: #e6eef8;
+  color: #1e3a8a; /* Matching header color */
+  font-weight: 600;
+}
+
+.payment-history-table td {
+  color: #333;
+}
+
+.payment-history-table .status.success {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.payment-history-table .status.failed {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.payment-history-table .view-receipt {
+  color: #1e3a8a; /* Matching link color */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.payment-history-table .view-receipt:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .main-content {
+      margin-left: 70px;
+      width: calc(100% - 70px);
+      padding: 15px;
+  }
+
+  .content-header {
+      padding: 10px 15px;
+  }
+
+  .content-header h2 {
+      font-size: 22px;
+  }
+
+  .content-header p {
+      font-size: 13px;
+  }
+
+  .payment-section {
+      padding: 20px;
+  }
+
+  .payment-section h4 {
+      font-size: 18px;
+      margin-bottom: 12px;
+  }
+
+  .payment-section h5 {
+      font-size: 15px;
+  }
+
+  .subscription-details p {
+      font-size: 13px;
+  }
+
+  .manage-subscription-btn,
+  .add-method-btn {
+      padding: 8px 15px;
+      font-size: 13px;
+  }
+
+  .payment-methods {
+      gap: 10px;
+  }
+
+  .payment-method {
+      padding: 12px;
+  }
+
+  .payment-method i {
+      font-size: 20px;
+  }
+
+  .payment-method span {
+      font-size: 13px;
+  }
+
+  .remove-method-btn {
+      padding: 5px 10px;
+      font-size: 11px;
+  }
+
+  .form-group label {
+      font-size: 13px;
+  }
+
+  .form-group input {
+      padding: 8px;
+      font-size: 13px;
+      max-width: 250px;
+  }
+
+  .form-row .form-group input {
+      max-width: 120px;
+  }
+
+  .payment-history-table {
+      font-size: 13px;
+  }
+
+  .payment-history-table th,
+  .payment-history-table td {
+      padding: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 10px;
+  }
+
+  .content-header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 8px 10px;
+      gap: 10px;
+  }
+
+  .content-header h2 {
+      font-size: 20px;
+  }
+
+  .content-header p {
+      font-size: 12px;
+  }
+
+  .payment-content {
+      gap: 15px;
+  }
+
+  .payment-section {
+      padding: 15px;
+  }
+
+  .payment-section h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+  }
+
+  .payment-section h5 {
+      font-size: 14px;
+  }
+
+  .subscription-details {
+      gap: 8px;
+  }
+
+  .subscription-details p {
+      font-size: 12px;
+  }
+
+  .manage-subscription-btn,
+  .add-method-btn {
+      padding: 8px 15px;
+      font-size: 12px;
+      width: 100%;
+  }
+
+  .payment-methods {
+      gap: 8px;
+  }
+
+  .payment-method {
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 10px;
+  }
+
+  .payment-method i {
+      font-size: 18px;
+  }
+
+  .payment-method span {
+      font-size: 12px;
+  }
+
+  .payment-method .expiry-date {
+      margin-left: 0;
+      width: 100%;
+  }
+
+  .remove-method-btn {
+      padding: 5px 10px;
+      font-size: 10px;
+      width: 100%;
+  }
+
+  .add-payment-method {
+      margin-top: 15px;
+  }
+
+  #payment-form {
+      gap: 10px;
+  }
+
+  .form-group label {
+      font-size: 12px;
+  }
+
+  .form-group input {
+      padding: 6px;
+      font-size: 12px;
+      max-width: 100%;
+  }
+
+  .form-row {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .form-row .form-group input {
+      max-width: 100%;
+  }
+
+  .payment-history-table {
+      display: block;
+      overflow-x: auto;
+      font-size: 12px;
+  }
+
+  .payment-history-table th,
+  .payment-history-table td {
+      padding: 8px;
+      min-width: 100px;
+  }
+
+  .payment-history-table thead {
+      display: none; /* Hide headers on mobile, use data labels instead */
+  }
+
+  .payment-history-table tbody tr {
+      display: block;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #d0e1f9;
+  }
+
+  .payment-history-table tbody td {
+      display: block;
+      text-align: right;
+      position: relative;
+      padding-left: 50%;
+      border: none;
+  }
+
+  .payment-history-table tbody td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 6px;
+      font-weight: 600;
+      color: #1e3a8a; /* Matching color */
+      text-align: left;
+  }
+
+  .payment-history-table tbody td[data-label="Receipt"] {
+      text-align: center;
+      padding-left: 0;
+  }
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar */
+}

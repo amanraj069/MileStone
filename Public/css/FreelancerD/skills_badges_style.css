@@ -1,0 +1,478 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Main Content Styles */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  margin-left: 290px;
+  width: calc(100% - 290px);
+  background-color: #f7f9fc;
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: #e6eef8;
+  padding: 15px 20px;
+  border-radius: 8px;
+}
+
+.content-header h2 {
+  font-size: 24px;
+  color: #1e3a8a; /* Blue accent for freelancer branding */
+}
+
+.content-header p {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+/* Skills & Badges Content */
+.skills-badges-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Section Styles */
+.skills-section,
+.badges-section,
+.badge-progress-section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.skills-section h4,
+.badges-section h4,
+.badge-progress-section h4 {
+  font-size: 20px;
+  color: #1e3a8a;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #d0e1f9;
+  padding-bottom: 8px;
+}
+
+.skills-section h5,
+.badges-section h5,
+.badge-progress-section h5 {
+  font-size: 16px;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+/* Skills Section */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.skill-tag {
+  background-color: #e0e7ff;
+  color: #1e3a8a;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.add-skill {
+  margin-top: 20px;
+}
+
+#add-skill-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #1e3a8a;
+  font-weight: 500;
+}
+
+.form-group input {
+  border: 1px solid #d0e1f9;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 300px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #1e3a8a;
+  outline: none;
+}
+
+.add-skill-btn {
+  background-color: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.add-skill-btn:hover {
+  background-color: #0d47a1;
+}
+
+/* Badges Section */
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.badge-item {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f7fd;
+  border-radius: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.badge-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.badge-item img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.badge-item h5 {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.badge-item p {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 8px;
+}
+
+.badge-date {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Badge Progress Section */
+.badge-progress-item {
+  margin-bottom: 20px;
+}
+
+.badge-progress-item h5 {
+  font-size: 16px;
+  color: #1e3a8a;
+  margin-bottom: 5px;
+}
+
+.badge-progress-item p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  background-color: #e0e7ff;
+  border-radius: 10px;
+  height: 12px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.progress {
+  background-color: #1e3a8a;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progress-status {
+  font-size: 12px;
+  color: #7f8c8d;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+  .main-content {
+      margin-left: 70px;
+      width: calc(100% - 70px);
+      padding: 15px;
+  }
+
+  .content-header {
+      padding: 10px 15px;
+  }
+
+  .content-header h2 {
+      font-size: 22px;
+  }
+
+  .content-header p {
+      font-size: 13px;
+  }
+
+  .skills-section,
+  .badges-section,
+  .badge-progress-section {
+      padding: 20px;
+  }
+
+  .skills-section h4,
+  .badges-section h4,
+  .badge-progress-section h4 {
+      font-size: 18px;
+      margin-bottom: 12px;
+  }
+
+  .skills-section h5,
+  .badges-section h5,
+  .badge-progress-section h5 {
+      font-size: 15px;
+  }
+
+  .skills-list {
+      gap: 10px;
+  }
+
+  .skill-tag {
+      padding: 5px 10px;
+      font-size: 13px;
+  }
+
+  .form-group label {
+      font-size: 13px;
+  }
+
+  .form-group input {
+      padding: 8px;
+      font-size: 13px;
+      max-width: 250px;
+  }
+
+  .add-skill-btn {
+      padding: 8px 15px;
+      font-size: 13px;
+  }
+
+  .badges-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+  }
+
+  .badge-item {
+      padding: 15px;
+  }
+
+  .badge-item img {
+      width: 80px;
+      height: 80px;
+  }
+
+  .badge-item h5 {
+      font-size: 15px;
+  }
+
+  .badge-item p {
+      font-size: 13px;
+  }
+
+  .badge-date {
+      font-size: 11px;
+  }
+
+  .badge-progress-item h5 {
+      font-size: 15px;
+  }
+
+  .badge-progress-item p {
+      font-size: 13px;
+  }
+
+  .progress-bar {
+      height: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-content {
+      margin-left: 0;
+      width: 100%;
+      padding: 10px;
+  }
+
+  .content-header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 8px 10px;
+      gap: 10px;
+  }
+
+  .content-header h2 {
+      font-size: 20px;
+  }
+
+  .content-header p {
+      font-size: 12px;
+  }
+
+  .skills-badges-content {
+      gap: 15px;
+  }
+
+  .skills-section,
+  .badges-section,
+  .badge-progress-section {
+      padding: 15px;
+  }
+
+  .skills-section h4,
+  .badges-section h4,
+  .badge-progress-section h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+  }
+
+  .skills-section h5,
+  .badges-section h5,
+  .badge-progress-section h5 {
+      font-size: 14px;
+  }
+
+  .skills-list {
+      gap: 8px;
+  }
+
+  .skill-tag {
+      padding: 4px 8px;
+      font-size: 12px;
+  }
+
+  .add-skill {
+      margin-top: 15px;
+  }
+
+  #add-skill-form {
+      gap: 10px;
+  }
+
+  .form-group label {
+      font-size: 12px;
+  }
+
+  .form-group input {
+      padding: 6px;
+      font-size: 12px;
+      max-width: 100%;
+  }
+
+  .add-skill-btn {
+      padding: 8px 15px;
+      font-size: 12px;
+      width: 100%;
+  }
+
+  .badges-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+  }
+
+  .badge-item {
+      padding: 10px;
+  }
+
+  .badge-item img {
+      width: 70px;
+      height: 70px;
+  }
+
+  .badge-item h5 {
+      font-size: 14px;
+  }
+
+  .badge-item p {
+      font-size: 12px;
+  }
+
+  .badge-date {
+      font-size: 10px;
+  }
+
+  .badge-progress-item {
+      margin-bottom: 15px;
+  }
+
+  .badge-progress-item h5 {
+      font-size: 14px;
+  }
+
+  .badge-progress-item p {
+      font-size: 12px;
+  }
+
+  .progress-bar {
+      height: 8px;
+  }
+
+  .progress-status {
+      font-size: 11px;
+  }
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar */
+}

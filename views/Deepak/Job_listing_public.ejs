@@ -1,0 +1,187 @@
+<!-- views/Deepak/Job_listing_public.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal - Milestone</title>
+    <link rel="stylesheet" href="/css/Joblisting/Job_listing_public.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">Milestone</div>
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search for jobs or freelancers..."
+          onclick="window.location.href='/jobs'"
+          onfocus="this.blur()"
+        />
+        <button
+          class="svg"
+          onclick="window.location.href='/jobs'; event.preventDefault()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="100"
+            height="100"
+            viewBox="0,0,255.98958,255.98958"
+          >
+            <g
+              fill="#ffffff"
+              fill-rule="nonzero"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="butt"
+              stroke-linejoin="miter"
+              stroke-miterlimit="10"
+              stroke-dasharray=""
+              stroke-dashoffset="0"
+              font-family="none"
+              font-weight="none"
+              font-size="none"
+              text-anchor="none"
+              style="mix-blend-mode: normal"
+            >
+              <g transform="scale(2,2)">
+                <path
+                  d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z"
+                ></path>
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="nav-buttons">
+        <button>Dashboard</button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <aside class="filters">
+          <h2>Filters</h2>
+          <div class="filter-section">
+            <h3>Sort By</h3>
+            <select id="sortSelect">
+              <option value="salary-desc">Salary (High to Low)</option>
+              <option value="salary-asc">Salary (Low to High)</option>
+              <option value="date">Newest First</option>
+              <option value="stars">Most Starred</option>
+            </select>
+          </div>
+          <div class="filter-section">
+            <h3>Experience Level</h3>
+            <div class="checkbox-group">
+              <label><input type="checkbox" value="entry" /> Entry Level</label>
+              <label><input type="checkbox" value="mid" /> Mid Level</label>
+              <label
+                ><input type="checkbox" value="senior" /> Senior Level</label
+              >
+            </div>
+          </div>
+          <div class="filter-section">
+            <h3>Skills</h3>
+            <div class="skills-container">
+              <div class="skill-tag">JavaScript</div>
+              <div class="skill-tag">Python</div>
+              <div class="skill-tag">React</div>
+              <div class="skill-tag">Node.js</div>
+              <div class="skill-tag">SQL</div>
+              <div class="skill-tag">AWS</div>
+              <div class="skill-tag">Docker</div>
+              <div class="skill-tag">Git</div>
+            </div>
+          </div>
+          <div class="filter-section">
+            <h3>Job Type</h3>
+            <div class="checkbox-group">
+              <label
+                ><input type="checkbox" value="full-time" /> Full Time</label
+              >
+              <label
+                ><input type="checkbox" value="part-time" /> Part Time</label
+              >
+              <label><input type="checkbox" value="contract" /> Contract</label>
+              <label><input type="checkbox" value="remote" /> Remote</label>
+            </div>
+          </div>
+        </aside>
+        <section class="job-listings" id="jobList">
+          <h1>Available Positions</h1>
+          <% jobs.forEach((job, index) => { %>
+          <div class="job-card">
+            <div class="job-img-container">
+              <img
+                src="<%= job.image %>"
+                alt="<%= job.company_name %>"
+                class="job-img"
+              />
+            </div>
+            <div class="job-info">
+              <h2 class="job-title"><%= job.job_title %></h2>
+              <div class="job-price"><%= job.salary_range %></div>
+              <div class="job-tech">
+                <% job.description.skills.slice(0, 3).forEach(skill => { %>
+                <span class="tech-tag"><%= skill %></span>
+                <% }) %>
+              </div>
+              <div class="job-meta">
+                <span class="location"><%= job.location %></span>
+                <span class="work"><%= job.job_type.toLowerCase() %></span>
+                <span class="clock">Posted <%= job.posted_date %></span>
+              </div>
+              <div class="star-rating">
+                <% const stars = Math.round(Math.random() * 5); for (let i = 0;
+                i < 5; i++) { if (i < stars) { %> ★ <% } else { %> ☆ <% } } %>
+              </div>
+            </div>
+            <div class="job-actions">
+              <span class="applications-count"
+                ><%= Math.floor(Math.random() * 100) %> applicants</span
+              >
+              <a href="/jobs/details?jobId=<%= index %>">
+                <button class="see-more-btn">See More</button>
+              </a>
+            </div>
+          </div>
+          <% }) %>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section footer-logo">
+          <h3>Milestone</h3>
+          <p>
+            Your go-to platform for hiring top freelancers. We'll fill some more
+            content here according to our need or we can remove this section if
+            not required.
+          </p>
+        </div>
+        <div class="footer-section footer-links">
+          <h3>Quick Links</h3>
+          <div class="quick-links">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/login">Sign in</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Milestone. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="/js/Joblisting/Job_listing_public.js"></script>
+  </body>
+</html>

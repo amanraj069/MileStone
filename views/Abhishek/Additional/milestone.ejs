@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar Dashboard</title>
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+    <link rel="stylesheet" href="/css/EmployerD/milestone.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+      <div class="sidebar-container">
+        <div class="content">
+          <div class="left-panel">
+            <div class="profile-img-container">
+              <svg
+                width="130px"
+                height="130px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6ZM17.8946 17.4473L17.0002 17C17.8946 17.4473 17.8939 17.4487 17.8939 17.4487L17.8932 17.4502L17.8916 17.4532L17.8882 17.46L17.88 17.4756C17.8739 17.4871 17.8666 17.5004 17.858 17.5155C17.8409 17.5458 17.8186 17.5832 17.7906 17.6267C17.7346 17.7138 17.6558 17.8254 17.5497 17.9527C17.3369 18.208 17.0163 18.5245 16.5549 18.8321C15.6228 19.4534 14.1751 20 12.0001 20C8.31494 20 6.76549 18.4304 6.26653 17.7115C5.96463 17.2765 5.99806 16.7683 6.18066 16.4031C6.91705 14.9303 8.42234 14 10.069 14H13.7642C15.5134 14 17.1124 14.9883 17.8947 16.5528C18.0354 16.8343 18.0354 17.1657 17.8946 17.4473Z"
+                  fill="#152C70"
+                />
+              </svg>
+            </div>
+            <div class="profile-name">Hey User!</div>
+
+            <nav class="dashboard-nav">
+              <ul>
+                <li class="nav-item">
+                  <a href="/" class="nav-link">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24px"
+                      height="24px"
+                    >
+                      <path
+                        d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"
+                      />
+                    </svg>
+                    <span>Home</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/employerD/profile" class="nav-link">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                      ></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Profile</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/employerD/job-listings" class="nav-link">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect
+                        x="2"
+                        y="7"
+                        width="20"
+                        height="14"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <path
+                        d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+                      ></path>
+                    </svg>
+                    <span>Job Listings</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/employerD/current-jobs" class="nav-link">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    <span>Current Active Jobs</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/employerD/previously-worked" class="nav-link">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Previously Worked</span>
+                  </a>
+                </li>
+                <li class="nav-item active">
+                  <a href="/employerD/transaction-history" class="nav-link">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect
+                        x="2"
+                        y="6"
+                        width="20"
+                        height="12"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <line
+                        x1="2"
+                        y1="10"
+                        x2="22"
+                        y2="10"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <rect x="4" y="14" width="4" height="2" fill="black" />
+                    </svg>
+                    <span>Transaction History</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/employerD/subscription" class="nav-link">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4 16h16l-1 4H5l-1-4z"
+                        stroke="black"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M4 10l4 4h8l4-4-4-4-4 4-4-4-4 4z"
+                        stroke="black"
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <span>Subscription</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            <button class="logout-btn" onclick="window.location.href='/logout'">
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="container">
+          <div class="header">
+            <h1 class="title">
+              Payments & Milestones - <%= transaction.projectTitle %>
+            </h1>
+            <button class="add-button" id="addMilestoneBtn">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Milestone
+            </button>
+          </div>
+
+          <div class="progress-card">
+            <div class="progress-section">
+              <div class="progress-header">
+                <h3 class="progress-title">Project Completion</h3>
+                <% const completedMilestones =
+                transaction.milestones.filter(function(m) { return m.status ===
+                'completed'; }).length; const totalMilestones =
+                transaction.milestones.length; const completionPercentage =
+                totalMilestones > 0 ? Math.round((completedMilestones /
+                totalMilestones) * 100) : 0; %>
+                <span class="progress-percentage" id="completionPercentage"
+                  ><%= completionPercentage %>%</span
+                >
+              </div>
+              <div class="progress-bar-container">
+                <div
+                  class="progress-bar"
+                  id="completionProgressBar"
+                  style="width: <%= completionPercentage %>%"
+                ></div>
+              </div>
+              <div class="progress-labels">
+                <span>Not Started</span>
+                <span>In Progress</span>
+                <span>Completed</span>
+              </div>
+            </div>
+
+            <div class="progress-section">
+              <div class="progress-header">
+                <h3 class="progress-title">Payment Progress</h3>
+                <% const totalAmount = transaction.amount; const paidAmount =
+                transaction.milestones.reduce(function(sum, m) { return sum +
+                (m.status === 'completed' ? m.payment : 0); }, 0); const
+                paymentPercentage = totalAmount > 0 ? Math.round((paidAmount /
+                totalAmount) * 100) : 0; %>
+                <span class="progress-amount" id="paymentProgress"
+                  >₹<%= paidAmount.toLocaleString() %> of ₹<%=
+                  totalAmount.toLocaleString() %> (<%= paymentPercentage
+                  %>%)</span
+                >
+              </div>
+              <div class="progress-bar-container">
+                <div
+                  class="progress-bar"
+                  id="paymentProgressBar"
+                  style="width: <%= paymentPercentage %>%"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="milestones-container" id="milestonesContainer">
+            <% transaction.milestones.forEach(function(milestone) { %>
+            <div class="milestone-card" data-id="<%= milestone.id %>">
+              <div class="milestone-header">
+                <h3 class="milestone-title"><%= milestone.deliverable %></h3>
+                <span class="status <%= milestone.status %>"
+                  ><%= milestone.status.charAt(0).toUpperCase() +
+                  milestone.status.slice(1) %></span
+                >
+              </div>
+              <div class="milestone-body">
+                <p><strong>Deadline:</strong> <%= milestone.deadline %></p>
+                <p>
+                  <strong>Payment:</strong> ₹<%=
+                  milestone.payment.toLocaleString() %> (<%=
+                  milestone.percentage %>%)
+                </p>
+              </div>
+              <div class="milestone-footer">
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+
+        <!-- Add/Edit Milestone Modal -->
+        <div class="modal-overlay" id="milestoneModal">
+          <div class="modal">
+            <div class="modal-header">
+              <h2 class="modal-title" id="modalTitle">Add New Milestone</h2>
+              <button class="close-modal" id="closeModal">×</button>
+            </div>
+            <div class="modal-body">
+              <form id="milestoneForm">
+                <input type="hidden" id="milestoneId" />
+                <div class="form-group">
+                  <label for="deliverable">Deliverable Description</label>
+                  <input
+                    type="text"
+                    id="deliverable"
+                    placeholder="eg: Complete feature X"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="deadline">Deadline</label>
+                  <input
+                    type="text"
+                    id="deadline"
+                    placeholder="eg: Week 2"
+                    required
+                  />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="payment">Payment Amount (₹)</label>
+                    <input
+                      type="number"
+                      id="payment"
+                      placeholder="eg: 22500"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="percentage">Percentage (%)</label>
+                    <input
+                      type="number"
+                      id="percentage"
+                      placeholder="eg: 20"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="cancel-btn" id="cancelBtn">
+                    Cancel
+                  </button>
+                  <button type="submit" class="save-btn" id="saveBtn">
+                    Add Milestone
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div class="modal-overlay" id="deleteModal">
+          <div class="modal delete-modal">
+            <div class="modal-header">
+              <h2 class="modal-title">Confirm Delete</h2>
+              <button class="close-modal" id="closeDeleteModal">×</button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete this milestone?</p>
+              <input type="hidden" id="deleteId" />
+              <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="cancelDeleteBtn">
+                  Cancel
+                </button>
+                <button type="button" class="delete-btn" id="confirmDeleteBtn">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/EmployerD/milestone.js"></script>
+  </body>
+</html>

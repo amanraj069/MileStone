@@ -1,0 +1,252 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.form-container {
+  display: flex;
+  width: 80%;
+  max-width: 1000px;
+  height: 80vh;
+  overflow: hidden;
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Left Side - Login Form */
+.form {
+  flex: 1;
+  background: #fff;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px 0 0 10px;
+}
+
+.form h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 24px;
+  display: none; /* Hidden to match the simpler form in your last image */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #03065d; /* Matches theme */
+}
+
+.form-group button {
+  width: 100%;
+  padding: 12px;
+  background-color: #03065d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+  background-color: #00058e;
+}
+
+.forgot-password {
+  text-align: right;
+  font-size: 12px;
+  color: #03065d;
+  margin-bottom: 20px;
+}
+
+.login-signup-link {
+  text-align: center;
+  color: #555;
+  margin-top: 20px;
+}
+
+.login-signup-link a {
+  color: #03065d;
+  text-decoration: none;
+}
+
+.login-signup-link a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  min-height: 40px; /* Reserve space for error messages */
+  white-space: pre-line; /* Preserve line breaks from JS */
+  font-size: 13px;
+  margin: 10px 0;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Right Side - Promotional Content */
+.promo-section {
+  flex: 1;
+  background: url("/assets/loginsignup/wave-bg1.png") no-repeat center center; /* Wave background image */
+  background-size: cover;
+  position: relative;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space between logo, slogan, and testimonial */
+  align-items: center;
+  border-radius: 0 10px 10px 0;
+  overflow: hidden;
+}
+
+/* Dark overlay to improve text readability */
+.promo-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+  z-index: 0;
+}
+
+.promo-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-top: 20px; /* 20px padding from the top for the logo */
+}
+
+.promo-section .logo img {
+  max-width: 400px; /* Ensure the logo image scales properly */
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.promo-section h2 {
+  font-size: 20px;
+  line-height: 1.4;
+  max-width: 400px;
+  margin: 10px 0; /* Even spacing above and below */
+}
+
+.promo-section h2 span {
+  display: block;
+}
+
+.promo-section .testimonial {
+  background: rgba(255, 255, 255, 0.55);
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 400px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.testimonial img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  margin-bottom: 52px;
+  opacity: 1;
+  display: block;
+}
+
+.testimonial .text {
+  flex-grow: 1;
+  text-align: left; /* Left-align the text */
+}
+
+.testimonial p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #474747;
+}
+
+.testimonial .author {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.testimonial .author .location {
+  font-style: italic; /* Italicize "Chennai, India" */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+  }
+
+  .form-form,
+  .promo-section {
+    flex: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .promo-section {
+    padding: 30px;
+    justify-content: space-between;
+  }
+
+  .promo-section .logo img {
+    margin-bottom: 20px; /* Reduced spacing on mobile */
+  }
+
+  .promo-section h2 {
+    margin: 10px 0; /* Reduced spacing on mobile */
+  }
+
+  .promo-section .testimonial {
+    margin-bottom: 20px;
+  }
+}

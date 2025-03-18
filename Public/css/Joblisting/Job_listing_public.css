@@ -1,0 +1,514 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar Styles */
+.navbar {
+  background: linear-gradient(135deg, #022245, #092c51);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 25px;
+  box-shadow: 0 4px 12px rgba(71, 20, 16, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 80px;
+}
+
+.logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+  padding: 8px 15px;
+  width: 45%;
+  height: 45px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-container:hover,
+.search-container:focus-within {
+  background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-container input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  background: transparent;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+}
+
+.svg {
+  height: 20px;
+  width: 20px;
+  margin-left: 10px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.svg:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Add this new class for hiding elements */
+.hidden {
+  display: none !important;
+}
+
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-container button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.search-container button:hover {
+  color: #ffffff;
+}
+
+.svg {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 15px;
+  margin-right: 20px;
+  transition: transform 0.3s ease;
+}
+
+.svg:hover {
+  transform: scale(1.1);
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-buttons button {
+  background-color: rgb(0, 94, 120);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-buttons button:hover {
+  background-color: rgb(1, 55, 70);
+  transform: translateY(-2px);
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+/* Filters */
+.filters {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  backdrop-filter: blur(10px);
+}
+
+.filters h2 {
+  color: #1a2b49;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e0e6ed;
+  padding-bottom: 10px;
+}
+
+.filter-section {
+  margin-bottom: 25px;
+}
+
+.filter-section h3 {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  border-color: #0a66c2;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #34495e;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  background: #e3f2fd;
+  color: #0a66c2;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+  background: #bbdefb;
+  transform: scale(1.05);
+}
+
+.skill-tag.selected {
+  background: #0a66c2;
+  color: white;
+}
+
+/* Job Listings */
+.job-listings {
+  flex: 1;
+}
+
+.job-listings h1 {
+  color: #1a2b49;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.job-card {
+  display: flex;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.job-img-container {
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
+}
+
+.job-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #e0e6ed;
+}
+
+.job-info {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+  font-size: 16px;
+  color: #555;
+  flex: 1;
+}
+
+.job-info span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.job-title {
+  font-size: 1.3rem;
+  color: #1a2b49;
+  margin-bottom: 8px;
+}
+
+.job-price {
+  color: #27ae60;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.job-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.tech-tag {
+  background: #f8f9fa;
+  color: #0a66c2;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.85rem;
+}
+
+.job-meta {
+  font-family: Arial, sans-serif;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.job-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.location::before {
+  content: "📍";
+  color: #007bff;
+}
+
+.work::before {
+  content: "💼";
+  color: #007bff;
+}
+
+.clock::before {
+  content: "⏳";
+  color: #007bff;
+}
+
+.star-rating {
+  color: #f1c40f;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.job-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.applications-count {
+  background: #f8f9fa;
+  color: #0a66c2;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+}
+
+.see-more-btn {
+  padding: 8px 20px;
+  background: #0a66c2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.see-more-btn:hover {
+  background: #084e96;
+  transform: scale(1.05);
+}
+
+/* Footer Styles */
+.footer {
+  background: linear-gradient(135deg, #022245, #092c51);
+  color: white;
+  padding: 40px 5%;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 0;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  text-align: left;
+  padding: 0 20px;
+}
+
+.footer-logo {
+  text-align: center;
+}
+
+.footer-logo h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-logo p {
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.footer-links h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.quick-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+  padding: 5px;
+}
+
+.quick-links a:hover {
+  color: #d4af37;
+  transform: translateY(-2px);
+}
+
+ul {
+  list-style: none;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .search-container {
+    width: 90%;
+    margin: 10px 0;
+  }
+
+  .nav-buttons {
+    padding: 5px 0;
+    flex-direction: row;
+    justify-content: center;
+    width: 50%;
+    gap: 10px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section {
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+  }
+
+  .quick-links {
+    align-items: center;
+  }
+}

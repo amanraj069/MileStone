@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freelancer Dashboard - Profile</title>
+    <link rel="stylesheet" href="/css/FreelancerD/static_elements/sidebar.css" />
+    <link rel="stylesheet" href="/css/FreelancerD/edit_profile_style.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <!-- Sidebar (unchanged) -->
+      <div class="sidebar-container">
+        <div class="content">
+          <div class="left-panel">
+            <div class="profile-img-container">
+              <svg
+                width="130px"
+                height="130px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6ZM17.8946 17.4473L17.0002 17C17.8946 17.4473 17.8939 17.4487 17.8939 17.4487L17.8932 17.4502L17.8916 17.4532L17.8882 17.46L17.88 17.4756C17.8739 17.4871 17.8666 17.5004 17.858 17.5155C17.8409 17.5458 17.8186 17.5832 17.7906 17.6267C17.7346 17.7138 17.6558 17.8254 17.5497 17.9527C17.3369 18.208 17.0163 18.5245 16.5549 18.8321C15.6228 19.4534 14.1751 20 12.0001 20C8.31494 20 6.76549 18.4304 6.26653 17.7115C5.96463 17.2765 5.99806 16.7683 6.18066 16.4031C6.91705 14.9303 8.42234 14 10.069 14H13.7642C15.5134 14 17.1124 14.9883 17.8947 16.5528C18.0354 16.8343 18.0354 17.1657 17.8946 17.4473Z"
+                  fill="#152C70"
+                />
+              </svg>
+            </div>
+            <div class="profile-name">Hey <%= user.name %>!</div>
+
+            <nav class="dashboard-nav">
+              <ul>
+                <li class="nav-item">
+                  <a href="/" class="nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+                      <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"/>
+                    </svg>
+                    <span>Home</span>
+                  </a>
+                </li>
+                <li class="nav-item active"><a href="/freelancerD/profile" class="nav-link"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" /><path d="M4 21C4 17.6863 7.58172 15 12 15C16.4183 15 20 17.6863 20 21" stroke="currentColor" stroke-width="2" /></svg><span>Profile</span></a></li>
+                <li class="nav-item"><a href="/freelancerD/active_job" class="nav-link"><svg data-name="Layer 1" width="22px" height="22px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M41.93 41.34H6.07a4.28 4.28 0 0 1-4.28-4.28V17.82a4.28 4.28 0 0 1 4.28-4.28h35.86a4.29 4.29 0 0 1 4.29 4.28v19.24a4.29 4.29 0 0 1-4.29 4.28zM6.07 15.54a2.28 2.28 0 0 0-2.28 2.28v19.24a2.28 2.28 0 0 0 2.28 2.28h35.86a2.29 2.29 0 0 0 2.29-2.28V17.82a2.29 2.29 0 0 0-2.29-2.28z" /><path d="M34 14.54h-2v-2a3.93 3.93 0 0 0-4-3.88h-8a3.93 3.93 0 0 0-4 3.92v2h-2v-2a5.93 5.93 0 0 1 6-5.92h8a5.93 5.93 0 0 1 6 5.92zM19.64 26.88a1 1 0 0 1-.34-.06L2.43 20.77a1 1 0 1 1 .68-1.88L20 24.94a1 1 0 0 1-.33 1.94zM28.36 26.88a1 1 0 0 1-.36-1.94l16.86-6.05a1 1 0 1 1 .68 1.88L28.7 26.82a1 1 0 0 1-.34.06z" /><path d="M27.91 32h-7.82a2.38 2.38 0 0 1-2.37-2.37v-2.46a2.37 2.37 0 0 1 2.37-2.37h7.82a2.37 2.37 0 0 1 2.37 2.37v2.48A2.38 2.38 0 0 1 27.91 32zm-7.82-5.2a.37.37 0 0 0-.37.37v2.48a.38.38 0 0 0 .37.37h7.82a.38.38 0 0 0 .37-.37v-2.48a.38.38 0 0 0-.37-.37z" /></svg><span>Active Jobs</span></a></li>
+                <li class="nav-item"><a href="/freelancerD/job_history" class="nav-link"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="10" /><path d="M12 6v6l4 2" /></svg><span>Job History</span></a></li>
+                <li class="nav-item"><a href="/freelancerD/payment" class="nav-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="12" stroke="black" stroke-width="2" /><line x1="2" y1="10" x2="22" y2="10" stroke="black" stroke-width="2" /><rect x="4" y="14" width="4" height="2" fill="black" /></svg><span>Payments</span></a></li>
+                <li class="nav-item"><a href="/freelancerD/skills_badges" class="nav-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="black" stroke-width="2" /><path d="M8 14L6 22L12 18L18 22L16 14" stroke="black" stroke-width="2" /></svg><span>Skills & Badges</span></a></li>
+                <li class="nav-item"><a href="/freelancerD/subscription" class="nav-link"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 16h16l-1 4H5l-1-4z" stroke="black" stroke-width="2" /><path d="M4 10l4 4h8l4-4-4-4-4 4-4-4-4 4z" stroke="black" stroke-width="2" stroke-linejoin="round" /></svg><span>Subscription</span></a></li>  
+              </ul>
+            </nav>
+            <button class="logout-btn" onclick="window.location.href='/logout'">Logout</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+          <div class="header">
+            <h1>Freelancer Profile</h1>
+            <button id="editProfileBtn" class="edit-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              Edit Profile
+            </button>
+          </div>
+
+          <div class="profile-section">
+            <div class="profile-image">
+              <img src="/assets/user_female.png" alt="Profile Image" />
+            </div>
+
+            <div class="profile-info">
+              <div class="profile-header">
+                <h2 data-editable="name"><%= profile.name %></h2>
+                <div class="top-freelancer-badge">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                  Top Freelancer
+                </div>
+              </div>
+
+              <div class="title" data-editable="title"><%= profile.title %></div>
+
+              <div class="location">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span data-editable="location"><%= profile.location %></span>
+              </div>
+
+              <div class="contact">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span data-editable="email"><%= user.email %></span>
+              </div>
+
+              <div class="contact">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span data-editable="phone"><%= profile.phone %></span>
+              </div>
+
+              <div class="rating-section">
+                <div class="rating">
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">☆</span>
+                  <span data-editable="rating"><%= profile.rating || '4.0' %></span>
+                </div>
+                <div class="rating-count">(<%= profile.reviews || '120' %> Reviews)</div>
+              </div>
+
+              <div class="projects-completed">
+                <span data-editable="projects"><%= profile.projects || '50+' %> Projects Completed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-container">
+            <div>
+              <!-- About Section -->
+              <div class="about-section">
+                <h3 class="section-title">About Me</h3>
+                <div class="about-content" data-editable="about">
+                  <% if (profile.about) { %>
+                    <% profile.about.split('\n\n').forEach(paragraph => { %>
+                      <p><%= paragraph %></p>
+                      <br />
+                    <% }); %>
+                  <% } else { %>
+                    <p>No about information provided yet.</p>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- Skills Section -->
+              <div class="skills-section">
+                <h3 class="section-title">Skills</h3>
+                <div class="skills-list" data-editable="skills">
+                  <% if (profile.skills && profile.skills.length > 0) { %>
+                    <% profile.skills.forEach(skill => { %>
+                      <span class="skill-tag"><%= skill %></span>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No skills added yet.</p>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- Experience Section -->
+              <div class="experience-section">
+                <h3 class="section-title">Experience</h3>
+                <div class="experience-list" data-editable="experience">
+                  <% if (profile.experience && profile.experience.length > 0) { %>
+                    <% profile.experience.forEach(exp => { %>
+                      <div class="experience-item">
+                        <h5><%= exp.title %></h5>
+                        <p class="experience-date"><%= exp.date %></p>
+                        <% if (exp.description) { %>
+                          <p><%= exp.description %></p>
+                        <% } %>
+                      </div>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No experience added yet.</p>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- Education Section -->
+              <div class="education-section">
+                <h3 class="section-title">Education</h3>
+                <div class="education-list" data-editable="education">
+                  <% if (profile.education && profile.education.length > 0) { %>
+                    <% profile.education.forEach(edu => { %>
+                      <div class="education-item">
+                        <h5><%= edu.title %></h5>
+                        <p class="education-date"><%= edu.institution%></p><br>
+                        <p class="education-date"><%= edu.degree%></p>
+                        <p class="education-date"><%= edu.date %></p>
+                      </div>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No education added yet.</p>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- New Resume Section -->
+              <div class="resume-section">
+                <h3 class="section-title">Resume</h3>
+                <div class="resume-content">
+                  <% if (profile.resume) { %>
+                    <div class="resume-item">
+                      <a href="<%= profile.resume %>" target="_blank" class="resume-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="2"/>
+                          <path d="M14 2v6h6" stroke="currentColor" stroke-width="2"/>
+                          <path d="M12 18v-6m-3 3h6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        View Resume
+                      </a>
+                      <button class="delete-resume-btn" onclick="deleteResume()">Delete Resume</button>
+                    </div>
+                  <% } else { %>
+                    <form id="resumeUploadForm" enctype="multipart/form-data">
+                      <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" required>
+                      <button type="submit" class="upload-btn">Upload Resume</button>
+                    </form>
+                    <p>Accepted formats: PDF, DOC, DOCX (Max size: 5MB)</p>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- New Skills Test Section -->
+              <div class="skills-test-section">
+                <h3 class="section-title">Skills Assessment</h3>
+                <div class="skills-test-content">
+                  <% if (profile.testScores && profile.testScores.length > 0) { %>
+                    <% profile.testScores.forEach(test => { %>
+                      <div class="test-item">
+                        <h5><%= test.skill %> Test</h5>
+                        <p>Score: <%= test.score %>%</p>
+                        <p>Date: <%= test.date %></p>
+                      </div>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No skills tests taken yet.</p>
+                  <% } %>
+                  <div class="test-actions">
+                    <button onclick="window.location.href='/freelancerD/skills-test'" class="test-btn">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 12l2 2 4-4m-6 8h6M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" stroke="white" stroke-width="2"/>
+                      </svg>
+                      Take a Skills Test
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Portfolio Section -->
+              <div class="portfolio-section">
+                <h3 class="section-title">Portfolio</h3>
+                <div class="portfolio-grid" data-editable="portfolio">
+                  <% if (profile.portfolio && profile.portfolio.length > 0) { %>
+                    <% profile.portfolio.forEach(item => { %>
+                      <div class="portfolio-item">
+                        <% if (item.image) { %>
+                          <img src="<%= item.image %>" alt="<%= item.title || 'Portfolio Item' %>">
+                        <% } %>
+                        <% if (item.title) { %>
+                          <h5><%= item.title %></h5>
+                        <% } %>
+                        <% if (item.description) { %>
+                          <p><%= item.description %></p>
+                        <% } %>
+                        <% if (item.link) { %>
+                          <a href="<%= item.link %>" class="portfolio-link">View Project</a>
+                        <% } %>
+                      </div>
+                    <% }); %>
+                  <% } else { %>
+                    <p>No portfolio items added yet.</p>
+                  <% } %>
+                </div>
+              </div>
+
+              <!-- Testimonials Section -->
+              <div class="testimonials-section">
+                <h3 class="section-title">Testimonials & Reviews</h3>
+                <div class="testimonial">
+                  <div class="testimonial-content">
+                    Working with <%= profile.name %> was a fantastic experience. They were professional, responsive, and delivered high-quality work on time.
+                  </div>
+                  <div class="testimonial-author">
+                    <div class="author-image">
+                      <img src="/assets/user_female.png" alt="Client Image" />
+                    </div>
+                    <div class="author-info">
+                      <div class="author-name">Alex Johnson</div>
+                      <div class="author-job">Project Manager</div>
+                      <div class="testimonial-rating">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span>4.5</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+              <h3 class="section-title">Freelancer Stats</h3>
+              <div class="stats-item">
+                <div class="stats-label">Member Since</div>
+                <div class="stats-value">Jan 2020</div>
+              </div>
+              <div class="stats-item">
+                <div class="stats-label">Total Earnings</div>
+                <div class="stats-value">INR 1,50,000</div>
+              </div>
+              <div class="stats-item">
+                <div class="stats-label">Completed Projects</div>
+                <div class="stats-value">50</div>
+              </div>
+              <div class="stats-item">
+                <div class="stats-label">Active Projects</div>
+                <div class="stats-value">5</div>
+              </div>
+              <div class="stats-item">
+                <div class="stats-label">Avg. Project Rate</div>
+                <div class="stats-value">INR 3,000</div>
+              </div>
+              <div class="stats-item">
+                <div class="stats-label">Response Rate</div>
+                <div class="stats-value">95%</div>
+              </div>
+              <div class="stats-item">
+                <div class="stats-label">Avg. Response Time</div>
+                <div class="stats-value">1.8 hours</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/FreelancerD/edit_profile.js"></script>
+    <script>
+      document.getElementById('resumeUploadForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        try {
+          const response = await fetch('/freelancerD/upload-resume', {
+            method: 'POST',
+            body: formData
+          });
+          if (response.ok) {
+            window.location.reload();
+          } else {
+            alert('Failed to upload resume');
+          }
+        } catch (error) {
+          console.error('Error uploading resume:', error);
+          alert('An error occurred while uploading');
+        }
+      });
+
+      function deleteResume() {
+        if (confirm('Are you sure you want to delete your resume?')) {
+          fetch('/freelancerD/delete-resume', {
+            method: 'POST'
+          })
+          .then(response => {
+            if (response.ok) {
+              window.location.reload();
+            } else {
+              alert('Failed to delete resume');
+            }
+          })
+          .catch(error => {
+            console.error('Error deleting resume:', error);
+            alert('An error occurred while deleting');
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
