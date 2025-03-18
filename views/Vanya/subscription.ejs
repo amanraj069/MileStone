@@ -10,10 +10,9 @@
     />
     <link rel="stylesheet" href="/css/FreelancerD/subscription_style.css" />
   </head>
-
   <body>
     <div class="dashboard-wrapper">
-      <!-- Sidebar -->
+      <!-- Sidebar (unchanged) -->
       <div class="sidebar-container">
         <div class="content">
           <div class="left-panel">
@@ -34,16 +33,21 @@
               </svg>
             </div>
             <div class="profile-name">Hey <%= user.name %>!</div>
-
             <nav class="dashboard-nav">
               <ul>
                 <li class="nav-item">
-                  <a href="/" class="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-                      <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"/>
-                    </svg>
-                    <span>Home</span>
-                  </a>
+                  <a href="/" class="nav-link"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24px"
+                      height="24px"
+                    >
+                      <path
+                        d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"
+                      /></svg
+                    ><span>Home</span></a
+                  >
                 </li>
                 <li class="nav-item">
                   <a href="/freelancerD/profile" class="nav-link"
@@ -178,22 +182,20 @@
                     >
                       <path
                         d="M4 16h16l-1 4H5l-1-4z"
-                        stroke="black"
+                        stroke="currentColor"
                         stroke-width="2"
                       />
                       <path
                         d="M4 10l4 4h8l4-4-4-4-4 4-4-4-4 4z"
-                        stroke="black"
+                        stroke="currentColor"
                         stroke-width="2"
                         stroke-linejoin="round"
                       /></svg
                     ><span>Subscription</span></a
                   >
                 </li>
-                
               </ul>
             </nav>
-
             <button class="logout-btn" onclick="window.location.href='/logout'">
               Logout
             </button>
@@ -201,6 +203,7 @@
         </div>
       </div>
 
+      <!-- Main Content -->
       <div class="main-content">
         <div class="container">
           <header>
@@ -214,9 +217,9 @@
               <p>
                 <%= subscription.current_plan.name %> - <%=
                 subscription.current_plan.description %> (<%=
-                subscription.current_plan.price %>) <%=
-                subscription.current_plan.name === 'Free Tier' ? 'Upgrade for
-                more opportunities!' : '' %>
+                subscription.current_plan.price %>) <% if
+                (subscription.current_plan.name === 'Free Tier') { %> Upgrade
+                for more opportunities! <% } %>
               </p>
             </div>
             <button>Manage Subscription</button>
