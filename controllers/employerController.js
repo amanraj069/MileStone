@@ -102,7 +102,7 @@ exports.geSeemoreJoblistings = async (req, res) => {
 exports.getmilestoneTransactionHistory = async (req, res) => {
   try {
     const transactionData = await getTransactionData();
-    const transactionId = "txn1"; // Note: This should probably use req.params.txnId
+    const transactionId = "txn1";
     const transaction = transactionData.transactions.find(
       (t) => t.id === transactionId
     );
