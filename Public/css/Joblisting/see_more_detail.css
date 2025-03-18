@@ -33,10 +33,12 @@ header {
 
 .back-button {
   text-decoration: none;
-  color: #1e90ff;
+  color: #0d62b6;
   display: flex;
   align-items: center;
   gap: 5px;
+  font-size: large;
+  font-weight: bolder;
 }
 
 .job-header {
@@ -413,7 +415,7 @@ header {
 }
 
 .error-message {
-    margin-top: 5px;
-    color: red;
-    font-size: 12px;
+  margin-top: 5px;
+  color: red;
+  font-size: 12px;
 }

@@ -19,7 +19,7 @@
           <div class="job-title-info">
             <div class="deadline">
               Application Deadline: <%= job.deadline %>
-            </div>
+            </div>  
             <h1 class="job-title"><%= job.job_title %></h1>
             <div class="company-name"><%= job.company_name %></div>
             <div class="job-meta">
@@ -165,7 +165,6 @@
         </table>
       </div>
 
-      <!-- Apply Modal (Only rendered if user is logged in) -->
       <% if (user) { %>
       <div class="modal-overlay" id="applyModal">
         <div class="modal">
