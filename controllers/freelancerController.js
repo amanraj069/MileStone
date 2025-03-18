@@ -55,7 +55,7 @@ exports.getSeemore = (req, res) => {
   res.sendFile(
     path.join(
       __dirname,
-      "../views/Abhishek/Additional/current_job_see_more.html"
+      "../views/Vanya/additional/jhistory_see_more.html"
     )
   );
 };

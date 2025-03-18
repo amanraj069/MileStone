@@ -203,7 +203,7 @@ body::-webkit-scrollbar {
 }
 
 .chat-btn,
-.complaint-btn,
+.complain-btn,
 .see-more-btn {
   padding: 8px 15px;
   border-radius: 4px;
@@ -218,6 +218,7 @@ body::-webkit-scrollbar {
   white-space: nowrap;
   width: 100%;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 .chat-btn {
@@ -229,12 +230,12 @@ body::-webkit-scrollbar {
   background-color: #d0e1f9;
 }
 
-.complaint-btn {
+.complain-btn {
   background-color: #fee2e2;
   color: #dc2626;
 }
 
-.complaint-btn:hover {
+.complain-btn:hover {
   background-color: #fecaca;
 }
 
@@ -248,7 +249,7 @@ body::-webkit-scrollbar {
 }
 
 .chat-btn i,
-.complaint-btn i {
+.complain-btn i {
   margin-right: 5px;
 }
 
@@ -264,7 +265,7 @@ body::-webkit-scrollbar {
   }
 
   .chat-btn,
-  .complaint-btn,
+  .complain-btn,
   .see-more-btn {
     padding: 7px 12px;
     font-size: 13px;
@@ -330,7 +331,7 @@ body::-webkit-scrollbar {
   }
 
   .chat-btn,
-  .complaint-btn,
+  .complain-btn,
   .see-more-btn {
     flex: 1;
     padding: 6px 8px;
