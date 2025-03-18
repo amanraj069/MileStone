@@ -18,7 +18,7 @@ exports.getHome = (req, res) => {
   }
   res.render("Aman/home", {
     user: req.session && req.session.user ? req.session.user : null,
-    dashboardRoute
+    dashboardRoute,
   });
 };
 
@@ -51,7 +51,7 @@ exports.getJobListing = async (req, res) => {
     res.render("Deepak/Job_listing_public", {
       jobs,
       user: req.session && req.session.user ? req.session.user : null,
-      dashboardRoute
+      dashboardRoute,
     });
   } catch (error) {
     console.error("Error loading job listings:", error);
@@ -74,7 +74,6 @@ exports.getJobDetails = async (req, res) => {
         .send("Job not found. Please select a job from the listings.");
     }
 
-    // Add user and dashboardRoute here too
     let dashboardRoute = "";
     if (req.session.user) {
       switch (req.session.user.role) {
@@ -94,7 +93,7 @@ exports.getJobDetails = async (req, res) => {
     res.render("Deepak/see_more_detail", {
       job,
       user: req.session.user || null,
-      dashboardRoute
+      dashboardRoute,
     });
   } catch (error) {
     console.error("Error loading job details:", error);

@@ -1,81 +1,77 @@
 // Modal control functions
 function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'flex';
-    }
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    console.log("Opening modal:", modalId);
+    modal.style.display = "flex";
+  } else {
+    console.error("Modal not found:", modalId);
+  }
 }
 
 function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'none';
-    }
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    console.log("Closing modal:", modalId);
+    modal.style.display = "none";
+  }
 }
 
-// Milestone modal event listeners (keeping original functionality)
-document.getElementById('addMilestoneBtn')?.addEventListener('click', function () {
-    openModal('addMilestoneModal');
-});
+// Ensure DOM is fully loaded before attaching event listeners
+document.addEventListener("DOMContentLoaded", function () {
+  // Apply modal event listeners for logged-in users
+  const applyNowLoggedInBtn = document.getElementById("applyNowLoggedInBtn");
+  if (applyNowLoggedInBtn) {
+    applyNowLoggedInBtn.addEventListener("click", function () {
+      console.log("Apply Now (Logged In) clicked");
+      openModal("applyModal");
+    });
+  }
 
-document.getElementById('closeAddMilestoneModal')?.addEventListener('click', function () {
-    closeModal('addMilestoneModal');
-});
+  // Apply button event listener for non-logged-in users
+  const applyNowLoginRequiredBtn = document.getElementById(
+    "applyNowLoginRequiredBtn"
+  );
+  if (applyNowLoginRequiredBtn) {
+    applyNowLoginRequiredBtn.addEventListener("click", function () {
+      console.log("Apply Now (Login Required) clicked");
+      window.location.href = "/login";
+    });
+  }
 
-document.getElementById('cancelAddMilestone')?.addEventListener('click', function () {
-    closeModal('addMilestoneModal');
-});
+  // Close apply modal
+  document
+    .getElementById("closeApplyModal")
+    ?.addEventListener("click", function () {
+      closeModal("applyModal");
+    });
 
-document.getElementById('saveAddMilestone')?.addEventListener('click', function () {
-    const deliverable = document.getElementById('deliverableInput').value;
-    const deadline = document.getElementById('milestoneDeadlineInput').value;
-    const payment = document.getElementById('paymentInput').value;
+  // Cancel apply modal
+  document
+    .getElementById("cancelApply")
+    ?.addEventListener("click", function () {
+      closeModal("applyModal");
+    });
 
-    if (!deliverable || !deadline || !payment) {
-        alert('Please fill out all fields');
+  // Submit application
+  document
+    .getElementById("submitApplication")
+    ?.addEventListener("click", function () {
+      const name = document.getElementById("applicantName").value.trim();
+      const email = document.getElementById("applicantEmail").value.trim();
+      const phone = document.getElementById("applicantPhone").value.trim();
+      const bid = document.getElementById("applicantBid").value.trim();
+      const message = document.getElementById("applicantMessage").value.trim();
+
+      if (!name || !email || !phone || !bid || !message) {
+        alert("Please fill out all required fields");
         return;
-    }
+      }
 
-    const tbody = document.getElementById('milestones-tbody');
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-        <td>${deliverable}</td>
-        <td>${deadline}</td>
-        <td class="payment-column">${payment}</td>
-    `;
-    tbody.appendChild(newRow);
+      console.log("Form submitted:", { name, email, phone, bid, message });
+      alert("Application submitted successfully!");
+      closeModal("applyModal");
+    });
 
-    document.getElementById('deliverableInput').value = '';
-    document.getElementById('milestoneDeadlineInput').value = '';
-    document.getElementById('paymentInput').value = '';
-    closeModal('addMilestoneModal');
-});
-
-// Apply modal event listeners
-document.getElementById('applyNowBtn')?.addEventListener('click', function () {
-    openModal('applyModal');
-});
-
-document.getElementById('closeApplyModal')?.addEventListener('click', function () {
-    closeModal('applyModal');
-});
-
-document.getElementById('cancelApply')?.addEventListener('click', function () {
-    closeModal('applyModal');
-});
-
-document.getElementById('submitApplication')?.addEventListener('click', function () {
-    const name = document.getElementById('applicantName').value.trim();
-    const email = document.getElementById('applicantEmail').value.trim();
-    const phone = document.getElementById('applicantPhone').value.trim();
-    const bid = document.getElementById('applicantBid').value.trim();
-    const message = document.getElementById('applicantMessage').value.trim();
-
-    if (!name || !email || !phone || !bid || !message) {
-        alert('Please fill out all required fields');
-        return;
-    }
-
-    alert('Application submitted successfully!');
-    closeModal('applyModal');
+  console.log("DOM loaded, checking user status");
 });

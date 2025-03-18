@@ -54,11 +54,11 @@
       </div>
       <div class="nav-buttons">
         <% if (typeof user !== 'undefined' && user) { %>
-          <button onclick="window.location.href='<%= dashboardRoute %>'">
-            Dashboard
-          </button>
+        <button onclick="window.location.href='<%= dashboardRoute %>'">
+          Dashboard
+        </button>
         <% } else { %>
-          <button onclick="window.location.href='/login'">Sign In</button>
+        <button onclick="window.location.href='/login'">Sign In</button>
         <% } %>
       </div>
     </nav>
