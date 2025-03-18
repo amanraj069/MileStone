@@ -93,6 +93,6 @@ exports.getFreelancerSubscription = async (req, res) => {
   }
 };
 exports.getChatsCurrentJobs = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+  res.sendFile(path.join(__dirname, "../views/Vanya/additional/chat.html"));
 };
 
