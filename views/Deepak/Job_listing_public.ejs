@@ -53,12 +53,10 @@
         </button>
       </div>
       <div class="nav-buttons">
-        <% if (locals.user) { %>
-          <% if (user.role === 'freelancer') { %>
-            <button onclick="window.location.href='/freelancer/dashboard'">Dashboard</button>
-          <% } else if (user.role === 'client') { %>
-            <button onclick="window.location.href='/client/dashboard'">Dashboard</button>
-          <% } %>
+        <% if (typeof user !== 'undefined' && user) { %>
+          <button onclick="window.location.href='<%= dashboardRoute %>'">
+            Dashboard
+          </button>
         <% } else { %>
           <button onclick="window.location.href='/login'">Sign In</button>
         <% } %>
