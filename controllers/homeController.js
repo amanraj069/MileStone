@@ -1,5 +1,5 @@
 const path = require("path");
-const fs = require("fs").promises; 
+const fs = require("fs").promises;
 
 exports.getHome = (req, res) => {
   res.sendFile(path.join(__dirname, "../views", "Aman", "home.html"));
@@ -21,7 +21,7 @@ exports.getJobListing = async (req, res) => {
 
 exports.getJobDetails = async (req, res) => {
   try {
-    const jobId = parseInt(req.query.jobId, 10); 
+    const jobId = parseInt(req.query.jobId, 10);
     const jobsData = await fs.readFile(
       path.join(__dirname, "../data", "posted_jobs.json"),
       "utf8"

@@ -41,30 +41,52 @@ body {
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 5px 12px;
+  border-radius: 25px;
+  padding: 8px 15px;
   width: 45%;
-  height: 50px;
-  transition: background-color 0.3s ease;
+  height: 45px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.search-container:hover {
+.search-container:hover,
+.search-container:focus-within {
   background-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .search-container input {
   border: none;
   outline: none;
   width: 100%;
-  padding: 5px;
+  padding: 8px;
   font-size: 16px;
   background: transparent;
   color: white;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.search-container input:focus {
-  transform: scale(1.01);
+.search-container input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+}
+
+.svg {
+  height: 20px;
+  width: 20px;
+  margin-left: 10px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.svg:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Add this new class for hiding elements */
+.hidden {
+  display: none !important;
 }
 
 .search-container input::placeholder {
