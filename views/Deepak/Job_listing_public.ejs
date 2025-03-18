@@ -14,14 +14,11 @@
       <div class="search-container">
         <input
           type="text"
+          id="searchInput"
           placeholder="Search for jobs or freelancers..."
-          onclick="window.location.href='/jobs'"
-          onfocus="this.blur()"
+          autocomplete="off"
         />
-        <button
-          class="svg"
-          onclick="window.location.href='/jobs'; event.preventDefault()"
-        >
+        <button class="svg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -56,7 +53,13 @@
         </button>
       </div>
       <div class="nav-buttons">
-        <button>Dashboard</button>
+        <% if (typeof user !== 'undefined' && user) { %>
+          <button onclick="window.location.href='<%= dashboardRoute %>'">
+            Dashboard
+          </button>
+        <% } else { %>
+          <button onclick="window.location.href='/login'">Sign In</button>
+        <% } %>
       </div>
     </nav>
 
