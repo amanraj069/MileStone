@@ -10,8 +10,16 @@
     <nav class="navbar">
       <div class="logo">Milestone</div>
       <div class="search-container">
-        <input type="text" placeholder="Search for jobs or freelancers..." />
-        <button class="svg">
+        <input
+          type="text"
+          placeholder="Search for jobs or freelancers..."
+          onclick="window.location.href='/jobs'"
+          onfocus="this.blur()"
+        />
+        <button
+          class="svg"
+          onclick="window.location.href='/jobs'; event.preventDefault()"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
