@@ -175,7 +175,7 @@ body {
 .badge-item {
   text-align: center;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #f0f7fd;
   border-radius: 8px;
   transition: transform 0.3s, box-shadow 0.3s;
 }

@@ -285,22 +285,38 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (key === "portfolio") {
           const items = element.querySelectorAll(".portfolio-edit-item");
           profileData[key] = Array.from(items)
-            .map((item) => {
+            .map((item, index) => {
               const inputs = item.querySelectorAll("input");
               const textarea = item.querySelector("textarea");
-              if (inputs.length < 4 || !textarea) {
-                console.warn(`Incomplete portfolio item detected in ${item}. Skipping.`);
+
+              // Debug the structure
+              console.log(`Portfolio item ${index} - Inputs: ${inputs.length}, Textarea: ${textarea ? 'present' : 'absent'}`, item.outerHTML);
+
+              // Expect 3 inputs (image, title, link) and 1 textarea (description)
+              if (inputs.length < 3 || !textarea) {
+                console.warn(`Portfolio item ${index} has incomplete structure. Inputs: ${inputs.length}, Textarea: ${textarea ? 'yes' : 'no'}.`);
                 return null;
               }
-              return {
-                image: inputs[0]?.value.trim() || "",
-                title: inputs[1]?.value.trim() || "",
-                description: textarea?.value.trim() || "",
-                link: inputs[3]?.value.trim() || "",
-              };
-            })
-            .filter((port) => port !== null && (port.title || port.image || port.description || port.link));
 
+              const image = inputs[0]?.value.trim() || "";
+              const title = inputs[1]?.value.trim() || "";
+              const description = textarea?.value.trim() || "";
+              const link = inputs[2]?.value.trim() || ""; // Corrected to index 2 for link
+
+              // Only skip if completely empty
+              if (!image && !title && !description && !link) {
+                console.warn(`Portfolio item ${index} is completely empty. Skipping.`);
+                return null;
+              }
+
+              return { image, title, description, link };
+            })
+            .filter((port) => port !== null);
+
+          // Log the processed portfolio data
+          console.log("Processed portfolio data:", profileData[key]);
+
+          // Render the updated portfolio items
           element.innerHTML = "";
           if (profileData[key].length) {
             profileData[key].forEach((port) => {

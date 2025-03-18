@@ -46,20 +46,20 @@
       {
         "title": "E-commerce Website Redesign",
         "description": "A responsive e-commerce platform built with React and Node.js.",
-        "image": "https://via.placeholder.com/300x200?text=Project+1",
-        "link": "#"
+        "image": "/assets/portfolio/ecom_portfolio.png",
+        "link": "https://github.com/evershopcommerce/evershop"
       },
       {
         "title": "Booking System UI",
         "description": "Modern booking system UI developed using Angular and SCSS.",
-        "image": "https://via.placeholder.com/300x200?text=Project+2",
-        "link": "#"
+        "image": "/assets/portfolio/bookingsys_portfolio.png",
+        "link": "https://github.com/SakerDakak/Salonek"
       },
       {
         "title": "Stream UI Optimization",
         "description": "Optimized streaming platform UI with React and Redux.",
-        "image": "https://via.placeholder.com/300x200?text=Project+3",
-        "link": "#"
+        "image": "/assets/portfolio/streaming_portfolio.png",
+        "link": "https://github.com/Open-Streaming-Platform/open-streaming-platform"
       }
     ]
   },
@@ -187,19 +187,19 @@
       {
         "title": "Top Freelancer",
         "description": "Earned for completing 50+ projects with a 4.5+ rating",
-        "image": "https://via.placeholder.com/100?text=Top+Freelancer",
+        "image": "/assets/portfolio/topfreelancer_badge.png",
         "date_earned": "Jan 2025"
       },
       {
         "title": "Rising Star",
         "description": "Earned for completing 10 projects within first 3 months",
-        "image": "https://via.placeholder.com/100?text=Rising+Star",
+        "image": "/assets/portfolio/risingstar_badge.png",
         "date_earned": "Aug 2024"
       },
       {
         "title": "Code Master",
         "description": "Earned for expertise in 5+ programming languages",
-        "image": "https://via.placeholder.com/100?text=Code+Master",
+        "image": "/assets/portfolio/codemaster_badge.png",
         "date_earned": "Nov 2024"
       }
     ],
