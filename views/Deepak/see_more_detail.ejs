@@ -1,153 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Job Details - <%= job.job_title %></title>
-    <link rel="stylesheet" href="/css/Joblisting/see_more_detail.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/Joblisting/see_more_detail.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <a href="/jobs" class="back-button">Back</a>
-            <div class="logo">Job Details</div>
-            <div></div>
-        </header>
+      <header>
+        <a href="/jobs" class="back-button">Back</a>
+        <div class="logo">Job Details</div>
+        <div></div>
+      </header>
 
-        <div class="job-header">
-            <div class="job-title-section">
-                <div class="job-title-info">
-                    <div class="deadline">Application Deadline: <%= job.deadline %></div>
-                    <h1 class="job-title"><%= job.job_title %></h1>
-                    <div class="company-name"><%= job.company_name %></div>
-                    <div class="job-meta">
-                        <div class="meta-item">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                            <%= job.location %>
-                        </div>
-                        <div class="meta-item">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4v-2h16v2zm0-5H4V8h3v2h2V8h6v2h2V8h3v6z"/>
-                            </svg>
-                            <%= job.job_type %>
-                        </div>
-                        <div class="meta-item">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"/>
-                            </svg>
-                            <%= job.salary_range %>
-                        </div>
-                        <div class="meta-item">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
-                            </svg>
-                            Posted on <%= job.posted_date %>
-                        </div>
-                    </div>
-                    <div class="job-actions">
-                        <button class="apply-button" id="applyNowBtn" onclick="openModal('applyModal')">
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                            </svg>
-                            Apply Now
-                        </button>
-                    </div>
-                </div>
-                <div class="job-img-container">
-                    <img src="<%= job.image %>" alt="<%= job.company_name %>" class="job-img">
-                </div>
+      <div class="job-header">
+        <div class="job-title-section">
+          <div class="job-title-info">
+            <div class="deadline">
+              Application Deadline: <%= job.deadline %>
             </div>
-        </div>
-
-        <div class="job-description">
-            <div class="section-title">Job Description</div>
-            <div class="description-text">
-                <p><%= job.description.intro %></p>
-                <br>
-                <p><strong>Responsibilities:</strong></p>
-                <ul>
-                    <% job.description.responsibilities.forEach(responsibility => { %>
-                        <li><%= responsibility %></li>
-                    <% }) %>
-                </ul>
-                <br>
-                <p><strong>Requirements:</strong></p>
-                <ul>
-                    <% job.description.requirements.forEach(requirement => { %>
-                        <li><%= requirement %></li>
-                    <% }) %>
-                </ul>
-                <div class="skills-required">
-                    <div class="skills-title">Technical Skills:</div>
-                    <div class="skills-tags">
-                        <% job.description.skills.forEach(skill => { %>
-                            <span class="skill-tag"><%= skill %></span>
-                        <% }) %>
-                    </div>
-                </div>
+            <h1 class="job-title"><%= job.job_title %></h1>
+            <div class="company-name"><%= job.company_name %></div>
+            <div class="job-meta">
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                  />
+                </svg>
+                <%= job.location %>
+              </div>
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4v-2h16v2zm0-5H4V8h3v2h2V8h6v2h2V8h3v6z"
+                  />
+                </svg>
+                <%= job.job_type %>
+              </div>
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"
+                  />
+                </svg>
+                <%= job.salary_range %>
+              </div>
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"
+                  />
+                </svg>
+                Posted on <%= job.posted_date %>
+              </div>
             </div>
-        </div>
-
-        <div class="milestones">
-            <div class="section-title">Project Milestones</div>
-            <table class="milestones-table">
-                <thead>
-                    <tr>
-                        <th>Deliverable</th>
-                        <th>Deadline</th>
-                        <th>Payment</th>
-                    </tr>
-                </thead>
-                <tbody id="milestones-tbody">
-                    <% job.milestones.forEach(milestone => { %>
-                        <tr>
-                            <td><%= milestone.deliverable %></td>
-                            <td><%= milestone.deadline %></td>
-                            <td class="payment-column"><%= milestone.payment %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Apply Modal -->
-        <div class="modal-overlay" id="applyModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <h3>Apply for <%= job.job_title %></h3>
-                    <span id="closeApplyModal" class="close-modal">×</span>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="applicantName">Full Name*</label>
-                        <input type="text" id="applicantName" placeholder="Enter your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="applicantEmail">Email*</label>
-                        <input type="email" id="applicantEmail" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="applicantPhone">Phone Number*</label>
-                        <input type="tel" id="applicantPhone" placeholder="Enter your phone number" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="applicantBid">Your Bid Amount (₹)*</label>
-                        <input type="text" id="applicantBid" placeholder="Enter your bid amount" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="applicantMessage">Cover Message*</label>
-                        <textarea id="applicantMessage" rows="5" placeholder="Write your cover message here" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="cancelApply" class="cancel-btn">Cancel</button>
-                    <button id="submitApplication" class="apply-button">Submit Application</button>
-                </div>
+            <div class="job-actions">
+              <% if (user) { %>
+              <button class="apply-button" id="applyNowLoggedInBtn">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+                Apply Now
+              </button>
+              <% } else { %>
+              <button class="apply-button" id="applyNowLoginRequiredBtn">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                </svg>
+                Apply Now
+              </button>
+              <% } %>
             </div>
+          </div>
+          <div class="job-img-container">
+            <img
+              src="<%= job.image %>"
+              alt="<%= job.company_name %>"
+              class="job-img"
+            />
+          </div>
         </div>
+      </div>
+
+      <div class="job-description">
+        <div class="section-title">Job Description</div>
+        <div class="description-text">
+          <p><%= job.description.intro %></p>
+          <br />
+          <p><strong>Responsibilities:</strong></p>
+          <ul>
+            <% job.description.responsibilities.forEach(responsibility => { %>
+            <li><%= responsibility %></li>
+            <% }) %>
+          </ul>
+          <br />
+          <p><strong>Requirements:</strong></p>
+          <ul>
+            <% job.description.requirements.forEach(requirement => { %>
+            <li><%= requirement %></li>
+            <% }) %>
+          </ul>
+          <div class="skills-required">
+            <div class="skills-title">Technical Skills:</div>
+            <div class="skills-tags">
+              <% job.description.skills.forEach(skill => { %>
+              <span class="skill-tag"><%= skill %></span>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="milestones">
+        <div class="section-title">Project Milestones</div>
+        <table class="milestones-table">
+          <thead>
+            <tr>
+              <th>Deliverable</th>
+              <th>Deadline</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody id="milestones-tbody">
+            <% job.milestones.forEach(milestone => { %>
+            <tr>
+              <td><%= milestone.deliverable %></td>
+              <td><%= milestone.deadline %></td>
+              <td class="payment-column"><%= milestone.payment %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Apply Modal (Only rendered if user is logged in) -->
+      <% if (user) { %>
+      <div class="modal-overlay" id="applyModal">
+        <div class="modal">
+          <div class="modal-header">
+            <h3>Apply for <%= job.job_title %></h3>
+            <span id="closeApplyModal" class="close-modal">×</span>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="applicantName">Full Name*</label>
+              <input
+                type="text"
+                id="applicantName"
+                value="<%= user.name || '' %>"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="applicantEmail">Email*</label>
+              <input
+                type="email"
+                id="applicantEmail"
+                value="<%= user.email || '' %>"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="applicantPhone">Phone Number*</label>
+              <input
+                type="tel"
+                id="applicantPhone"
+                placeholder="Enter your phone number"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="applicantBid">Your Bid Amount (₹)*</label>
+              <input
+                type="text"
+                id="applicantBid"
+                placeholder="Enter your bid amount"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="applicantMessage">Cover Message*</label>
+              <textarea
+                id="applicantMessage"
+                rows="5"
+                placeholder="Write your cover message here"
+                required
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="cancelApply" class="cancel-btn">Cancel</button>
+            <button id="submitApplication" class="apply-button">
+              Submit Application
+            </button>
+          </div>
+        </div>
+      </div>
+      <% } %>
     </div>
     <script src="/js/Joblisting/see_more_detail.js"></script>
-</body>
+  </body>
 </html>

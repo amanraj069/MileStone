@@ -92,3 +92,7 @@ exports.getFreelancerSubscription = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+exports.getChatsCurrentJobs = (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/Vanya/additional/chat.html"));
+};
+

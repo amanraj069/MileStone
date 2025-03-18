@@ -102,7 +102,7 @@ exports.geSeemoreJoblistings = async (req, res) => {
 exports.getmilestoneTransactionHistory = async (req, res) => {
   try {
     const transactionData = await getTransactionData();
-    const transactionId = "txn1"; // Note: This should probably use req.params.txnId
+    const transactionId = req.params.txnId; // Use dynamic transaction ID from route parameter
     const transaction = transactionData.transactions.find(
       (t) => t.id === transactionId
     );
@@ -117,9 +117,7 @@ exports.getmilestoneTransactionHistory = async (req, res) => {
 };
 
 exports.getmilestoneCurrentjob = (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../views/Abhishek/Additional/milestone.html")
-  );
+  res.sendFile(path.join(__dirname, "../views/Abhishek/milestone.html"));
 };
 
 exports.getDetailsofAppliers = (req, res) => {
