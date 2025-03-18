@@ -250,6 +250,9 @@
     text-decoration: none;
   }
   
+  a {
+    text-decoration: none;
+  } 
   .project-files-btn {
     background-color: #e6eef8;
     color: #2563eb;
