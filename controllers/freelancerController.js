@@ -52,7 +52,12 @@ exports.getFreelancerJobHistory = async (req, res) => {
 };
 
 exports.getSeemore = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+  res.sendFile(
+    path.join(
+      __dirname,
+      "../views/Abhishek/Additional/current_job_see_more.html"
+    )
+  );
 };
 
 exports.getFreelancerPayment = async (req, res) => {
