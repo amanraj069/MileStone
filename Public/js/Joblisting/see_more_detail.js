@@ -1,26 +1,32 @@
-
+// Modal control functions
 function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'flex';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+    }
 }
 
 function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
-
-document.getElementById('addMilestoneBtn').addEventListener('click', function () {
+// Milestone modal event listeners (keeping original functionality)
+document.getElementById('addMilestoneBtn')?.addEventListener('click', function () {
     openModal('addMilestoneModal');
 });
 
-document.getElementById('closeAddMilestoneModal').addEventListener('click', function () {
+document.getElementById('closeAddMilestoneModal')?.addEventListener('click', function () {
     closeModal('addMilestoneModal');
 });
 
-document.getElementById('cancelAddMilestone').addEventListener('click', function () {
+document.getElementById('cancelAddMilestone')?.addEventListener('click', function () {
     closeModal('addMilestoneModal');
 });
 
-document.getElementById('saveAddMilestone').addEventListener('click', function () {
+document.getElementById('saveAddMilestone')?.addEventListener('click', function () {
     const deliverable = document.getElementById('deliverableInput').value;
     const deadline = document.getElementById('milestoneDeadlineInput').value;
     const payment = document.getElementById('paymentInput').value;
@@ -45,20 +51,20 @@ document.getElementById('saveAddMilestone').addEventListener('click', function (
     closeModal('addMilestoneModal');
 });
 
-
-document.getElementById('applyNowBtn').addEventListener('click', function () {
+// Apply modal event listeners
+document.getElementById('applyNowBtn')?.addEventListener('click', function () {
     openModal('applyModal');
 });
 
-document.getElementById('closeApplyModal').addEventListener('click', function () {
+document.getElementById('closeApplyModal')?.addEventListener('click', function () {
     closeModal('applyModal');
 });
 
-document.getElementById('cancelApply').addEventListener('click', function () {
+document.getElementById('cancelApply')?.addEventListener('click', function () {
     closeModal('applyModal');
 });
 
-document.getElementById('submitApplication').addEventListener('click', function () {
+document.getElementById('submitApplication')?.addEventListener('click', function () {
     const name = document.getElementById('applicantName').value.trim();
     const email = document.getElementById('applicantEmail').value.trim();
     const phone = document.getElementById('applicantPhone').value.trim();
@@ -73,9 +79,3 @@ document.getElementById('submitApplication').addEventListener('click', function 
     alert('Application submitted successfully!');
     closeModal('applyModal');
 });
-
-
-function goBack() {
-    alert('Navigating back to job listings...');
-    window.location.href = "job_listing.html";
-}
