@@ -1,15 +1,17 @@
+// Job_listing_public.js
 document.addEventListener("DOMContentLoaded", () => {
   const sortSelect = document.getElementById("sortSelect");
   const searchInput = document.getElementById("searchInput");
   const jobList = document.getElementById("jobList");
   const allJobs = Array.from(document.querySelectorAll(".job-card"));
 
-  // Handle single-select checkboxes
-  const handleSingleSelect = (selector) => {
-    document.querySelectorAll(selector).forEach((checkbox) => {
+  // Handle checkbox groups
+  const setupCheckboxFilters = (selector, singleSelect = false) => {
+    const checkboxes = document.querySelectorAll(selector);
+    checkboxes.forEach((checkbox) => {
       checkbox.addEventListener("change", (e) => {
-        if (e.target.checked) {
-          document.querySelectorAll(selector).forEach((box) => {
+        if (singleSelect && e.target.checked) {
+          checkboxes.forEach((box) => {
             if (box !== e.target) box.checked = false;
           });
         }
@@ -28,72 +30,83 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Event listeners
-  sortSelect.addEventListener("change", () => applyFiltersAndSort());
-
+  sortSelect.addEventListener("change", applyFiltersAndSort);
+  
   let searchTimeout;
   searchInput.addEventListener("input", () => {
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      applyFiltersAndSort();
-    }, 300);
+    searchTimeout = setTimeout(applyFiltersAndSort, 300);
   });
 
   // Search functionality
-  function performSearch(searchTerm) {
+  function performSearch(jobs, searchTerm) {
     searchTerm = searchTerm.toLowerCase().trim();
-    if (!searchTerm) return allJobs;
+    if (!searchTerm) return jobs;
 
-    return allJobs.filter((job) => {
-      const jobTitle = job
-        .querySelector(".job-title")
-        .textContent.toLowerCase();
-      return jobTitle.includes(searchTerm);
+    return jobs.filter((job) => {
+      const jobTitle = job.querySelector(".job-title").textContent.toLowerCase();
+      const company = job.querySelector(".job-img").alt.toLowerCase();
+      const skills = Array.from(job.querySelectorAll(".tech-tag"))
+        .map(tag => tag.textContent.toLowerCase());
+      
+      return jobTitle.includes(searchTerm) || 
+             company.includes(searchTerm) || 
+             skills.some(skill => skill.includes(searchTerm));
     });
   }
 
   // Main filter and sort function
   function applyFiltersAndSort() {
-    const selectedExperience =
-      document.querySelector(
-        ".filter-section:nth-of-type(2) .checkbox-group input:checked"
-      )?.value || "";
-    const selectedJobType =
-      document.querySelector(
-        ".filter-section:nth-of-type(4) .checkbox-group input:checked"
-      )?.value || "";
+    // Get selected filters
+    const selectedExperience = document.querySelector(
+      ".filter-section:nth-of-type(2) .checkbox-group input:checked"
+    )?.value || "";
+    
+    const selectedJobTypes = Array.from(
+      document.querySelectorAll(".filter-section:nth-of-type(4) .checkbox-group input:checked")
+    ).map(input => input.value);
+    
     const selectedSkills = Array.from(
       document.querySelectorAll(".skill-tag.selected")
-    ).map((tag) => tag.textContent.trim().toLowerCase());
+    ).map(tag => tag.textContent.trim().toLowerCase());
+    
     const sortBy = sortSelect.value;
     const searchTerm = searchInput.value;
 
-    // Apply search first
-    let filteredJobs = performSearch(searchTerm);
+    // Filter jobs
+    let filteredJobs = [...allJobs];
 
-    // Apply additional filters
-    filteredJobs = filteredJobs.filter((job) => {
-      const jobTitle = job
-        .querySelector(".job-title")
-        .textContent.toLowerCase();
-      const matchesExperience =
-        !selectedExperience ||
-        (selectedExperience === "entry" && jobTitle.includes("entry")) ||
-        (selectedExperience === "mid" && jobTitle.includes("mid")) ||
-        (selectedExperience === "senior" && jobTitle.includes("senior"));
+    // Apply search
+    filteredJobs = performSearch(filteredJobs, searchTerm);
 
-      const jobType = job.querySelector(".work").textContent.toLowerCase();
-      const matchesJobType =
-        !selectedJobType || jobType.includes(selectedJobType);
+    // Apply experience filter
+    if (selectedExperience) {
+      filteredJobs = filteredJobs.filter((job) => {
+        const jobTitle = job.querySelector(".job-title").textContent.toLowerCase();
+        return (
+          (selectedExperience === "entry" && jobTitle.includes("entry")) ||
+          (selectedExperience === "mid" && jobTitle.includes("mid")) ||
+          (selectedExperience === "senior" && jobTitle.includes("senior"))
+        );
+      });
+    }
 
-      const jobSkills = Array.from(job.querySelectorAll(".tech-tag")).map(
-        (tag) => tag.textContent.trim().toLowerCase()
-      );
-      const matchesSkills =
-        selectedSkills.length === 0 ||
-        selectedSkills.every((skill) => jobSkills.includes(skill));
+    // Apply job type filter
+    if (selectedJobTypes.length > 0) {
+      filteredJobs = filteredJobs.filter((job) => {
+        const jobType = job.querySelector(".work").textContent.toLowerCase();
+        return selectedJobTypes.some(type => jobType.includes(type));
+      });
+    }
 
-      return matchesExperience && matchesJobType && matchesSkills;
-    });
+    // Apply skills filter
+    if (selectedSkills.length > 0) {
+      filteredJobs = filteredJobs.filter((job) => {
+        const jobSkills = Array.from(job.querySelectorAll(".tech-tag"))
+          .map(tag => tag.textContent.trim().toLowerCase());
+        return selectedSkills.every(skill => jobSkills.includes(skill));
+      });
+    }
 
     // Sort filtered results
     filteredJobs.sort((a, b) => {
@@ -121,26 +134,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update display
     jobList.innerHTML = "<h1>Available Positions</h1>";
     if (filteredJobs.length === 0) {
-      const noResults = document.createElement("div");
-      noResults.className = "no-results";
-      noResults.style.textAlign = "center";
-      noResults.style.padding = "20px";
-      noResults.style.color = "#666";
-      noResults.innerHTML = `
-                <h3>No matching jobs found</h3>
-                <p>Try different keywords or remove search filters</p>
-            `;
-      jobList.appendChild(noResults);
+      jobList.innerHTML += `
+        <div class="no-results" style="text-align: center; padding: 20px; color: #666;">
+          <h3>No matching jobs found</h3>
+          <p>Try different keywords or adjust filters</p>
+        </div>
+      `;
     } else {
-      filteredJobs.forEach((job) => jobList.appendChild(job));
+      filteredJobs.forEach(job => jobList.appendChild(job));
     }
   }
 
   // Utility functions
   function extractSalary(job) {
     const salaryText = job.querySelector(".job-price").textContent;
-    const salaryNumbers = salaryText.replace(/₹|,/g, "").match(/\d+/g);
-
+    const salaryNumbers = salaryText.replace(/[^0-9-]/g, "").match(/\d+/g);
+    
     if (salaryNumbers && salaryNumbers.length === 2) {
       return (parseInt(salaryNumbers[0]) + parseInt(salaryNumbers[1])) / 2;
     } else if (salaryNumbers && salaryNumbers.length === 1) {
@@ -150,15 +159,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function extractDate(job) {
-    const dateText = job.querySelector(".clock").textContent.match(/\d+/);
-    return dateText ? parseInt(dateText[0]) : 0;
+    const dateText = job.querySelector(".clock").textContent.match(/\d{4}-\d{2}-\d{2}/) || 
+                     job.querySelector(".clock").textContent.match(/\d+/);
+    return dateText ? new Date(dateText[0]).getTime() : 0;
   }
 
   function countStars(job) {
     return job.querySelector(".star-rating").textContent.split("★").length - 1;
   }
-  handleSingleSelect(".filter-section:nth-of-type(2) .checkbox-group input");
-  handleSingleSelect(".filter-section:nth-of-type(4) .checkbox-group input");
 
+  // Initialize filters
+  setupCheckboxFilters(".filter-section:nth-of-type(2) .checkbox-group input", true); // Single select for experience
+  setupCheckboxFilters(".filter-section:nth-of-type(4) .checkbox-group input", false); // Multiple select for job type
+  
+  // Initial application of filters
   applyFiltersAndSort();
 });
