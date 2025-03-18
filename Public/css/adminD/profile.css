@@ -3,7 +3,8 @@ body {
     font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9fafb;
+    background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+    color: #1e293b;
 }
 
 .dashboard-wrapper {
@@ -13,208 +14,298 @@ body {
 
 .main-content {
     flex: 1;
-    padding: 30px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
 }
 
+/* Profile Header */
 .profile-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .profile-header h1 {
-    font-size: 28px;
+    font-size: 32px;
     color: #1e3a8a;
-    font-weight: 700;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.edit-profile-btn {
-    background-color: #3b82f6;
+.header-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.edit-profile-btn, .status-toggle-btn {
+    background: linear-gradient(45deg, #3b82f6, #60a5fa);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
 }
 
-.edit-profile-btn:hover {
-    background-color: #2563eb;
+.status-toggle-btn[data-status="inactive"] {
+    background: linear-gradient(45deg, #ef4444, #f87171);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+}
+
+.edit-profile-btn:hover, .status-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.status-toggle-btn:hover[data-status="inactive"] {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
 }
 
 /* Profile Container */
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background: linear-gradient(145deg, #ffffff, #f1f5f9);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(229, 231, 235, 0.2);
 }
 
 .profile-overview {
     display: flex;
     align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+    position: relative;
+}
+
+.profile-logo {
+    position: relative;
 }
 
 .profile-logo img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    margin-right: 25px;
-    border: 3px solid #e5e7eb;
+    margin-right: 30px;
+    border: 4px solid #3b82f6;
+    transition: transform 0.3s ease;
+}
+
+.profile-logo img:hover {
+    transform: scale(1.05);
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 10px;
+    right: 35px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.status-indicator.active {
+    background-color: #22c55e;
+}
+
+.status-indicator.inactive {
+    background-color: #ef4444;
 }
 
 .profile-details h2 {
-    font-size: 24px;
-    margin: 0;
+    font-size: 28px;
+    margin: 0 0 15px;
     color: #1e3a8a;
-    font-weight: 600;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .badge {
-    background-color: #3c7041;
+    background: linear-gradient(45deg, #22c55e, #4ade80);
     color: white;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    margin-left: 10px;
-    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .profile-details p {
-    margin: 8px 0;
-    color: #4b5563;
-    font-size: 14px;
+    margin: 12px 0;
+    color: #475569;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .profile-details a {
-    color: #1e3a8a;
+    color: #3b82f6;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .profile-details a:hover {
-    text-decoration: underline;
-}
-
-.rating .stars {
-    color: #f59e0b;
-    font-size: 16px;
+    color: #2563eb;
 }
 
 /* Social Links */
 .social-links {
     display: flex;
-    gap: 12px;
-    margin: 15px 0;
-    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
 }
 
 .social-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid #E1306C; /* Consistent border for Instagram */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .social-icon:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .social-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
 }
 
-.social-icon.linkedin { border: 2px solid #0A66C2; }
-.social-icon.twitter { border: 2px solid #1DA1F2; }
-.social-icon.facebook { border: 2px solid #1877F2; }
-.social-icon.instagram { border: 2px solid #E1306C; }
+.social-icon.linkedin { border: 3px solid #0A66C2; }
+.social-icon.twitter { border: 3px solid #1DA1F2; }
+.social-icon.facebook { border: 3px solid #1877F2; }
+.social-icon.instagram { border: 3px solid #E1306C; }
+
 /* Profile Content */
 .profile-content {
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    margin-top: 30px;
 }
 
 .profile-main {
-    flex: 1;
+    flex: 2;
 }
 
-.settings-section {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+.profile-sidebar {
+    flex: 1;
+    min-width: 250px;
+}
+
+.profile-section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     transition: transform 0.3s ease;
 }
 
-.settings-section:hover {
-    transform: translateY(-2px);
+.profile-section:hover {
+    transform: translateY(-3px);
 }
 
-.settings-section h3 {
-    font-size: 18px;
+.profile-section h3 {
+    font-size: 20px;
     color: #1e3a8a;
-    margin-bottom: 15px;
-    font-weight: 600;
+    margin-bottom: 20px;
+    font-weight: 700;
 }
 
-.settings-section p {
-    margin: 8px 0;
-    color: #4b5563;
+.profile-section p {
+    margin: 12px 0;
+    color: #475569;
+    font-size: 15px;
+}
+
+.profile-pic-preview {
+    max-width: 80px;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+.action-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: linear-gradient(45deg, #3b82f6, #60a5fa);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
     font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
 /* Edit Profile Form */
 .edit-profile-form {
-    background: linear-gradient(145deg, #ffffff, #f1f5f9);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(229, 231, 235, 0.2);
 }
 
 .edit-profile-form h2 {
-    font-size: 24px;
+    font-size: 28px;
     color: #1e3a8a;
-    margin-bottom: 25px;
-    font-weight: 600;
+    margin-bottom: 30px;
+    font-weight: 700;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .form-group label {
     display: block;
-    font-weight: 500;
-    color: #4b5563;
+    font-weight: 600;
+    color: #1e293b;
     margin-bottom: 8px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .form-control {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 14px;
-    background-color: #f9fafb;
-    transition: border-color 0.3s ease;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #f9fafb;
+    transition: all 0.3s ease;
 }
 
 .form-control:focus {
@@ -223,35 +314,44 @@ body {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
 .btn-primary {
-    background-color: #3b82f6;
+    background: linear-gradient(45deg, #3b82f6, #60a5fa);
     color: white;
-    padding: 12px 24px;
+    padding: 14px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
 }
 
 .btn-primary:hover {
-    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
 }
 
 .btn-cancel {
-    background-color: #6b7280;
+    background: linear-gradient(45deg, #6b7280, #9ca3af);
     color: white;
-    padding: 12px 24px;
+    padding: 14px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-left: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
 }
 
 .btn-cancel:hover {
-    background-color: #4b5563;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(107, 114, 128, 0.3);
 }
