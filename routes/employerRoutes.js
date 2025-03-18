@@ -12,7 +12,7 @@ router
   .get(employerController.geSeemoreJoblistings);
 router
   .route("/job-listings/see_more/job/view_profile")
-  .get(employerController.getDetailsofAppliers); 
+  .get(employerController.getDetailsofAppliers);
 
 router.route("/current-jobs").get(employerController.getCurrentJobs);
 router.route("/current-jobs/chat").get(employerController.getChatsCurrentJobs);

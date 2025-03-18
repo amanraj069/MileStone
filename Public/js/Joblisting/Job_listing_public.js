@@ -157,11 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function countStars(job) {
     return job.querySelector(".star-rating").textContent.split("★").length - 1;
   }
+  handleSingleSelect(".filter-section:nth-of-type(2) .checkbox-group input");
+  handleSingleSelect(".filter-section:nth-of-type(4) .checkbox-group input");
 
-  // Initialize filters
-  handleSingleSelect(".filter-section:nth-of-type(2) .checkbox-group input"); // Experience Level
-  handleSingleSelect(".filter-section:nth-of-type(4) .checkbox-group input"); // Job Type
-
-  // Initial load
   applyFiltersAndSort();
 });
