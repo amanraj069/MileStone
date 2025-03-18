@@ -411,3 +411,9 @@ header {
 .meta-item:nth-child(4):hover {
   background-color: #cbd5e0;
 }
+
+.error-message {
+    margin-top: 5px;
+    color: red;
+    font-size: 12px;
+}
