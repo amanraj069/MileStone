@@ -226,7 +226,7 @@ body {
 }
 
 .category-card:hover {
-  background: linear-gradient(135deg, #03065d, #092c51);
+  background: linear-gradient(135deg, rgb(0, 94, 120), rgb(1, 55, 70));
   color: white;
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(71, 20, 16, 0.2);
@@ -271,7 +271,7 @@ body {
 }
 
 .explore-btn:hover {
-  background: #092c51;
+  background: #00058e;
   transform: scale(1.05);
 }
 
@@ -354,7 +354,7 @@ body {
 }
 
 .hire-btn:hover {
-  background: #092c51;
+  background: #00058e;
   transform: scale(1.05);
 }
 
@@ -427,7 +427,7 @@ body {
 }
 
 .view-btn:hover {
-  background: #092c51;
+  background: #00058e;
   transform: scale(1.05);
 }
 
@@ -442,7 +442,7 @@ body {
 }
 
 .see-all-jobs:hover {
-  color: #092c51;
+  color: #00058e;
   transform: scale(1.05);
 }
 
@@ -567,7 +567,7 @@ body {
 }
 
 .read-more:hover {
-  color: #092c51;
+  color: #00058e;
   transform: translateX(5px);
 }
 
