@@ -7,7 +7,7 @@
       "job_type": "Full-time",
       "salary_range": "₹60,000-127,500 per week",
       "posted_date": "Feb 16, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C7.png",
       "description": {
         "intro": "We are looking for an experienced Frontend Developer to join our growing team. The ideal candidate will have strong experience with React, TypeScript, and NextJS.",
         "responsibilities": [
@@ -42,7 +42,7 @@
       "job_type": "Contract",
       "salary_range": "₹7,000-45,500 per month",
       "posted_date": "Feb 15, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C14.png",
       "description": {
         "intro": "Join our design team to craft user-friendly interfaces for cutting-edge applications.",
         "responsibilities": [
@@ -73,7 +73,7 @@
       "job_type": "Full-time",
       "salary_range": "₹55,200-104,500 per month",
       "posted_date": "Feb 10, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C7.png",
       "description": {
         "intro": "Seeking a skilled Backend Developer to build robust server-side applications.",
         "responsibilities": [
@@ -105,7 +105,7 @@
       "job_type": "Full-time",
       "salary_range": "₹26,100-87,550 per month",
       "posted_date": "Feb 12, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C3.png",
       "description": {
         "intro": "Looking for a DevOps Engineer to streamline our deployment processes.",
         "responsibilities": [
@@ -137,7 +137,7 @@
       "job_type": "Full-time",
       "salary_range": "₹61,000-130,500 per month",
       "posted_date": "Feb 14, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C10.jpeg",
       "description": {
         "intro": "Join us as a Full Stack Developer to build end-to-end solutions.",
         "responsibilities": [
@@ -169,7 +169,7 @@
       "job_type": "Full-time",
       "salary_range": "₹87,550-182,500 per month",
       "posted_date": "Feb 14, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C13.png",
       "description": {
         "intro": "Seeking a Data Scientist to analyze and model complex datasets.",
         "responsibilities": [
@@ -201,7 +201,7 @@
       "job_type": "Part-time",
       "salary_range": "₹22,500-43,500 per month",
       "posted_date": "Feb 13, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C15.png",
       "description": {
         "intro": "Looking for a creative Content Writer to produce engaging content.",
         "responsibilities": [
@@ -232,7 +232,7 @@
       "job_type": "Full-time",
       "salary_range": "₹78,350-174,500 per month",
       "posted_date": "Feb 11, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C12.jpg",
       "description": {
         "intro": "Join us to develop innovative mobile applications.",
         "responsibilities": [
@@ -264,7 +264,7 @@
       "job_type": "Full-time",
       "salary_range": "₹104,500-215,400 per month",
       "posted_date": "Feb 16, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C3.png",
       "description": {
         "intro": "Seeking a Cloud Architect to design scalable cloud solutions.",
         "responsibilities": [
@@ -296,7 +296,7 @@
       "job_type": "Full-time",
       "salary_range": "₹90,000-200,000 per month",
       "posted_date": "Feb 17, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C9.png",
       "description": {
         "intro": "Join our team to develop cutting-edge ML models.",
         "responsibilities": [
@@ -328,7 +328,7 @@
       "job_type": "Full-time",
       "salary_range": "₹70,000-150,000 per month",
       "posted_date": "Feb 15, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C8.png",
       "description": {
         "intro": "Protect our systems as a Cybersecurity Analyst.",
         "responsibilities": [
@@ -360,7 +360,7 @@
       "job_type": "Full-time",
       "salary_range": "₹100,000-220,000 per month",
       "posted_date": "Feb 18, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C2.jpeg",
       "description": {
         "intro": "Lead product development as a Product Manager.",
         "responsibilities": [
@@ -392,7 +392,7 @@
       "job_type": "Contract",
       "salary_range": "₹20,000-50,000 per month",
       "posted_date": "Feb 14, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C16.png",
       "description": {
         "intro": "Create stunning visuals as a Graphic Designer.",
         "responsibilities": [
@@ -423,7 +423,7 @@
       "job_type": "Full-time",
       "salary_range": "₹50,000-110,000 per month",
       "posted_date": "Feb 16, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C17.png",
       "description": {
         "intro": "Ensure product quality as a QA Engineer.",
         "responsibilities": [
@@ -455,7 +455,7 @@
       "job_type": "Full-time",
       "salary_range": "₹60,000-130,000 per month",
       "posted_date": "Feb 17, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C2.jpeg",
       "description": {
         "intro": "Bridge business and tech as a Business Analyst.",
         "responsibilities": [
@@ -487,7 +487,7 @@
       "job_type": "Full-time",
       "salary_range": "₹65,000-140,000 per month",
       "posted_date": "Feb 15, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C11.jpg",
       "description": {
         "intro": "Maintain robust networks as a Network Engineer.",
         "responsibilities": [
@@ -519,7 +519,7 @@
       "job_type": "Full-time",
       "salary_range": "₹45,000-100,000 per month",
       "posted_date": "Feb 14, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C6.png",
       "description": {
         "intro": "Drive online growth as a Digital Marketing Specialist.",
         "responsibilities": [
@@ -551,7 +551,7 @@
       "job_type": "Full-time",
       "salary_range": "₹55,000-120,000 per month",
       "posted_date": "Feb 16, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C13.png",
       "description": {
         "intro": "Maintain our IT systems as a Systems Administrator.",
         "responsibilities": [
@@ -583,7 +583,7 @@
       "job_type": "Full-time",
       "salary_range": "₹120,000-250,000 per month",
       "posted_date": "Feb 18, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C6.png",
       "description": {
         "intro": "Push AI boundaries as a Research Scientist.",
         "responsibilities": [
@@ -615,7 +615,7 @@
       "job_type": "Full-time",
       "salary_range": "₹90,000-180,000 per month",
       "posted_date": "Feb 17, 2025",
-      "image": "company_logo.jpg",
+      "image": "/assets/public_jobs/C9.png",
       "description": {
         "intro": "Build decentralized solutions as a Blockchain Developer.",
         "responsibilities": [
