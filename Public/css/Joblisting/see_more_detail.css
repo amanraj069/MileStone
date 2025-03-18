@@ -45,7 +45,6 @@ header {
     padding: 30px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -55,7 +54,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
@@ -133,10 +131,7 @@ header {
     display: flex;
     align-items: center;
     gap: 5px;
-
-    display: flex;
     justify-content: center;
-    padding: 10px 20px;
 }
 
 .apply-button i {
@@ -151,6 +146,11 @@ header {
 .apply-button {
     background-color: #0a66c2;
     color: white;
+    transition: background-color 0.2s;
+}
+
+.apply-button:hover {
+    background-color: #0854a0;
 }
 
 .job-description,
@@ -238,7 +238,6 @@ header {
     color: #0a66c2;
 }
 
-
 .modal-overlay {
     display: none;
     position: fixed;
@@ -259,6 +258,8 @@ header {
     max-width: 600px;
     padding: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    top: 20px;
 }
 
 .modal-header {
@@ -268,36 +269,43 @@ header {
     margin-bottom: 20px;
 }
 
-.modal-title,
 .modal-header h3 {
     font-size: 22px;
     font-weight: 600;
+    margin: 0;
 }
 
 .close-modal {
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 30px;
     cursor: pointer;
     color: #666;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #333;
 }
 
 .modal-body {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
-.form-label {
+.form-group label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
 }
 
-.form-input,
-.form-textarea {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -305,35 +313,30 @@ header {
     font-size: 14px;
 }
 
-.form-textarea {
-    min-height: 150px;
+.form-group textarea {
+    min-height: 100px;
     resize: vertical;
 }
 
 .modal-footer {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-}
-
-.cancel-btn,
-.save-btn {
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
+    gap: 6px;
 }
 
 .cancel-btn {
     background-color: #f3f2ef;
     color: #333;
     border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
 }
 
-.save-btn {
-    background-color: #0a66c2;
-    color: white;
-    border: none;
+.cancel-btn:hover {
+    background-color: #e0e0e0;
 }
 
 @media (max-width: 768px) {
@@ -347,7 +350,6 @@ header {
         margin-left: 0;
         margin-bottom: 15px;
         margin: auto;
-
         order: -1;
         text-align: center;
     }
@@ -367,7 +369,6 @@ header {
         height: auto;
     }
 }
-
 
 .meta-item:nth-child(1) { 
     background-color: #e6f0fa;
