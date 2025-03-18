@@ -12,5 +12,6 @@ router.route("/skills_badges").get(freelancerController.getFreelancerSkills);
 router
   .route("/subscription")
   .get(freelancerController.getFreelancerSubscription);
-
+router.route("/job_history/see_more").get(freelancerController.getSeemore);
 module.exports = router;
+

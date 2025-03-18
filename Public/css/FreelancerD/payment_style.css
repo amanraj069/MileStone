@@ -115,6 +115,7 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: fit-content;
+  text-decoration: none;
 }
 
 .manage-subscription-btn:hover {

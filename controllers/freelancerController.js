@@ -51,6 +51,10 @@ exports.getFreelancerJobHistory = async (req, res) => {
   }
 };
 
+exports.getSeemore = (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+};
+
 exports.getFreelancerPayment = async (req, res) => {
   try {
     const data = await getFreelancerData();
