@@ -19,6 +19,15 @@ const getJobsData = async () => {
   return JSON.parse(data);
 };
 
+const getCurrentPreviousData = async () => {
+  const filePath = path.join(
+    __dirname,
+    "../data/EmployerD/current_previous.json"
+  );
+  const data = await fs.readFile(filePath, "utf8");
+  return JSON.parse(data);
+};
+
 exports.getEmployerProfile = async (req, res) => {
   try {
     const profileData = await getProfileData();
@@ -39,14 +48,28 @@ exports.getJobListings = async (req, res) => {
   }
 };
 
-exports.getCurrentJobs = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Abhishek/current_jobs.html"));
+exports.getCurrentJobs = async (req, res) => {
+  try {
+    const data = await getCurrentPreviousData();
+    res.render("Abhishek/current_jobs", {
+      current_freelancers: data.current_freelancers,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 };
 
-exports.getPreviouslyWorked = (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../views/Abhishek/previously_worked.html")
-  );
+exports.getPreviouslyWorked = async (req, res) => {
+  try {
+    const data = await getCurrentPreviousData();
+    res.render("Abhishek/previously_worked", {
+      previous_freelancers: data.previous_freelancers,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 };
 
 exports.getTransactionHistory = async (req, res) => {
@@ -102,7 +125,7 @@ exports.geSeemoreJoblistings = async (req, res) => {
 exports.getmilestoneTransactionHistory = async (req, res) => {
   try {
     const transactionData = await getTransactionData();
-    const transactionId = req.params.txnId; // Use dynamic transaction ID from route parameter
+    const transactionId = req.params.txnId;
     const transaction = transactionData.transactions.find(
       (t) => t.id === transactionId
     );

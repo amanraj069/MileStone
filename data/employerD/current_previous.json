@@ -1,0 +1,123 @@
+{
+  "current_freelancers": [
+    {
+      "id": "1",
+      "name": "Sneha Iyer",
+      "rating": 4.7,
+      "skills": ["Shopify", "Liquid", "E-commerce"],
+      "project": "Online Store Redesign",
+      "since_days": 4,
+      "image": "/assets/user_female.png"
+    },
+    {
+      "id": "2",
+      "name": "Atul Khatri",
+      "rating": 4.6,
+      "skills": ["Power BI", "Python", "Plotly"],
+      "project": "Marketing Data Analyst",
+      "since_days": 14,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Vikram Reddy",
+      "rating": 4.2,
+      "skills": ["Adobe Illustrator", "Sketch", "Graphic Design"],
+      "project": "Banner Design",
+      "since_days": 3,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Neha Kapoor",
+      "rating": 3.9,
+      "skills": ["React Native", "Redux", "TypeScript"],
+      "project": "Mobile Fitness App",
+      "since_days": 7,
+      "image": "/assets/user_female.png"
+    },
+    {
+      "id": "5",
+      "name": "Rohit Sharma",
+      "rating": 4.8,
+      "skills": ["Angular", "Node.js", "HTML5"],
+      "project": "Online Learning Platform",
+      "since_days": 2,
+      "image": "/assets/user_image.jpg"
+    }
+  ],
+  "previous_freelancers": [
+    {
+      "id": "1",
+      "name": "A. Krishna Swamy",
+      "rating": 4.5,
+      "skills": ["Content Writing", "Copywriting", "SEO"],
+      "project": "Blog Content Strategy",
+      "completed_days_ago": 5,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Ravi Krishan",
+      "rating": 4.6,
+      "skills": ["React", "TypeScript", "UI/UX"],
+      "project": "E-commerce Platform Redesign",
+      "completed_days_ago": 14,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Suneeta Sharma",
+      "rating": 4.8,
+      "skills": ["Node.js", "MongoDB", "Express"],
+      "project": "Inventory Management API",
+      "completed_days_ago": 30,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Aman Raj",
+      "rating": 3.8,
+      "skills": ["Figma", "Adobe XD", "UI Design"],
+      "project": "Mobile App UI Design",
+      "completed_days_ago": 3,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Amisha Patel",
+      "rating": 2.9,
+      "skills": ["Next.js", "TailwindCSS", "Firebase"],
+      "project": "Community Forum Website",
+      "completed_days_ago": 7,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Hrithik Roshan",
+      "rating": 4.9,
+      "skills": ["Vue.js", "JavaScript", "CSS"],
+      "project": "Travel Booking Dashboard",
+      "completed_days_ago": 14,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Ankit Singh",
+      "rating": 4.1,
+      "skills": ["Python", "Django", "PostgreSQL"],
+      "project": "Analytics Dashboard Backend",
+      "completed_days_ago": 2,
+      "image": "/assets/user_image.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Regina Shetty",
+      "rating": 4.7,
+      "skills": ["WordPress", "PHP", "SEO"],
+      "project": "SEO Optimization Project",
+      "completed_days_ago": 42,
+      "image": "/assets/user_image.jpg"
+    }
+  ]
+}
