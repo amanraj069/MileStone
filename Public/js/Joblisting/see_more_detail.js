@@ -65,12 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   document
-    .getElementById("applyNowBtn")
-    ?.addEventListener("click", function () {
-      openModal("applyModal");
-    });
-
-  document
     .getElementById("closeApplyModal")
     ?.addEventListener("click", function () {
       closeModal("applyModal");
@@ -84,12 +78,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document
     .getElementById("submitApplication")
-    ?.addEventListener("click", function () {
+    ?.addEventListener("click", async function () {
       const name = document.getElementById("applicantName").value.trim();
       const email = document.getElementById("applicantEmail").value.trim();
       const phone = document.getElementById("applicantPhone").value.trim();
       const bid = document.getElementById("applicantBid").value.trim();
       const message = document.getElementById("applicantMessage").value.trim();
+
+      const jobTitle = document.querySelector(".job-title").textContent;
+      const companyName = document.querySelector(".company-name").textContent;
+      const location = document
+        .querySelector(".meta-item:nth-child(1)")
+        .textContent.trim();
+      const jobType = document
+        .querySelector(".meta-item:nth-child(2)")
+        .textContent.trim();
+      const salaryRange = document
+        .querySelector(".meta-item:nth-child(3)")
+        .textContent.trim();
+      const postedDate = document
+        .querySelector(".meta-item:nth-child(4)")
+        .textContent.replace("Posted on ", "")
+        .trim();
+      const deadline = document
+        .querySelector(".deadline")
+        .textContent.replace("Application Deadline: ", "")
+        .trim();
+      const image = document.querySelector(".job-img").src;
+
+      const descriptionIntro = document.querySelector(
+        ".description-text p"
+      ).textContent;
 
       clearErrors();
 
@@ -114,58 +133,43 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (isValid) {
-        alert("Application submitted successfully!");
-        closeModal("applyModal");
-        document.getElementById("applicantName").value = "";
-        document.getElementById("applicantEmail").value = "";
-        document.getElementById("applicantPhone").value = "";
-        document.getElementById("applicantBid").value = "";
-        document.getElementById("applicantMessage").value = "";
+        const applicationData = {
+          job_title: jobTitle,
+          company_name: companyName,
+          location,
+          job_type: jobType,
+          salary_range: salaryRange,
+          posted_date: postedDate,
+          deadline,
+          image,
+          description_intro: descriptionIntro,
+          bid_amount: bid,
+          applicant_name: name,
+          applicant_email: email,
+          applicant_phone: phone,
+          applicant_message: message,
+        };
+
+        try {
+          const response = await fetch("/jobs/apply", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(applicationData),
+          });
+
+          if (response.ok) {
+            alert("Application submitted successfully!");
+            closeModal("applyModal");
+            window.location.href = "/freelancerD/active_job";
+          } else {
+            displayError("Failed to submit application. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error submitting application:", error);
+          displayError("An error occurred. Please try again.");
+        }
       }
-    });
-
-  document
-    .getElementById("addMilestoneBtn")
-    ?.addEventListener("click", function () {
-      openModal("addMilestoneModal");
-    });
-
-  document
-    .getElementById("closeAddMilestoneModal")
-    ?.addEventListener("click", function () {
-      closeModal("addMilestoneModal");
-    });
-
-  document
-    .getElementById("cancelAddMilestone")
-    ?.addEventListener("click", function () {
-      closeModal("addMilestoneModal");
-    });
-
-  document
-    .getElementById("saveAddMilestone")
-    ?.addEventListener("click", function () {
-      const deliverable = document.getElementById("deliverableInput")?.value;
-      const deadline = document.getElementById("milestoneDeadlineInput")?.value;
-      const payment = document.getElementById("paymentInput")?.value;
-
-      if (!deliverable || !deadline || !payment) {
-        alert("Please fill out all fields");
-        return;
-      }
-
-      const tbody = document.getElementById("milestones-tbody");
-      const newRow = document.createElement("tr");
-      newRow.innerHTML = `
-            <td>${deliverable}</td>
-            <td>${deadline}</td>
-            <td class="payment-column">${payment}</td>
-        `;
-      tbody.appendChild(newRow);
-
-      document.getElementById("deliverableInput").value = "";
-      document.getElementById("milestoneDeadlineInput").value = "";
-      document.getElementById("paymentInput").value = "";
-      closeModal("addMilestoneModal");
     });
 });

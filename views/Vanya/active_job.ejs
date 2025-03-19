@@ -41,8 +41,8 @@
             <nav class="dashboard-nav">
               <ul>
                 <li class="nav-item">
-                  <a href="/" class="nav-link">
-                    <svg
+                  <a href="/" class="nav-link"
+                    ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       width="24px"
@@ -50,10 +50,9 @@
                     >
                       <path
                         d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"
-                      />
-                    </svg>
-                    <span>Home</span>
-                  </a>
+                      /></svg
+                    ><span>Home</span></a
+                  >
                 </li>
                 <li class="nav-item">
                   <a href="/freelancerD/profile" class="nav-link"
@@ -256,7 +255,7 @@
 
           <div class="job-cards">
             <% active_jobs.forEach(job => { %>
-            <div class="job-card">
+            <div class="job-card" data-job-id="<%= job.id %>">
               <div class="job-company-logo">
                 <img src="<%= job.logo %>" alt="<%= job.company %> Logo" />
               </div>
@@ -296,8 +295,11 @@
                 >
                   <i class="fas fa-comment"></i> Chat
                 </button>
-                <button class="complain-btn">
-                  <i class="fas fa-exclamation-circle"></i> Raise Issue
+                <button
+                  class="complain-btn"
+                  onclick="leaveJob('<%= job.id %>')"
+                >
+                  <i class="fas fa-sign-out-alt"></i> Leave Job
                 </button>
                 <a
                   href="/freelancerD/job_history/jhistory_see_more"
@@ -312,5 +314,33 @@
       </div>
     </div>
   </body>
-  <script src="/js/FreelancerD/raise_complaint.js"></script>
+  <script>
+    async function leaveJob(jobId) {
+      if (confirm("Are you sure you want to leave this job?")) {
+        try {
+          const response = await fetch(
+            `/freelancerD/active_job/leave/${jobId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (response.ok) {
+            alert("Job left successfully!");
+            document
+              .querySelector(`.job-card[data-job-id="${jobId}"]`)
+              .remove();
+          } else {
+            alert("Failed to leave the job. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error leaving job:", error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+    }
+  </script>
 </html>

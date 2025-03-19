@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs").promises;
+const db = require("../database");
 
 exports.getHome = (req, res) => {
   let dashboardRoute = "";
@@ -99,4 +100,64 @@ exports.getJobDetails = async (req, res) => {
     console.error("Error loading job details:", error);
     res.status(500).send("Server Error");
   }
+};
+
+exports.applyForJob = (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: "Unauthorized: Please log in" });
+  }
+
+  const {
+    job_title,
+    company_name,
+    location,
+    job_type,
+    salary_range,
+    posted_date,
+    deadline,
+    image,
+    description_intro,
+    bid_amount,
+    applicant_name,
+    applicant_email,
+    applicant_phone,
+    applicant_message,
+  } = req.body;
+
+  const userId = req.session.user.id;
+
+  const query = `
+    INSERT INTO active_jobs (
+      user_id, job_title, company_name, location, job_type, salary_range, posted_date, deadline, image, description_intro,
+      bid_amount, applicant_name, applicant_email, applicant_phone, applicant_message
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.run(
+    query,
+    [
+      userId,
+      job_title,
+      company_name,
+      location,
+      job_type,
+      salary_range,
+      posted_date,
+      deadline,
+      image,
+      description_intro,
+      bid_amount,
+      applicant_name,
+      applicant_email,
+      applicant_phone,
+      applicant_message,
+    ],
+    function (err) {
+      if (err) {
+        console.error("Error saving job application:", err);
+        return res.status(500).json({ error: "Failed to save application" });
+      }
+      res.status(200).json({ message: "Application submitted successfully" });
+    }
+  );
 };
