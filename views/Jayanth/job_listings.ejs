@@ -168,13 +168,18 @@
         </div>
       </div>
       <div class="main-content">
-        <section id="job-listings" class="section-content active">
-          <div class="filter-buttons">
-            <button class="filter-btn active">All Jobs</button>
-            <button class="filter-btn">Recent</button>
-            <button class="filter-btn">Remote</button>
-            <button class="filter-btn">Full-time</button>
-            <button class="filter-btn">Part-time</button>
+        <section id="job_listings" class="section-content active">
+          <h1>Job Listings</h1>
+          <div class="search-bar" style="margin-bottom: 20px;">
+            <form action="/adminD/job_listings" method="GET" style="display: flex; align-items: center;">
+              <input type="text" name="q" placeholder="Search..." style="padding: 8px; flex: 1; border: 1px solid #ddd; border-radius: 4px 0 0 4px; background-color: #f0f0f0;">
+              <button type="submit" style="padding: 8px; background-color: #3949ab; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </form>
           </div>
           <div class="jobs-container">
             <% jobListings.forEach(job => { %>

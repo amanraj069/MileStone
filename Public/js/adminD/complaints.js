@@ -21,4 +21,25 @@ document.addEventListener('DOMContentLoaded', function() {
             this.textContent = 'Close Actions';
         }
     }
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-bar input[name="q"]');
+    const complaintCards = document.querySelectorAll('.complaint-card');
+    const searchForm = document.querySelector('.search-bar form');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+    });
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        complaintCards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
 });

@@ -158,6 +158,10 @@
   background-color: #303f9f;
 }
 
+.hidden {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .job-card {
     flex-direction: column;

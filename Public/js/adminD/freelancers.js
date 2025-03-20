@@ -14,4 +14,25 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Delete button clicked'); // Replace with actual delete logic
         });
     });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-bar input[name="q"]');
+    const userCards = document.querySelectorAll('.user-card');
+    const searchForm = document.querySelector('.search-bar form');
+
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+    });
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        userCards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    });
 });

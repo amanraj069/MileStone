@@ -98,7 +98,9 @@
 .btn-danger:hover {
     background-color: #e53935;
 }
-
+.hidden {
+    display: none;
+}
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .user-card {
