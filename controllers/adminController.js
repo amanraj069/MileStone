@@ -22,6 +22,30 @@ exports.getJobListings = async (req, res) => {
   }
 };
 
+exports.getJobDetails = async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+    const jobListingsData = await fs.readFile(
+      path.join(__dirname, "../data/adminD/job_listings.json"),
+      "utf8"
+    );
+    const jobListings = JSON.parse(jobListingsData);
+    const job = jobListings.find((j) => j.id === jobId);
+
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+
+    res.render("Jayanth/Additional/see_more_detail", {
+      job,
+      user: req.session.user,
+    });
+  } catch (error) {
+    console.error("Error fetching job details:", error);
+    res.status(500).send("Error loading job details page");
+  }
+};
+
 exports.getFreelancers = async (req, res) => {
   try {
     const freelancersData = await fs.readFile(
