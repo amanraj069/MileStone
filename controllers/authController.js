@@ -34,7 +34,6 @@ exports.postLogin = (req, res) => {
     [email, role],
     async (err, user) => {
       if (err || !user) {
-        // Redirect with error message
         return res.redirect("/login?error=Invalid email or role");
       }
       const match = await bcrypt.compare(password, user.password);
@@ -67,7 +66,6 @@ exports.postLogin = (req, res) => {
           }
         });
       } else {
-        // Redirect with error message for incorrect password
         res.redirect("/login?error=Incorrect password");
       }
     }

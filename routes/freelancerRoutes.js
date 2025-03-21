@@ -8,7 +8,7 @@ router.route("/active_job").get(freelancerController.getFreelancerActiveJobs);
 router.route("/active_job/chat").get(freelancerController.getChatsCurrentJobs);
 router
   .route("/active_job/leave/:jobId")
-  .delete(freelancerController.leaveActiveJob); // New route
+  .delete(freelancerController.leaveActiveJob); 
 router.route("/job_history").get(freelancerController.getFreelancerJobHistory);
 router
   .route("/job_history/jhistory_see_more")
