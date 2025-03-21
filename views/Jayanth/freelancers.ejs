@@ -35,8 +35,15 @@
               <ul>
                 <li class="nav-item">
                   <a href="/" class="nav-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
-                      <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"/>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24px"
+                      height="24px"
+                    >
+                      <path
+                        d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 10 21 L 10 14 L 14 14 L 14 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z"
+                      />
                     </svg>
                     <span>Home</span>
                   </a>
@@ -163,18 +170,52 @@
                 </li>
               </ul>
             </nav>
-            <button class="logout-btn" onclick="window.location.href='/logout'">Logout</button>
+            <button class="logout-btn" onclick="window.location.href='/logout'">
+              Logout
+            </button>
           </div>
         </div>
       </div>
       <div class="main-content">
         <section id="freelancers" class="section-content active">
           <h1>Freelancers</h1>
-          <div class="search-bar" style="margin-bottom: 20px;">
-            <form action="/adminD/freelancers" method="GET" style="display: flex; align-items: center;">
-              <input type="text" name="q" placeholder="Search..." style="padding: 8px; flex: 1; border: 1px solid #ddd; border-radius: 4px 0 0 4px; background-color: #f0f0f0;">
-              <button type="submit" style="padding: 8px; background-color: #3949ab; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+          <div class="search-bar" style="margin-bottom: 20px">
+            <form
+              action="/adminD/freelancers"
+              method="GET"
+              style="display: flex; align-items: center"
+            >
+              <input
+                type="text"
+                name="q"
+                placeholder="Search..."
+                style="
+                  padding: 8px;
+                  flex: 1;
+                  border: 1px solid #ddd;
+                  border-radius: 4px 0 0 4px;
+                  background-color: #f0f0f0;
+                "
+              />
+              <button
+                type="submit"
+                style="
+                  padding: 8px;
+                  background-color: #3949ab;
+                  border: none;
+                  border-radius: 0 4px 4px 0;
+                  cursor: pointer;
+                "
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
@@ -191,24 +232,50 @@
                 <h3><%= freelancer.name %></h3>
                 <p class="user-title"><%= freelancer.title %></p>
                 <div class="rating">
-                  <% for(let i = 1; i <= 5; i++) { %>
-                    <% if(i <= Math.floor(freelancer.rating)) { %>
-                      <!-- Full Star SVG -->
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                      </svg>
-                    <% } else if(i === Math.ceil(freelancer.rating) && freelancer.rating % 1 !== 0) { %>
-                      <!-- Half Star SVG -->
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77V2Z" />
-                      </svg>
-                    <% } else { %>
-                      <!-- Empty Star SVG -->
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                      </svg>
-                    <% } %>
-                  <% } %>
+                  <% for(let i = 1; i <= 5; i++) { %> <% if(i <=
+                  Math.floor(freelancer.rating)) { %>
+                  <!-- Full Star SVG -->
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                    />
+                  </svg>
+                  <% } else if(i === Math.ceil(freelancer.rating) &&
+                  freelancer.rating % 1 !== 0) { %>
+                  <!-- Half Star SVG -->
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77V2Z"
+                    />
+                  </svg>
+                  <% } else { %>
+                  <!-- Empty Star SVG -->
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                    />
+                  </svg>
+                  <% } %> <% } %>
                   <span><%= freelancer.rating %></span>
                 </div>
                 <p class="user-skills"><%= freelancer.skills.join(', ') %></p>
@@ -216,16 +283,35 @@
               <div class="user-actions">
                 <button class="btn-primary">
                   <!-- Comment/Chat SVG -->
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" />
-                  </svg>
-                  Chat
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                    /></svg
+                  ><a href="/AdminD/chat"> Chat </a>
                 </button>
                 <button class="btn-danger">
                   <!-- Trash SVG -->
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path d="M3 6H5H21" />
-                    <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" />
+                    <path
+                      d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
+                    />
                   </svg>
                   Delete
                 </button>

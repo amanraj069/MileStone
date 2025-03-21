@@ -113,3 +113,7 @@ exports.getProfile = async (req, res) => {
     res.status(500).send("Error loading profile page");
   }
 };
+
+exports.getChatsCurrentJobs = (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+};
