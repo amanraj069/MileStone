@@ -63,6 +63,7 @@ const redirectIfLoggedIn = (req, res, next) => {
   next();
 };
 
+// using app
 app.use((req, res, next) => {
   console.log(
     `[${req.method}] ${req.path} - Session ID: ${req.sessionID}, User:`,
