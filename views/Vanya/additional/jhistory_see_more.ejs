@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job History Details - FreelancePro</title>
+    <link rel="stylesheet" href="/css/freelancerD/static_elements/sidebar.css" />
+    <link rel="stylesheet" href="/css/freelancerD/see_more.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+      <%- include('../partials/sidebar', {activePage: 'job_history'}) %>
+
+      <div class="main-content">
+        <div class="container">
+          <header>
+            <div class="logo">Job Details</div>
+            <button id="complain-btn">Raise Complaint</button>
+            <div></div>
+            <!-- Empty div for spacing -->
+          </header>
+
+          <div class="job-header">
+            <div class="job-title-section">
+              <div class="job-title-info">
+                <div class="deadline">
+                  Work Completion Deadline: March 15, 2025
+                </div>
+                <h1 class="job-title">Senior Frontend Developer</h1>
+                <div class="freelancer-name">Atul Khatri</div>
+                <div class="job-meta">
+                  <div class="meta-item">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                      />
+                    </svg>
+                    <span>Bangalore (Remote option available)</span>
+                  </div>
+                  <!-- Rest of the job meta items -->
+                </div>
+              </div>
+              <div class="job-img-container">
+                <img
+                  src="/assets/company_logo.jpg"
+                  alt="xyz company"
+                  class="job-img"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <!-- Rest of the content -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

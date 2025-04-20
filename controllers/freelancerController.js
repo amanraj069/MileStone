@@ -73,6 +73,7 @@ exports.getFreelancerActiveJobs = (req, res) => {
       res.render("Vanya/active_job", {
         user: req.session.user,
         active_jobs: activeJobs,
+        activePage: 'active_job'
       });
     }
   );
@@ -101,7 +102,11 @@ exports.leaveActiveJob = (req, res) => {
 
 exports.getFreelancerProfile = async (req, res) => {
   try {
-    res.render("Vanya/profile", { user: req.session.user, profile: {} });
+    res.render("Vanya/profile", { 
+      user: req.session.user, 
+      profile: {},
+      activePage: 'profile'
+    });
   } catch (error) {
     console.error("Error rendering profile:", error.message);
     res.status(500).send("Server Error: Unable to render profile page");
@@ -114,6 +119,7 @@ exports.getFreelancerJobHistory = async (req, res) => {
     const renderData = {
       user: req.session.user || data.user,
       job_history: data.job_history,
+      activePage: 'job_history'
     };
     console.log(
       "Data being passed to job_history.ejs:",
@@ -136,9 +142,11 @@ exports.getFreelancerJobHistory = async (req, res) => {
 };
 
 exports.getSeemore = (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../views/Vanya/additional/jhistory_see_more.html")
-  );
+  // Convert to render EJS instead of sending HTML file
+  res.render("Vanya/additional/jhistory_see_more", {
+    user: req.session.user,
+    activePage: 'job_history'
+  });
 };
 
 exports.getFreelancerPayment = async (req, res) => {
@@ -147,6 +155,7 @@ exports.getFreelancerPayment = async (req, res) => {
     res.render("Vanya/payment", {
       user: req.session.user || data.user,
       payments: data.payments,
+      activePage: 'payment'
     });
   } catch (error) {
     console.error("Error rendering payment:", error.message);
@@ -160,6 +169,7 @@ exports.getFreelancerSkills = async (req, res) => {
     res.render("Vanya/skills_badges", {
       user: req.session.user || data.user,
       skills_badges: data.skills_badges,
+      activePage: 'skills_badges'
     });
   } catch (error) {
     console.error("Error rendering skills_badges:", error.message);
@@ -173,6 +183,7 @@ exports.getFreelancerSubscription = async (req, res) => {
     res.render("Vanya/subscription", {
       user: req.session.user || data.user,
       subscription: data.subscription,
+      activePage: 'subscription'
     });
   } catch (error) {
     console.error("Error rendering subscription:", error.message);
@@ -181,5 +192,9 @@ exports.getFreelancerSubscription = async (req, res) => {
 };
 
 exports.getChatsCurrentJobs = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Vanya/additional/chat.html"));
+  // Convert to render EJS instead of sending HTML file
+  res.render("Vanya/additional/chat", {
+    user: req.session.user,
+    activePage: 'active_job'
+  });
 };
