@@ -31,7 +31,11 @@ const getCurrentPreviousData = async () => {
 exports.getEmployerProfile = async (req, res) => {
   try {
     const profileData = await getProfileData();
-    res.render("Abhishek/profile", { data: profileData });
+    res.render("Abhishek/profile", { 
+      data: profileData,
+      user: req.session.user,
+      activePage: 'profile'
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
@@ -41,7 +45,11 @@ exports.getEmployerProfile = async (req, res) => {
 exports.getJobListings = async (req, res) => {
   try {
     const jobsData = await getJobsData();
-    res.render("Abhishek/job_listing", { jobs: jobsData.jobs });
+    res.render("Abhishek/job_listing", { 
+      jobs: jobsData.jobs,
+      user: req.session.user,
+      activePage: 'job_listings'
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
@@ -53,6 +61,8 @@ exports.getCurrentJobs = async (req, res) => {
     const data = await getCurrentPreviousData();
     res.render("Abhishek/current_jobs", {
       current_freelancers: data.current_freelancers,
+      user: req.session.user,
+      activePage: 'current_jobs'
     });
   } catch (error) {
     console.error(error);
@@ -65,6 +75,8 @@ exports.getPreviouslyWorked = async (req, res) => {
     const data = await getCurrentPreviousData();
     res.render("Abhishek/previously_worked", {
       previous_freelancers: data.previous_freelancers,
+      user: req.session.user,
+      activePage: 'previously_worked'
     });
   } catch (error) {
     console.error(error);
@@ -77,6 +89,8 @@ exports.getTransactionHistory = async (req, res) => {
     const transactionData = await getTransactionData();
     res.render("Abhishek/transaction", {
       transactions: transactionData.transactions,
+      user: req.session.user,
+      activePage: 'transaction_history'
     });
   } catch (error) {
     console.error(error);
@@ -87,7 +101,11 @@ exports.getTransactionHistory = async (req, res) => {
 exports.getSubscription = async (req, res) => {
   try {
     const profileData = await getProfileData();
-    res.render("Abhishek/subscription", { data: profileData });
+    res.render("Abhishek/subscription", { 
+      data: profileData,
+      user: req.session.user,
+      activePage: 'subscription'
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");

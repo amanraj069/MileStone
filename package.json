@@ -26,6 +26,7 @@
     "express-session": "^1.18.1",
     "kill-port": "^2.0.1",
     "mongodb": "^6.13.0",
+    "mongoose": "^8.14.1",
     "node": "^23.8.0",
     "nodemon": "^3.1.9",
     "sqlite3": "^5.1.7"
