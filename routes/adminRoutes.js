@@ -1,17 +1,14 @@
 const express = require("express");
+const router = express.Router();
 const adminController = require("../controllers/adminController");
 
-const router = express.Router();
-
-router.route("/").get(adminController.getAdminDashboard);
-router.route("/profile").get(adminController.getProfile);
-router.route("/job_listings").get(adminController.getJobListings);
-router
-  .route("/job_listings/see_more/:jobId")
-  .get(adminController.getJobDetails);
-router.route("/freelancers").get(adminController.getFreelancers);
-router.route("/employers").get(adminController.getEmployers);
-router.route("/complaints").get(adminController.getComplaints);
-router.route("/chat").get(adminController.getChatsCurrentJobs);
+router.get("/", adminController.getAdminDashboard);
+router.get("/job_listings", adminController.getJobListings);
+router.get("/job_listings/see_more/:jobId", adminController.getJobDetails);
+router.get("/freelancers", adminController.getFreelancers);
+router.get("/employers", adminController.getEmployers);
+router.get("/complaints", adminController.getComplaints);
+router.get("/profile", adminController.getProfile);
+router.get("/chat", adminController.getChatsCurrentJobs);
 
 module.exports = router;

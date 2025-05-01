@@ -7,12 +7,18 @@
 
 body {
   background-color: #f5f5f5;
-  padding: 20px;
+  margin: 0; /* Explicitly reset margin */
+  padding: 0; /* Explicitly reset padding */
+}
+
+.main-content {
+  padding: 20px; /* Ensure content padding is applied here */
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 15px; /* Added padding for inner content spacing */
 }
 
 a {
@@ -75,7 +81,6 @@ a {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* width: 420px; */
 }
 
 .freelancer-card:hover {

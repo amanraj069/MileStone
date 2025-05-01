@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar Dashboard</title>
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+    <link rel="stylesheet" href="/css/EmployerD/view_profile.css" />
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <%- include('../partials/sidebar', { user: user, activePage: activePage }) %>
+      <div class="main-content">
+        <div class="container">
+          <div class="profile-header">
+            <div class="profile-info">
+              <div class="profile-image">
+                <img src="/assets/user_image.jpg" alt="Applicant" />
+              </div>
+              <div class="profile-details">
+                <h1>Ravi Krishan</h1>
+                <div class="rating">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                    <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"/>
+                  </svg>
+                  <span>4.3 (48 reviews)</span>
+                </div>
+                <div>Senior Frontend Developer</div>
+                <div class="contact-info">
+                  <p>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+                    </svg>
+                    Greater Noida (Delhi)
+                  </p>
+                  <p>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                      <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-1 14H5V6h14v12zm-4-6l-4 3V9l4 3z"/>
+                    </svg>
+                    ravi.dev@gmail.com
+                  </p>
+                  <p>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                      <path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-.66-.7-1.39-.85-2.16h-1.5v-1.5h1.39c.16-.79.42-1.51.78-2.14L4.26 2h-2.1v-1.5h2.14c.49-1.27 1.02-2.45 1.59-3.5h5.07c.66 1.43 1.5 2.73 2.5 3.88V2h-4.63l1.32 1.27c.26-.62.62-1.2.97-1.77H8.47c-.35.56-.62 1.16-.81 1.77H11l-1.75 1.75v1.5h1.5L11 7h1.5v1.5h-1.5l.75.75H13l1.5-1.5h1.5v-1.5h-2.47l.81-1.77c.19-.61.46-1.21.81-1.77h1.55c-.35.57-.71 1.15-.97 1.77L13 2h4.63v1.5h-2.14c-.36.63-.62 1.35-.78 2.14h1.5v1.5h-1.39c.15.83.3 1.7.45 2.59h1.54c-.06.89-.21 1.76-.45 2.59h-1.54c-.15.83-.3 1.7-.45 2.59h1.39c-.16.79-.42 1.51-.78 2.14h2.14v1.5h-2.14c-.49 1.27-1.02 2.45-1.59 3.5h-5.07c-.66-1.43-1.5-2.73-2.5-3.88v-1.5h4.63l-1.32-1.27c-.26.62-.62 1.2-.97 1.77h-1.55c.35-.56.62-1.16.81-1.77H5l1.75-1.75v-1.5h-1.5v-1.5l-1.75.75H3l-.75-.75v-1.5h1.5l-.75-.75H3l-1.75.75v1.5h1.5l-1.75 1.75c-.19.61-.46 1.21-.81 1.77h-1.55c.35-.57.71-1.15.97-1.77l1.32-1.27h-4.63v-1.5h2.14c.36-.63.62-1.35.78-2.14h-1.39c.15-.83.3-1.7.45-2.59H3.96zm-1.96 7.5h1.5v1.5h-1.5v-1.5zm0-3h1.5v1.5h-1.5v-1.5zm0 6h1.5v1.5h-1.5v-1.5z"/>
+                    </svg>
+                    +91 9941793002
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button class="btn btn-primary">Contact Me</button>
+              <a href="/assets/resume.jpg"><button class="btn btn-secondary">Download CV</button></a>
+            </div>
+          </div>
+          <div class="stats-container">
+            <div class="stat-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+              </svg>
+              <div class="stat-value">109</div>
+              <div>Projects Completed</div>
+            </div>
+            <div class="stat-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"/>
+              </svg>
+              <div class="stat-value">94.2%</div>
+              <div>Success Rate</div>
+            </div>
+            <div class="stat-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"/>
+              </svg>
+              <div class="stat-value">90%</div>
+              <div>On Time</div>
+            </div>
+            <div class="stat-card">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                <path d="M11 2h2v5h8v3h-8v5h5v3h-5v4h-2v-4H6v-3h5v-5H3V7h8V2z"/>
+              </svg>
+              <div class="stat-value">₹300/hr</div>
+              <div>Hourly Rate</div>
+            </div>
+          </div>
+          <div class="about-section">
+            <h2>About Me</h2>
+            <p>I am a Full-stack developer with 5+ years of experience in building web application. Specialized in React, Node.js, and Next.js, I have successfully delivered over 150 projects for clients worldwide. My focus is on creating scalable, efficient, and user-friendly solutions.</p>
+            <p>With a passion for clean code and innovative solutions, I approach each project with dedication and attention to detail. I believe in maintaining clear communication throughout the development process and ensuring that all deliverables exceed client expectations.</p>
+          </div>
+          <div class="skills-section">
+            <div class="skills-category">
+              <h3>Frontend Development</h3>
+              <div class="skills-list">
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Vue.js</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS</span>
+              </div>
+            </div>
+            <div class="skills-category">
+              <h3>Backend Development</h3>
+              <div class="skills-list">
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Django</span>
+                <span class="skill-tag">MongoDB</span>
+                <span class="skill-tag">PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+          <div class="education-section">
+            <h2>Education & Certifications</h2>
+            <div class="education-item">
+              <div class="education-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                  <path d="M12 3l-7 7h4v10h6V10h4l-7-7zm1 13h-2v-2h2v2zm0-4h-2V6h2v6z"/>
+                </svg>
+              </div>
+              <div class="education-details">
+                <h3>Bachelor of Technology in Computer Science</h3>
+                <div class="institution">Stanford University</div>
+                <div class="period">2018 - 2020</div>
+              </div>
+            </div>
+            <div class="education-item">
+              <div class="education-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+              </div>
+              <div class="education-details">
+                <h3>AWS Certified Solutions Architect</h3>
+                <div class="institution">Amazon Web Services</div>
+                <div class="period">Issued Dec 2023</div>
+              </div>
+            </div>
+            <div class="education-item">
+              <div class="education-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                  <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+              </div>
+              <div class="education-details">
+                <h3>Google Cloud Professional Developer</h3>
+                <div class="institution">Google</div>
+                <div class="period">Issued Jun 2023</div>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-section">
+            <div class="portfolio-header">
+              <h2>Portfolio</h2>
+              <a href="https://forcedtomakeanaccounthere.github.io/portfolio/" target="_blank" class="btn btn-secondary">Go to Site</a>
+            </div>
+            <iframe src="https://forcedtomakeanaccounthere.github.io/portfolio/" class="portfolio-frame" title="Portfolio Preview"></iframe>
+          </div>
+          <div class="reviews-section">
+            <div class="portfolio-header">
+              <h2>Client Reviews</h2>
+              <button class="btn btn-secondary">View All Reviews</button>
+            </div>
+            <div class="review-card">

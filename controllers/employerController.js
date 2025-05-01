@@ -112,8 +112,16 @@ exports.getSubscription = async (req, res) => {
   }
 };
 
-exports.getChatsCurrentJobs = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+exports.getChatsCurrentJobs = async (req, res) => {
+  try {
+    res.render("Abhishek/Additional/chat", {
+      user: req.session.user,
+      activePage: 'current_jobs'
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 };
 
 exports.getSeemoreCurrentJobs = (req, res) => {
@@ -157,8 +165,16 @@ exports.getmilestoneTransactionHistory = async (req, res) => {
   }
 };
 
-exports.getmilestoneCurrentjob = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Abhishek/milestone.html"));
+exports.getmilestoneCurrentjob = async (req, res) => {
+  try {
+    res.render("Abhishek/milestone", {
+      user: req.session.user,
+      activePage: 'transaction_history'
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 };
 
 exports.getDetailsofAppliers = (req, res) => {

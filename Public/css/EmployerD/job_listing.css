@@ -8,12 +8,16 @@
 body {
     background-color: #f3f2ef;
     color: #333;
-    padding: 20px;
+}
+
+.main-content {
+    padding: 20px; /* Moved padding from body to main-content */
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 15px; /* Added padding for inner content spacing */
 }
 
 a {

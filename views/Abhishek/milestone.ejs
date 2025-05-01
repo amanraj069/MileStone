@@ -9,13 +9,22 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('../partials/sidebar', { user: user, activePage: activePage }) %>
+      <%- include('partials/sidebar', { user: user, activePage: activePage }) %>
       <div class="main-content">
         <div class="container">
           <div class="header">
-            <h1 class="title">Payments & Milestones - <%= transaction.projectTitle %></h1>
+            <h1 class="title">Payments & Milestones</h1>
             <button class="add-button" id="addMilestoneBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
@@ -26,13 +35,12 @@
             <div class="progress-section">
               <div class="progress-header">
                 <h3 class="progress-title">Project Completion</h3>
-                <% const completedMilestones = transaction.milestones.filter(m => m.status === 'completed').length; %>
-                <% const totalMilestones = transaction.milestones.length; %>
-                <% const completionPercentage = totalMilestones > 0 ? Math.round((completedMilestones / totalMilestones) * 100) : 0; %>
-                <span class="progress-percentage" id="completionPercentage"><%= completionPercentage %>%</span>
+                <span class="progress-percentage" id="completionPercentage"
+                  >0%</span
+                >
               </div>
               <div class="progress-bar-container">
-                <div class="progress-bar" id="completionProgressBar" style="width: <%= completionPercentage %>%"></div>
+                <div class="progress-bar" id="completionProgressBar"></div>
               </div>
               <div class="progress-labels">
                 <span>Not Started</span>
@@ -43,35 +51,20 @@
             <div class="progress-section">
               <div class="progress-header">
                 <h3 class="progress-title">Payment Progress</h3>
-                <% const totalAmount = transaction.amount; %>
-                <% const paidAmount = transaction.milestones.reduce((sum, m) => sum + (m.status === 'completed' ? m.payment : 0), 0); %>
-                <% const paymentPercentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0; %>
-                <span class="progress-amount" id="paymentProgress">₹<%= paidAmount.toLocaleString() %> of ₹<%= totalAmount.toLocaleString() %> (<%= paymentPercentage %>%)</span>
+                <span class="progress-amount" id="paymentProgress"
+                  >₹0 of ₹0 (0%)</span
+                >
               </div>
               <div class="progress-bar-container">
-                <div class="progress-bar" id="paymentProgressBar" style="width: <%= paymentPercentage %>%"></div>
+                <div class="progress-bar" id="paymentProgressBar"></div>
               </div>
             </div>
           </div>
           <div class="milestones-container" id="milestonesContainer">
-            <% transaction.milestones.forEach(milestone => { %>
-            <div class="milestone-card" data-id="<%= milestone.id %>">
-              <div class="milestone-header">
-                <h3 class="milestone-title"><%= milestone.deliverable %></h3>
-                <span class="status <%= milestone.status %>"><%= milestone.status.charAt(0).toUpperCase() + milestone.status.slice(1) %></span>
-              </div>
-              <div class="milestone-body">
-                <p><strong>Deadline:</strong> <%= milestone.deadline %></p>
-                <p><strong>Payment:</strong> ₹<%= milestone.payment.toLocaleString() %> (<%= milestone.percentage %>%)</p>
-              </div>
-              <div class="milestone-footer">
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
-              </div>
-            </div>
-            <% }) %>
+            <!-- Milestone cards will be inserted here by JavaScript -->
           </div>
         </div>
+        <!-- Add/Edit Milestone Modal -->
         <div class="modal-overlay" id="milestoneModal">
           <div class="modal">
             <div class="modal-header">
@@ -83,30 +76,55 @@
                 <input type="hidden" id="milestoneId" />
                 <div class="form-group">
                   <label for="deliverable">Deliverable Description</label>
-                  <input type="text" id="deliverable" placeholder="eg: Complete feature X" required />
+                  <input
+                    type="text"
+                    id="deliverable"
+                    placeholder="eg : Complete feature X"
+                    required
+                  />
                 </div>
                 <div class="form-group">
                   <label for="deadline">Deadline</label>
-                  <input type="text" id="deadline" placeholder="eg: Week 2" required />
+                  <input
+                    type="text"
+                    id="deadline"
+                    placeholder="eg : Week 2"
+                    required
+                  />
                 </div>
                 <div class="form-row">
                   <div class="form-group">
                     <label for="payment">Payment Amount (₹)</label>
-                    <input type="number" id="payment" placeholder="eg: 22500" required />
+                    <input
+                      type="number"
+                      id="payment"
+                      placeholder="eg : 22500"
+                      required
+                    />
                   </div>
                   <div class="form-group">
                     <label for="percentage">Percentage (%)</label>
-                    <input type="number" id="percentage" placeholder="eg: 20" required />
+                    <input
+                      type="number"
+                      id="percentage"
+                      placeholder="eg : 20"
+                      required
+                    />
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-                  <button type="submit" class="save-btn" id="saveBtn">Add Milestone</button>
+                  <button type="button" class="cancel-btn" id="cancelBtn">
+                    Cancel
+                  </button>
+                  <button type="submit" class="save-btn" id="saveBtn">
+                    Add Milestone
+                  </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
+        <!-- Delete Confirmation Modal -->
         <div class="modal-overlay" id="deleteModal">
           <div class="modal delete-modal">
             <div class="modal-header">
@@ -117,8 +135,12 @@
               <p>Are you sure you want to delete this milestone?</p>
               <input type="hidden" id="deleteId" />
               <div class="modal-footer">
-                <button type="button" class="cancel-btn" id="cancelDeleteBtn">Cancel</button>
-                <button type="button" class="delete-btn" id="confirmDeleteBtn">Delete</button>
+                <button type="button" class="cancel-btn" id="cancelDeleteBtn">
+                  Cancel
+                </button>
+                <button type="button" class="delete-btn" id="confirmDeleteBtn">
+                  Delete
+                </button>
               </div>
             </div>
           </div>

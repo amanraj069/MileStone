@@ -2,7 +2,10 @@ const path = require("path");
 const fs = require("fs").promises;
 
 exports.getAdminDashboard = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Jayanth/admin.html"));
+  res.render("Jayanth/admin", {
+    user: req.session.user,
+    activeSection: "home",
+  });
 };
 
 exports.getJobListings = async (req, res) => {
@@ -15,6 +18,7 @@ exports.getJobListings = async (req, res) => {
     res.render("Jayanth/job_listings", {
       jobListings,
       user: req.session.user,
+      activeSection: "job-listings",
     });
   } catch (error) {
     console.error("Error fetching job listings:", error);
@@ -39,6 +43,7 @@ exports.getJobDetails = async (req, res) => {
     res.render("Jayanth/Additional/see_more_detail", {
       job,
       user: req.session.user,
+      activeSection: "job-listings",
     });
   } catch (error) {
     console.error("Error fetching job details:", error);
@@ -56,6 +61,7 @@ exports.getFreelancers = async (req, res) => {
     res.render("Jayanth/freelancers", {
       freelancers,
       user: req.session.user,
+      activeSection: "freelancers",
     });
   } catch (error) {
     console.error("Error fetching freelancers:", error);
@@ -73,6 +79,7 @@ exports.getEmployers = async (req, res) => {
     res.render("Jayanth/employers", {
       employers,
       user: req.session.user,
+      activeSection: "employers",
     });
   } catch (error) {
     console.error("Error fetching employers:", error);
@@ -90,6 +97,7 @@ exports.getComplaints = async (req, res) => {
     res.render("Jayanth/complaints", {
       complaints,
       user: req.session.user,
+      activeSection: "complaints",
     });
   } catch (error) {
     console.error("Error fetching complaints:", error);
@@ -107,6 +115,7 @@ exports.getProfile = async (req, res) => {
     res.render("Jayanth/profile", {
       profile,
       user: req.session.user,
+      activeSection: "profile",
     });
   } catch (error) {
     console.error("Error fetching profile:", error);
@@ -115,5 +124,8 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.getChatsCurrentJobs = (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/Abhishek/Additional/chat.html"));
+  res.render("Abhishek/Additional/chat", {
+    user: req.session.user,
+    activeSection: "chat",
+  });
 };
