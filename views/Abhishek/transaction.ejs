@@ -9,10 +9,11 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: activePage }) %>
+      <%- include('partials/sidebar', { user: { name: 'TechCorp Solutions' }, activePage: 'transaction_history' }) %>
       <div class="main-content">
         <div class="container">
           <h1>Transaction History</h1>
+
           <div class="filter-container">
             <button class="filter-button active" data-filter="all">
               All Transactions
@@ -22,45 +23,31 @@
             </button>
             <button class="filter-button" data-filter="pending">Pending</button>
           </div>
+
           <div class="transactions-grid" id="transactions-container">
-            <% transactions.forEach(transaction => { %>
-            <div
-              class="transaction-card"
-              data-status="<%= transaction.status %>"
-            >
+            <div class="transaction-card" data-status="completed">
               <div class="card-header">
                 <div class="freelancer-info">
                   <img
-                    src="<%= transaction.freelancerAvatar %>"
-                    alt="<%= transaction.freelancerName %>"
+                    src="/assets/user_image.jpg"
+                    alt="Aman Raj"
                     class="avatar"
                   />
-                  <div class="freelancer-name">
-                    <%= transaction.freelancerName %>
-                  </div>
+                  <div class="freelancer-name">Aman Raj</div>
                 </div>
-                <span class="status-badge status-<%= transaction.status %>">
-                  <%= transaction.status === 'completed' ? 'Paid' : 'Pending' %>
-                </span>
+                <span class="status-badge status-completed">Paid</span>
               </div>
               <div class="card-body">
-                <div class="project-title"><%= transaction.projectTitle %></div>
-                <div class="amount">
-                  ₹<%= transaction.amount.toLocaleString() %>
-                </div>
-                <div class="date">
-                  <%= transaction.status === 'completed' ? 'Paid on' : 'Due on'
-                  %> <%= transaction.date %>
-                </div>
+                <div class="project-title">Mobile App UI Design</div>
+                <div class="amount">₹18,000</div>
+                <div class="date">Paid on Mar 09, 2025</div>
               </div>
               <div class="card-footer">
-                <a
-                  href="/employerD/transaction-history/milestone/<%= transaction.id %>"
+                <a href="/employerD/transaction-history/milestone"
                   ><button class="btn btn-outline">View Details</button></a
                 >
               </div>
             </div>
-            <% }) %>
           </div>
         </div>
       </div>

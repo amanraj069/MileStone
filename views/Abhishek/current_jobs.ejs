@@ -9,10 +9,11 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: activePage }) %>
+      <%- include('partials/sidebar', { user: user, activePage: 'current_jobs' }) %>
       <div class="main-content">
         <div class="container">
           <h1 class="section-title">Currently Working Freelancers</h1>
+
           <div class="search-bar">
             <input
               type="text"
@@ -33,27 +34,20 @@
               </svg>
             </button>
           </div>
+
           <div class="freelancer-list">
-            <% current_freelancers.forEach(freelancer => { %>
-            <div
-              class="freelancer-card"
-              data-Since="<%= freelancer.since_days %>"
-              data-rating="<%= freelancer.rating %>"
-            >
+            <div class="freelancer-card" data-Since="45" data-rating="4.7">
               <div class="card-header">
                 <img
-                  src="<%= freelancer.image %>"
+                  src="/assets/user_female.png"
                   alt="Profile"
                   class="profile-img"
                 />
                 <div class="freelancer-info">
-                  <a
-                    href="/employerD/job-listings/see_more/job/view_profile"
-                    class="freelancer-name"
-                    ><%= freelancer.name %></a
+                  <a href="view_profile.html" class="freelancer-name"
+                    >Sneha Iyer</a
                   >
                   <div class="rating">
-                    <% for(let i = 0; i < 5; i++) { %>
                     <svg
                       width="12"
                       height="12"
@@ -65,8 +59,51 @@
                         d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
                       />
                     </svg>
-                    <% } %>
-                    <span><%= freelancer.rating %></span>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
+                    </svg>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
+                    </svg>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
+                    </svg>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
+                    </svg>
+                    <span>4.7</span>
                   </div>
                 </div>
                 <div>
@@ -75,13 +112,13 @@
               </div>
               <div class="card-body">
                 <div class="skills">
-                  <% freelancer.skills.forEach(skill => { %>
-                  <span class="skill-tag"><%= skill %></span>
-                  <% }) %>
+                  <span class="skill-tag">Shopify</span>
+                  <span class="skill-tag">Liquid</span>
+                  <span class="skill-tag">E-commerce</span>
                 </div>
                 <div class="project-info">
                   <p class="info-label">Working on:</p>
-                  <p class="project-name"><%= freelancer.project %></p>
+                  <p class="project-name">Online Store Redesign</p>
                 </div>
               </div>
               <div class="card-footer">
@@ -97,7 +134,7 @@
                       d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
                     />
                   </svg>
-                  <span>Since <%= freelancer.since_days %> days</span>
+                  <span>Since 4 days</span>
                 </div>
                 <a href="/employerD/current-jobs/chat"
                   ><button class="chat-btn">Chat</button></a
@@ -107,10 +144,8 @@
                 >
               </div>
             </div>
-            <% }) %>
           </div>
         </div>
-      </div>
     </div>
     <script src="/js/EmployerD/current_jobs.js"></script>
   </body>

@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: activePage }) %>
+      <%- include('partials/sidebar', { user: user, activePage: 'job_listings' }) %>
       <div class="main-content">
         <div class="container">
           <header>
@@ -21,8 +21,11 @@
                 placeholder="Search jobs, companies..."
               />
             </div>
-            <div class="user-profile"><i>🔍</i></div>
+            <div class="user-profile">
+              <i>🔍</i>
+            </div>
           </header>
+
           <div class="filters">
             <button class="filter-btn active">All Jobs</button>
             <button class="filter-btn">Recent</button>
@@ -30,9 +33,9 @@
             <button class="filter-btn">Full-time</button>
             <button class="filter-btn">Part-time</button>
           </div>
+
           <div class="content">
             <main class="job-listings">
-              <% jobs.forEach(job => { %>
               <div class="job-card">
                 <div class="job-img-container">
                   <img
@@ -42,12 +45,12 @@
                   />
                 </div>
                 <div class="job-info">
-                  <h2 class="job-title"><%= job.title %></h2>
-                  <div class="job-price"><%= job.salary %></div>
+                  <h2 class="job-title">Senior Frontend Developer</h2>
+                  <div class="job-price">₹40,000-65,000</div>
                   <div class="job-tech">
-                    <% job.tech.forEach(tech => { %>
-                    <span class="tech-tag"><%= tech %></span>
-                    <% }) %>
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">NextJS</span>
                   </div>
                   <div class="job-meta">
                     <span class="job-location">
@@ -62,21 +65,21 @@
                           d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"
                         />
                       </svg>
-                      <%= job.location %> <span class="status-dot"></span>
+                      Bangalore <span class="status-dot"></span>
                     </span>
                     <span class="job-type">
                       <svg
                         width="12"
                         height="12"
-                        viewBox="0 22"
+                        viewBox="0 0 24 24"
                         fill="currentColor"
                         class="icon"
                       >
                         <path
-                          d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"
+                          d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.1 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"
                         />
                       </svg>
-                      <%= job.type %> <span class="status-dot"></span>
+                      Full-time <span class="status-dot"></span>
                     </span>
                     <span class="job-date">
                       <svg
@@ -90,24 +93,20 @@
                           d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11z"
                         />
                       </svg>
-                      Posted <%= job.posted %> <span class="status-dot"></span>
+                      Posted 2 days ago <span class="status-dot"></span>
                     </span>
                   </div>
                 </div>
                 <div class="job-actions">
-                  <span class="applications-count"
-                    ><%= job.applicants %> applicants</span
-                  >
-                  <a href="/employerD/job-listings/see_more/<%= job.id %>"
+                  <span class="applications-count">45 applicants</span>
+                  <a href="/employerD/job-listings/see_more"
                     ><button class="see-more-btn">See More</button></a
                   >
                 </div>
               </div>
-              <% }) %>
             </main>
           </div>
         </div>
-      </div>
     </div>
     <script src="/js/EmployerD/job_listing.js"></script>
   </body>
