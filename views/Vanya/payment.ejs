@@ -29,14 +29,9 @@
             <div class="payment-section">
               <h4>Current Subscription</h4>
               <div class="subscription-details">
-                <p><strong>Plan:</strong> <%= payments.subscription.plan %></p>
-                <p>
-                  <strong>Amount:</strong> <%= payments.subscription.amount %>
-                </p>
-                <p>
-                  <strong>Next Billing Date:</strong> <%=
-                  payments.subscription.next_billing_date %>
-                </p>
+                <p><strong>Plan:</strong> Pro Plan</p>
+                <p><strong>Amount:</strong> Rs.29.99/month</p>
+                <p><strong>Next Billing Date:</strong> April 7, 2025</p>
                 <a
                   href="/freelancerD/subscription"
                   class="manage-subscription-btn"
@@ -46,21 +41,22 @@
               </div>
             </div>
 
-            <!-- Rest of the content -->
             <!-- Payment Methods -->
             <div class="payment-section">
               <h4>Payment Methods</h4>
               <div class="payment-methods">
-                <% payments.methods.forEach(method => { %>
                 <div class="payment-method">
-                  <i class="fab fa-cc-<%= method.type.toLowerCase() %>"></i>
-                  <span
-                    ><%= method.type %> ending in <%= method.last_four %></span
-                  >
-                  <span class="expiry-date">Exp: <%= method.expiry %></span>
+                  <i class="fab fa-cc-visa"></i>
+                  <span>Visa ending in 1234</span>
+                  <span class="expiry-date">Exp: 12/25</span>
                   <button class="remove-method-btn">Remove</button>
                 </div>
-                <% }); %>
+                <div class="payment-method">
+                  <i class="fab fa-cc-mastercard"></i>
+                  <span>Mastercard ending in 5678</span>
+                  <span class="expiry-date">Exp: 09/24</span>
+                  <button class="remove-method-btn">Remove</button>
+                </div>
               </div>
               <div class="add-payment-method">
                 <h5>Add New Payment Method</h5>
@@ -79,7 +75,7 @@
                     <input
                       type="text"
                       id="card-holder"
-                      placeholder="<%= user.name %>"
+                      placeholder="Vanya Awasthi"
                       required
                     />
                   </div>
@@ -119,22 +115,33 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% payments.history.forEach(payment => { %>
                   <tr>
-                    <td><%= payment.date %></td>
-                    <td><%= payment.description %></td>
-                    <td><%= payment.amount %></td>
-                    <td class="status <%= payment.status.toLowerCase() %>">
-                      <%= payment.status %>
-                    </td>
+                    <td>Mar 7, 2025</td>
+                    <td>Pro Plan Subscription</td>
+                    <td>Rs.29.99</td>
+                    <td class="status success">Success</td>
                     <td>
-                      <a href="<%= payment.receipt_link %>" class="view-receipt"
-                        ><%= payment.status === 'Failed' ? 'Retry Payment' :
-                        'View Receipt' %></a
-                      >
+                      <a href="#" class="view-receipt">View Receipt</a>
                     </td>
                   </tr>
-                  <% }); %>
+                  <tr>
+                    <td>Feb 7, 2025</td>
+                    <td>Pro Plan Subscription</td>
+                    <td>Rs.29.99</td>
+                    <td class="status success">Success</td>
+                    <td>
+                      <a href="#" class="view-receipt">View Receipt</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jan 7, 2025</td>
+                    <td>Pro Plan Subscription</td>
+                    <td>Rs.29.99</td>
+                    <td class="status failed">Failed</td>
+                    <td>
+                      <a href="#" class="view-receipt">Retry Payment</a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

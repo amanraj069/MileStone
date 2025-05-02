@@ -27,34 +27,34 @@
             <div class="plan-info">
               <h2>Your Plan</h2>
               <p>
-                <%= subscription.current_plan.name %> - <%=
-                subscription.current_plan.description %> (<%=
-                subscription.current_plan.price %>) <% if
-                (subscription.current_plan.name === 'Free Tier') { %> Upgrade
-                for more opportunities! <% } %>
+                Free Tier - Includes basic features. Upgrade for more! (Rs.0/month)
+                Upgrade for more opportunities!
               </p>
             </div>
             <button>Manage Subscription</button>
           </section>
 
-          <!-- Rest of the content -->
           <section class="plan-options">
             <h2>Choose Your Plan</h2>
             <div class="plans">
-              <% subscription.available_plans.forEach(plan => { %>
               <div class="plan-card">
-                <h3><%= plan.name %></h3>
-                <p class="price"><%= plan.price %></p>
-                <p><%= plan.description %></p>
-                <% if (plan.name === subscription.current_plan.name) { %>
+                <h3>Basic</h3>
+                <p class="price">Rs.0/month</p>
+                <p>Limited access, core functionality, ads included.</p>
                 <button disabled>Current Plan</button>
-                <% } else if (plan.name === 'Enterprise') { %>
-                <button class="quote-btn">Get a Quote</button>
-                <% } else { %>
-                <button class="upgrade-btn">Upgrade to <%= plan.name %></button>
-                <% } %>
               </div>
-              <% }); %>
+              <div class="plan-card">
+                <h3>Pro</h3>
+                <p class="price">Rs.9.99/month</p>
+                <p>Ad-free, advanced tools, priority support.</p>
+                <button class="upgrade-btn">Upgrade to Pro</button>
+              </div>
+              <div class="plan-card">
+                <h3>Enterprise</h3>
+                <p class="price">Contact Us</p>
+                <p>Custom solutions, team accounts, dedicated support.</p>
+                <button class="quote-btn">Get a Quote</button>
+              </div>
             </div>
             <label
               ><input type="checkbox" /> Save 20% with yearly billing</label

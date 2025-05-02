@@ -47,6 +47,7 @@
                 fill="#152C70"
               />
             </svg>
+            <span class="username">Vanya Awasthi</span>
           </div>
         </header>
 
@@ -65,47 +66,37 @@
           </div>
 
           <div class="job-cards">
-            <% job_history.forEach(job => { %>
+            <!-- Job 1 -->
             <div class="job-card">
               <div class="job-company-logo">
-                <img src="<%= job.logo %>" alt="<%= job.company %> Logo" />
+                <img src="/assets/company_logo.jpg" alt="Google Logo" />
               </div>
               <div class="job-info">
                 <div class="job-header">
-                  <h3 class="job-title"><%= job.title %></h3>
-                  <div class="job-company"><%= job.company %></div>
-                  <div class="job-status <%= job.status.toLowerCase() %>">
-                    <%= job.status %>
-                  </div>
+                  <h3 class="job-title">Frontend Development for Search Page</h3>
+                  <div class="job-company">Google</div>
+                  <div class="job-status completed">Completed</div>
                 </div>
                 <div class="job-tech">
-                  <% job.tech.forEach(tech => { %>
-                  <span class="tech-tag"><%= tech %></span>
-                  <% }); %>
+                  <span class="tech-tag">HTML5</span>
+                  <span class="tech-tag">CSS3</span>
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">React</span>
                 </div>
                 <div class="job-meta">
-                  <div class="job-date"><%= job.date %></div>
-                  <div class="job-price"><%= job.price %></div>
+                  <div class="job-date">Jan 12, 2025 - Feb 15, 2025</div>
+                  <div class="job-price">Rs.5,800</div>
                 </div>
-                <% if (job.rating) { %>
                 <div class="job-rating">
                   <div class="rating-stars">
-                    <% for (let i = 1; i <= 5; i++) { %> <% if (i <=
-                    parseFloat(job.rating)) { %>
                     <i class="fas fa-star"></i>
-                    <% } else if (i - 0.5 <= parseFloat(job.rating)) { %>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
-                    <% } else { %>
-                    <i class="far fa-star"></i>
-                    <% } %> <% } %>
                   </div>
-                  <span class="rating-score"><%= job.rating %></span>
+                  <span class="rating-score">4.5/5</span>
                 </div>
-                <% } %> <% if (job.cancel_reason) { %>
-                <div class="job-cancel-reason">
-                  Reason: <%= job.cancel_reason %>
-                </div>
-                <% } %>
               </div>
               <div class="job-actions">
                 <a href="https://github.com/sheisstarwithoutmoon/HealthCare">
@@ -120,7 +111,88 @@
                 >
               </div>
             </div>
-            <% }); %>
+            <!-- Job 2 -->
+            <div class="job-card">
+              <div class="job-company-logo">
+                <img src="/assets/company_logo.jpg" alt="Airbnb Logo" />
+              </div>
+              <div class="job-info">
+                <div class="job-header">
+                  <h3 class="job-title">Booking System Redesign</h3>
+                  <div class="job-company">Airbnb</div>
+                  <div class="job-status cancelled">Cancelled</div>
+                </div>
+                <div class="job-tech">
+                  <span class="tech-tag">Angular</span>
+                  <span class="tech-tag">TypeScript</span>
+                  <span class="tech-tag">SCSS</span>
+                </div>
+                <div class="job-meta">
+                  <div class="job-date">Dec 05, 2024 - Dec 15, 2024</div>
+                  <div class="job-price">Rs.2,000 (Partial)</div>
+                </div>
+                <div class="job-cancel-reason">
+                  Reason: Project requirements changed significantly
+                </div>
+              </div>
+              <div class="job-actions">
+                <a href="https://github.com/sheisstarwithoutmoon/HealthCare">
+                  <button class="project-files-btn">
+                    <i class="fas fa-folder"></i> Project Files
+                  </button>
+                </a>
+                <a
+                  href="/freelancerD/job_history/jhistory_see_more"
+                  class="see-more-btn"
+                  >See More</a
+                >
+              </div>
+            </div>
+            <!-- Job 3 -->
+            <div class="job-card">
+              <div class="job-company-logo">
+                <img src="/assets/company_logo.jpg" alt="Netflix Logo" />
+              </div>
+              <div class="job-info">
+                <div class="job-header">
+                  <h3 class="job-title">Stream UI Optimization</h3>
+                  <div class="job-company">Netflix</div>
+                  <div class="job-status completed">Completed</div>
+                </div>
+                <div class="job-tech">
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Redux</span>
+                  <span class="tech-tag">Node.js</span>
+                </div>
+                <div class="job-meta">
+                  <div class="job-date">Oct 10, 2024 - Nov 25, 2024</div>
+                  <div class="job-price">Rs.7,200</div>
+                </div>
+                <div class="job-rating">
+                  <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <span class="rating-score">5.0/5</span>
+                </div>
+              </div>
+              <div class="job-actions">
+                <a href="https://github.com/sheisstarwithoutmoon/HealthCare">
+                  <button class="project-files-btn">
+                    <i class="fas fa-folder"></i> Project Files
+                  </button>
+                </a>
+                <a
+                  href="/freelancerD/job_history/jhistory_see_more"
+                  class="see-more-btn"
+                  >See More</a
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,200 +1,133 @@
-const path = require("path");
-const db = require("../database");
-const fs = require("fs").promises;
+const mongoose = require('../database');
+const ActiveJob = require('../models/job');
 
-const getFreelancerData = async () => {
+exports.getFreelancerActiveJobs = async (req, res) => {
   try {
-    const filePath = path.join(__dirname, "../data/freelancerD/data.json");
-    try {
-      await fs.access(filePath);
-    } catch (error) {
-      throw new Error(`Data file not found at ${filePath}`);
+    if (!req.session.user) {
+      return res.status(401).send('Unauthorized: Please log in');
     }
 
-    const data = await fs.readFile(filePath, "utf8");
+    const userId = req.session.user.id;
 
-    if (!data.trim()) {
-      throw new Error("Data file is empty");
-    }
+    // Query MongoDB for active jobs
+    const activeJobs = await ActiveJob.find({ user: userId }).lean();
 
-    const parsedData = JSON.parse(data);
+    // Map MongoDB documents to the format expected by the EJS template
+    const formattedJobs = activeJobs.map((job) => ({
+      id: job._id.toString(),
+      title: job.job_title,
+      company: job.company_name || 'Unknown Company',
+      logo: job.image || '/assets/company_logo.jpg',
+      deadline: job.deadline ? job.deadline.toLocaleDateString() : 'No deadline',
+      price: job.bid_amount || 'Not specified',
+      progress: 0, // Hardcoded as in original; adjust if dynamic progress is needed
+      tech: [] // Hardcoded as in original; can be updated if job has tech field
+    }));
 
-    if (
-      !parsedData.user ||
-      !parsedData.active_jobs ||
-      !parsedData.job_history
-    ) {
-      throw new Error(
-        "Invalid JSON structure: missing required fields (user, active_jobs, or job_history)"
-      );
-    }
-
-    return parsedData;
+    res.render('Vanya/active_job', {
+      user: req.session.user,
+      active_jobs: formattedJobs,
+      activePage: 'active_job'
+    });
   } catch (error) {
-    console.error("Error reading freelancer data:", error.message);
-    return {
-      user: { id: 0, name: "Unknown User", role: "Freelancer" },
-      job_history: [],
-      active_jobs: [],
-      payments: [],
-      skills_badges: [],
-      subscription: {},
-    };
+    console.error('Error fetching active jobs:', error.message);
+    res.status(500).send('Server Error: Unable to load active jobs');
   }
 };
 
-exports.getFreelancerActiveJobs = (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).send("Unauthorized: Please log in");
+exports.leaveActiveJob = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: 'Unauthorized: Please log in' });
+    }
+
+    const userId = req.session.user.id;
+    const jobId = req.params.jobId;
+
+    // Delete the job from MongoDB
+    const result = await ActiveJob.deleteOne({ _id: jobId, user: userId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Job not found or not authorized' });
+    }
+
+    res.status(200).json({ message: 'Job left successfully' });
+  } catch (error) {
+    console.error('Error deleting active job:', error.message);
+    res.status(500).json({ error: 'Failed to leave job' });
   }
-
-  const userId = req.session.user.id;
-
-  db.all(
-    "SELECT * FROM active_jobs WHERE user_id = ?",
-    [userId],
-    (err, rows) => {
-      if (err) {
-        console.error("Error fetching active jobs:", err);
-        return res.status(500).send("Server Error: Unable to load active jobs");
-      }
-
-      const activeJobs = rows.map((job) => ({
-        id: job.id,
-        title: job.job_title,
-        company: job.company_name,
-        logo: job.image,
-        deadline: job.deadline,
-        price: job.bid_amount,
-        progress: 0,
-        tech: [],
-      }));
-
-      res.render("Vanya/active_job", {
-        user: req.session.user,
-        active_jobs: activeJobs,
-        activePage: 'active_job'
-      });
-    }
-  );
-};
-
-exports.leaveActiveJob = (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: "Unauthorized: Please log in" });
-  }
-
-  const userId = req.session.user.id;
-  const jobId = req.params.jobId;
-
-  const query = "DELETE FROM active_jobs WHERE id = ? AND user_id = ?";
-  db.run(query, [jobId, userId], function (err) {
-    if (err) {
-      console.error("Error deleting active job:", err);
-      return res.status(500).json({ error: "Failed to leave job" });
-    }
-    if (this.changes === 0) {
-      return res.status(404).json({ error: "Job not found or not authorized" });
-    }
-    res.status(200).json({ message: "Job left successfully" });
-  });
 };
 
 exports.getFreelancerProfile = async (req, res) => {
   try {
-    res.render("Vanya/profile", { 
-      user: req.session.user, 
-      profile: {},
+    res.render('Vanya/profile', { 
+      user: req.session.user || staticUser,
       activePage: 'profile'
     });
   } catch (error) {
-    console.error("Error rendering profile:", error.message);
-    res.status(500).send("Server Error: Unable to render profile page");
+    console.error('Error rendering profile:', error.message);
+    res.status(500).send('Server Error: Unable to render profile page');
   }
 };
 
 exports.getFreelancerJobHistory = async (req, res) => {
   try {
-    const data = await getFreelancerData();
-    const renderData = {
-      user: req.session.user || data.user,
-      job_history: data.job_history,
+    res.render('Vanya/job_history', {
+      user: req.session.user || staticUser,
       activePage: 'job_history'
-    };
-    console.log(
-      "Data being passed to job_history.ejs:",
-      JSON.stringify(renderData, null, 2)
-    );
-
-    res.render("Vanya/job_history", renderData, (err, html) => {
-      if (err) {
-        console.error("Error rendering job_history template:", err.message);
-        return res
-          .status(500)
-          .send("Server Error: Unable to render job history page");
-      }
-      res.send(html);
     });
   } catch (error) {
-    console.error("Error in getFreelancerJobHistory:", error.message);
-    res.status(500).send("Server Error: Unable to load job history");
+    console.error('Error rendering job history:', error.message);
+    res.status(500).send('Server Error: Unable to render job history page');
   }
 };
 
 exports.getSeemore = (req, res) => {
-  // Convert to render EJS instead of sending HTML file
-  res.render("Vanya/additional/jhistory_see_more", {
-    user: req.session.user,
+  res.render('Vanya/additional/jhistory_see_more', {
+    user: req.session.user || staticUser,
     activePage: 'job_history'
   });
 };
 
 exports.getFreelancerPayment = async (req, res) => {
   try {
-    const data = await getFreelancerData();
-    res.render("Vanya/payment", {
-      user: req.session.user || data.user,
-      payments: data.payments,
+    res.render('Vanya/payment', {
+      user: req.session.user || staticUser,
       activePage: 'payment'
     });
   } catch (error) {
-    console.error("Error rendering payment:", error.message);
-    res.status(500).send("Server Error: Unable to render payment page");
+    console.error('Error rendering payment:', error.message);
+    res.status(500).send('Server Error: Unable to render payment page');
   }
 };
 
 exports.getFreelancerSkills = async (req, res) => {
   try {
-    const data = await getFreelancerData();
-    res.render("Vanya/skills_badges", {
-      user: req.session.user || data.user,
-      skills_badges: data.skills_badges,
+    res.render('Vanya/skills_badges', {
+      user: req.session.user || staticUser,
       activePage: 'skills_badges'
     });
   } catch (error) {
-    console.error("Error rendering skills_badges:", error.message);
-    res.status(500).send("Server Error: Unable to render skills page");
+    console.error('Error rendering skills_badges:', error.message);
+    res.status(500).send('Server Error: Unable to render skills page');
   }
 };
 
 exports.getFreelancerSubscription = async (req, res) => {
   try {
-    const data = await getFreelancerData();
-    res.render("Vanya/subscription", {
-      user: req.session.user || data.user,
-      subscription: data.subscription,
+    res.render('Vanya/subscription', {
+      user: req.session.user || staticUser,
       activePage: 'subscription'
     });
   } catch (error) {
-    console.error("Error rendering subscription:", error.message);
-    res.status(500).send("Server Error: Unable to render subscription page");
+    console.error('Error rendering subscription:', error.message);
+    res.status(500).send('Server Error: Unable to render subscription page');
   }
 };
 
 exports.getChatsCurrentJobs = (req, res) => {
-  // Convert to render EJS instead of sending HTML file
-  res.render("Vanya/additional/chat", {
-    user: req.session.user,
+  res.render('Vanya/additional/chat', {
+    user: req.session.user || staticUser,
     activePage: 'active_job'
   });
 };

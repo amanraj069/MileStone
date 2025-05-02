@@ -31,9 +31,14 @@
             <section class="skills-section">
               <h4>Your Skills</h4>
               <div class="skills-list">
-                <% skills_badges.skills.forEach(skill => { %>
-                <span class="skill-tag"><%= skill %></span>
-                <% }); %>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">Angular</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Git</span>
               </div>
               <div class="add-skill">
                 <h5>Add a New Skill</h5>
@@ -57,35 +62,54 @@
             <section class="badges-section">
               <h4>Your Badges</h4>
               <div class="badges-grid">
-                <% skills_badges.badges.forEach(badge => { %>
                 <div class="badge-item">
-                  <img src="<%= badge.image %>" alt="<%= badge.title %>" />
-                  <h5><%= badge.title %></h5>
-                  <p><%= badge.description %></p>
-                  <span class="badge-date"
-                    >Earned: <%= badge.date_earned %></span
-                  >
+                  <img src="/assets/portfolio/topfreelancer_badge.png" alt="Top Freelancer" />
+                  <h5>Top Freelancer</h5>
+                  <p>Earned for completing 50+ projects with a 4.5+ rating</p>
+                  <span class="badge-date">Earned: Jan 2025</span>
                 </div>
-                <% }); %>
+                <div class="badge-item">
+                  <img src="/assets/portfolio/risingstar_badge.png" alt="Rising Star" />
+                  <h5>Rising Star</h5>
+                  <p>Earned for completing 10 projects within first 3 months</p>
+                  <span class="badge-date">Earned: Aug 2024</span>
+                </div>
+                <div class="badge-item">
+                  <img src="/assets/portfolio/codemaster_badge.png" alt="Code Master" />
+                  <h5>Code Master</h5>
+                  <p>Earned for expertise in 5+ programming languages</p>
+                  <span class="badge-date">Earned: Nov 2024</span>
+                </div>
               </div>
             </section>
 
             <!-- Badge Progress -->
             <section class="badge-progress-section">
               <h4>Badge Progress</h4>
-              <% skills_badges.badge_progress.forEach(progress => { %>
               <div class="badge-progress-item">
-                <h5><%= progress.title %></h5>
-                <p><%= progress.description %></p>
+                <h5>Client Favorite</h5>
+                <p>Receive 20 five-star reviews</p>
                 <div class="progress-bar">
-                  <div
-                    class="progress"
-                    style="width: <%= progress.percentage %>%"
-                  ></div>
+                  <div class="progress" style="width: 90%"></div>
                 </div>
-                <span class="progress-status"><%= progress.progress %></span>
+                <span class="progress-status">18/20</span>
               </div>
-              <% }); %>
+              <div class="badge-progress-item">
+                <h5>Project Titan</h5>
+                <p>Complete 100 projects</p>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 50%"></div>
+                </div>
+                <span class="progress-status">50/100</span>
+              </div>
+              <div class="badge-progress-item">
+                <h5>Speedy Deliverer</h5>
+                <p>Deliver 10 projects ahead of schedule</p>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 70%"></div>
+                </div>
+                <span class="progress-status">7/10</span>
+              </div>
             </section>
           </div>
         </div>

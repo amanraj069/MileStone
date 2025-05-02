@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 const connectionString = 'mongodb://127.0.0.1:27017/Milestone';
 
 // Connect to MongoDB
-mongoose.connect(connectionString)
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => {
     console.log('Connected to MongoDB successfully');
   })
@@ -12,4 +15,5 @@ mongoose.connect(connectionString)
     console.error('Error connecting to MongoDB:', err);
   });
 
-module.exports = mongoose.connection;
+// Export the mongoose instance
+module.exports = mongoose;

@@ -35,8 +35,6 @@
             </button>
           </div>
 
-          <!-- Rest of the content -->
-          <!-- ... -->
           <div class="profile-section">
             <div class="profile-image">
               <img src="/assets/user_female.png" alt="Profile Image" />
@@ -44,7 +42,7 @@
 
             <div class="profile-info">
               <div class="profile-header">
-                <h2 data-editable="name"><%= profile.name %></h2>
+                <h2 data-editable="name">Vanya Awasthi</h2>
                 <div class="top-freelancer-badge">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +62,7 @@
                 </div>
               </div>
 
-              <div class="title" data-editable="title"><%= profile.title %></div>
+              <div class="title" data-editable="title">Frontend Developer</div>
 
               <div class="location">
                 <svg
@@ -81,7 +79,7 @@
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span data-editable="location"><%= profile.location %></span>
+                <span data-editable="location">Pune, Maharashtra</span>
               </div>
 
               <div class="contact">
@@ -99,7 +97,7 @@
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span data-editable="email"><%= user.email %></span>
+                <span data-editable="email">vanya.awasthi@email.com</span>
               </div>
 
               <div class="contact">
@@ -116,7 +114,7 @@
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                 </svg>
-                <span data-editable="phone"><%= profile.phone %></span>
+                <span data-editable="phone">+91 8757462008</span>
               </div>
 
               <div class="rating-section">
@@ -125,14 +123,14 @@
                   <span class="star">★</span>
                   <span class="star">★</span>
                   <span class="star">★</span>
-                  <span class="star">☆</span>
-                  <span data-editable="rating"><%= profile.rating || '4.0' %></span>
+                  <span class="star">★</span>
+                  <span data-editable="rating">4.8/5</span>
                 </div>
-                <div class="rating-count">(<%= profile.reviews || '120' %> Reviews)</div>
+                <div class="rating-count">(120 Reviews)</div>
               </div>
 
               <div class="projects-completed">
-                <span data-editable="projects"><%= profile.projects || '50+' %> Projects Completed</span>
+                <span data-editable="projects">50 Projects Completed</span>
               </div>
             </div>
           </div>
@@ -143,14 +141,7 @@
               <div class="about-section">
                 <h3 class="section-title">About Me</h3>
                 <div class="about-content" data-editable="about">
-                  <% if (profile.about) { %>
-                    <% profile.about.split('\n\n').forEach(paragraph => { %>
-                      <p><%= paragraph %></p>
-                      <br />
-                    <% }); %>
-                  <% } else { %>
-                    <p>No about information provided yet.</p>
-                  <% } %>
+                  <p>I am a passionate Frontend Developer with over 5 years of experience in building responsive and user-friendly web applications. I specialize in React, JavaScript, and modern CSS frameworks. My goal is to create seamless digital experiences that delight users and meet business objectives.</p>
                 </div>
               </div>
 
@@ -158,13 +149,14 @@
               <div class="skills-section">
                 <h3 class="section-title">Skills</h3>
                 <div class="skills-list" data-editable="skills">
-                  <% if (profile.skills && profile.skills.length > 0) { %>
-                    <% profile.skills.forEach(skill => { %>
-                      <span class="skill-tag"><%= skill %></span>
-                    <% }); %>
-                  <% } else { %>
-                    <p>No skills added yet.</p>
-                  <% } %>
+                  <span class="skill-tag">HTML5</span>
+                  <span class="skill-tag">CSS3</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">React</span>
+                  <span class="skill-tag">TypeScript</span>
+                  <span class="skill-tag">Angular</span>
+                  <span class="skill-tag">Node.js</span>
+                  <span class="skill-tag">Git</span>
                 </div>
               </div>
 
@@ -172,19 +164,16 @@
               <div class="experience-section">
                 <h3 class="section-title">Experience</h3>
                 <div class="experience-list" data-editable="experience">
-                  <% if (profile.experience && profile.experience.length > 0) { %>
-                    <% profile.experience.forEach(exp => { %>
-                      <div class="experience-item">
-                        <h5><%= exp.title %></h5>
-                        <p class="experience-date"><%= exp.date %></p>
-                        <% if (exp.description) { %>
-                          <p><%= exp.description %></p>
-                        <% } %>
-                      </div>
-                    <% }); %>
-                  <% } else { %>
-                    <p>No experience added yet.</p>
-                  <% } %>
+                  <div class="experience-item">
+                    <h5>Senior Frontend Developer - Google</h5>
+                    <p class="experience-date">Jan 2022 - Present</p>
+                    <p>Led the development of search page enhancements, improving user engagement by 30%. Collaborated with UX designers to implement responsive designs using React and TypeScript.</p>
+                  </div>
+                  <div class="experience-item">
+                    <h5>Frontend Developer - Airbnb</h5>
+                    <p class="experience-date">Jun 2019 - Dec 2021</p>
+                    <p>Developed and maintained the booking system UI, integrating Angular and SCSS to create a seamless user experience. Reduced page load time by 20% through optimization techniques.</p>
+                  </div>
                 </div>
               </div>
 
@@ -192,69 +181,11 @@
               <div class="education-section">
                 <h3 class="section-title">Education</h3>
                 <div class="education-list" data-editable="education">
-                  <% if (profile.education && profile.education.length > 0) { %>
-                    <% profile.education.forEach(edu => { %>
-                      <div class="education-item">
-                        <h5><%= edu.title %></h5>
-                        <p class="education-date"><%= edu.institution%></p><br>
-                        <p class="education-date"><%= edu.degree%></p>
-                        <p class="education-date"><%= edu.date %></p>
-                      </div>
-                    <% }); %>
-                  <% } else { %>
-                    <p>No education added yet.</p>
-                  <% } %>
-                </div>
-              </div>
-
-              <!-- New Resume Section -->
-              <div class="resume-section">
-                <h3 class="section-title">Resume</h3>
-                <div class="resume-content">
-                  <% if (profile.resume) { %>
-                    <div class="resume-item">
-                      <a href="<%= profile.resume %>" target="_blank" class="resume-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="2"/>
-                          <path d="M14 2v6h6" stroke="currentColor" stroke-width="2"/>
-                          <path d="M12 18v-6m-3 3h6" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                        View Resume
-                      </a>
-                      <button class="delete-resume-btn" onclick="deleteResume()">Delete Resume</button>
-                    </div>
-                  <% } else { %>
-                    <form id="resumeUploadForm" enctype="multipart/form-data">
-                      <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" required>
-                      <button type="submit" class="upload-btn">Upload Resume</button>
-                    </form>
-                    <p>Accepted formats: PDF, DOC, DOCX (Max size: 5MB)</p>
-                  <% } %>
-                </div>
-              </div>
-
-              <!-- New Skills Test Section -->
-              <div class="skills-test-section">
-                <h3 class="section-title">Skills Assessment</h3>
-                <div class="skills-test-content">
-                  <% if (profile.testScores && profile.testScores.length > 0) { %>
-                    <% profile.testScores.forEach(test => { %>
-                      <div class="test-item">
-                        <h5><%= test.skill %> Test</h5>
-                        <p>Score: <%= test.score %>%</p>
-                        <p>Date: <%= test.date %></p>
-                      </div>
-                    <% }); %>
-                  <% } else { %>
-                    <p>No skills tests taken yet.</p>
-                  <% } %>
-                  <div class="test-actions">
-                    <button onclick="window.location.href='/freelancerD/skills-test'" class="test-btn">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 12l2 2 4-4m-6 8h6M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" stroke="white" stroke-width="2"/>
-                      </svg>
-                      Take a Skills Test
-                    </button>
+                  <div class="education-item">
+                    <h5>Bachelor of Science in Computer Science</h5>
+                    <p class="education-date">University of California, Berkeley</p><br>
+                    <p class="education-date">Bachelor of Science in Computer Science</p>
+                    <p class="education-date">2015 - 2019</p>
                   </div>
                 </div>
               </div>
@@ -263,26 +194,24 @@
               <div class="portfolio-section">
                 <h3 class="section-title">Portfolio</h3>
                 <div class="portfolio-grid" data-editable="portfolio">
-                  <% if (profile.portfolio && profile.portfolio.length > 0) { %>
-                    <% profile.portfolio.forEach(item => { %>
-                      <div class="portfolio-item">
-                        <% if (item.image) { %>
-                          <img src="<%= item.image %>" alt="<%= item.title || 'Portfolio Item' %>">
-                        <% } %>
-                        <% if (item.title) { %>
-                          <h5><%= item.title %></h5>
-                        <% } %>
-                        <% if (item.description) { %>
-                          <p><%= item.description %></p>
-                        <% } %>
-                        <% if (item.link) { %>
-                          <a href="<%= item.link %>" class="portfolio-link">View Project</a>
-                        <% } %>
-                      </div>
-                    <% }); %>
-                  <% } else { %>
-                    <p>No portfolio items added yet.</p>
-                  <% } %>
+                  <div class="portfolio-item">
+                    <img src="/assets/portfolio/ecom_portfolio.png" alt="E-commerce Website Redesign">
+                    <h5>E-commerce Website Redesign</h5>
+                    <p>A responsive e-commerce platform built with React and Node.js.</p>
+                    <a href="https://github.com/evershopcommerce/evershop" class="portfolio-link">View Project</a>
+                  </div>
+                  <div class="portfolio-item">
+                    <img src="/assets/portfolio/bookingsys_portfolio.png" alt="Booking System UI">
+                    <h5>Booking System UI</h5>
+                    <p>Modern booking system UI developed using Angular and SCSS.</p>
+                    <a href="https://github.com/SakerDakak/Salonek" class="portfolio-link">View Project</a>
+                  </div>
+                  <div class="portfolio-item">
+                    <img src="/assets/portfolio/streaming_portfolio.png" alt="Stream UI Optimization">
+                    <h5>Stream UI Optimization</h5>
+                    <p>Optimized streaming platform UI with React and Redux.</p>
+                    <a href="https://github.com/Open-Streaming-Platform/open-streaming-platform" class="portfolio-link">View Project</a>
+                  </div>
                 </div>
               </div>
 
@@ -291,7 +220,7 @@
                 <h3 class="section-title">Testimonials & Reviews</h3>
                 <div class="testimonial">
                   <div class="testimonial-content">
-                    Working with <%= profile.name %> was a fantastic experience. They were professional, responsive, and delivered high-quality work on time.
+                    Working with Vanya Awasthi was a fantastic experience. They were professional, responsive, and delivered high-quality work on time.
                   </div>
                   <div class="testimonial-author">
                     <div class="author-image">
@@ -390,7 +319,5 @@
         }
       }
     </script>
-      </div>
-    </div>
   </body>
 </html>
