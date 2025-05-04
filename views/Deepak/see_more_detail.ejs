@@ -57,10 +57,23 @@
                   viewBox="0 0 24 24"
                 >
                   <path
+                    d="M5 13h14v-2H5v2zm-2 4h14v-2H3v2zm4-8h14V7H7v2z"
+                  />
+                </svg>
+                <%= job.experienceLevel %> Level
+              </div>
+              <div class="meta-item">
+                <svg
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
                     d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"
                   />
                 </svg>
-                ₹<%= job.budget.amount.toLocaleString() %> per <%= job.budget.period %>
+                ₹<%= job.budget.amount.toLocaleString() %> paid <%= job.budget.period %>
               </div>
               <div class="meta-item">
                 <svg
@@ -97,7 +110,7 @@
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                  <path d="M2.01 21L23 12 2.01 3 2 10l 15 2-15 2z" />
                 </svg>
                 Apply Now
               </button>
@@ -170,7 +183,7 @@
               <% }); %>
             <% } else { %>
               <tr>
-                <td colspan="3">No milestones defined for this project.</td>
+                <tdSFITNESS colspan="3">No milestones defined for this project.</td>
               </tr>
             <% } %>
           </tbody>

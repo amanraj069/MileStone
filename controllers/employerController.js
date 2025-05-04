@@ -30,6 +30,7 @@ const employerController = {
         imageUrl,
         location,
         jobType,
+        experienceLevel,
         remote,
         applicationDeadline,
         description,
@@ -51,6 +52,7 @@ const employerController = {
         },
         location,
         jobType,
+        experienceLevel,
         remote: remote === "true",
         applicationDeadline,
         description: {

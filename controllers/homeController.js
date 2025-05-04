@@ -109,6 +109,7 @@ exports.applyForJob = (req, res) => {
     employer_id,
     location,
     job_type,
+    experienceLevel,
     budget_amount,
     budget_period,
     posted_date,
@@ -126,9 +127,9 @@ exports.applyForJob = (req, res) => {
 
   const query = `
     INSERT INTO active_jobs (
-      user_id, job_id, job_title, employer_id, location, job_type, budget_amount, budget_period, posted_date, deadline, image, description_intro,
+      user_id, job_id, job_title, employer_id, location, job_type, experienceLevel, budget_amount, budget_period, posted_date, deadline, image, description_intro,
       bid_amount, applicant_name, applicant_email, applicant_phone, applicant_message
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.run(
@@ -140,6 +141,7 @@ exports.applyForJob = (req, res) => {
       employer_id,
       location,
       job_type,
+      experienceLevel,
       budget_amount,
       budget_period,
       posted_date,

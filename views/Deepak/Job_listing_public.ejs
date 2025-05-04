@@ -96,7 +96,6 @@
               <div class="skill-tag">AWS</div>
               <div class="skill-tag">Docker</div>
               <div class="skill-tag">Git</div>
-              <div class="skill-tag">ffsd</div>
             </div>
           </div>
           <div class="filter-section">
@@ -115,20 +114,20 @@
         </aside>
         <section class="job_listings" id="jobList">
           <h1>Available Positions</h1>
-          <% if (jobListings && jobListings.length > 0) { %>
-          <% jobListings.forEach((job, index) => { %>
+          <% if (jobListings && jobListings.length > 0) { %> <%
+          jobListings.forEach((job, index) => { %>
           <div class="job-card">
             <div class="job-img-container">
-              <img
-                src="<%= job.imageUrl %>"
-                alt="Job Image"
-                class="job-img"
-              />
+              <img src="<%= job.imageUrl %>" alt="Job Image" class="job-img" />
             </div>
             <div class="job-info">
-              <h2 class="job-title"><%= job.title %></h2>
+              <h2 class="job-title">
+                <%= job.title %>( <%= job.experienceLevel%>)
+              </h2>
+
               <div class="job-price">
-                ₹<%= job.budget.amount.toLocaleString() %> (<%= job.budget.period %>)
+                ₹<%= job.budget.amount.toLocaleString() %> (<%=
+                job.budget.period %>)
               </div>
               <div class="job-tech">
                 <% job.description.skills.slice(0, 3).forEach(skill => { %>
@@ -138,11 +137,15 @@
               <div class="job-meta">
                 <span class="location"
                   ><%= job.location || 'Not specified' %></span
+                ><span class="location"
+                  ><%= job.experienceLevel || 'Not specified' %></span
                 >
                 <span><%= job.remote ? '(Remote)' : '' %></span>
                 <span class="work"><%= job.jobType %></span>
                 <span class="clock">
-                  Posted <%= new Date(job.postedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %>
+                  Posted <%= new
+                  Date(job.postedDate).toLocaleDateString('en-US', { month:
+                  'short', day: 'numeric', year: 'numeric' }) %>
                 </span>
               </div>
             </div>
@@ -150,13 +153,12 @@
               <span class="applications-count">
                 <%= Math.floor(Math.random() * 100) %> applicants
               </span>
-              <a href="/jobs/details/<%= job.jobId %>">
+              <a href="/jobs/<%= job.jobId %>">
                 <button class="see-more-btn">See More</button>
               </a>
             </div>
           </div>
-          <% }); %>
-          <% } else { %>
+          <% }); %> <% } else { %>
           <p>No job listings available at the moment.</p>
           <% } %>
         </section>

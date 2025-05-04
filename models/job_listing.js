@@ -36,6 +36,11 @@ const jobListingSchema = new Schema(
       enum: ["full-time", "part-time", "contract"],
       required: true,
     },
+    experienceLevel: {
+      type: String,
+      enum: ["Entry", "Mid", "Senior"],
+      required: true,
+    },
     remote: {
       type: Boolean,
       default: false,
