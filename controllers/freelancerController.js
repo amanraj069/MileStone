@@ -1,5 +1,5 @@
 const mongoose = require('../database');
-const ActiveJob = require('../models/job');
+const ActiveJob = require('../models/job_listing');
 
 exports.getFreelancerActiveJobs = async (req, res) => {
   try {
