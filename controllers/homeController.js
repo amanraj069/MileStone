@@ -1,6 +1,5 @@
-const path = require("path");
-const fs = require("fs").promises;
 const db = require("../database");
+const JobListing = require("../models/job_listing");
 
 exports.getHome = (req, res) => {
   let dashboardRoute = "";
@@ -25,12 +24,6 @@ exports.getHome = (req, res) => {
 
 exports.getJobListing = async (req, res) => {
   try {
-    const jobsData = await fs.readFile(
-      path.join(__dirname, "../data", "posted_jobs.json"),
-      "utf8"
-    );
-    const jobs = JSON.parse(jobsData);
-
     let dashboardRoute = "";
     if (req.session && req.session.user) {
       switch (req.session.user.role) {
@@ -46,33 +39,37 @@ exports.getJobListing = async (req, res) => {
       }
     }
 
+    const jobListings = await JobListing.find({ status: "open" }).lean();
+    console.log("Fetched job listings:", jobListings);
+
     res.locals.user = req.session && req.session.user ? req.session.user : null;
     res.locals.dashboardRoute = dashboardRoute;
 
     res.render("Deepak/Job_listing_public", {
-      jobs,
       user: req.session && req.session.user ? req.session.user : null,
       dashboardRoute,
+      jobListings,
     });
   } catch (error) {
-    console.error("Error loading job listings:", error);
-    res.status(500).send("Server Error");
+    console.error("Error fetching job listings:", error);
+    res.status(500).send("Error fetching job listings");
   }
 };
 
 exports.getJobDetails = async (req, res) => {
   try {
-    const jobId = parseInt(req.query.jobId, 10);
-    const jobsData = await fs.readFile(
-      path.join(__dirname, "../data", "posted_jobs.json"),
-      "utf8"
-    );
-    const jobs = JSON.parse(jobsData);
+    const jobId = req.params.jobId || req.query.jobId;
+    console.log("Job ID from request:", jobId);
 
-    if (isNaN(jobId) || jobId < 0 || jobId >= jobs.length) {
-      return res
-        .status(404)
-        .send("Job not found. Please select a job from the listings.");
+    if (!jobId) {
+      return res.status(400).send("Job ID is required");
+    }
+
+    const job = await JobListing.findOne({ jobId }).lean();
+    console.log("Fetched job:", job);
+
+    if (!job) {
+      return res.status(404).send("Job not found. Please select a job from the listings.");
     }
 
     let dashboardRoute = "";
@@ -90,11 +87,10 @@ exports.getJobDetails = async (req, res) => {
       }
     }
 
-    const job = jobs[jobId];
     res.render("Deepak/see_more_detail", {
-      job,
       user: req.session.user || null,
       dashboardRoute,
+      job,
     });
   } catch (error) {
     console.error("Error loading job details:", error);
@@ -108,11 +104,13 @@ exports.applyForJob = (req, res) => {
   }
 
   const {
+    job_id,
     job_title,
-    company_name,
+    employer_id,
     location,
     job_type,
-    salary_range,
+    budget_amount,
+    budget_period,
     posted_date,
     deadline,
     image,
@@ -128,23 +126,25 @@ exports.applyForJob = (req, res) => {
 
   const query = `
     INSERT INTO active_jobs (
-      user_id, job_title, company_name, location, job_type, salary_range, posted_date, deadline, image, description_intro,
+      user_id, job_id, job_title, employer_id, location, job_type, budget_amount, budget_period, posted_date, deadline, image, description_intro,
       bid_amount, applicant_name, applicant_email, applicant_phone, applicant_message
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.run(
     query,
     [
       userId,
+      job_id,
       job_title,
-      company_name,
+      employer_id,
       location,
       job_type,
-      salary_range,
+      budget_amount,
+      budget_period,
       posted_date,
       deadline,
-      image,
+      image || null,
       description_intro,
       bid_amount,
       applicant_name,

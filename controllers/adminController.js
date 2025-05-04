@@ -18,7 +18,7 @@ exports.getJobListings = async (req, res) => {
     res.render("Jayanth/job_listings", {
       jobListings,
       user: req.session.user,
-      activeSection: "job-listings",
+      activeSection: "job_listings",
     });
   } catch (error) {
     console.error("Error fetching job listings:", error);
@@ -43,7 +43,7 @@ exports.getJobDetails = async (req, res) => {
     res.render("Jayanth/Additional/see_more_detail", {
       job,
       user: req.session.user,
-      activeSection: "job-listings",
+      activeSection: "job_listings",
     });
   } catch (error) {
     console.error("Error fetching job details:", error);

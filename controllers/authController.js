@@ -1,12 +1,12 @@
 const path = require("path");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const { User, Employer, Freelancer, Admin } = require("../models");
 
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
-  
+
   try {
     // Validate required fields
     if (!email || !password || !role) {
@@ -29,7 +29,7 @@ exports.postSignup = async (req, res) => {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    
+
     // Create new user
     const newUser = new User({
       userId,
@@ -37,28 +37,28 @@ exports.postSignup = async (req, res) => {
       password: hashedPassword,
       role,
       roleId,
-      name: name || ''
+      name: name || "",
     });
 
     // Create corresponding role-specific tuple
     let roleEntity;
     switch (role.toLowerCase()) {
-      case 'employer':
+      case "employer":
         roleEntity = new Employer({
           employerId: roleId,
-          userId
+          userId,
         });
         break;
-      case 'freelancer':
+      case "freelancer":
         roleEntity = new Freelancer({
           freelancerId: roleId,
-          userId
+          userId,
         });
         break;
-      case 'admin':
+      case "admin":
         roleEntity = new Admin({
           adminId: roleId,
-          userId
+          userId,
         });
         break;
       default:
@@ -82,7 +82,7 @@ exports.postSignup = async (req, res) => {
 
 exports.postLogin = async (req, res) => {
   const { email, password, role } = req.body;
-  
+
   try {
     // Validate required fields
     if (!email || !password || !role) {
@@ -91,11 +91,11 @@ exports.postLogin = async (req, res) => {
 
     // Find user by email and role
     const user = await User.findOne({ email, role });
-    
+
     if (!user) {
       return res.redirect("/login?error=Invalid email or role");
     }
-    
+
     // Check if user has a password
     if (!user.password) {
       return res.redirect("/login?error=Account has no password set");
@@ -103,7 +103,7 @@ exports.postLogin = async (req, res) => {
 
     // Check password
     const match = await bcrypt.compare(password, user.password);
-    
+
     if (match) {
       // Set user session
       req.session.user = {
@@ -111,23 +111,24 @@ exports.postLogin = async (req, res) => {
         email: user.email,
         role: user.role,
         name: user.name,
+        roleId: user.roleId,
         authenticated: true,
       };
-      
+
       console.log(
         "User logged in, session set:",
         req.session.user,
         "Session ID:",
         req.sessionID
       );
-      
+
       // Save session and redirect
       req.session.save((err) => {
         if (err) {
           console.error("Session save error:", err);
           return res.status(500).send("Server error during login");
         }
-        
+
         console.log(`Redirecting ${role} to dashboard`);
         try {
           if (role === "admin") {

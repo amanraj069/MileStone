@@ -236,11 +236,11 @@ select:hover {
 }
 
 /* Job Listings */
-.job-listings {
+.job_listings {
   flex: 1;
 }
 
-.job-listings h1 {
+.job_listings h1 {
   color: #1a2b49;
   font-size: 2rem;
   margin-bottom: 25px;

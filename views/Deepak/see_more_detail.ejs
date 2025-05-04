@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Job Details - <%= job.job_title %></title>
+    <title>Job Details - <%= job.title %></title>
     <link rel="stylesheet" href="/css/Joblisting/see_more_detail.css" />
   </head>
   <body>
@@ -18,10 +18,10 @@
         <div class="job-title-section">
           <div class="job-title-info">
             <div class="deadline">
-              Application Deadline: <%= job.deadline %>
+              Application Deadline: <%= new Date(job.applicationDeadline).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %>
             </div>
-            <h1 class="job-title"><%= job.job_title %></h1>
-            <div class="company-name"><%= job.company_name %></div>
+            <h1 class="job-title"><%= job.title %></h1>
+            <div class="company-name">TechSolutions Inc.</div>
             <div class="job-meta">
               <div class="meta-item">
                 <svg
@@ -34,7 +34,7 @@
                     d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                   />
                 </svg>
-                <%= job.location %>
+                <%= job.location || 'Not specified' %> <%= job.remote ? '(Remote)' : '' %>
               </div>
               <div class="meta-item">
                 <svg
@@ -47,7 +47,7 @@
                     d="M20 6h-3V4c0-1.11-.89-2-2-2H9c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zM9 4h6v2H9V4zm11 15H4v-2h16v2zm0-5H4V8h3v2h2V8h6v2h2V8h3v6z"
                   />
                 </svg>
-                <%= job.job_type %>
+                <%= job.jobType %>
               </div>
               <div class="meta-item">
                 <svg
@@ -60,7 +60,7 @@
                     d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z"
                   />
                 </svg>
-                <%= job.salary_range %>
+                ₹<%= job.budget.amount.toLocaleString() %> per <%= job.budget.period %>
               </div>
               <div class="meta-item">
                 <svg
@@ -73,7 +73,7 @@
                     d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"
                   />
                 </svg>
-                Posted on <%= job.posted_date %>
+                Posted on <%= new Date(job.postedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %>
               </div>
             </div>
             <div class="job-actions">
@@ -106,8 +106,8 @@
           </div>
           <div class="job-img-container">
             <img
-              src="<%= job.image %>"
-              alt="<%= job.company_name %>"
+              src="<%= job.imageUrl %>"
+              alt="Job Image"
               class="job-img"
             />
           </div>
@@ -117,29 +117,35 @@
       <div class="job-description">
         <div class="section-title">Job Description</div>
         <div class="description-text">
-          <p><%= job.description.intro %></p>
-          <br />
-          <p><strong>Responsibilities:</strong></p>
-          <ul>
-            <% job.description.responsibilities.forEach(responsibility => { %>
-            <li><%= responsibility %></li>
-            <% }) %>
-          </ul>
-          <br />
-          <p><strong>Requirements:</strong></p>
-          <ul>
-            <% job.description.requirements.forEach(requirement => { %>
-            <li><%= requirement %></li>
-            <% }) %>
-          </ul>
-          <div class="skills-required">
-            <div class="skills-title">Technical Skills:</div>
-            <div class="skills-tags">
-              <% job.description.skills.forEach(skill => { %>
-              <span class="skill-tag"><%= skill %></span>
-              <% }) %>
+          <p><%= job.description.text %></p>
+          <% if (job.description.responsibilities && job.description.responsibilities.length > 0) { %>
+            <br />
+            <p><strong>Responsibilities:</strong></p>
+            <ul>
+              <% job.description.responsibilities.forEach(responsibility => { %>
+                <li><%= responsibility %></li>
+              <% }); %>
+            </ul>
+          <% } %>
+          <% if (job.description.requirements && job.description.requirements.length > 0) { %>
+            <br />
+            <p><strong>Requirements:</strong></p>
+            <ul>
+              <% job.description.requirements.forEach(requirement => { %>
+                <li><%= requirement %></li>
+              <% }); %>
+            </ul>
+          <% } %>
+          <% if (job.description.skills && job.description.skills.length > 0) { %>
+            <div class="skills-required">
+              <div class="skills-title">Technical Skills:</div>
+              <div class="skills-tags">
+                <% job.description.skills.forEach(skill => { %>
+                  <span class="skill-tag"><%= skill %></span>
+                <% }); %>
+              </div>
             </div>
-          </div>
+          <% } %>
         </div>
       </div>
 
@@ -148,19 +154,25 @@
         <table class="milestones-table">
           <thead>
             <tr>
-              <th>Deliverable</th>
+              <th>Description</th>
               <th>Deadline</th>
               <th>Payment</th>
             </tr>
           </thead>
           <tbody id="milestones-tbody">
-            <% job.milestones.forEach(milestone => { %>
-            <tr>
-              <td><%= milestone.deliverable %></td>
-              <td><%= milestone.deadline %></td>
-              <td class="payment-column"><%= milestone.payment %></td>
-            </tr>
-            <% }) %>
+            <% if (job.milestones && job.milestones.length > 0) { %>
+              <% job.milestones.forEach(milestone => { %>
+                <tr>
+                  <td><%= milestone.description %></td>
+                  <td><%= milestone.deadline %></td>
+                  <td class="payment-column"><%= milestone.payment %></td>
+                </tr>
+              <% }); %>
+            <% } else { %>
+              <tr>
+                <td colspan="3">No milestones defined for this project.</td>
+              </tr>
+            <% } %>
           </tbody>
         </table>
       </div>
@@ -169,57 +181,77 @@
       <div class="modal-overlay" id="applyModal">
         <div class="modal">
           <div class="modal-header">
-            <h3>Apply for <%= job.job_title %></h3>
+            <h3>Apply for <%= job.title %></h3>
             <span id="closeApplyModal" class="close-modal">×</span>
           </div>
           <div class="modal-body">
-            <div class="form-group">
-              <label for="applicantName">Full Name*</label>
-              <input
-                type="text"
-                id="applicantName"
-                value="<%= user.name || '' %>"
-                placeholder="Enter your full name"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="applicantEmail">Email*</label>
-              <input
-                type="email"
-                id="applicantEmail"
-                value="<%= user.email || '' %>"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="applicantPhone">Phone Number*</label>
-              <input
-                type="tel"
-                id="applicantPhone"
-                placeholder="Enter your phone number"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="applicantBid">Your Bid Amount (₹)*</label>
-              <input
-                type="text"
-                id="applicantBid"
-                placeholder="Enter your bid amount"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="applicantMessage">Cover Message*</label>
-              <textarea
-                id="applicantMessage"
-                rows="5"
-                placeholder="Write your cover message here"
-                required
-              ></textarea>
-            </div>
+            <form id="applicationForm">
+              <!-- Hidden fields for job details -->
+              <input type="hidden" name="job_id" value="<%= job.jobId %>">
+              <input type="hidden" name="job_title" value="<%= job.title %>">
+              <input type="hidden" name="employer_id" value="<%= job.employerId %>">
+              <input type="hidden" name="location" value="<%= job.location || 'Not specified' %>">
+              <input type="hidden" name="job_type" value="<%= job.jobType %>">
+              <input type="hidden" name="budget_amount" value="<%= job.budget.amount %>">
+              <input type="hidden" name="budget_period" value="<%= job.budget.period %>">
+              <input type="hidden" name="posted_date" value="<%= new Date(job.postedDate).toISOString() %>">
+              <input type="hidden" name="deadline" value="<%= new Date(job.applicationDeadline).toISOString() %>">
+              <input type="hidden" name="image" value="<%= job.imageUrl %>">
+              <input type="hidden" name="description_intro" value="<%= job.description.text %>">
+
+              <div class="form-group">
+                <label for="applicantName">Full Name*</label>
+                <input
+                  type="text"
+                  id="applicantName"
+                  name="applicant_name"
+                  value="<%= user.name || '' %>"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="applicantEmail">Email*</label>
+                <input
+                  type="email"
+                  id="applicantEmail"
+                  name="applicant_email"
+                  value="<%= user.email || '' %>"
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="applicantPhone">Phone Number*</label>
+                <input
+                  type="tel"
+                  id="applicantPhone"
+                  name="applicant_phone"
+                  placeholder="Enter your phone number"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="applicantBid">Your Bid Amount (₹)*</label>
+                <input
+                  type="text"
+                  id="applicantBid"
+                  name="bid_amount"
+                  placeholder="Enter your bid amount"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="applicantMessage">Cover Message*</label>
+                <textarea
+                  id="applicantMessage"
+                  name="applicant_message"
+                  rows="5"
+                  placeholder="Write your cover message here"
+                  required
+                ></textarea>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button id="cancelApply" class="cancel-btn">Cancel</button>
@@ -232,5 +264,73 @@
       <% } %>
     </div>
     <script src="/js/Joblisting/see_more_detail.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const applyNowLoggedInBtn = document.getElementById('applyNowLoggedInBtn');
+        const applyNowLoginRequiredBtn = document.getElementById('applyNowLoginRequiredBtn');
+        const applyModal = document.getElementById('applyModal');
+        const closeApplyModal = document.getElementById('closeApplyModal');
+        const cancelApply = document.getElementById('cancelApply');
+        const submitApplication = document.getElementById('submitApplication');
+
+        if (applyNowLoggedInBtn) {
+          applyNowLoggedInBtn.addEventListener('click', () => {
+            applyModal.style.display = 'block';
+          });
+        }
+
+        if (applyNowLoginRequiredBtn) {
+          applyNowLoginRequiredBtn.addEventListener('click', () => {
+            window.location.href = '/login';
+          });
+        }
+
+        if (closeApplyModal) {
+          closeApplyModal.addEventListener('click', () => {
+            applyModal.style.display = 'none';
+          });
+        }
+
+        if (cancelApply) {
+          cancelApply.addEventListener('click', () => {
+            applyModal.style.display = 'none';
+          });
+        }
+
+        if (submitApplication) {
+          submitApplication.addEventListener('click', async () => {
+            const form = document.getElementById('applicationForm');
+            if (!form.checkValidity()) {
+              form.reportValidity();
+              return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            try {
+              const response = await fetch('/jobs/apply', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+              });
+
+              const result = await response.json();
+              if (response.ok) {
+                alert(result.message);
+                applyModal.style.display = 'none';
+              } else {
+                alert(result.error || 'Failed to submit application');
+              }
+            } catch (error) {
+              console.error('Error submitting application:', error);
+              alert('An error occurred while submitting your application');
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
