@@ -15,13 +15,6 @@ exports.getJobListings = (req, res) => {
   });
 };
 
-exports.getJobDetails = (req, res) => {
-  res.render("Jayanth/Additional/see_more_detail", {
-    user: req.session.user,
-    activeSection: "job_listings",
-  });
-};
-
 exports.getFreelancers = (req, res) => {
   res.render("Jayanth/freelancers", {
     user: req.session.user,
@@ -47,12 +40,5 @@ exports.getProfile = (req, res) => {
   res.render("Jayanth/profile", {
     user: req.session.user,
     activeSection: "profile",
-  });
-};
-
-exports.getChatsCurrentJobs = (req, res) => {
-  res.render("Abhishek/Additional/chat", {
-    user: req.session.user,
-    activeSection: "chat",
   });
 };
