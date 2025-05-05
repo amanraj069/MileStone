@@ -8,119 +8,46 @@ exports.getAdminDashboard = (req, res) => {
   });
 };
 
-exports.getJobListings = async (req, res) => {
-  try {
-    const jobListingsData = await fs.readFile(
-      path.join(__dirname, "../data/adminD/job_listings.json"),
-      "utf8"
-    );
-    const jobListings = JSON.parse(jobListingsData);
-    res.render("Jayanth/job_listings", {
-      jobListings,
-      user: req.session.user,
-      activeSection: "job_listings",
-    });
-  } catch (error) {
-    console.error("Error fetching job listings:", error);
-    res.status(500).send("Error loading job listings page");
-  }
+exports.getJobListings = (req, res) => {
+  res.render("Jayanth/job_listings", {
+    user: req.session.user,
+    activeSection: "job_listings",
+  });
 };
 
-exports.getJobDetails = async (req, res) => {
-  try {
-    const jobId = req.params.jobId;
-    const jobListingsData = await fs.readFile(
-      path.join(__dirname, "../data/adminD/job_listings.json"),
-      "utf8"
-    );
-    const jobListings = JSON.parse(jobListingsData);
-    const job = jobListings.find((j) => j.id === jobId);
-
-    if (!job) {
-      return res.status(404).send("Job not found");
-    }
-
-    res.render("Jayanth/Additional/see_more_detail", {
-      job,
-      user: req.session.user,
-      activeSection: "job_listings",
-    });
-  } catch (error) {
-    console.error("Error fetching job details:", error);
-    res.status(500).send("Error loading job details page");
-  }
+exports.getJobDetails = (req, res) => {
+  res.render("Jayanth/Additional/see_more_detail", {
+    user: req.session.user,
+    activeSection: "job_listings",
+  });
 };
 
-exports.getFreelancers = async (req, res) => {
-  try {
-    const freelancersData = await fs.readFile(
-      path.join(__dirname, "../data/adminD/freelancers.json"),
-      "utf8"
-    );
-    const freelancers = JSON.parse(freelancersData);
-    res.render("Jayanth/freelancers", {
-      freelancers,
-      user: req.session.user,
-      activeSection: "freelancers",
-    });
-  } catch (error) {
-    console.error("Error fetching freelancers:", error);
-    res.status(500).send("Error loading freelancers page");
-  }
+exports.getFreelancers = (req, res) => {
+  res.render("Jayanth/freelancers", {
+    user: req.session.user,
+    activeSection: "freelancers",
+  });
 };
 
-exports.getEmployers = async (req, res) => {
-  try {
-    const employersData = await fs.readFile(
-      path.join(__dirname, "../data/adminD/employers.json"),
-      "utf8"
-    );
-    const employers = JSON.parse(employersData);
-    res.render("Jayanth/employers", {
-      employers,
-      user: req.session.user,
-      activeSection: "employers",
-    });
-  } catch (error) {
-    console.error("Error fetching employers:", error);
-    res.status(500).send("Error loading employers page");
-  }
+exports.getEmployers = (req, res) => {
+  res.render("Jayanth/employers", {
+    user: req.session.user,
+    activeSection: "employers",
+  });
 };
 
-exports.getComplaints = async (req, res) => {
-  try {
-    const complaintsData = await fs.readFile(
-      path.join(__dirname, "../data/adminD/complaints.json"),
-      "utf8"
-    );
-    const complaints = JSON.parse(complaintsData);
-    res.render("Jayanth/complaints", {
-      complaints,
-      user: req.session.user,
-      activeSection: "complaints",
-    });
-  } catch (error) {
-    console.error("Error fetching complaints:", error);
-    res.status(500).send("Error loading complaints page");
-  }
+exports.getComplaints = (req, res) => {
+  res.render("Jayanth/complaints", {
+    user: req.session.user,
+    activeSection: "complaints",
+  });
 };
 
-exports.getProfile = async (req, res) => {
-  try {
-    const profileData = await fs.readFile(
-      path.join(__dirname, "../data/adminD/profile.json"),
-      "utf8"
-    );
-    const profile = JSON.parse(profileData);
-    res.render("Jayanth/profile", {
-      profile,
-      user: req.session.user,
-      activeSection: "profile",
-    });
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-    res.status(500).send("Error loading profile page");
-  }
+exports.getProfile = (req, res) => {
+  res.render("Jayanth/profile", {
+    user: req.session.user,
+    activeSection: "profile",
+  });
 };
 
 exports.getChatsCurrentJobs = (req, res) => {

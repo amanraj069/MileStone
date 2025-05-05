@@ -26,32 +26,9 @@
             </form>
           </div>
           <div class="complaints-container">
-            <% complaints.forEach(complaint => { %>
-            <div
-              class="complaint-card <%= complaint.status.toLowerCase().replace(' ', '-') %>"
-            >
+            <div class="complaint-card pending">
               <div class="complaint-header">
-                <span
-                  class="status-icon <%= complaint.status.toLowerCase().replace(' ', '-') %>"
-                >
-                  <% if (complaint.status === 'Resolved') { %>
-                  <!-- Checkmark SVG -->
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M20 6L9 17L4 12"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  <% } else { %>
+                <span class="status-icon pending">
                   <!-- Clock SVG -->
                   <svg
                     width="16"
@@ -74,13 +51,10 @@
                       stroke-linecap="round"
                     />
                   </svg>
-                  <% } %>
                 </span>
-                <h3>Complaint #<%= complaint.id %></h3>
-                <span
-                  class="status <%= complaint.status.toLowerCase().replace(' ', '-') %>"
-                >
-                  <%= complaint.status %>
+                <h3>Complaint #1253</h3>
+                <span class="status pending">
+                  pending
                 </span>
               </div>
               <div class="complaint-body">
@@ -88,19 +62,19 @@
                   <div class="party">
                     <p>
                       <strong>Freelancer:</strong>
-                      <%= complaint.freelancer %>
+                      Sarah Johnson
                     </p>
                   </div>
                   <div class="party">
                     <p>
                       <strong>Employer:</strong>
-                      <%= complaint.employer %>
+                      TechSolutions Inc.
                     </p>
                   </div>
                 </div>
                 <p class="complaint-desc">
                   <strong>Issue:</strong>
-                  <%= complaint.issue %>
+                  Delayed payments for completed work
                 </p>
               </div>
               <div class="complaint-actions">
@@ -123,7 +97,6 @@
                 </div>
               </div>
             </div>
-            <% }) %>
           </div>
         </section>
       </div>

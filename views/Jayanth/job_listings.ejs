@@ -57,20 +57,19 @@
             </form>
           </div>
           <div class="jobs-container">
-            <% jobListings.forEach(job => { %>
             <div class="job-card">
               <div class="job-card-left">
                 <div class="company-logo">
-                  <img src="<%= job.companyLogo %>" alt="Company Logo" />
+                  <img src="/assets/company_logo.jpg" alt="Company Logo" />
                 </div>
               </div>
               <div class="job-card-center">
-                <h3 class="job-title"><%= job.title %></h3>
-                <p class="job-salary"><%= job.salary %></p>
+                <h3 class="job-title">Senior Frontend Developer</h3>
+                <p class="job-salary">₹800-1700</p>
                 <div class="job-tags">
-                  <% job.tags.forEach(tag => { %>
-                  <span class="job-tag"><%= tag %></span>
-                  <% }) %>
+                  <span class="job-tag">React</span>
+                  <span class="job-tag">TypeScript</span>
+                  <span class="job-tag">NextJS</span>
                 </div>
                 <div class="job-details">
                   <span class="job-location">
@@ -88,7 +87,7 @@
                       />
                       <circle cx="12" cy="9" r="2" />
                     </svg>
-                    <%= job.location %>
+                    Bangalore
                     <span class="status-dot green"></span>
                   </span>
                   <span class="job-type">
@@ -104,7 +103,7 @@
                       <rect x="3" y="4" width="18" height="14" rx="2" ry="2" />
                       <line x1="3" y1="8" x2="21" y2="8" />
                     </svg>
-                    <%= job.type %>
+                    Full-time
                     <span class="status-dot green"></span>
                   </span>
                   <span class="job-date">
@@ -120,23 +119,22 @@
                       <circle cx="12" cy="12" r="10" />
                       <path d="M12 6V12L16 14" />
                     </svg>
-                    Posted <%= job.posted %>
+                    Posted 2 days ago
                     <span class="status-dot green"></span>
                   </span>
                 </div>
               </div>
               <div class="job-card-right">
                 <div class="applicants-badge">
-                  <%= job.applicants %> applicants
+                  45 applicants
                 </div>
                 <a
-                  href="/AdminD/job_listings/see_more/<%= job.id %>"
+                  href="/AdminD/job_listings/see_more/1"
                   class="btn-see-more"
                   >See More</a
                 >
               </div>
             </div>
-            <% }) %>
           </div>
         </section>
       </div>

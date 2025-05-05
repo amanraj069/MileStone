@@ -58,17 +58,14 @@
             </form>
           </div>
           <div class="user-list">
-            <% employers.forEach(employer => { %>
             <div class="user-card">
               <div class="user-avatar">
-                <img src="<%= employer.logo %>" alt="Company Logo" />
+                <img src="/assets/company_logo.jpg" alt="Company Logo" />
               </div>
               <div class="user-info">
-                <h3><%= employer.name %></h3>
-                <p class="user-title"><%= employer.type %></p>
+                <h3>TechSolutions Inc.</h3>
+                <p class="user-title">Software Development Company</p>
                 <div class="rating">
-                  <% for(let i=1; i <=5; i++) { %> <% if(i <=
-                  Math.floor(employer.rating)) { %>
                   <!-- Full Star SVG -->
                   <svg
                     width="16"
@@ -81,8 +78,42 @@
                       d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
                     />
                   </svg>
-                  <% } else if(i === Math.ceil(employer.rating) &&
-                  employer.rating % 1 !== 0) { %>
+                  <!-- Full Star SVG -->
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                    />
+                  </svg>
+                  <!-- Full Star SVG -->
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                    />
+                  </svg>
+                  <!-- Full Star SVG -->
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                    />
+                  </svg>
                   <!-- Half Star SVG -->
                   <svg
                     width="16"
@@ -95,25 +126,9 @@
                       d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77V2Z"
                     />
                   </svg>
-                  <% } else { %>
-                  <!-- Empty Star SVG -->
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                    />
-                  </svg>
-                  <% } %> <% } %>
-                  <span> <%= employer.rating %> </span>
+                  <span> 4.5 </span>
                 </div>
-                <p class="user-location"><%= employer.location %></p>
+                <p class="user-location">San Francisco, CA</p>
               </div>
               <div class="user-actions">
                 <button class="btn-primary">
@@ -153,7 +168,6 @@
                 </button>
               </div>
             </div>
-            <% }) %>
           </div>
         </section>
       </div>
