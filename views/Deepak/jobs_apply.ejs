@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Job - Milestone</title>
+    <link rel="stylesheet" href="/css/Joblisting/jobs_apply.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">Milestone</div>
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Search for jobs or freelancers..."
+          onclick="window.location.href='/jobs'"
+          onfocus="this.blur()"
+        />
+        <button
+          class="svg"
+          onclick="window.location.href='/jobs'; event.preventDefault()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            x="0px"
+            y="0px"
+            width="100"
+            height="100"
+            viewBox="0,0,255.98958,255.98958"
+          >
+            <g
+              fill="#ffffff"
+              fill-rule="nonzero"
+              stroke="none"
+              stroke-width="1"
+              stroke-linecap="butt"
+              stroke-linejoin="miter"
+              stroke-miterlimit="10"
+              stroke-dasharray=""
+              stroke-dashoffset="0"
+              font-family="none"
+              font-weight="none"
+              font-size="none"
+              text-anchor="none"
+              style="mix-blend-mode: normal"
+            >
+              <g transform="scale(2,2)">
+                <path
+                  d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z"
+                ></path>
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="nav-buttons">
+        <% if (user) { %>
+        <button onclick="window.location.href='<%= dashboardRoute %>'">
+          Dashboard
+        </button>
+        <% } else { %>
+        <button onclick="window.location.href='/login'">Sign In</button>
+        <% } %>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <h1 class="page-title">Apply for <%= job.title %></h1>
+
+      <!-- Error Message -->
+      <% if (error) { %>
+      <div class="error-message">
+        <p><%= error %></p>
+      </div>
+      <% } %>
+
+      <!-- Content Wrapper for Side-by-Side Layout -->
+      <div class="content-wrapper">
+        <!-- Job Details Section -->
+        <div class="job-details">
+          <h2 class="section-title">Job Details</h2>
+          <div class="job-details-grid">
+            <div class="job-details-column">
+              <p><strong>Job Type:</strong> <%= job.jobType %></p>
+              <p>
+                <strong>Location:</strong> <%= job.location || 'Not specified'
+                %>
+              </p>
+              <p>
+                <strong>Experience Level:</strong> <%= job.experienceLevel %>
+              </p>
+              <p>
+                <strong>Budget:</strong> $<%= job.budget.amount %> / <%=
+                job.budget.period %>
+              </p>
+            </div>
+            <div class="job-details-column">
+              <p>
+                <strong>Posted:</strong> <%= job.postedDate.toDateString() %>
+              </p>
+              <p>
+                <strong>Deadline:</strong> <%=
+                job.applicationDeadline.toDateString() %>
+              </p>
+              <p><strong>Remote:</strong> <%= job.remote ? 'Yes' : 'No' %></p>
+            </div>
+          </div>
+
+          <div class="job-requirements">
+            <h3 class="sub-section-title">Requirements</h3>
+            <ul class="list">
+              <% job.description.requirements.forEach(req => { %>
+              <li><%= req %></li>
+              <% }) %>
+            </ul>
+          </div>
+
+          <div class="job-skills">
+            <h3 class="sub-section-title">Skills</h3>
+            <ul class="list">
+              <% job.description.skills.forEach(skill => { %>
+              <li><%= skill %></li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Application Form -->
+        <% if (user && user.role === 'Freelancer') { %>
+        <div class="application-form">
+          <h2 class="section-title">Application Form</h2>
+
+          <form action="/jobs/apply/<%= job.jobId %>" method="POST">
+            <div class="form-group">
+              <label for="coverMessage" class="form-label">Cover Message</label>
+              <textarea
+                id="coverMessage"
+                name="coverMessage"
+                rows="5"
+                class="form-textarea"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="resumeLink" class="form-label">Resume Link</label>
+              <input
+                type="url"
+                id="resumeLink"
+                name="resumeLink"
+                class="form-input"
+                placeholder="https://example.com/resume.pdf"
+                required
+              />
+            </div>
+
+            <input type="hidden" name="jobId" value="<%= job.jobId %>" />
+            <input
+              type="hidden"
+              name="freelancerId"
+              value="<%= user.roleId %>"
+            />
+
+            <button type="submit" class="submit-button">
+              Submit Application
+            </button>
+          </form>
+        </div>
+        <% } else { %>
+        <div class="application-form">
+          <div class="warning-message">
+            <p>You must be logged in as a Freelancer to apply for this job.</p>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section footer-logo">
+          <h3 class="footer-title">Milestone</h3>
+          <p class="centered">
+            Your go-to platform for hiring top freelancers. We'll fill some more
+            content here according to our need or we can remove this section if
+            not required.
+          </p>
+        </div>
+        <div class="footer-section footer-links">
+          <h3 class="footer-title">Quick Links</h3>
+          <div class="quick-links">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/login">Sign in</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Milestone. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

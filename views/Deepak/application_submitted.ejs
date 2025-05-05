@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Submitted - Milestone</title>
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(135deg, #022245, #092c51);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 25px;
+      box-shadow: 0 4px 12px rgba(71, 20, 16, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      height: 80px;
+    }
+
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 5px 12px;
+      width: 45%;
+      height: 50px;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-container:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .search-container input {
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 5px;
+      font-size: 16px;
+      background: transparent;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .search-container input:focus {
+      transform: scale(1.01);
+    }
+
+    .search-container input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .search-container button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    .search-container button:hover {
+      color: #ffffff;
+    }
+
+    .svg {
+      height: 20px;
+      width: 20px;
+      margin-bottom: 15px;
+      margin-right: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .svg:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-buttons button {
+      background-color: rgb(0, 94, 120);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+      background-color: rgb(1, 55, 70);
+      transform: translateY(-2px);
+    }
+
+    /* Success Section */
+    .success-section {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f0f7fd, #ffffff);
+    }
+
+    .success-container {
+      max-width: 600px;
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      animation: subtleFadeUp 0.6s ease-out forwards;
+    }
+
+    .success-container h1 {
+      font-size: 36px;
+      color: #03065d;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .success-container p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .success-icon {
+      font-size: 60px;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+
+    .success-container .btn-primary {
+      background-color: #03065d;
+      color: white;
+      padding: 12px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(71, 20, 16, 0.2);
+    }
+
+    .success-container .btn-primary:hover {
+      background-color: #00058e;
+      transform: translateY(-2px);
+    }
+
+    /* Error Section */
+    .error-container {
+      max-width: 600px;
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      animation: subtleFadeUp 0.6s ease-out forwards;
+    }
+
+    .error-container h1 {
+      font-size: 36px;
+      color: #dc3545;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .error-container p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .error-icon {
+      font-size: 60px;
+      color: #dc3545;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #022245, #092c51);
+      color: white;
+      padding: 40px 5%;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
+      text-align: left;
+      padding: 0 20px;
+    }
+
+    .footer-logo {
+      text-align: center;
+    }
+
+    .footer-logo h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo p {
+      font-size: 14px;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .footer-links h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .footer-title,
+    .footer-logo h3 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .quick-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 5px;
+    }
+
+    .quick-links a:hover {
+      color: #d4af37;
+      transform: translateY(-2px);
+    }
+
+    ul,
+    ol {
+      list-style: none;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Animation Keyframes */
+    @keyframes subtleFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+      }
+
+      .search-container {
+        width: 90%;
+        margin: 10px 0;
+      }
+
+      .nav-buttons {
+        padding: 5px 0;
+        flex-direction: row;
+        justify-content: center;
+        width: 50%;
+        gap: 10px;
+      }
+
+      .success-container, .error-container {
+        padding: 20px;
+      }
+
+      .success-container h1, .error-container h1 {
+        font-size: 28px;
+      }
+
+      .success-container p, .error-container p {
+        font-size: 16px;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-section {
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+      }
+
+      .quick-links {
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Milestone</div>
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search for jobs or freelancers..."
+        onclick="window.location.href='/jobs'"
+        onfocus="this.blur()"
+      />
+      <button
+        class="svg"
+        onclick="window.location.href='/jobs'; event.preventDefault()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="100"
+          height="100"
+          viewBox="0,0,255.98958,255.98958"
+        >
+          <g
+            fill="#ffffff"
+            fill-rule="nonzero"
+            stroke="none"
+            stroke-width="1"
+            stroke-linecap="butt"
+            stroke-linejoin="miter"
+            stroke-miterlimit="10"
+            stroke-dasharray=""
+            stroke-dashoffset="0"
+            font-family="none"
+            font-weight="none"
+            font-size="none"
+            text-anchor="none"
+            style="mix-blend-mode: normal"
+          >
+            <g transform="scale(2,2)">
+              <path
+                d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z"
+              ></path>
+            </g>
+          </g>
+        </svg>
+      </button>
+    </div>
+    <div class="nav-buttons">
+      <% if (user) { %>
+      <button onclick="window.location.href='<%= dashboardRoute %>'">
+        Dashboard
+      </button>
+      <% } else { %>
+      <button onclick="window.location.href='/login'">Sign In</button>
+      <% } %>
+    </div>
+  </nav>
+
+  <!-- Success/Error Section -->
+  <section class="success-section">
+    <% if (success) { %>
+      <div class="success-container">
+        <div class="success-icon">✔</div>
+        <h1>Application Submitted Successfully!</h1>
+        <p>
+          Thank you for applying to <strong><%= job.title %></strong>! Your application has been received and is under review.
+          You'll hear from us soon regarding the next steps.
+        </p>
+        <button class="btn-primary" onclick="window.location.href='/jobs'">Browse More Jobs</button>
+      </div>
+    <% } else { %>
+      <div class="error-container">
+        <div class="error-icon">✖</div>
+        <h1>Application Submission Failed</h1>
+        <p>
+          There was an issue submitting your application. Please try again or contact support if the problem persists.
+        </p>
+        <button class="btn-primary" onclick="window.location.href='/jobs'">Back to Job Listings</button>
+      </div>
+    <% } %>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section footer-logo">
+        <h3 class="footer-title">Milestone</h3>
+        <p class="centered">
+          Your go-to platform for hiring top freelancers. We'll fill some more
+          content here according to our need or we can remove this section if
+          not required.
+        </p>
+      </div>
+      <div class="footer-section footer-links">
+        <h3 class="footer-title">Quick Links</h3>
+        <div class="quick-links">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/login">Sign in</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Milestone. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

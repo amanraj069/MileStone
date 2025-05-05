@@ -1,5 +1,6 @@
 const db = require("../database");
 const JobListing = require("../models/job_listing");
+const JobApplication = require("../models/job_application");
 
 exports.getHome = (req, res) => {
   let dashboardRoute = "";
@@ -98,68 +99,143 @@ exports.getJobDetails = async (req, res) => {
   }
 };
 
-exports.applyForJob = (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: "Unauthorized: Please log in" });
-  }
+exports.getJobApplication = async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+    console.log("Job ID for application:", jobId);
 
-  const {
-    job_id,
-    job_title,
-    employer_id,
-    location,
-    job_type,
-    experienceLevel,
-    budget_amount,
-    budget_period,
-    posted_date,
-    deadline,
-    image,
-    description_intro,
-    bid_amount,
-    applicant_name,
-    applicant_email,
-    applicant_phone,
-    applicant_message,
-  } = req.body;
-
-  const userId = req.session.user.id;
-
-  const query = `
-    INSERT INTO active_jobs (
-      user_id, job_id, job_title, employer_id, location, job_type, experienceLevel, budget_amount, budget_period, posted_date, deadline, image, description_intro,
-      bid_amount, applicant_name, applicant_email, applicant_phone, applicant_message
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  db.run(
-    query,
-    [
-      userId,
-      job_id,
-      job_title,
-      employer_id,
-      location,
-      job_type,
-      experienceLevel,
-      budget_amount,
-      budget_period,
-      posted_date,
-      deadline,
-      image || null,
-      description_intro,
-      bid_amount,
-      applicant_name,
-      applicant_email,
-      applicant_phone,
-      applicant_message,
-    ],
-    function (err) {
-      if (err) {
-        console.error("Error saving job application:", err);
-        return res.status(500).json({ error: "Failed to save application" });
-      }
-      res.status(200).json({ message: "Application submitted successfully" });
+    if (!jobId) {
+      return res.status(400).send("Job ID is required");
     }
-  );
+
+    const job = await JobListing.findOne({ jobId }).lean();
+    console.log("Fetched job for application:", job);
+
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+
+    let dashboardRoute = "";
+    if (req.session.user) {
+      switch (req.session.user.role) {
+        case "Admin":
+          dashboardRoute = "/adminD/profile";
+          break;
+        case "Employer":
+          dashboardRoute = "/employerD/profile";
+          break;
+        case "Freelancer":
+          dashboardRoute = "/freelancerD/profile";
+          break;
+      }
+    }
+
+    res.render("Deepak/jobs_apply", {
+      user: req.session.user || null,
+      dashboardRoute,
+      job,
+      error: req.query.error || null,
+    });
+  } catch (error) {
+    console.error("Error loading job application page:", error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.applyForJob = async (req, res) => {
+  try {
+    if (!req.session.user || req.session.user.role !== "Freelancer") {
+      return res.redirect(`/jobs/apply/${req.params.jobId}?error=Unauthorized: Please log in as a Freelancer`);
+    }
+
+    const { jobId, coverMessage, resumeLink } = req.body;
+    const freelancerId = req.session.user.roleId;
+
+    console.log("Received jobId:", jobId); // Debug log
+
+    // Validate input
+    if (!jobId || !coverMessage || !resumeLink) {
+      return res.redirect(`/jobs/apply/${jobId}?error=Missing required fields`);
+    }
+
+    // Verify job exists
+    const job = await JobListing.findOne({ jobId });
+    console.log("Found job:", job); // Debug log
+
+    if (!job) {
+      return res.redirect(`/jobs/apply/${jobId}?error=Job not found`);
+    }
+
+    // Check if freelancer has already applied to this job
+    const existingApplication = await JobApplication.findOne({
+      freelancerId,
+      jobId,
+    });
+
+    if (existingApplication) {
+      return res.redirect(`/jobs/apply/${jobId}?error=You can't apply to the same job more than once, wait for it to get approved.`);
+    }
+
+    // Create new job application
+    const jobApplication = new JobApplication({
+      freelancerId,
+      jobId,
+      coverMessage,
+      resumeLink,
+      status: "Pending"
+    });
+
+    await jobApplication.save();
+
+    // Redirect to success page with jobId
+    res.redirect(`/jobs/application-submitted/${jobId}?success=true`);
+  } catch (error) {
+    console.error("Error submitting job application:", error);
+    res.redirect(`/jobs/apply/${req.body.jobId}?error=Failed to submit application`);
+  }
+};
+
+exports.getApplicationSubmitted = async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+    console.log("Job ID for success page:", jobId);
+
+    if (!jobId) {
+      return res.status(400).send("Job ID is required");
+    }
+
+    const job = await JobListing.findOne({ jobId }).lean();
+    console.log("Fetched job for success page:", job);
+
+    if (!job) {
+      return res.status(404).send("Job not found. Please select a job from the listings.");
+    }
+
+    let dashboardRoute = "";
+    if (req.session && req.session.user) {
+      switch (req.session.user.role) {
+        case "Admin":
+          dashboardRoute = "/adminD/profile";
+          break;
+        case "Employer":
+          dashboardRoute = "/employerD/profile";
+          break;
+        case "Freelancer":
+          dashboardRoute = "/freelancerD/profile";
+          break;
+      }
+    }
+
+    const success = req.query.success === "true";
+
+    res.render("Deepak/application_submitted", {
+      user: req.session && req.session.user ? req.session.user : null,
+      dashboardRoute,
+      success,
+      job,
+    });
+  } catch (error) {
+    console.error("Error loading application submitted page:", error);
+    res.status(500).send("Server Error");
+  }
 };

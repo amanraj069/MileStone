@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Job Listing</title>
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+    <link rel="stylesheet" href="/css/EmployerD/job_listing.css" />
+    <style>
+      .form-container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #0a66c2;
+        box-shadow: 0 0 5px rgba(10, 102, 194, 0.2);
+      }
+      .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .form-group input[type="checkbox"] {
+        width: auto;
+        margin-right: 10px;
+      }
+      .milestone-group {
+        position: relative;
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+      }
+      .remove-milestone {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff4d4f;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+      }
+      .remove-milestone:hover {
+        background-color: #d9363e;
+      }
+      .add-milestone {
+        margin: 10px 0;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .add-milestone:hover {
+        background-color: #218838;
+      }
+      .submit-btn {
+        padding: 10px 20px;
+        background-color: #0a66c2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .submit-btn:hover {
+        background-color: #084e96;
+      }
+      #milestones h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <%- include('../partials/sidebar', { user: user, activePage: 'job_listings' }) %>
+      <div class="main-content">
+        <div class="container">
+          <header>
+            <div class="logo">Updating the current Job Listing</div>
+          </header>
+          <div class="content">
+            <div class="form-container">
+              <form action="/employerD/job_listings/edit/<%= job.jobId %>" method="POST">
+                <div class="form-group">
+                  <label for="title">Job Title</label>
+                  <input type="text" id="title" name="title" value="<%= job.title %>" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="imageUrl">Image URL</label>
+                  <input type="url" id="imageUrl" name="imageUrl" value="<%= job.imageUrl %>" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="budget_amount">Budget Amount</label>
+                  <input
+                    type="number"
+                    id="budget_amount"
+                    name="budget[amount]"
+                    value="<%= job.budget.amount %>"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="budget_period">Budget Period</label>
+                  <select id="budget_period" name="budget[period]" required>
+                    <option value="weekly" <%= job.budget.period === 'weekly' ? 'selected' : '' %>>Weekly</option>
+                    <option value="monthly" <%= job.budget.period === 'monthly' ? 'selected' : '' %>>Monthly</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <input type="text" id="location" name="location" value="<%= job.location || '' %>" />
+                </div>
+
+                <div class="form-group">
+                  <label for="jobType">Job Type</label>
+                  <select id="jobType" name="jobType" required>
+                    <option value="full-time" <%= job.jobType === 'full-time' ? 'selected' : '' %>>Full-time</option>
+                    <option value="part-time" <%= job.jobType === 'part-time' ? 'selected' : '' %>>Part-time</option>
+                    <option value="contract" <%= job.jobType === 'contract' ? 'selected' : '' %>>Contract</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="experienceLevel">Experience Level</label>
+                  <select id="experienceLevel" name="experienceLevel" required>
+                    <option value="Entry" <%= job.experienceLevel === 'Entry' ? 'selected' : '' %>>Entry</option>
+                    <option value="Mid" <%= job.experienceLevel === 'Mid' ? 'selected' : '' %>>Mid</option>
+                    <option value="Senior" <%= job.experienceLevel === 'Senior' ? 'selected' : '' %>>Senior</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="remote">
+                    <input
+                      type="checkbox"
+                      id="remote"
+                      name="remote"
+                      value="true"
+                      <%= job.remote ? 'checked' : '' %>
+                    />
+                    Remote
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label for="applicationDeadline">Application Deadline</label>
+                  <input
+                    type="date"
+                    id="applicationDeadline"
+                    name="applicationDeadline"
+                    value="<%= job.applicationDeadline.toISOString().split('T')[0] %>"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="description_text">Description for the Job</label>
+                  <textarea
+                    id="description_text"
+                    name="description[text]"
+                    required
+                  ><%= job.description.text %></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="description_responsibilities">Responsibilities (one per line)</label>
+                  <textarea
+                    id="description_responsibilities"
+                    name="description[responsibilities]"
+                  ><%= job.description.responsibilities.join('\n') %></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="description_requirements">Requirements (one per line)</label>
+                  <textarea
+                    id="description_requirements"
+                    name="description[requirements]"
+                  ><%= job.description.requirements.join('\n') %></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="description_skills">Skills (one per line)</label>
+                  <textarea
+                    id="description_skills"
+                    name="description[skills]"
+                  ><%= job.description.skills.join('\n') %></textarea>
+                </div>
+
+                <div id="milestones">
+                  <h3>Milestones</h3>
+                  <% job.milestones.forEach((milestone, index) => { %>
+                    <div class="milestone-group" data-index="<%= index %>">
+                      <button type="button" class="remove-milestone" onclick="removeMilestone(this)">×</button>
+                      <div class="form-group">
+                        <label for="milestone_description_<%= index %>">Description</label>
+                        <input
+                          type="text"
+                          id="milestone_description_<%= index %>"
+                          name="milestones[<%= index %>][description]"
+                          value="<%= milestone.description %>"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="milestone_deadline_<%= index %>">Deadline for the Milestone</label>
+                        <input
+                          type="date"
+                          id="milestone_deadline_<%= index %>"
+                          name="milestones[<%= index %>][deadline]"
+                          value="<%= milestone.deadline.split('T')[0] %>"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="milestone_payment_<%= index %>">Amount to be paid</label>
+                        <input
+                          type="text"
+                          id="milestone_payment_<%= index %>"
+                          name="milestones[<%= index %>][payment]"
+                          value="<%= milestone.payment %>"
+                          required
+                        />
+                      </div>
+                    </div>
+                  <% }) %>
+                </div>
+
+                <button type="button" class="add-milestone">Add Milestone</button>
+                <button type="submit" class="submit-btn">Update Job Listing</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let milestoneCount = <%- job.milestones.length %>;
+
+      document.querySelector(".add-milestone").addEventListener("click", () => {
+        const milestoneDiv = document.createElement("div");
+        milestoneDiv.className = "milestone-group";
+        milestoneDiv.setAttribute("data-index", milestoneCount);
+        milestoneDiv.innerHTML = `
+          <button type="button" class="remove-milestone" onclick="removeMilestone(this)">×</button>
+          <div class="form-group">
+            <label for="milestone_description_${milestoneCount}">Description</label>
+            <input type="text" id="milestone_description_${milestoneCount}" name="milestones[${milestoneCount}][description]" required />
+          </div>
+          <div class="form-group">
+            <label for="milestone_deadline_${milestoneCount}">Deadline</label>
+            <input type="date" id="milestone_deadline_${milestoneCount}" name="milestones[${milestoneCount}][deadline]" required />
+          </div>
+          <div class="form-group">
+            <label for="milestone_payment_${milestoneCount}">Payment</label>
+            <input type="text" id="milestone_payment_${milestoneCount}" name="milestones[${milestoneCount}][payment]" required />
+          </div>
+        `;
+        document.getElementById("milestones").appendChild(milestoneDiv);
+        milestoneCount++;
+        reindexMilestones();
+      });
+
+      function removeMilestone(button) {
+        button.parentElement.remove();
+        reindexMilestones();
+      }
+
+      function reindexMilestones() {
+        const milestoneGroups = document.querySelectorAll(".milestone-group");
+        milestoneGroups.forEach((group, index) => {
+          group.setAttribute("data-index", index);
+          const inputs = group.querySelectorAll("input");
+          inputs.forEach((input) => {
+            const name = input.name.replace(
+              /milestones\[\d+\]/,
+              `milestones[${index}]`
+            );
+            input.name = name;
+            const id = input.id.replace(
+              /milestone_(description|deadline|payment)_\d+/,
+              `milestone_$1_${index}`
+            );
+            input.id = id;
+            const label = input.previousElementSibling;
+            if (label && label.tagName === "LABEL") {
+              label.setAttribute("for", id);
+            }
+          });
+        });
+        milestoneCount = milestoneGroups.length;
+      }
+    </script>
+  </body>
+</html>
