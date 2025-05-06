@@ -9,6 +9,7 @@ router.post("/job_listings/new", employerController.createJobListing);
 router.get("/job_listings/edit/:jobId", employerController.getEditJobForm);
 router.post("/job_listings/edit/:jobId", employerController.updateJobListing);
 router.get("/profile", employerController.getProfile);
+router.get("/profile/edit", employerController.getEditProfile);
 router.get("/transaction_history", employerController.getTransactionHistory);
 router.get("/milestones", employerController.getMilestones);
 router.get("/previously_worked", employerController.getPreviouslyWorked);

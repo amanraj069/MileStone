@@ -194,6 +194,13 @@ const employerController = {
       activePage: "profile",
     });
   },
+  
+  getEditProfile: (req, res) => {
+    res.render("Abhishek/edit-profile", {
+      user: { name: "TechCorp Solutions" },
+      activePage: "profile",
+    });
+  },
 
   getTransactionHistory: (req, res) => {
     res.render("Abhishek/transaction", {

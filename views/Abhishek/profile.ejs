@@ -1,593 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebar Dashboard</title>
-    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-    <link rel="stylesheet" href="/css/EmployerD/profile.css" />
-  </head>
-  <body>
-    <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: { name: 'TechCorp Solutions' }, activePage: 'profile' }) %>
-      <div class="main-content">
-        <div class="container">
-          <div class="header">
-            <h1>Employer Profile</h1>
-            <button id="editProfileBtn" class="edit-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                ></path>
-                <path
-                  d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                ></path>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employer Profile</title>
+  <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+  <link rel="stylesheet" href="/css/EmployerD/profile.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <%- include('partials/sidebar', { user: user, activePage: 'profile'
+    }) %>
+    <div class="main-content">
+      <div class="container">
+        <div class="header">
+          <h1>Employer Profile</h1>
+          <a href="/employerD/profile/edit" class="edit-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            Edit Profile
+          </a>
+        </div>
+
+        <div class="profile-section">
+          <div class="profile-image">
+            <img src="https://img.freepik.com/premium-vector/abstract-logo-design-any-corporate-brand-business-company_1253202-91639.jpg" alt="Company Logo" id="companyLogo">
+          </div>
+
+          <div class="profile-info">
+            <div class="profile-header">
+              <h2 class="company-name" id="companyNameDisplay">TechMonkey Assc.</h2>
+              <div class="top-employer-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="7"></circle>
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+                Top Employer
+              </div>
+            </div>
+
+            <div class="profile-meta">
+              <div class="meta-item">
+                <span class="meta-label">Role:</span>
+                <span class="meta-value" id="roleDisplay">Employer</span>
+              </div>
+            </div>
+
+            <div class="location">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
               </svg>
-              Edit Profile
-            </button>
-          </div>
-
-          <!-- Edit Profile Form (Hidden by default) -->
-          <div id="editProfileForm" class="edit-form">
-            <div class="form-group">
-              <label for="companyName">Company Name</label>
-              <input type="text" id="companyName" value="TechMonkey Assc." />
+              <span id="locationDisplay">Bangalore, India (Remote options available)</span>
             </div>
 
-            <div class="form-group">
-              <label for="location">Location</label>
-              <input
-                type="text"
-                id="location"
-                value="Bangalore, India (Remote options available)"
-              />
+            <div class="website">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <a href="#" id="websiteDisplay" target="_blank">www.techmonkey.com</a>
             </div>
 
-            <div class="form-group">
-              <label for="website">Website</label>
-              <input type="text" id="website" value="www.techmonkey.com" />
+            <div class="contact">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span id="emailDisplay">contact@techmonkey.com</span>
             </div>
 
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" value="contact@techmonkey.com" />
+            <div class="contact">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span id="phoneDisplay">+91 98765 43210</span>
             </div>
 
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="text" id="phone" value="+91 98765 43210" />
-            </div>
-
-            <div class="form-group">
-              <label>Social Links</label>
-              <div class="social-link-edit">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                  ></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-                <input
-                  type="text"
-                  id="linkedinUrl"
-                  value="https://linkedin.com/company/techmonkey"
-                />
-              </div>
-              <div class="social-link-edit">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                  ></path>
-                </svg>
-                <input
-                  type="text"
-                  id="twitterUrl"
-                  value="https://twitter.com/techmonkey"
-                />
-              </div>
-              <div class="social-link-edit">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
-                  ></path>
-                </svg>
-                <input
-                  type="text"
-                  id="facebookUrl"
-                  value="https://facebook.com/techmonkey"
-                />
-              </div>
-              <div class="social-link-edit">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path
-                    d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                  ></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                <input
-                  type="text"
-                  id="instagramUrl"
-                  value="https://instagram.com/techmonkey"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="aboutContent">About</label>
-              <textarea id="aboutContent" rows="8">
-TechSolutions Inc. is a leading technology company specializing in web and mobile application development. Founded in 2010, we've grown from a small startup to a team of over 100 talented professionals working on cutting-edge projects for clients worldwide.
-    
-    We believe in creating innovative solutions that help businesses thrive in the digital landscape. Our team is passionate about delivering high-quality products that exceed client expectations and provide exceptional user experiences.
-    
-    At TechSolutions, we value collaboration, creativity, and continuous learning. We're always looking to work with talented freelancers who share our vision and can contribute to our growing portfolio of successful projects.</textarea
-              >
-            </div>
-          </div>
-
-          <div class="profile-section">
-            <div class="profile-image">
-              <img
-                src="/assets/company_logo.jpg"
-                alt="Company Logo"
-                id="companyLogo"
-              />
-            </div>
-
-            <div class="profile-info">
-              <div class="profile-header">
-                <h2 class="company-name" id="companyNameDisplay">
-                  TechMonkey Assc.
-                </h2>
-                <div class="top-employer-badge">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <circle cx="12" cy="8" r="7"></circle>
-                    <polyline
-                      points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"
-                    ></polyline>
+            <div class="social-links" id="socialLinksDisplay">
+              <div class="social-link-container">
+                <a href="https://linkedin.com/company/techmonkey" class="social-link" data-platform="linkedin" id="linkedinLink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
                   </svg>
-                  Top Employer
-                </div>
+                </a>
+                <span class="social-url">LinkedIn</span>
               </div>
-
-              <div class="location">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
-                  ></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span id="locationDisplay"
-                  >Bangalore, India (Remote options available)</span
-                >
-              </div>
-
-              <div class="website">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path
-                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                  ></path>
-                </svg>
-                <a href="#" id="websiteDisplay">www.techmonkey.com</a>
-              </div>
-
-              <div class="contact">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                  ></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span id="emailDisplay">contact@techmonkey.com</span>
-              </div>
-
-              <div class="contact">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-                  ></path>
-                </svg>
-                <span id="phoneDisplay">+91 98765 43210</span>
-              </div>
-
-              <div class="social-links" id="socialLinksDisplay">
-                <div class="social-link-container">
-                  <a
-                    href="https://linkedin.com/company/techmonkey"
-                    class="social-link"
-                    data-platform="linkedin"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                      ></path>
-                      <rect x="2" y="9" width="4" height="12"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                  </a>
-                  <span class="social-url">LinkedIn</span>
-                </div>
-                <div class="social-link-container">
-                  <a
-                    href="https://twitter.com/techmonkey"
-                    class="social-link"
-                    data-platform="twitter"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                      ></path>
-                    </svg>
-                  </a>
-                  <span class="social-url">Twitter</span>
-                </div>
-                <div class="social-link-container">
-                  <a
-                    href="https://facebook.com/techmonkey"
-                    class="social-link"
-                    data-platform="facebook"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
-                      ></path>
-                    </svg>
-                  </a>
-                  <span class="social-url">Facebook</span>
-                </div>
-                <div class="social-link-container">
-                  <a
-                    href="https://instagram.com/techmonkey"
-                    class="social-link"
-                    data-platform="instagram"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <rect
-                        x="2"
-                        y="2"
-                        width="20"
-                        height="20"
-                        rx="5"
-                        ry="5"
-                      ></rect>
-                      <path
-                        d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                      ></path>
-                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                  </a>
-                  <span class="social-url">Instagram</span>
-                </div>
-              </div>
-
-              <div class="rating-section">
-                <div class="rating">
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">★</span>
-                  <span class="star">☆</span>
-                  <span>4.2</span>
-                </div>
-                <div class="rating-count">(54 reviews)</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid-container">
-            <div>
-              <div class="about-section">
-                <h3 class="section-title">About TechMonkey Assc.</h3>
-                <div class="about-content" id="aboutContentDisplay">
-                  <p>
-                    TechSolutions Inc. is a leading technology company
-                    specializing in web and mobile application development.
-                    Founded in 2010, we've grown from a small startup to a team
-                    of over 100 talented professionals working on cutting-edge
-                    projects for clients worldwide.
-                  </p>
-                  <br />
-                  <p>
-                    We believe in creating innovative solutions that help
-                    businesses thrive in the digital landscape. Our team is
-                    passionate about delivering high-quality products that
-                    exceed client expectations and provide exceptional user
-                    experiences.
-                  </p>
-                  <br />
-                  <p>
-                    At TechSolutions, we value collaboration, creativity, and
-                    continuous learning. We're always looking to work with
-                    talented freelancers who share our vision and can contribute
-                    to our growing portfolio of successful projects.
-                  </p>
-                </div>
-              </div>
-
-              <div class="testimonials-section">
-                <h3 class="section-title">Testimonials & Reviews</h3>
-
-                <div class="testimonial">
-                  <div class="testimonial-content">
-                    Working with TechMonkey Assc. was a fantastic experience.
-                    The team was professional, responsive, and delivered
-                    high-quality work on time. I appreciated their attention to
-                    detail and willingness to go the extra mile to ensure the
-                    project's success.
-                  </div>
-                  <div class="testimonial-author">
-                    <div class="author-image">
-                      <img src="/assets/user_image.jpg" alt="employer img" />
-                    </div>
-                    <div class="author-info">
-                      <div class="author-name">Tushar Verma</div>
-                      <div class="author-job">UI/UX Designer</div>
-                      <div class="testimonial-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">☆</span>
-                        <span>4.6</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="testimonial">
-                  <div class="testimonial-content">
-                    They provided clear direction and timely feedback throughout
-                    the project, have a streamlined process that made
-                    collaboration efficient. I would definitely work with them
-                    again on future projects.
-                  </div>
-                  <div class="testimonial-author">
-                    <div class="author-image">
-                      <img src="/assets/user_female.png" alt="employer img" />
-                    </div>
-                    <div class="author-info">
-                      <div class="author-name">Sangeeta Setia</div>
-                      <div class="author-job">Full Stack Developer</div>
-                      <div class="testimonial-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">☆</span>
-                        <span>3.9</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="stats-section">
-              <h3 class="section-title">Employer Stats</h3>
-
-              <div class="stats-chart">
-                <img
-                  src="/assets/chart1.png"
-                  alt="Projects & Freelancers Chart"
-                  class="chart-image"
-                />
-              </div>
-
-              <div class="stats-chart">
-                <img
-                  src="/assets/chart2.png"
-                  alt="Response Metrics Chart"
-                  class="chart-image"
-                />
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Member Since</div>
-                <div class="stats-value">Jan 2018</div>
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Projects Posted</div>
-                <div class="stats-value">27</div>
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Completed Projects</div>
-                <div class="stats-value">18</div>
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Active Projects</div>
-                <div class="stats-value">9</div>
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Freelancers Hired</div>
-                <div class="stats-value">21</div>
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Avg. Project Budget</div>
-                <div class="stats-value">INR 2,500</div>
-              </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Payment Verification</div>
-                <div class="stats-value">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#4CAF50"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              <div class="social-link-container">
+                <a href="https://twitter.com/techmonkey" class="social-link" data-platform="twitter" id="twitterLink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                   </svg>
-                  Verified
-                </div>
+                </a>
+                <span class="social-url">Twitter</span>
               </div>
+              <div class="social-link-container">
+                <a href="https://facebook.com/techmonkey" class="social-link" data-platform="facebook" id="facebookLink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                </a>
+                <span class="social-url">Facebook</span>
+              </div>
+              <div class="social-link-container">
+                <a href="https://instagram.com/techmonkey" class="social-link" data-platform="instagram" id="instagramLink">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+                <span class="social-url">Instagram</span>
+              </div>
+            </div>
 
-              <div class="stats-item">
-                <div class="stats-label">Response Rate</div>
-                <div class="stats-value">98%</div>
+            <div class="rating-section">
+              <div class="rating">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">☆</span>
+                <span>4.2</span>
               </div>
-
-              <div class="stats-item">
-                <div class="stats-label">Avg. Response Time</div>
-                <div class="stats-value">2.3 hours</div>
-              </div>
+              <div class="rating-count">(54 reviews)</div>
             </div>
           </div>
         </div>
+
+        <div class="grid-container">
+          <div class="about-section">
+            <h3 class="section-title">About <span id="aboutCompanyName">TechMonkey Assc.</span></h3>
+            <div class="about-content" id="aboutContentDisplay">
+              <p>
+                TechSolutions Inc. is a leading technology company specializing in web and mobile application development. Founded in 2010, we've grown from a small startup to a team of over 100 talented professionals working on cutting-edge projects for clients worldwide.
+              </p>
+              <br />
+              <p>
+                We believe in creating innovative solutions that help businesses thrive in the digital landscape. Our team is passionate about delivering high-quality products that exceed client expectations and provide exceptional user experiences.
+              </p>
+              <br />
+              <p>
+                At TechSolutions, we value collaboration, creativity, and continuous learning. We're always looking to work with talented freelancers who share our vision and can contribute to our growing portfolio of successful projects.
+              </p>
+            </div>
+          </div>
+
+          <div class="subscription-section">
+            <h3 class="section-title">Subscription</h3>
+            <div class="subscription-info">
+              <span class="meta-label">Subscription Type:</span>
+              <span class="meta-value subscription-badge" id="subscriptionDisplay">Premium</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="/js/EmployerD/profile.js"></script>
-  </body>
+  </div>
+
+  <script src="/js/EmployerD/profile.js"></script>
+</body>
 </html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Employer Profile</title>
+  <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+  <link rel="stylesheet" href="/css/EmployerD/profile.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <%- include('partials/sidebar', { user: user, activePage: 'profile'
+    }) %>
+    <div class="main-content">
+      <div class="container">
+        <div class="header">
+          <h1>Edit Employer Profile</h1>
+          <a href="/employerD/profile" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Profile
+          </a>
+        </div>
+
+        <div class="edit-form-container">
+          <form id="profileEditForm">
+            <div class="form-section">
+              <h3 class="form-section-title">Basic Information</h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="companyName">Company Name</label>
+                  <input type="text" id="companyName" name="companyName" value="TechMonkey Assc.">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <input type="text" id="location" name="location" value="Bangalore, India (Remote options available)">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="companyImageUrl">Company Image URL</label>
+                  <input type="url" id="companyImageUrl" name="companyImageUrl" value="https://via.placeholder.com/150" placeholder="Enter image URL">
+                  <small class="field-note">Enter a direct link to your company logo image (e.g., https://via.placeholder.com/150)</small>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="websiteLink">Website Link</label>
+                  <input type="url" id="websiteLink" name="websiteLink" value="www.techmonkey.com">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">Contact Information</h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" value="contact@techmonkey.com">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="text" id="phone" name="phone" value="+91 98765 43210">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">Social Media Links</h3>
+
+              <div class="form-row">
+                <div class="form-group social-input">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
+                  <input type="url" id="linkedinUrl" name="linkedinUrl" value="https://linkedin.com/company/techmonkey" placeholder="LinkedIn URL">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group social-input">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                  </svg>
+                  <input type="url" id="twitterUrl" name="twitterUrl" value="https://twitter.com/techmonkey" placeholder="Twitter URL">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group social-input">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                  <input type="url" id="facebookUrl" name="facebookUrl" value="https://facebook.com/techmonkey" placeholder="Facebook URL">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group social-input">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                  <input type="url" id="instagramUrl" name="instagramUrl" value="https://instagram.com/techmonkey" placeholder="Instagram URL">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="form-section-title">About Company</h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <textarea id="aboutContent" name="aboutContent" rows="8">TechSolutions Inc. is a leading technology company specializing in web and mobile application development. Founded in 2010, we've grown from a small startup to a team of over 100 talented professionals working on cutting-edge projects for clients worldwide.
+
+    We believe in creating innovative solutions that help businesses thrive in the digital landscape. Our team is passionate about delivering high-quality products that exceed client expectations and provide exceptional user experiences.
+
+    At TechSolutions, we value collaboration, creativity, and continuous learning. We're always looking to work with talented freelancers who share our vision and can contribute to our growing portfolio of successful projects.</textarea>
+                  <small class="field-note">Separate paragraphs with a blank line</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <a href="profile.html" class="cancel-button">Cancel</a>
+              <button type="submit" class="save-button">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+  <script src="edit-profile.js"></script>
+</body>
+</html>
