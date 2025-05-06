@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
       profileEditForm.addEventListener('submit', function(e) {
         e.preventDefault();
         saveProfileData();
-        window.location.href = 'profile.html';
+        window.location.href = '/EmployerD/profile'; // Redirect to profile page after saving
       });
     }
   });

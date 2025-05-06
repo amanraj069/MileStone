@@ -1,6 +1,7 @@
 const JobListing = require("../models/job_listing");
 const JobApplication = require("../models/job_application");
 const User = require("../models/user");
+const Employer = require("../models/employer");
 
 const employerController = {
   getCurrentJobs: (req, res) => {
@@ -12,12 +13,11 @@ const employerController = {
 
   getJobListings: async (req, res) => {
     try {
-      const employerId = req.session?.user?.roleId;
+      const employerId = req.session.user.roleId;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
 
-      // Fetch job listings, excluding those with status "closed" or "completed"
       const jobListings = await JobListing.find({
         employerId,
         status: { $nin: ["closed", "completed"] },
@@ -58,7 +58,7 @@ const employerController = {
         milestones,
       } = req.body;
 
-      const employerId = req.session?.user?.roleId;
+      const employerId = req.session.user.roleId;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
@@ -105,7 +105,7 @@ const employerController = {
   getEditJobForm: async (req, res) => {
     try {
       const { jobId } = req.params;
-      const employerId = req.session?.user?.roleId;
+      const employerId = req.session.user.roleId;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
@@ -129,7 +129,7 @@ const employerController = {
   updateJobListing: async (req, res) => {
     try {
       const { jobId } = req.params;
-      const employerId = req.session?.user?.roleId;
+      const employerId = req.session.user.roleId;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
@@ -201,16 +201,13 @@ const employerController = {
         throw new Error("Employer roleId not found in session");
       }
 
-      // Find all jobs for this employer
       const jobs = await JobListing.find({ employerId }).lean();
       const jobIds = jobs.map((job) => job.jobId);
 
-      // Find all applications for these jobs
       const applications = await JobApplication.find({
         jobId: { $in: jobIds },
       }).lean();
 
-      // Fetch user data for freelancers
       const freelancerIds = [
         ...new Set(applications.map((app) => app.freelancerId)),
       ];
@@ -218,7 +215,6 @@ const employerController = {
         .select("roleId name picture")
         .lean();
 
-      // Map applications with job titles and freelancer info
       const applicationsWithDetails = applications.map((application) => {
         const job = jobs.find((job) => job.jobId === application.jobId);
         const user = users.find(
@@ -246,30 +242,26 @@ const employerController = {
   acceptJobApplication: async (req, res) => {
     try {
       const { applicationId } = req.params;
-      const employerId = req.session?.user?.roleId;
+      const employerId = req.session.user.roleId;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
 
-      // Find the application
       const application = await JobApplication.findOne({ applicationId });
       if (!application) {
         throw new Error("Application not found");
       }
 
-      // Verify the job belongs to this employer
       const job = await JobListing.findOne({ jobId: application.jobId });
       if (!job || job.employerId !== employerId) {
         throw new Error("Not authorized to modify this application");
       }
 
-      // Update application status to "Accepted"
       await JobApplication.findOneAndUpdate(
         { applicationId },
         { $set: { status: "Accepted" } }
       );
 
-      // Assign the freelancer to the job listing, set startDate, and close the job
       await JobListing.findOneAndUpdate(
         { jobId: application.jobId },
         {
@@ -296,19 +288,16 @@ const employerController = {
         throw new Error("Employer roleId not found in session");
       }
 
-      // Find the application
       const application = await JobApplication.findOne({ applicationId });
       if (!application) {
         throw new Error("Application not found");
       }
 
-      // Verify the job belongs to this employer
       const job = await JobListing.findOne({ jobId: application.jobId });
       if (!job || job.employerId !== employerId) {
         throw new Error("Not authorized to modify this application");
       }
 
-      // Update application status
       await JobApplication.findOneAndUpdate(
         { applicationId },
         { $set: { status: "Rejected" } }
@@ -321,18 +310,160 @@ const employerController = {
     }
   },
 
-  getProfile: (req, res) => {
-    res.render("Abhishek/profile", {
-      user: { name: req.session.user.name },
-      activePage: "profile",
-    });
+  getProfile: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+      const employerId = req.session.user.roleId;
+
+      if (!userId || !employerId) {
+        throw new Error("User ID or Employer roleId not found in session");
+      }
+
+      const user = await User.findOne({ userId }).lean();
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const employer = await Employer.findOne({ employerId }).lean();
+      if (!employer) {
+        throw new Error("Employer not found");
+      }
+
+      res.render("Abhishek/profile", {
+        user: {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          picture: user.picture,
+          location: user.location,
+          socialMedia: user.socialMedia,
+          aboutMe: user.aboutMe,
+          subscription: user.subscription,
+          role: user.role,
+        },
+        company: {
+          name: employer.companyName,
+          website: employer.websiteLink,
+        },
+        activePage: "profile",
+      });
+    } catch (error) {
+      console.error("Error fetching profile:", error.message);
+      res.status(500).send("Error fetching profile: " + error.message);
+    }
   },
-  
-  getEditProfile: (req, res) => {
-    res.render("Abhishek/edit-profile", {
-      user: { name: "TechCorp Solutions" },
-      activePage: "profile",
-    });
+
+  getEditProfile: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+      const employerId = req.session.user.roleId;
+
+      if (!userId || !employerId) {
+        throw new Error("User ID or Employer roleId not found in session");
+      }
+
+      const user = await User.findOne({ userId }).lean();
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const employer = await Employer.findOne({ employerId }).lean();
+      if (!employer) {
+        throw new Error("Employer not found");
+      }
+
+      res.render("Abhishek/others/edit-profile", {
+        user: {
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          picture: user.picture,
+          location: user.location,
+          socialMedia: user.socialMedia,
+          aboutMe: user.aboutMe,
+          subscription: user.subscription,
+          role: user.role,
+        },
+        company: {
+          name: employer.companyName,
+          website: employer.websiteLink,
+        },
+        activePage: "education",
+      });
+    } catch (error) {
+      console.error("Error fetching edit profile:", error.message);
+      res.status(500).send("Error fetching edit profile: " + error.message);
+    }
+  },
+
+  updateProfile: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+      const employerId = req.session.user.roleId;
+
+      if (!userId || !employerId) {
+        throw new Error("User ID or Employer roleId not found in session");
+      }
+
+      const {
+        companyName,
+        location,
+        companyImageUrl,
+        websiteLink,
+        email,
+        phone,
+        linkedinUrl,
+        twitterUrl,
+        facebookUrl,
+        instagramUrl,
+        aboutContent,
+      } = req.body;
+
+      const userUpdate = {
+        email,
+        phone,
+        picture: companyImageUrl,
+        location,
+        socialMedia: {
+          linkedin: linkedinUrl || "",
+          twitter: twitterUrl || "",
+          facebook: facebookUrl || "",
+          instagram: instagramUrl || "",
+        },
+        aboutMe: aboutContent,
+      };
+
+      const employerUpdate = {
+        companyName,
+        websiteLink,
+      };
+
+      const user = await User.findOneAndUpdate(
+        { userId },
+        { $set: userUpdate },
+        { new: true }
+      );
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const employer = await Employer.findOneAndUpdate(
+        { employerId },
+        { $set: employerUpdate },
+        { new: true }
+      );
+      if (!employer) {
+        throw new Error("Employer not found");
+      }
+
+      req.session.user.name = user.name;
+      req.session.user.email = user.email;
+
+      res.redirect("/employerD/profile");
+    } catch (error) {
+      console.error("Error updating profile:", error.message);
+      res.status(500).send("Error updating profile: " + error.message);
+    }
   },
 
   getTransactionHistory: (req, res) => {
@@ -356,11 +487,29 @@ const employerController = {
     });
   },
 
-  getSubscription: (req, res) => {
-    res.render("Abhishek/subscription", {
-      user: { name: req.session.user.name },
-      activePage: "subscription",
-    });
+  getSubscription: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+      if (!userId) {
+        throw new Error("User ID not found in session");
+      }
+
+      const user = await User.findOne({ userId }).lean();
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      res.render("Abhishek/subscription", {
+        user: {
+          name: user.name,
+          subscription: user.subscription || "Basic",
+        },
+        activePage: "subscription",
+      });
+    } catch (error) {
+      console.error("Error fetching subscription:", error.message);
+      res.status(500).send("Error fetching subscription: " + error.message);
+    }
   },
 
   getMilestone: (req, res) => {

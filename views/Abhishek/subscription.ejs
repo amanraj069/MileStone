@@ -9,8 +9,7 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: 'subscription'
-      }) %>
+      <%- include('partials/sidebar', { user: user, activePage: 'subscription' }) %>
       <div class="main-content">
         <div class="container">
           <header>
@@ -21,7 +20,7 @@
           <section class="current-plan">
             <div class="plan-info">
               <h2>Your Plan</h2>
-              <p>Free Tier - Includes basic features. Upgrade for more!</p>
+              <p><%= user.subscription || 'Basic' %> - <%= user.subscription === 'Premium' ? 'Ad-free, advanced tools, priority support.' : 'Includes basic features. Upgrade for more!' %></p>
             </div>
             <button>Manage Subscription</button>
           </section>
@@ -33,31 +32,18 @@
                 <h3>Basic</h3>
                 <p class="price">₹0/month</p>
                 <p>Limited access, core functionality, ads included.</p>
-                <button disabled>Current Plan</button>
+                <button <%= user.subscription === 'Basic' ? 'disabled' : '' %>>Current Plan</button>
               </div>
-              <div class="plan-card">
-                <h3>Pro</h3>
+              <div class="plan-card premium">
+                <h3>Premium</h3>
                 <p class="price">₹868.61/month</p>
                 <p>Ad-free, advanced tools, priority support.</p>
-                <button class="upgrade-btn">Upgrade to Pro</button>
-              </div>
-              <div class="plan-card">
-                <h3>Enterprise</h3>
-                <p class="price">Contact Us</p>
-                <p>Custom solutions, team accounts, dedicated support.</p>
-                <button class="quote-btn">Get a Quote</button>
+                <button class="upgrade-btn" <%= user.subscription === 'Premium' ? 'disabled' : '' %>>
+                  <%= user.subscription === 'Premium' ? 'Current Plan' : 'Upgrade to Premium' %>
+                </button>
               </div>
             </div>
-            <label
-              ><input type="checkbox" /> Save 20% with yearly billing</label
-            >
           </section>
-
-          <section class="payment-details">
-            <p>Secure payments powered by BhimUPI.</p>
-            <a href="#">Add/Update Payment Method</a>
-          </section>
-
           <footer>
             <button class="confirm-btn">Confirm Upgrade</button>
           </footer>
