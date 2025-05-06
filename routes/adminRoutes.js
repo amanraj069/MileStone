@@ -8,5 +8,6 @@ router.get("/freelancers", adminController.getFreelancers);
 router.get("/employers", adminController.getEmployers);
 router.get("/complaints", adminController.getComplaints);
 router.get("/profile", adminController.getProfile);
+router.get("/profile/edit", adminController.getEditProfile);
 
 module.exports = router;
