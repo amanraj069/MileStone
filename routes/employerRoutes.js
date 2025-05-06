@@ -13,6 +13,7 @@ router.post("/job_applications/:applicationId/accept", employerController.accept
 router.post("/job_applications/:applicationId/reject", employerController.rejectJobApplication);
 router.get("/profile", employerController.getProfile);
 router.get("/profile/edit", employerController.getEditProfile);
+router.post("/profile/edit", employerController.updateProfile);
 router.get("/transaction_history", employerController.getTransactionHistory);
 router.get("/milestones", employerController.getMilestones);
 router.get("/previously_worked", employerController.getPreviouslyWorked);
