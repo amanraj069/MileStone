@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Freelancer Profile</title>
+  <link rel="stylesheet" href="/css/FreelancerD/static_elements/sidebar.css" />
+  <link rel="stylesheet" href="/css/FreelancerD/profile.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <%- include('./partials/sidebar', {activePage: 'profile'}) %>
+        <div class="main-content">
+            <div class="container">
+                <div class="header">
+                <h1>Edit Freelancer Profile</h1>
+                <a href="/freelancerD/profile" class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Profile
+                </a>
+                </div>
+
+                <div class="edit-form-container">
+                <form id="profileEditForm">
+                    <div class="form-section">
+                    <h3 class="form-section-title">Basic Information</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" value="Vanya Awasthi">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" value="Frontend Developer">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" value="Pune, Maharashtra">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="profileImageUrl">Profile Image URL</label>
+                        <input type="url" id="profileImageUrl" name="profileImageUrl" value="https://via.placeholder.com/150" placeholder="Enter image URL">
+                        <small class="field-note">Enter a direct link to your profile image (e.g., https://via.placeholder.com/150)</small>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Contact Information</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="vanya.awasthi@email.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" name="phone" value="+91 8757462008">
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">About Me</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="about">About</label>
+                        <textarea id="about" name="about" rows="6">I am a passionate Frontend Developer with over 5 years of experience in building responsive and user-friendly web applications. I specialize in React, JavaScript, and modern CSS frameworks. My goal is to create seamless digital experiences that delight users and meet business objectives.</textarea>
+                        <small class="field-note">Separate paragraphs with a blank line</small>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Skills</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label>Skills</label>
+                        <div id="skillsContainer" class="skills-container">
+                            <input type="text" class="skill-input" value="HTML5">
+                            <input type="text" class="skill-input" value="CSS3">
+                            <input type="text" class="skill-input" value="JavaScript">
+                            <input type="text" class="skill-input" value="React">
+                            <input type="text" class="skill-input" value="TypeScript">
+                            <input type="text" class="skill-input" value="Angular">
+                            <input type="text" class="skill-input" value="Node.js">
+                            <input type="text" class="skill-input" value="Git">
+                            <button type="button" id="addSkillBtn" class="add-btn">Add Skill</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Experience</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label>Experience</label>
+                        <div id="experienceContainer" class="experience-container">
+                            <div class="experience-item">
+                            <input type="text" class="experience-title" value="Senior Frontend Developer - Google" placeholder="Title">
+                            <input type="text" class="experience-date" value="Jan 2022 - Present" placeholder="Date">
+                            <textarea class="experience-description" rows="3" placeholder="Description">Led the development of search page enhancements, improving user engagement by 30%. Collaborated with UX designers to implement responsive designs using React and TypeScript.</textarea>
+                            </div>
+                            <div class="experience-item">
+                            <input type="text" class="experience-title" value="Frontend Developer - Airbnb" placeholder="Title">
+                            <input type="text" class="experience-date" value="Jun 2019 - Dec 2021" placeholder="Date">
+                            <textarea class="experience-description" rows="3" placeholder="Description">Developed and maintained the booking system UI, integrating Angular and SCSS to create a seamless user experience. Reduced page load time by 20% through optimization techniques.</textarea>
+                            </div>
+                            <button type="button" id="addExperienceBtn" class="add-btn">Add Experience</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Education</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label>Education</label>
+                        <div id="educationContainer" class="education-container">
+                            <div class="education-item">
+                            <input type="text" class="education-title" value="Bachelor of Science in Computer Science" placeholder="Degree">
+                            <input type="text" class="education-institution" value="University of California, Berkeley" placeholder="Institution">
+                            <input type="text" class="education-date" value="2015 - 2019" placeholder="Date">
+                            </div>
+                            <button type="button" id="addEducationBtn" class="add-btn">Add Education</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Portfolio</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label>Portfolio</label>
+                        <div id="portfolioContainer" class="portfolio-container">
+                            <div class="portfolio-item">
+                            <input type="url" class="portfolio-image" value="/assets/portfolio/ecom_portfolio.png" placeholder="Image URL">
+                            <input type="text" class="portfolio-title" value="E-commerce Website Redesign" placeholder="Title">
+                            <textarea class="portfolio-description" rows="3" placeholder="Description">A responsive e-commerce platform built with React and Node.js.</textarea>
+                            <input type="url" class="portfolio-link" value="https://github.com/evershopcommerce/evershop" placeholder="Link">
+                            </div>
+                            <div class="portfolio-item">
+                            <input type="url" class="portfolio-image" value="/assets/portfolio/bookingsys_portfolio.png" placeholder="Image URL">
+                            <input type="text" class="portfolio-title" value="Booking System UI" placeholder="Title">
+                            <textarea class="portfolio-description" rows="3" placeholder="Description">Modern booking system UI developed using Angular and SCSS.</textarea>
+                            <input type="url" class="portfolio-link" value="https://github.com/SakerDakak/Salonek" placeholder="Link">
+                            </div>
+                            <div class="portfolio-item">
+                            <input type="url" class="portfolio-image" value="/assets/portfolio/streaming_portfolio.png" placeholder="Image URL">
+                            <input type="text" class="portfolio-title" value="Stream UI Optimization" placeholder="Title">
+                            <textarea class="portfolio-description" rows="3" placeholder="Description">Optimized streaming platform UI with React and Redux.</textarea>
+                            <input type="url" class="portfolio-link" value="https://github.com/Open-Streaming-Platform/open-streaming-platform" placeholder="Link">
+                            </div>
+                            <button type="button" id="addPortfolioBtn" class="add-btn">Add Portfolio Item</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Resume</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="resumeLink">Resume Link</label>
+                        <input type="url" id="resumeLink" name="resumeLink" value="" placeholder="Enter resume link">
+                        <small class="field-note">Enter a direct link to your resume (e.g., https://example.com/resume.pdf)</small>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-section">
+                    <h3 class="form-section-title">Projects Completed</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                        <label for="projects">Projects Completed</label>
+                        <input type="text" id="projects" name="projects" value="50 Projects Completed">
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-actions">
+                    <a href="/freelancerD/profile" class="cancel-button">Cancel</a>
+                    <button type="submit" class="save-button">Save Changes</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script src="/js/FreelancerD/edit-profile.js"></script>
+</body>
+</html>
