@@ -1,9 +1,11 @@
 const JobListing = require("../models/job_listing");
+const JobApplication = require("../models/job_application");
+const User = require("../models/user");
 
 const employerController = {
   getCurrentJobs: (req, res) => {
     res.render("Abhishek/current_jobs", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "current_jobs",
     });
   },
@@ -15,12 +17,16 @@ const employerController = {
         throw new Error("Employer roleId not found in session");
       }
 
-      const jobListings = await JobListing.find({ employerId })
+      // Fetch job listings, excluding those with status "closed" or "completed"
+      const jobListings = await JobListing.find({
+        employerId,
+        status: { $nin: ["closed", "completed"] },
+      })
         .sort({ postedDate: -1 })
         .lean();
 
       res.render("Abhishek/job_listing", {
-        user: { name: "TechCorp Solutions" },
+        user: { name: req.session.user.name },
         activePage: "job_listings",
         jobListings,
       });
@@ -32,7 +38,7 @@ const employerController = {
 
   getNewJobForm: (req, res) => {
     res.render("Abhishek/others/new_job", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "job_listings",
     });
   },
@@ -110,7 +116,7 @@ const employerController = {
       }
 
       res.render("Abhishek/others/update_job", {
-        user: { name: "TechCorp Solutions" },
+        user: { name: req.session.user.name },
         activePage: "job_listings",
         job,
       });
@@ -188,38 +194,172 @@ const employerController = {
     }
   },
 
+  getJobApplications: async (req, res) => {
+    try {
+      const employerId = req.session?.user?.roleId;
+      if (!employerId) {
+        throw new Error("Employer roleId not found in session");
+      }
+
+      // Find all jobs for this employer
+      const jobs = await JobListing.find({ employerId }).lean();
+      const jobIds = jobs.map((job) => job.jobId);
+
+      // Find all applications for these jobs
+      const applications = await JobApplication.find({
+        jobId: { $in: jobIds },
+      }).lean();
+
+      // Fetch user data for freelancers
+      const freelancerIds = [
+        ...new Set(applications.map((app) => app.freelancerId)),
+      ];
+      const users = await User.find({ roleId: { $in: freelancerIds } })
+        .select("roleId name picture")
+        .lean();
+
+      // Map applications with job titles and freelancer info
+      const applicationsWithDetails = applications.map((application) => {
+        const job = jobs.find((job) => job.jobId === application.jobId);
+        const user = users.find(
+          (user) => user.roleId === application.freelancerId
+        );
+        return {
+          ...application,
+          jobTitle: job?.title || "Unknown Job",
+          freelancerName: user?.name || "Unknown Freelancer",
+          freelancerPicture: user?.picture || null,
+        };
+      });
+
+      res.render("Abhishek/job_applications", {
+        user: { name: req.session.user.name },
+        activePage: "job_applications",
+        applications: applicationsWithDetails,
+      });
+    } catch (error) {
+      console.error("Error fetching job applications:", error.message);
+      res.status(500).send("Error fetching job applications: " + error.message);
+    }
+  },
+
+  acceptJobApplication: async (req, res) => {
+    try {
+      const { applicationId } = req.params;
+      const employerId = req.session?.user?.roleId;
+      if (!employerId) {
+        throw new Error("Employer roleId not found in session");
+      }
+
+      // Find the application
+      const application = await JobApplication.findOne({ applicationId });
+      if (!application) {
+        throw new Error("Application not found");
+      }
+
+      // Verify the job belongs to this employer
+      const job = await JobListing.findOne({ jobId: application.jobId });
+      if (!job || job.employerId !== employerId) {
+        throw new Error("Not authorized to modify this application");
+      }
+
+      // Update application status to "Accepted"
+      await JobApplication.findOneAndUpdate(
+        { applicationId },
+        { $set: { status: "Accepted" } }
+      );
+
+      // Assign the freelancer to the job listing, set startDate, and close the job
+      await JobListing.findOneAndUpdate(
+        { jobId: application.jobId },
+        {
+          $set: {
+            "assignedFreelancer.freelancerId": application.freelancerId,
+            "assignedFreelancer.startDate": new Date(),
+            status: "closed",
+          },
+        }
+      );
+
+      res.redirect("/employerD/job_applications");
+    } catch (error) {
+      console.error("Error accepting job application:", error.message);
+      res.status(500).send("Error accepting job application: " + error.message);
+    }
+  },
+
+  rejectJobApplication: async (req, res) => {
+    try {
+      const { applicationId } = req.params;
+      const employerId = req.session?.user?.roleId;
+      if (!employerId) {
+        throw new Error("Employer roleId not found in session");
+      }
+
+      // Find the application
+      const application = await JobApplication.findOne({ applicationId });
+      if (!application) {
+        throw new Error("Application not found");
+      }
+
+      // Verify the job belongs to this employer
+      const job = await JobListing.findOne({ jobId: application.jobId });
+      if (!job || job.employerId !== employerId) {
+        throw new Error("Not authorized to modify this application");
+      }
+
+      // Update application status
+      await JobApplication.findOneAndUpdate(
+        { applicationId },
+        { $set: { status: "Rejected" } }
+      );
+
+      res.redirect("/employerD/job_applications");
+    } catch (error) {
+      console.error("Error rejecting job application:", error.message);
+      res.status(500).send("Error rejecting job application: " + error.message);
+    }
+  },
+
   getProfile: (req, res) => {
     res.render("Abhishek/profile", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "profile",
     });
   },
 
   getTransactionHistory: (req, res) => {
     res.render("Abhishek/transaction", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "transaction_history",
     });
   },
 
   getMilestones: (req, res) => {
     res.render("Abhishek/milestone", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "transaction_history",
     });
   },
 
   getPreviouslyWorked: (req, res) => {
     res.render("Abhishek/previously_worked", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "previously_worked",
     });
   },
 
   getSubscription: (req, res) => {
     res.render("Abhishek/subscription", {
-      user: { name: "TechCorp Solutions" },
+      user: { name: req.session.user.name },
       activePage: "subscription",
+    });
+  },
+
+  getMilestone: (req, res) => {
+    res.render("Abhishek/others/milestone", {
+      user: { name: req.session.user.name },
+      activePage: "transaction_history",
     });
   },
 };
