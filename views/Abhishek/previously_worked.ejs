@@ -9,7 +9,8 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: { name: 'TechCorp Solutions' }, activePage: 'previously_worked' }) %>
+      <%- include('partials/sidebar', { user: user, activePage:
+      'previously_worked' }) %>
       <div class="main-content">
         <div class="container">
           <h1 class="section-title">Previously Worked Freelancers</h1>
@@ -36,24 +37,72 @@
           <div class="freelancer-list">
             <div class="freelancer-card" data-rating="4.5">
               <div class="card-header">
-                <img src="/assets/user_image.jpg" alt="Profile" class="profile-img" />
+                <img
+                  src="/assets/user_image.jpg"
+                  alt="Profile"
+                  class="profile-img"
+                />
                 <div class="freelancer-info">
-                  <a href="/employerD/job_listings/see_more/job/view_profile" class="freelancer-name">Rahul Mehra</a>
+                  <a
+                    href="/employerD/job_listings/see_more/job/view_profile"
+                    class="freelancer-name"
+                    >Rahul Mehra</a
+                  >
                   <div class="rating">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
                     <span>4.5</span>
                   </div>
@@ -85,30 +134,82 @@
                   </svg>
                   <span>Completed 30 days ago</span>
                 </div>
-                <a href="/employerD/previously_worked/chat"><button class="chat-btn">Chat</button></a>
-                <a href="/employerD/previously_worked/see_more"><button class="see-more-btn">See More</button></a>
+                <a href="/employerD/previously_worked/chat"
+                  ><button class="chat-btn">Chat</button></a
+                >
+                <a href="/employerD/previously_worked/see_more"
+                  ><button class="see-more-btn">See More</button></a
+                >
               </div>
             </div>
             <div class="freelancer-card" data-rating="4.3">
               <div class="card-header">
-                <img src="/assets/user_female.png" alt="Profile" class="profile-img" />
+                <img
+                  src="/assets/user_female.png"
+                  alt="Profile"
+                  class="profile-img"
+                />
                 <div class="freelancer-info">
-                  <a href="/employerD/job_listings/see_more/job/view_profile" class="freelancer-name">Priya Singh</a>
+                  <a
+                    href="/employerD/job_listings/see_more/job/view_profile"
+                    class="freelancer-name"
+                    >Priya Singh</a
+                  >
                   <div class="rating">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
                     <span>4.3</span>
                   </div>
@@ -140,30 +241,82 @@
                   </svg>
                   <span>Completed 45 days ago</span>
                 </div>
-                <a href="/employerD/previously_worked/chat"><button class="chat-btn">Chat</button></a>
-                <a href="/employerD/previously_worked/see_more"><button class="see-more-btn">See More</button></a>
+                <a href="/employerD/previously_worked/chat"
+                  ><button class="chat-btn">Chat</button></a
+                >
+                <a href="/employerD/previously_worked/see_more"
+                  ><button class="see-more-btn">See More</button></a
+                >
               </div>
             </div>
             <div class="freelancer-card" data-rating="4.0">
               <div class="card-header">
-                <img src="/assets/user_image.jpg" alt="Profile" class="profile-img" />
+                <img
+                  src="/assets/user_image.jpg"
+                  alt="Profile"
+                  class="profile-img"
+                />
                 <div class="freelancer-info">
-                  <a href="/employerD/job_listings/see_more/job/view_profile" class="freelancer-name">Arjun Patel</a>
+                  <a
+                    href="/employerD/job_listings/see_more/job/view_profile"
+                    class="freelancer-name"
+                    >Arjun Patel</a
+                  >
                   <div class="rating">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
                     <span>4.0</span>
                   </div>
@@ -195,30 +348,82 @@
                   </svg>
                   <span>Completed 60 days ago</span>
                 </div>
-                <a href="/employerD/previously_worked/chat"><button class="chat-btn">Chat</button></a>
-                <a href="/employerD/previously_worked/see_more"><button class="see-more-btn">See More</button></a>
+                <a href="/employerD/previously_worked/chat"
+                  ><button class="chat-btn">Chat</button></a
+                >
+                <a href="/employerD/previously_worked/see_more"
+                  ><button class="see-more-btn">See More</button></a
+                >
               </div>
             </div>
             <div class="freelancer-card" data-rating="4.7">
               <div class="card-header">
-                <img src="/assets/user_female.png" alt="Profile" class="profile-img" />
+                <img
+                  src="/assets/user_female.png"
+                  alt="Profile"
+                  class="profile-img"
+                />
                 <div class="freelancer-info">
-                  <a href="/employerD/job_listings/see_more/job/view_profile" class="freelancer-name">Ananya Gupta</a>
+                  <a
+                    href="/employerD/job_listings/see_more/job/view_profile"
+                    class="freelancer-name"
+                    >Ananya Gupta</a
+                  >
                   <div class="rating">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
                     <span>4.7</span>
                   </div>
@@ -250,30 +455,82 @@
                   </svg>
                   <span>Completed 20 days ago</span>
                 </div>
-                <a href="/employerD/previously_worked/chat"><button class="chat-btn">Chat</button></a>
-                <a href="/employerD/previously_worked/see_more"><button class="see-more-btn">See More</button></a>
+                <a href="/employerD/previously_worked/chat"
+                  ><button class="chat-btn">Chat</button></a
+                >
+                <a href="/employerD/previously_worked/see_more"
+                  ><button class="see-more-btn">See More</button></a
+                >
               </div>
             </div>
             <div class="freelancer-card" data-rating="4.2">
               <div class="card-header">
-                <img src="/assets/user_image.jpg" alt="Profile" class="profile-img" />
+                <img
+                  src="/assets/user_image.jpg"
+                  alt="Profile"
+                  class="profile-img"
+                />
                 <div class="freelancer-info">
-                  <a href="/employerD/job_listings/see_more/job/view_profile" class="freelancer-name">Kiran Desai</a>
+                  <a
+                    href="/employerD/job_listings/see_more/job/view_profile"
+                    class="freelancer-name"
+                    >Kiran Desai</a
+                  >
                   <div class="rating">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" class="icon">
-                      <path d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z" />
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
+                    >
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
                     </svg>
                     <span>4.2</span>
                   </div>
@@ -305,8 +562,12 @@
                   </svg>
                   <span>Completed 15 days ago</span>
                 </div>
-                <a href="/employerD/previously_worked/chat"><button class="chat-btn">Chat</button></a>
-                <a href="/employerD/previously_worked/see_more"><button class="see-more-btn">See More</button></a>
+                <a href="/employerD/previously_worked/chat"
+                  ><button class="chat-btn">Chat</button></a
+                >
+                <a href="/employerD/previously_worked/see_more"
+                  ><button class="see-more-btn">See More</button></a
+                >
               </div>
             </div>
           </div>

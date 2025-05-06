@@ -9,7 +9,8 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: { name: 'TechCorp Solutions' }, activePage: 'transaction_history' }) %>
+      <%- include('partials/sidebar', { user: user, activePage:
+      'transaction_history' }) %>
       <div class="main-content">
         <div class="container">
           <h1>Transaction History</h1>

@@ -9,11 +9,12 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: { name: 'TechCorp Solutions' }, activePage: 'transaction_history' }) %>
+      <%- include('../partials/sidebar', { user: user, activePage:
+      'transaction_history' }) %>
       <div class="main-content">
         <div class="container">
           <div class="header">
-            <h1 class="title">Payments & Milestones</h1>
+            <h1 class="title">Payments & Milestones for this Job</h1>
             <button class="add-button" id="addMilestoneBtn">
               <svg
                 width="16"
@@ -35,10 +36,16 @@
             <div class="progress-section">
               <div class="progress-header">
                 <h3 class="progress-title">Project Completion</h3>
-                <span class="progress-percentage" id="completionPercentage">40%</span>
+                <span class="progress-percentage" id="completionPercentage"
+                  >40%</span
+                >
               </div>
               <div class="progress-bar-container">
-                <div class="progress-bar" id="completionProgressBar" style="width: 40%;"></div>
+                <div
+                  class="progress-bar"
+                  id="completionProgressBar"
+                  style="width: 40%"
+                ></div>
               </div>
               <div class="progress-labels">
                 <span>Not Started</span>
@@ -49,17 +56,25 @@
             <div class="progress-section">
               <div class="progress-header">
                 <h3 class="progress-title">Payment Progress</h3>
-                <span class="progress-amount" id="paymentProgress">₹62,250 of ₹124,500 (50%)</span>
+                <span class="progress-amount" id="paymentProgress"
+                  >₹62,250 of ₹124,500 (50%)</span
+                >
               </div>
               <div class="progress-bar-container">
-                <div class="progress-bar" id="paymentProgressBar" style="width: 50%;"></div>
+                <div
+                  class="progress-bar"
+                  id="paymentProgressBar"
+                  style="width: 50%"
+                ></div>
               </div>
             </div>
           </div>
           <div class="milestones-container" id="milestonesContainer">
             <div class="milestone-card">
               <div class="milestone-header">
-                <h3 class="milestone-title">Initial setup and component architecture</h3>
+                <h3 class="milestone-title">
+                  Initial setup and component architecture
+                </h3>
                 <div class="milestone-actions">
                   <button class="edit-btn">
                     <svg
@@ -95,26 +110,26 @@
                       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                       <path d="M10 11v6"></path>
                       <path d="M14 11v6"></path>
-                      <path d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"></path>
+                      <path
+                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
+                      ></path>
                     </svg>
                   </button>
                 </div>
               </div>
               <div class="milestone-details">
-                <p class="milestone-info">
-                  <strong>Deadline:</strong> Week 1
-                </p>
+                <p class="milestone-info"><strong>Deadline:</strong> Week 1</p>
                 <p class="milestone-info">
                   <strong>Payment:</strong> ₹24,900 (20%)
                 </p>
-                <p class="milestone-info">
-                  <strong>Status:</strong> Completed
-                </p>
+                <p class="milestone-info"><strong>Status:</strong> Completed</p>
               </div>
             </div>
             <div class="milestone-card">
               <div class="milestone-header">
-                <h3 class="milestone-title">Core functionality implementation</h3>
+                <h3 class="milestone-title">
+                  Core functionality implementation
+                </h3>
                 <div class="milestone-actions">
                   <button class="edit-btn">
                     <svg
@@ -150,15 +165,15 @@
                       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                       <path d="M10 11v6"></path>
                       <path d="M14 11v6"></path>
-                      <path d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"></path>
+                      <path
+                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
+                      ></path>
                     </svg>
                   </button>
                 </div>
               </div>
               <div class="milestone-details">
-                <p class="milestone-info">
-                  <strong>Deadline:</strong> Week 3
-                </p>
+                <p class="milestone-info"><strong>Deadline:</strong> Week 3</p>
                 <p class="milestone-info">
                   <strong>Payment:</strong> ₹37,350 (30%)
                 </p>
@@ -205,15 +220,15 @@
                       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                       <path d="M10 11v6"></path>
                       <path d="M14 11v6"></path>
-                      <path d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"></path>
+                      <path
+                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
+                      ></path>
                     </svg>
                   </button>
                 </div>
               </div>
               <div class="milestone-details">
-                <p class="milestone-info">
-                  <strong>Deadline:</strong> Week 5
-                </p>
+                <p class="milestone-info"><strong>Deadline:</strong> Week 5</p>
                 <p class="milestone-info">
                   <strong>Payment:</strong> ₹24,900 (20%)
                 </p>
@@ -260,15 +275,15 @@
                       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                       <path d="M10 11v6"></path>
                       <path d="M14 11v6"></path>
-                      <path d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"></path>
+                      <path
+                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
+                      ></path>
                     </svg>
                   </button>
                 </div>
               </div>
               <div class="milestone-details">
-                <p class="milestone-info">
-                  <strong>Deadline:</strong> Week 7
-                </p>
+                <p class="milestone-info"><strong>Deadline:</strong> Week 7</p>
                 <p class="milestone-info">
                   <strong>Payment:</strong> ₹24,900 (20%)
                 </p>
@@ -315,15 +330,15 @@
                       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                       <path d="M10 11v6"></path>
                       <path d="M14 11v6"></path>
-                      <path d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"></path>
+                      <path
+                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
+                      ></path>
                     </svg>
                   </button>
                 </div>
               </div>
               <div class="milestone-details">
-                <p class="milestone-info">
-                  <strong>Deadline:</strong> Week 8
-                </p>
+                <p class="milestone-info"><strong>Deadline:</strong> Week 8</p>
                 <p class="milestone-info">
                   <strong>Payment:</strong> ₹12,450 (10%)
                 </p>
@@ -383,8 +398,12 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-                  <button type="submit" class="save-btn" id="saveBtn">Add Milestone</button>
+                  <button type="button" class="cancel-btn" id="cancelBtn">
+                    Cancel
+                  </button>
+                  <button type="submit" class="save-btn" id="saveBtn">
+                    Add Milestone
+                  </button>
                 </div>
               </form>
             </div>
@@ -401,8 +420,12 @@
               <p>Are you sure you want to delete this milestone?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="cancel-btn" id="cancelDeleteBtn">Cancel</button>
-              <button type="button" class="delete-btn" id="confirmDeleteBtn">Delete</button>
+              <button type="button" class="cancel-btn" id="cancelDeleteBtn">
+                Cancel
+              </button>
+              <button type="button" class="delete-btn" id="confirmDeleteBtn">
+                Delete
+              </button>
             </div>
           </div>
         </div>
