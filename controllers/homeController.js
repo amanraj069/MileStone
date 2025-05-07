@@ -24,6 +24,10 @@ exports.getHome = (req, res) => {
   });
 };
 
+exports.getBlog = (req, res) => {
+  res.render("Aman/blog");
+};
+
 exports.getJobListing = async (req, res) => {
   try {
     let dashboardRoute = "";
