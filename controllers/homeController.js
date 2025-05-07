@@ -243,3 +243,24 @@ exports.getApplicationSubmitted = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+exports.getProfile = (req, res) => {
+  let dashboardRoute = "";
+  if (req.session && req.session.user) {
+    switch (req.session.user.role) {
+      case "Admin":
+        dashboardRoute = "/adminD/profile";
+        break;
+      case "Employer":
+        dashboardRoute = "/employerD/profile";
+        break;
+      case "Freelancer":
+        dashboardRoute = "/freelancerD/profile";
+        break;
+    }
+  }
+  res.render("Aman/common_profile", {
+    user: req.session && req.session.user ? req.session.user : null,
+    dashboardRoute,
+  });
+};

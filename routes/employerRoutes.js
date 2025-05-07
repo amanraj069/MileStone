@@ -15,9 +15,11 @@ router.get("/profile", employerController.getProfile);
 router.get("/profile/edit", employerController.getEditProfile);
 router.post("/profile/edit", employerController.updateProfile);
 router.get("/transaction_history", employerController.getTransactionHistory);
-router.get("/milestones", employerController.getMilestones);
+router.get("/transaction_history/milestone", employerController.getMilestone);
 router.get("/previously_worked", employerController.getPreviouslyWorked);
 router.get("/subscription", employerController.getSubscription);
-router.get("/transaction_history/milestone", employerController.getMilestone);
+router.get("/milestones", employerController.getMilestone);
+router.get("/view_profile", employerController.getViewprofile);
+router.post("/milestone/:jobId/:milestoneId/pay", employerController.payMilestone);
 
 module.exports = router;

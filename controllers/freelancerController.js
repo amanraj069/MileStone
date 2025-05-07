@@ -1,5 +1,8 @@
 const mongoose = require("../database");
-const ActiveJob = require("../models/job_listing");
+const JobListing = require("../models/job_listing");
+const User = require("../models/user");
+const Employer = require("../models/employer");
+const Freelancer = require("../models/freelancer");
 
 exports.getFreelancerActiveJobs = async (req, res) => {
   try {
@@ -7,24 +10,52 @@ exports.getFreelancerActiveJobs = async (req, res) => {
       return res.status(401).send("Unauthorized: Please log in");
     }
 
-    const userId = req.session.user.id;
+    const freelancerId = req.session.user.roleId;
 
-    // Query MongoDB for active jobs
-    const activeJobs = await ActiveJob.find({ user: userId }).lean();
+    // Query MongoDB for active jobs where user is assigned and status is working
+    const activeJobs = await JobListing.find({
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": "working",
+    }).lean();
 
-    // Map MongoDB documents to the format expected by the EJS template
-    const formattedJobs = activeJobs.map((job) => ({
-      id: job._id.toString(),
-      title: job.job_title,
-      company: job.company_name || "Unknown Company",
-      logo: job.image || "/assets/company_logo.jpg",
-      deadline: job.deadline
-        ? job.deadline.toLocaleDateString()
-        : "No deadline",
-      price: job.bid_amount || "Not specified",
-      progress: 0, // Hardcoded as in original; adjust if dynamic progress is needed
-      tech: [], // Hardcoded as in original; can be updated if job has tech field
-    }));
+    // Fetch employer details for company names and format jobs
+    const formattedJobs = await Promise.all(
+      activeJobs.map(async (job) => {
+        // Calculate sum of paid milestones
+        const paidAmount = job.milestones
+          .filter((milestone) => milestone.status === "paid")
+          .reduce(
+            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
+            0
+          );
+
+        // Calculate milestone progress as a percentage
+        const totalBudget = parseFloat(job.budget.amount) || 0;
+        const progress =
+          totalBudget > 0 ? Math.min((paidAmount / totalBudget) * 100, 100) : 0;
+
+        // Fetch employer company name
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
+        }).lean();
+        const companyName = employer ? employer.companyName : "Unknown Company";
+
+        return {
+          id: job.jobId,
+          title: job.title,
+          company: companyName,
+          logo: job.imageUrl || "/assets/company_logo.jpg",
+          deadline: job.applicationDeadline
+            ? job.applicationDeadline.toLocaleDateString()
+            : "No deadline",
+          price: job.budget.amount
+            ? `Rs.${parseFloat(job.budget.amount).toFixed(2)}`
+            : "Not specified",
+          progress: Math.round(progress), // Round the progress to an integer
+          tech: job.description.skills || [],
+        };
+      })
+    );
 
     res.render("Vanya/active_job", {
       user: req.session.user,
@@ -43,51 +74,248 @@ exports.leaveActiveJob = async (req, res) => {
       return res.status(401).json({ error: "Unauthorized: Please log in" });
     }
 
-    const userId = req.session.user.id;
+    const freelancerId = req.session.user.roleId;
     const jobId = req.params.jobId;
 
-    // Delete the job from MongoDB
-    const result = await ActiveJob.deleteOne({ _id: jobId, user: userId });
+    // Update job status to left using jobId instead of _id
+    const result = await JobListing.updateOne(
+      {
+        jobId: jobId, // Use jobId (UUID) instead of _id (ObjectId)
+        "assignedFreelancer.freelancerId": freelancerId,
+        "assignedFreelancer.status": "working",
+      },
+      { $set: { "assignedFreelancer.status": "left" } }
+    );
 
-    if (result.deletedCount === 0) {
+    if (result.modifiedCount === 0) {
       return res.status(404).json({ error: "Job not found or not authorized" });
     }
 
     res.status(200).json({ message: "Job left successfully" });
   } catch (error) {
-    console.error("Error deleting active job:", error.message);
+    console.error("Error leaving active job:", error.message);
     res.status(500).json({ error: "Failed to leave job" });
   }
 };
 
 exports.getFreelancerProfile = async (req, res) => {
   try {
-    res.render("Vanya/profile", {
-      user: req.session.user || staticUser,
+    if (!req.session.user) {
+      throw new Error("Unauthorized: Please log in");
+    }
+
+    const userId = req.session.user.id;
+    const freelancerId = req.session.user.roleId;
+
+    if (!userId || !freelancerId) {
+      throw new Error("User ID or Freelancer roleId not found in session");
+    }
+
+    // Fetch user data
+    const user = await User.findOne({ userId }).lean();
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Fetch freelancer data
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
+    if (!freelancer) {
+      throw new Error("Freelancer profile not found");
+    }
+
+    await res.render("Vanya/profile", {
+      user: {
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      picture: user.picture, // Fallback to a working public image
+      location: user.location,
+      socialMedia: user.socialMedia,
+      aboutMe: user.aboutMe,
+      subscription: user.subscription,
+      role: user.role,
+      skills: freelancer.skills || [],
+      experience: freelancer.experience || [],
+      education: freelancer.education || [],
+      portfolio: freelancer.portfolio || [],
+      resume: freelancer.resume || "",
+      },
       activePage: "profile",
     });
   } catch (error) {
-    console.error("Error rendering profile:", error.message);
-    res.status(500).send("Server Error: Unable to render profile page");
+    console.error("Error fetching profile:", error.message);
+    res.status(500).send("Error fetching profile: " + error.message);
   }
 };
 
 exports.getEditFreelancerProfile = async (req, res) => {
   try {
-    res.render("Vanya/edit-profile", {
-      user: req.session.user || staticUser,
+    if (!req.session.user) {
+      return res.status(401).send("Unauthorized: Please log in");
+    }
+
+    const freelancerId = req.session.user.roleId;
+
+    // Fetch user data
+    const user = await User.findOne({ roleId: freelancerId }).lean();
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Fetch freelancer data
+    const freelancer = await Freelancer.findOne({
+      freelancerId: freelancerId,
+    }).lean();
+    if (!freelancer) {
+      return res.status(404).send("Freelancer profile not found");
+    }
+
+    // Combine user and freelancer data
+    const profileData = {
+      ...user,
+      ...freelancer,
+    };
+
+    res.render("Vanya/others/edit-profile", {
+      user: profileData,
       activePage: "profile",
     });
   } catch (error) {
-    console.error("Error rendering profile:", error.message);
+    console.error("Error rendering edit profile:", error.message);
     res.status(500).send("Server Error: Unable to render edit profile page");
+  }
+};
+
+exports.updateFreelancerProfile = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const freelancerId = req.session.user.roleId;
+    const {
+      name,
+      title,
+      location,
+      profileImageUrl,
+      email,
+      phone,
+      about,
+      experience,
+      education,
+      portfolio,
+      resumeLink,
+      skills,
+    } = req.body;
+
+    // Update User model
+    const userUpdate = await User.updateOne(
+      { roleId: freelancerId },
+      {
+        $set: {
+          name,
+          email,
+          phone,
+          location,
+          picture: profileImageUrl,
+          aboutMe: about,
+        },
+      }
+    );
+
+    if (userUpdate.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Parse arrays if they are strings (in case they are sent as JSON strings)
+    const parsedExperience =
+      typeof experience === "string" ? JSON.parse(experience) : experience;
+    const parsedEducation =
+      typeof education === "string" ? JSON.parse(education) : education;
+    const parsedPortfolio =
+      typeof portfolio === "string" ? JSON.parse(portfolio) : portfolio;
+    const parsedSkills =
+      typeof skills === "string" ? JSON.parse(skills) : skills;
+
+    // Update Freelancer model
+    const freelancerUpdate = await Freelancer.updateOne(
+      { freelancerId: freelancerId },
+      {
+        $set: {
+          resume: resumeLink,
+          skills: parsedSkills || [],
+          experience: parsedExperience || [],
+          education: parsedEducation || [],
+          portfolio: parsedPortfolio || [],
+        },
+      }
+    );
+
+    if (freelancerUpdate.matchedCount === 0) {
+      return res.status(404).json({ error: "Freelancer profile not found" });
+    }
+
+    res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    console.error("Error updating profile:", error.message);
+    res.status(500).json({ error: "Server Error: Unable to update profile" });
   }
 };
 
 exports.getFreelancerJobHistory = async (req, res) => {
   try {
+    if (!req.session.user) {
+      return res.status(401).send("Unauthorized: Please log in");
+    }
+
+    const freelancerId = req.session.user.roleId;
+
+    // Query MongoDB for finished or left jobs
+    const historyJobs = await JobListing.find({
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": { $in: ["finished", "left"] },
+    }).lean();
+
+    // Fetch employer details for company names
+    const formattedJobs = await Promise.all(
+      historyJobs.map(async (job) => {
+        // Calculate sum of paid milestones
+        const paidAmount = job.milestones
+          .filter((milestone) => milestone.status === "paid")
+          .reduce(
+            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
+            0
+          );
+
+        // Fetch employer company name
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
+        }).lean();
+        const companyName = employer ? employer.companyName : "Unknown Company";
+
+        return {
+          id: job.jobId,
+          title: job.title,
+          company: companyName,
+          logo: job.imageUrl || "/assets/company_logo.jpg",
+          status: job.assignedFreelancer.status,
+          tech: job.description.skills || [],
+          date: `${
+            job.assignedFreelancer.startDate
+              ? job.assignedFreelancer.startDate.toLocaleDateString()
+              : "Unknown"
+          } - ${
+            job.updatedAt ? job.updatedAt.toLocaleDateString() : "Unknown"
+          }`,
+          price: paidAmount ? `Rs.${paidAmount.toFixed(2)}` : "Not paid",
+          rating: job.rating || 0, // Adjust if you have a rating field
+        };
+      })
+    );
+
     res.render("Vanya/job_history", {
-      user: req.session.user || staticUser,
+      user: req.session.user,
+      history_jobs: formattedJobs,
       activePage: "job_history",
     });
   } catch (error) {

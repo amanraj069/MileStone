@@ -199,6 +199,10 @@ select:hover {
   border-color: #0a66c2;
 }
 
+.checkbox-group {
+  margin-top: 10px;
+}
+
 .checkbox-group label {
   display: flex;
   align-items: center;

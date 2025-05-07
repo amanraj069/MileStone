@@ -68,7 +68,15 @@ const jobListingSchema = new Schema(
         description: { type: String, required: true },
         deadline: { type: String, required: true },
         payment: { type: String, required: true },
-        status: { type: String, default: "pending" },
+        status: {
+          type: String,
+          enum: ["paid", "not-paid"],
+          default: "not-paid",
+        },
+        requested: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
     assignedFreelancer: {
@@ -80,6 +88,11 @@ const jobListingSchema = new Schema(
       startDate: {
         type: Date,
         default: null,
+      },
+      status: {
+        type: String,
+        enum: ["notworking", "working", "finished","left"],
+        default: "working",
       },
     },
     status: {

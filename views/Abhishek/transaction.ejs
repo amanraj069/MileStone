@@ -3,52 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebar Dashboard</title>
+    <title>Transaction History</title>
     <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
     <link rel="stylesheet" href="/css/EmployerD/transaction.css" />
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage:
-      'transaction_history' }) %>
+      <%- include('partials/sidebar', { user: user, activePage: 'transaction_history' }) %>
       <div class="main-content">
         <div class="container">
           <h1>Transaction History</h1>
-
-          <div class="filter-container">
-            <button class="filter-button active" data-filter="all">
-              All Transactions
-            </button>
-            <button class="filter-button" data-filter="completed">
-              Completed
-            </button>
-            <button class="filter-button" data-filter="pending">Pending</button>
-          </div>
-
           <div class="transactions-grid" id="transactions-container">
-            <div class="transaction-card" data-status="completed">
-              <div class="card-header">
-                <div class="freelancer-info">
-                  <img
-                    src="/assets/user_image.jpg"
-                    alt="Aman Raj"
-                    class="avatar"
-                  />
-                  <div class="freelancer-name">Aman Raj</div>
+            <% if (transactions && transactions.length > 0) { %>
+              <% transactions.forEach(transaction => { %>
+                <div class="transaction-card" data-status="<%= transaction.status %>">
+                  <div class="card-header">
+                    <div class="freelancer-info">
+                      <img src="<%= transaction.freelancer.picture %>" alt="<%= transaction.freelancer.name %>" class="avatar" />
+                      <div class="freelancer-name"><%= transaction.freelancer.name %></div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="project-title"><%= transaction.projectTitle %></div>
+                    <div class="amount">₹<%= transaction.amount.toLocaleString() %></div>
+                    <div class="date">Started on <%= new Date(transaction.startDate).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) %></div>
+                  </div>
+                  <div class="card-footer">
+                    <a href="/employerD/transaction_history/milestone?jobId=<%= transaction.jobId %>">
+                      <button class="btn btn-outline">View Details</button>
+                    </a>
+                  </div>
                 </div>
-                <span class="status-badge status-completed">Paid</span>
+              <% }); %>
+            <% } else { %>
+              <div class="no-transactions">
+                <p>No transactions found. When you hire freelancers, they'll appear here.</p>
               </div>
-              <div class="card-body">
-                <div class="project-title">Mobile App UI Design</div>
-                <div class="amount">₹18,000</div>
-                <div class="date">Paid on Mar 09, 2025</div>
-              </div>
-              <div class="card-footer">
-                <a href="/employerD/transaction_history/milestone"
-                  ><button class="btn btn-outline">View Details</button></a
-                >
-              </div>
-            </div>
+            <% } %>
           </div>
         </div>
       </div>
