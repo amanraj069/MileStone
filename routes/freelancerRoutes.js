@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.route("/profile").get(freelancerController.getFreelancerProfile);
 router.route("/profile/edit").get(freelancerController.getEditFreelancerProfile);
+router.route("/profile/update").post(freelancerController.updateFreelancerProfile); 
 router.route("/active_job").get(freelancerController.getFreelancerActiveJobs);
 router
   .route("/active_job/leave/:jobId")

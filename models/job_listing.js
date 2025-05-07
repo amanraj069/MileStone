@@ -73,6 +73,10 @@ const jobListingSchema = new Schema(
           enum: ["paid", "not-paid"],
           default: "not-paid",
         },
+        requested: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
     assignedFreelancer: {
@@ -87,7 +91,7 @@ const jobListingSchema = new Schema(
       },
       status: {
         type: String,
-        enum: ["notworking", "working", "finished"],
+        enum: ["notworking", "working", "finished","left"],
         default: "working",
       },
     },
