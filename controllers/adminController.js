@@ -4,12 +4,10 @@ const User = require("../models/user");
 const Employer = require("../models/employer");
 const Freelancer = require("../models/freelancer");
 const JobListing = require("../models/job_listing");
+const Skill = require("../models/skill");
 
 exports.getAdminDashboard = (req, res) => {
-  res.render("Jayanth/admin", {
-    user: req.session.user,
-    activeSection: "home",
-  });
+  res.redirect("/adminD/profile");
 };
 
 exports.getJobListings = async (req, res) => {
@@ -153,6 +151,35 @@ exports.getComplaints = (req, res) => {
   });
 };
 
+exports.getQuizzes = async (req, res) => {
+  try {
+    const searchQuery = req.query.q ? req.query.q.trim() : "";
+    
+    let query = {};
+    if (searchQuery) {
+      query.name = { $regex: searchQuery, $options: 'i' };
+    }
+    
+    const skills = await Skill.find(query).lean();
+    
+    const skillData = skills.map((skill) => ({
+      ...skill,
+      questionCount: skill.questions.length,
+      totalMarks: skill.questions.reduce((sum, q) => sum + q.marks, 0),
+    }));
+    
+    res.render("Jayanth/quizzes", {
+      user: req.session.user,
+      activeSection: "quizzes",
+      skills: skillData,
+      searchQuery,
+    });
+  } catch (error) {
+    console.error("Error in getQuizzes:", error);
+    res.status(500).send("Server error");
+  }
+};
+
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findOne({ userId: req.session.user.id });
@@ -263,6 +290,54 @@ exports.deleteFreelancer = async (req, res) => {
     res.json({ message: "Freelancer deleted successfully" });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getAddQuiz = (req, res) => {
+  res.render("Jayanth/add-quiz", {
+    user: req.session.user,
+    activeSection: "quizzes",
+  });
+};
+
+exports.addQuiz = async (req, res) => {
+  try {
+    const { name, questions } = req.body;
+    
+    const parsedQuestions = typeof questions === 'string' 
+      ? JSON.parse(questions) 
+      : questions;
+    
+    const newSkill = new Skill({
+      name,
+      questions: parsedQuestions.map(q => ({
+        questionText: q.questionText,
+        options: q.options,
+        correctAnswer: q.correctAnswer,
+        marks: parseInt(q.marks) || 1
+      }))
+    });
+    
+    await newSkill.save();
+    res.redirect("/adminD/quizzes");
+  } catch (error) {
+    console.error("Error adding quiz:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+exports.deleteQuiz = async (req, res) => {
+  try {
+    const result = await Skill.deleteOne({ skillId: req.params.skillId });
+    
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Skill not found" });
+    }
+    
+    res.json({ message: "Skill and quiz deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting quiz:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

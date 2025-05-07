@@ -13,4 +13,10 @@ router.post("/profile/edit", adminController.updateProfile);
 router.delete("/employers/:userId", adminController.deleteEmployer);
 router.delete("/freelancers/:userId", adminController.deleteFreelancer);
 
+// New quiz routes
+router.get("/quizzes", adminController.getQuizzes);
+router.get("/quizzes/add", adminController.getAddQuiz);
+router.post("/quizzes/add", adminController.addQuiz);
+router.delete("/quizzes/:skillId", adminController.deleteQuiz);
+
 module.exports = router;
