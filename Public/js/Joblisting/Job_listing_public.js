@@ -2,9 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const sortSelect = document.getElementById("sortSelect");
   const searchInput = document.getElementById("searchInput");
   const jobList = document.getElementById("jobList");
+  const jobTypeSelect = document.getElementById("jobTypeSelect");
+  const remoteCheckbox = document.getElementById("remoteCheckbox");
   const allJobs = Array.from(document.querySelectorAll(".job-card"));
 
-  // Handle checkbox groups
+  // Handle checkbox groups with single selection for experience level
   const setupCheckboxFilters = (selector, singleSelect = false) => {
     const checkboxes = document.querySelectorAll(selector);
     checkboxes.forEach((checkbox) => {
@@ -30,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event listeners
   sortSelect.addEventListener("change", applyFiltersAndSort);
+  jobTypeSelect.addEventListener("change", applyFiltersAndSort);
+  remoteCheckbox.addEventListener("change", applyFiltersAndSort);
 
   let searchTimeout;
   searchInput.addEventListener("input", () => {
@@ -62,16 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Main filter and sort function
   function applyFiltersAndSort() {
     // Get selected filters
-    const selectedExperience =
-      document.querySelector(
-        ".filter-section:nth-of-type(2) .checkbox-group input:checked"
-      )?.value || "";
+    const selectedExperience = document.querySelector(
+      ".filter-section:nth-of-type(2) .checkbox-group input:checked"
+    )?.value || "";
 
-    const selectedJobTypes = Array.from(
-      document.querySelectorAll(
-        ".filter-section:nth-of-type(4) .checkbox-group input:checked"
-      )
-    ).map((input) => input.value);
+    const selectedJobType = jobTypeSelect.value;
+    const isRemote = remoteCheckbox.checked;
 
     const selectedSkills = Array.from(
       document.querySelectorAll(".skill-tag.selected")
@@ -101,10 +101,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Apply job type filter
-    if (selectedJobTypes.length > 0) {
+    if (selectedJobType) {
       filteredJobs = filteredJobs.filter((job) => {
         const jobType = job.querySelector(".work").textContent.toLowerCase();
-        return selectedJobTypes.some((type) => jobType.includes(type));
+        return jobType.includes(selectedJobType);
+      });
+    }
+
+    // Apply remote filter
+    if (isRemote) {
+      filteredJobs = filteredJobs.filter((job) => {
+        const remoteText = job.querySelector(".job-meta").textContent.toLowerCase();
+        return remoteText.includes("(remote)");
       });
     }
 
@@ -169,24 +177,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function extractDate(job) {
-    const dateText =
-      job.querySelector(".clock").textContent.match(/\d{4}-\d{2}-\d{2}/) ||
-      job.querySelector(".clock").textContent.match(/\d+/);
-    return dateText ? new Date(dateText[0]).getTime() : 0;
+    const dateText = job.querySelector(".clock").textContent;
+    const dateMatch = dateText.match(/(\w+\s\d{1,2},\s\d{4})/);
+    return dateMatch ? new Date(dateMatch[0]).getTime() : 0;
   }
 
   function countStars(job) {
-    return job.querySelector(".star-rating").textContent.split("★").length - 1;
+    const starRating = job.querySelector(".star-rating");
+    return starRating ? starRating.textContent.split("★").length - 1 : 0;
   }
 
+  // Initialize filters
   setupCheckboxFilters(
     ".filter-section:nth-of-type(2) .checkbox-group input",
     true
   );
-  setupCheckboxFilters(
-    ".filter-section:nth-of-type(4) .checkbox-group input",
-    true
-  );
 
+  // Initial application of filters
   applyFiltersAndSort();
 });
