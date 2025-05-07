@@ -9,428 +9,202 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('../partials/sidebar', { user: user, activePage:
-      'transaction_history' }) %>
+      <%- include('../partials/sidebar', { user: user, activePage: 'transaction_history' }) %>
       <div class="main-content">
         <div class="container">
           <div class="header">
-            <h1 class="title">Payments & Milestones for this Job</h1>
-            <button class="add-button" id="addMilestoneBtn">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Add Milestone
-            </button>
+            <h1 class="title">Payments & Milestones for Job</h1>
           </div>
-          <div class="progress-card">
-            <div class="progress-section">
-              <div class="progress-header">
-                <h3 class="progress-title">Project Completion</h3>
-                <span class="progress-percentage" id="completionPercentage"
-                  >40%</span
-                >
-              </div>
-              <div class="progress-bar-container">
-                <div
-                  class="progress-bar"
-                  id="completionProgressBar"
-                  style="width: 40%"
-                ></div>
-              </div>
-              <div class="progress-labels">
-                <span>Not Started</span>
-                <span>In Progress</span>
-                <span>Completed</span>
-              </div>
-            </div>
-            <div class="progress-section">
-              <div class="progress-header">
-                <h3 class="progress-title">Payment Progress</h3>
-                <span class="progress-amount" id="paymentProgress"
-                  >₹62,250 of ₹124,500 (50%)</span
-                >
-              </div>
-              <div class="progress-bar-container">
-                <div
-                  class="progress-bar"
-                  id="paymentProgressBar"
-                  style="width: 50%"
-                ></div>
-              </div>
-            </div>
-          </div>
-          <div class="milestones-container" id="milestonesContainer">
-            <div class="milestone-card">
-              <div class="milestone-header">
-                <h3 class="milestone-title">
-                  Initial setup and component architecture
-                </h3>
-                <div class="milestone-actions">
-                  <button class="edit-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                      ></path>
-                      <path
-                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button class="delete-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path
-                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
-                      ></path>
-                    </svg>
-                  </button>
+          <% if (jobs.length === 0) { %>
+            <p>No job found.</p>
+          <% } else { %>
+            <% jobs.forEach(job => { %>
+              <div class="job-section">
+                <h2 class="job-title"><%= job.title %></h2>
+                <p><strong>Freelancer:</strong> <%= job.freelancer.name %> (<%= job.freelancer.status === 'working' ? 'Currently Working' : 'Finished' %>)</p>
+                <div class="progress-card">
+                  <div class="progress-section">
+                    <div class="progress-header">
+                      <h3 class="progress-title">Project Completion</h3>
+                      <span class="progress-percentage"><%= job.progress.completionPercentage %>%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar" style="width: <%= job.progress.completionPercentage %>%"></div>
+                    </div>
+                    <div class="progress-labels">
+                      <span>Not Started</span>
+                      <span>In Progress</span>
+                      <span>Completed</span>
+                    </div>
+                  </div>
+                  <div class="progress-section">
+                    <div class="progress-header">
+                      <h3 class="progress-title">Payment Progress</h3>
+                      <span class="progress-amount">₹<%= job.progress.payment.paid.toLocaleString() %> of ₹<%= job.progress.payment.total.toLocaleString() %> (<%= job.progress.payment.percentage %>%)</span>
+                    </div>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar" style="width: <%= job.progress.payment.percentage %>%"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="milestones-container">
+                  <table class="milestone-table">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Description</th>
+                        <th>Amount (₹)</th>
+                        <th>Deadline</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% job.milestones.forEach(milestone => { %>
+                        <tr class="milestone-row <%= milestone.status === 'paid' ? 'paid' : 'not-paid' %>">
+                          <td><%= milestone.serialNo %></td>
+                          <td><%= milestone.description %></td>
+                          <td>₹<%= milestone.amount.toLocaleString() %></td>
+                          <td><%= milestone.deadline %></td>
+                          <td>
+                            <% if (milestone.status === 'paid') { %>
+                              <button class="pay-btn" disabled>Paid</button>
+                            <% } else { %>
+                              <button class="pay-btn" 
+                                      data-job-id="<%= job.jobId %>"
+                                      data-milestone-id="<%= milestone.milestoneId %>"
+                                      data-description="<%= milestone.description %>"
+                                      data-amount="<%= milestone.amount %>">Pay</button>
+                            <% } %>
+                          </td>
+                        </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div class="milestone-details">
-                <p class="milestone-info"><strong>Deadline:</strong> Week 1</p>
-                <p class="milestone-info">
-                  <strong>Payment:</strong> ₹24,900 (20%)
-                </p>
-                <p class="milestone-info"><strong>Status:</strong> Completed</p>
-              </div>
-            </div>
-            <div class="milestone-card">
-              <div class="milestone-header">
-                <h3 class="milestone-title">
-                  Core functionality implementation
-                </h3>
-                <div class="milestone-actions">
-                  <button class="edit-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                      ></path>
-                      <path
-                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button class="delete-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path
-                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="milestone-details">
-                <p class="milestone-info"><strong>Deadline:</strong> Week 3</p>
-                <p class="milestone-info">
-                  <strong>Payment:</strong> ₹37,350 (30%)
-                </p>
-                <p class="milestone-info">
-                  <strong>Status:</strong> In Progress
-                </p>
-              </div>
-            </div>
-            <div class="milestone-card">
-              <div class="milestone-header">
-                <h3 class="milestone-title">Integration with backend APIs</h3>
-                <div class="milestone-actions">
-                  <button class="edit-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                      ></path>
-                      <path
-                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button class="delete-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path
-                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="milestone-details">
-                <p class="milestone-info"><strong>Deadline:</strong> Week 5</p>
-                <p class="milestone-info">
-                  <strong>Payment:</strong> ₹24,900 (20%)
-                </p>
-                <p class="milestone-info">
-                  <strong>Status:</strong> Not Started
-                </p>
-              </div>
-            </div>
-            <div class="milestone-card">
-              <div class="milestone-header">
-                <h3 class="milestone-title">Testing and optimization</h3>
-                <div class="milestone-actions">
-                  <button class="edit-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                      ></path>
-                      <path
-                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button class="delete-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path
-                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="milestone-details">
-                <p class="milestone-info"><strong>Deadline:</strong> Week 7</p>
-                <p class="milestone-info">
-                  <strong>Payment:</strong> ₹24,900 (20%)
-                </p>
-                <p class="milestone-info">
-                  <strong>Status:</strong> Not Started
-                </p>
-              </div>
-            </div>
-            <div class="milestone-card">
-              <div class="milestone-header">
-                <h3 class="milestone-title">Final delivery</h3>
-                <div class="milestone-actions">
-                  <button class="edit-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                      ></path>
-                      <path
-                        d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button class="delete-btn">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path
-                        d="M6 6l1.5 12c.1.7.7 1.2 1.4 1.2h6.2c.7 0 1.3-.5 1.4-1.2L18 6"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div class="milestone-details">
-                <p class="milestone-info"><strong>Deadline:</strong> Week 8</p>
-                <p class="milestone-info">
-                  <strong>Payment:</strong> ₹12,450 (10%)
-                </p>
-                <p class="milestone-info">
-                  <strong>Status:</strong> Not Started
-                </p>
-              </div>
-            </div>
-          </div>
+            <% }); %>
+          <% } %>
         </div>
-        <!-- Add/Edit Milestone Modal -->
-        <div class="modal-overlay" id="milestoneModal">
+        <!-- Payment Confirmation Modal -->
+        <div class="modal-overlay" id="paymentModal">
           <div class="modal">
             <div class="modal-header">
-              <h2 class="modal-title" id="modalTitle">Add New Milestone</h2>
-              <button class="close-modal" id="closeModal">×</button>
+              <h2 class="modal-title">Confirm Payment</h2>
+              <button class="close-modal" id="closePaymentModal">×</button>
             </div>
             <div class="modal-body">
-              <form id="milestoneForm">
-                <input type="hidden" id="milestoneId" />
-                <div class="form-group">
-                  <label for="deliverable">Deliverable Description</label>
-                  <input
-                    type="text"
-                    id="deliverable"
-                    placeholder="eg : Complete feature X"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="deadline">Deadline</label>
-                  <input
-                    type="text"
-                    id="deadline"
-                    placeholder="eg : Week 2"
-                    required
-                  />
-                </div>
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="payment">Payment Amount (₹)</label>
-                    <input
-                      type="number"
-                      id="payment"
-                      placeholder="eg : 22500"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="percentage">Percentage (%)</label>
-                    <input
-                      type="number"
-                      id="percentage"
-                      placeholder="eg : 20"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="cancel-btn" id="cancelBtn">
-                    Cancel
-                  </button>
-                  <button type="submit" class="save-btn" id="saveBtn">
-                    Add Milestone
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <!-- Delete Confirmation Modal -->
-        <div class="modal-overlay" id="deleteModal">
-          <div class="modal delete-modal">
-            <div class="modal-header">
-              <h2 class="modal-title">Confirm Deletion</h2>
-              <button class="close-modal" id="closeDeleteModal">×</button>
-            </div>
-            <div class="modal-body">
-              <p>Are you sure you want to delete this milestone?</p>
+              <p><strong>Milestone:</strong> <span id="paymentDescription"></span></p>
+              <p><strong>Amount:</strong> ₹<span id="paymentAmount"></span></p>
+              <p><strong>Employer:</strong> <%= user.name %></p>
+              <p><strong>Email:</strong> <%= user.email %></p>
+              <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" required>
+                  <option value="card">Credit/Debit Card</option>
+                  <option value="bank">Bank Transfer</option>
+                  <option value="upi">UPI</option>
+                </select>
+              </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="cancel-btn" id="cancelDeleteBtn">
-                Cancel
-              </button>
-              <button type="button" class="delete-btn" id="confirmDeleteBtn">
-                Delete
-              </button>
+              <button type="button" class="cancel-btn" id="cancelPaymentBtn">Cancel</button>
+              <button type="button" class="save-btn" id="confirmPaymentBtn">Verify and Pay</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/EmployerD/milestone.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const paymentModal = document.getElementById('paymentModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+        const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+        const paymentDescription = document.getElementById('paymentDescription');
+        const paymentAmount = document.getElementById('paymentAmount');
+
+        // Open payment modal
+        document.querySelectorAll('.pay-btn:not(:disabled)').forEach(button => {
+          button.addEventListener('click', () => {
+            const jobId = button.dataset.jobId;
+            const milestoneId = button.dataset.milestoneId;
+            const description = button.dataset.description;
+            const amount = button.dataset.amount;
+
+            paymentDescription.textContent = description;
+            paymentAmount.textContent = amount;
+            confirmPaymentBtn.dataset.jobId = jobId;
+            confirmPaymentBtn.dataset.milestoneId = milestoneId;
+            paymentModal.style.display = 'flex';
+          });
+        });
+
+        // Close payment modal
+        const closePaymentModalFn = () => {
+          paymentModal.style.display = 'none';
+          delete confirmPaymentBtn.dataset.jobId;
+          delete confirmPaymentBtn.dataset.milestoneId;
+        };
+
+        closePaymentModal.addEventListener('click', closePaymentModalFn);
+        cancelPaymentBtn.addEventListener('click', closePaymentModalFn);
+
+        // Confirm payment
+        confirmPaymentBtn.addEventListener('click', async () => {
+          const jobId = confirmPaymentBtn.dataset.jobId;
+          const milestoneId = confirmPaymentBtn.dataset.milestoneId;
+
+          try {
+            const response = await fetch(`/employerD/milestone/${jobId}/${milestoneId}/pay`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error('Failed to update milestone status');
+            }
+
+            const data = await response.json();
+            if (data.success) {
+              // Update UI
+              const milestoneRow = document.querySelector(`.pay-btn[data-milestone-id="${milestoneId}"]`).closest('tr');
+              milestoneRow.classList.remove('not-paid');
+              milestoneRow.classList.add('paid');
+              milestoneRow.querySelector('.pay-btn').textContent = 'Paid';
+              milestoneRow.querySelector('.pay-btn').disabled = true;
+              paymentModal.style.display = 'none';
+
+              // Update payment progress
+              const progressAmountElement = milestoneRow.closest('.job-section').querySelector('.progress-amount');
+              const paidMatch = progressAmountElement.textContent.match(/₹([\d,]+)/);
+              const totalMatch = progressAmountElement.textContent.match(/of ₹([\d,]+)/);
+              if (!paidMatch || !totalMatch) {
+                throw new Error('Could not parse payment amounts');
+              }
+              const paidAmount = parseFloat(paidMatch[1].replace(/,/g, '')) + parseFloat(paymentAmount.textContent);
+              const totalAmount = parseFloat(totalMatch[1].replace(/,/g, ''));
+              const percentage = Math.round((paidAmount / totalAmount) * 100);
+              progressAmountElement.textContent = `₹${paidAmount.toLocaleString()} of ₹${totalAmount.toLocaleString()} (${percentage}%)`;
+              const paymentProgressBar = milestoneRow.closest('.job-section').querySelector('.progress-section:last-child .progress-bar');
+              paymentProgressBar.style.width = `${percentage}%`;
+
+              // Update project completion
+              const completedCount = milestoneRow.closest('.job-section').querySelectorAll('.milestone-row.paid').length;
+              const totalCount = milestoneRow.closest('.job-section').querySelectorAll('.milestone-row').length;
+              const completionPercentage = Math.round((completedCount / totalCount) * 100);
+              const completionPercentageElement = milestoneRow.closest('.job-section').querySelector('.progress-percentage');
+              completionPercentageElement.textContent = `${completionPercentage}%`;
+              const completionProgressBar = milestoneRow.closest('.job-section').querySelector('.progress-section:first-child .progress-bar');
+              completionProgressBar.style.width = `${completionPercentage}%`;
+            }
+          } catch (error) {
+            console.error('Error paying milestone:', error.message);
+            alert('Failed to process payment. Please try again.');
+          }
+        });
+      });
+    </script>
   </body>
 </html>

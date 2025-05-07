@@ -5,118 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Freelancer Dashboard - Profile</title>
     <link rel="stylesheet" href="/css/FreelancerD/static_elements/sidebar.css" />
-    <link rel="stylesheet" href="/css/FreelancerD/edit_profile_style.css" />
+    <link rel="stylesheet" href="/css/FreelancerD/profile.css" />
   </head>
-
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
       <%- include('./partials/sidebar', {activePage: 'profile'}) %>
-
       <div class="main-content">
+        <div class="container">
           <div class="header">
             <h1>Freelancer Profile</h1>
-            <button id="editProfileBtn" class="edit-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
+            <a href="/freelancerD/profile/edit" class="edit-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
               </svg>
               Edit Profile
-            </button>
+            </a>
           </div>
-
+      
           <div class="profile-section">
             <div class="profile-image">
-              <img src="/assets/user_female.png" alt="Profile Image" />
+              <img src="/assets/user_female.png" alt="Profile Image" id="profileImage">
             </div>
-
+      
             <div class="profile-info">
               <div class="profile-header">
-                <h2 data-editable="name">Vanya Awasthi</h2>
+                <h2 id="nameDisplay">Vanya Awasthi</h2>
                 <div class="top-freelancer-badge">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="8" r="7"></circle>
                     <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
                   </svg>
                   Top Freelancer
                 </div>
               </div>
-
-              <div class="title" data-editable="title">Frontend Developer</div>
-
+      
+              <div class="title" id="titleDisplay">Frontend Developer</div>
+      
               <div class="location">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span data-editable="location">Pune, Maharashtra</span>
+                <span id="locationDisplay">Pune, Maharashtra</span>
               </div>
-
+      
               <div class="contact">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span data-editable="email">vanya.awasthi@email.com</span>
+                <span id="emailDisplay">vanya.awasthi@email.com</span>
               </div>
-
+      
               <div class="contact">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                 </svg>
-                <span data-editable="phone">+91 8757462008</span>
+                <span id="phoneDisplay">+91 8757462008</span>
               </div>
-
+      
               <div class="rating-section">
                 <div class="rating">
                   <span class="star">★</span>
@@ -124,31 +78,27 @@
                   <span class="star">★</span>
                   <span class="star">★</span>
                   <span class="star">★</span>
-                  <span data-editable="rating">4.8/5</span>
+                  <span>4.8/5</span>
                 </div>
                 <div class="rating-count">(120 Reviews)</div>
               </div>
-
-              <div class="projects-completed">
-                <span data-editable="projects">50 Projects Completed</span>
-              </div>
+      
+              <div class="projects-completed" id="projectsDisplay">50 Projects Completed</div>
             </div>
           </div>
-
+      
           <div class="grid-container">
             <div>
-              <!-- About Section -->
               <div class="about-section">
                 <h3 class="section-title">About Me</h3>
-                <div class="about-content" data-editable="about">
+                <div class="about-content" id="aboutDisplay">
                   <p>I am a passionate Frontend Developer with over 5 years of experience in building responsive and user-friendly web applications. I specialize in React, JavaScript, and modern CSS frameworks. My goal is to create seamless digital experiences that delight users and meet business objectives.</p>
                 </div>
               </div>
-
-              <!-- Skills Section -->
+      
               <div class="skills-section">
                 <h3 class="section-title">Skills</h3>
-                <div class="skills-list" data-editable="skills">
+                <div class="skills-list" id="skillsDisplay">
                   <span class="skill-tag">HTML5</span>
                   <span class="skill-tag">CSS3</span>
                   <span class="skill-tag">JavaScript</span>
@@ -159,11 +109,10 @@
                   <span class="skill-tag">Git</span>
                 </div>
               </div>
-
-              <!-- Experience Section -->
+      
               <div class="experience-section">
                 <h3 class="section-title">Experience</h3>
-                <div class="experience-list" data-editable="experience">
+                <div class="experience-list" id="experienceDisplay">
                   <div class="experience-item">
                     <h5>Senior Frontend Developer - Google</h5>
                     <p class="experience-date">Jan 2022 - Present</p>
@@ -176,27 +125,24 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Education Section -->
+      
               <div class="education-section">
                 <h3 class="section-title">Education</h3>
-                <div class="education-list" data-editable="education">
+                <div class="education-list" id="educationDisplay">
                   <div class="education-item">
                     <h5>Bachelor of Science in Computer Science</h5>
-                    <p class="education-date">University of California, Berkeley</p><br>
-                    <p class="education-date">Bachelor of Science in Computer Science</p>
+                    <p class="education-date">University of California, Berkeley</p>
                     <p class="education-date">2015 - 2019</p>
                   </div>
                 </div>
               </div>
-
-              <!-- Portfolio Section -->
+      
               <div class="portfolio-section">
                 <h3 class="section-title">Portfolio</h3>
-                <div class="portfolio-grid" data-editable="portfolio">
+                <div class="portfolio-grid" id="portfolioDisplay">
                   <div class="portfolio-item">
                     <img src="/assets/portfolio/ecom_portfolio.png" alt="E-commerce Website Redesign">
-                    <h5>E-commerce Website Redesign</h5>
+                    <h5>Website Redesign</h5>
                     <p>A responsive e-commerce platform built with React and Node.js.</p>
                     <a href="https://github.com/evershopcommerce/evershop" class="portfolio-link">View Project</a>
                   </div>
@@ -214,110 +160,19 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Testimonials Section -->
-              <div class="testimonials-section">
-                <h3 class="section-title">Testimonials & Reviews</h3>
-                <div class="testimonial">
-                  <div class="testimonial-content">
-                    Working with Vanya Awasthi was a fantastic experience. They were professional, responsive, and delivered high-quality work on time.
-                  </div>
-                  <div class="testimonial-author">
-                    <div class="author-image">
-                      <img src="/assets/user_female.png" alt="Client Image" />
-                    </div>
-                    <div class="author-info">
-                      <div class="author-name">Alex Johnson</div>
-                      <div class="author-job">Project Manager</div>
-                      <div class="testimonial-rating">
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">★</span>
-                        <span class="star">☆</span>
-                        <span>4.5</span>
-                      </div>
-                    </div>
-                  </div>
+      
+              <div class="resume-section">
+                <h3 class="section-title">Resume</h3>
+                <div class="resume-content" id="resumeDisplay">
+                  <a href="#" class="resume-link">View Resume</a>
                 </div>
-              </div>
-            </div>
-
-            <!-- Stats Section -->
-            <div class="stats-section">
-              <h3 class="section-title">Freelancer Stats</h3>
-              <div class="stats-item">
-                <div class="stats-label">Member Since</div>
-                <div class="stats-value">Jan 2020</div>
-              </div>
-              <div class="stats-item">
-                <div class="stats-label">Total Earnings</div>
-                <div class="stats-value">INR 1,50,000</div>
-              </div>
-              <div class="stats-item">
-                <div class="stats-label">Completed Projects</div>
-                <div class="stats-value">50</div>
-              </div>
-              <div class="stats-item">
-                <div class="stats-label">Active Projects</div>
-                <div class="stats-value">5</div>
-              </div>
-              <div class="stats-item">
-                <div class="stats-label">Avg. Project Rate</div>
-                <div class="stats-value">INR 3,000</div>
-              </div>
-              <div class="stats-item">
-                <div class="stats-label">Response Rate</div>
-                <div class="stats-value">95%</div>
-              </div>
-              <div class="stats-item">
-                <div class="stats-label">Avg. Response Time</div>
-                <div class="stats-value">1.8 hours</div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/FreelancerD/edit_profile.js"></script>
-    <script>
-      document.getElementById('resumeUploadForm')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        try {
-          const response = await fetch('/freelancerD/upload-resume', {
-            method: 'POST',
-            body: formData
-          });
-          if (response.ok) {
-            window.location.reload();
-          } else {
-            alert('Failed to upload resume');
-          }
-        } catch (error) {
-          console.error('Error uploading resume:', error);
-          alert('An error occurred while uploading');
-        }
-      });
-
-      function deleteResume() {
-        if (confirm('Are you sure you want to delete your resume?')) {
-          fetch('/freelancerD/delete-resume', {
-            method: 'POST'
-          })
-          .then(response => {
-            if (response.ok) {
-              window.location.reload();
-            } else {
-              alert('Failed to delete resume');
-            }
-          })
-          .catch(error => {
-            console.error('Error deleting resume:', error);
-            alert('An error occurred while deleting');
-          });
-        }
-      }
-    </script>
+  
+    <script src="/js/FreelancerD/profile.js"></script>
   </body>
-</html>
+  </html>

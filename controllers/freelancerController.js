@@ -72,6 +72,18 @@ exports.getFreelancerProfile = async (req, res) => {
   }
 };
 
+exports.getEditFreelancerProfile = async (req, res) => {
+  try {
+    res.render("Vanya/edit-profile", {
+      user: req.session.user || staticUser,
+      activePage: "profile",
+    });
+  } catch (error) {
+    console.error("Error rendering profile:", error.message);
+    res.status(500).send("Server Error: Unable to render edit profile page");
+  }
+};
+
 exports.getFreelancerJobHistory = async (req, res) => {
   try {
     res.render("Vanya/job_history", {

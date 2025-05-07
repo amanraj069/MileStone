@@ -9,11 +9,11 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage:
-      'previously_worked' }) %>
+      <%- include('partials/sidebar', { user: user, activePage: 'previously_worked' }) %>
       <div class="main-content">
         <div class="container">
           <h1 class="section-title">Previously Worked Freelancers</h1>
+
           <div class="search-bar">
             <input
               type="text"
@@ -34,542 +34,77 @@
               </svg>
             </button>
           </div>
+
           <div class="freelancer-list">
-            <div class="freelancer-card" data-rating="4.5">
-              <div class="card-header">
-                <img
-                  src="/assets/user_image.jpg"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div class="freelancer-info">
-                  <a
-                    href="/employerD/job_listings/see_more/job/view_profile"
-                    class="freelancer-name"
-                    >Rahul Mehra</a
-                  >
-                  <div class="rating">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
+            <% if (freelancers && freelancers.length > 0) { %>
+              <% freelancers.forEach(freelancerData => { %>
+                <div class="freelancer-card" data-rating="<%= freelancerData.freelancer.rating %>">
+                  <div class="card-header">
+                    <img
+                      src="<%= freelancerData.freelancer.picture %>"
+                      alt="Profile"
+                      class="profile-img"
+                    />
+                    <div class="freelancer-info">
+                      <a href="/profile/<%= freelancerData.freelancer.id %>" class="freelancer-name"
+                        ><%= freelancerData.freelancer.name %></a
+                      >
+                      <div class="rating">
+                        <% for (let i = 0; i < 5; i++) { %>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="icon"
+                          >
+                            <path
+                              d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                            />
+                          </svg>
+                        <% } %>
+                        <span><%= freelancerData.freelancer.rating.toFixed(1) %></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="skills">
+                      <% freelancerData.skills.slice(0, 3).forEach(skill => { %>
+                        <span class="skill-tag"><%= skill %></span>
+                      <% }) %>
+                    </div>
+                    <div class="project-info">
+                      <p class="info-label">Worked on:</p>
+                      <p class="project-name"><%= freelancerData.projectName %></p>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="Since-date">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="icon"
+                      >
+                        <path
+                          d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
+                        />
+                      </svg>
+                      <span>Completed <%= Math.floor((new Date() - new Date(freelancerData.completionDate)) / (1000 * 60 * 60 * 24)) %> days ago</span>
+                    </div>
+                    <a href="/employerD/previously_worked/chat/<%= freelancerData.jobId %>"
+                      ><button class="chat-btn">Chat</button></a
                     >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
+                    <a href="/profile/<%= freelancerData.freelancer.id %>"
+                      ><button class="view-profile-btn">View Profile</button></a
                     >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <span>4.5</span>
                   </div>
                 </div>
-              </div>
-              <div class="card-body">
-                <div class="skills">
-                  <span class="skill-tag">Django</span>
-                  <span class="skill-tag">PostgreSQL</span>
-                  <span class="skill-tag">AWS</span>
-                </div>
-                <div class="project-info">
-                  <p class="info-label">Worked on:</p>
-                  <p class="project-name">Inventory Management System</p>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="Since-date">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon"
-                  >
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                    />
-                  </svg>
-                  <span>Completed 30 days ago</span>
-                </div>
-                <a href="/employerD/previously_worked/chat"
-                  ><button class="chat-btn">Chat</button></a
-                >
-                <a href="/employerD/previously_worked/see_more"
-                  ><button class="see-more-btn">See More</button></a
-                >
-              </div>
-            </div>
-            <div class="freelancer-card" data-rating="4.3">
-              <div class="card-header">
-                <img
-                  src="/assets/user_female.png"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div class="freelancer-info">
-                  <a
-                    href="/employerD/job_listings/see_more/job/view_profile"
-                    class="freelancer-name"
-                    >Priya Singh</a
-                  >
-                  <div class="rating">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <span>4.3</span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="skills">
-                  <span class="skill-tag">Figma</span>
-                  <span class="skill-tag">Adobe XD</span>
-                  <span class="skill-tag">UI/UX</span>
-                </div>
-                <div class="project-info">
-                  <p class="info-label">Worked on:</p>
-                  <p class="project-name">App Redesign</p>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="Since-date">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon"
-                  >
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                    />
-                  </svg>
-                  <span>Completed 45 days ago</span>
-                </div>
-                <a href="/employerD/previously_worked/chat"
-                  ><button class="chat-btn">Chat</button></a
-                >
-                <a href="/employerD/previously_worked/see_more"
-                  ><button class="see-more-btn">See More</button></a
-                >
-              </div>
-            </div>
-            <div class="freelancer-card" data-rating="4.0">
-              <div class="card-header">
-                <img
-                  src="/assets/user_image.jpg"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div class="freelancer-info">
-                  <a
-                    href="/employerD/job_listings/see_more/job/view_profile"
-                    class="freelancer-name"
-                    >Arjun Patel</a
-                  >
-                  <div class="rating">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <span>4.0</span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="skills">
-                  <span class="skill-tag">Flutter</span>
-                  <span class="skill-tag">Dart</span>
-                  <span class="skill-tag">Firebase</span>
-                </div>
-                <div class="project-info">
-                  <p class="info-label">Worked on:</p>
-                  <p class="project-name">Mobile App Development</p>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="Since-date">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon"
-                  >
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                    />
-                  </svg>
-                  <span>Completed 60 days ago</span>
-                </div>
-                <a href="/employerD/previously_worked/chat"
-                  ><button class="chat-btn">Chat</button></a
-                >
-                <a href="/employerD/previously_worked/see_more"
-                  ><button class="see-more-btn">See More</button></a
-                >
-              </div>
-            </div>
-            <div class="freelancer-card" data-rating="4.7">
-              <div class="card-header">
-                <img
-                  src="/assets/user_female.png"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div class="freelancer-info">
-                  <a
-                    href="/employerD/job_listings/see_more/job/view_profile"
-                    class="freelancer-name"
-                    >Ananya Gupta</a
-                  >
-                  <div class="rating">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <span>4.7</span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="skills">
-                  <span class="skill-tag">TensorFlow</span>
-                  <span class="skill-tag">Python</span>
-                  <span class="skill-tag">Data Science</span>
-                </div>
-                <div class="project-info">
-                  <p class="info-label">Worked on:</p>
-                  <p class="project-name">Predictive Analytics Model</p>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="Since-date">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon"
-                  >
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                    />
-                  </svg>
-                  <span>Completed 20 days ago</span>
-                </div>
-                <a href="/employerD/previously_worked/chat"
-                  ><button class="chat-btn">Chat</button></a
-                >
-                <a href="/employerD/previously_worked/see_more"
-                  ><button class="see-more-btn">See More</button></a
-                >
-              </div>
-            </div>
-            <div class="freelancer-card" data-rating="4.2">
-              <div class="card-header">
-                <img
-                  src="/assets/user_image.jpg"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div class="freelancer-info">
-                  <a
-                    href="/employerD/job_listings/see_more/job/view_profile"
-                    class="freelancer-name"
-                    >Kiran Desai</a
-                  >
-                  <div class="rating">
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="icon"
-                    >
-                      <path
-                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                      />
-                    </svg>
-                    <span>4.2</span>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="skills">
-                  <span class="skill-tag">Selenium</span>
-                  <span class="skill-tag">JMeter</span>
-                  <span class="skill-tag">QA</span>
-                </div>
-                <div class="project-info">
-                  <p class="info-label">Worked on:</p>
-                  <p class="project-name">Web App Testing</p>
-                </div>
-              </div>
-              <div class="card-footer">
-                <div class="Since-date">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon"
-                  >
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                    />
-                  </svg>
-                  <span>Completed 15 days ago</span>
-                </div>
-                <a href="/employerD/previously_worked/chat"
-                  ><button class="chat-btn">Chat</button></a
-                >
-                <a href="/employerD/previously_worked/see_more"
-                  ><button class="see-more-btn">See More</button></a
-                >
-              </div>
-            </div>
+              <% }) %>
+            <% } else { %>
+              <p>No freelancers have previously worked on your projects.</p>
+            <% } %>
           </div>
         </div>
       </div>

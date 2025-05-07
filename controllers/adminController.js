@@ -42,3 +42,10 @@ exports.getProfile = (req, res) => {
     activeSection: "profile",
   });
 };
+
+exports.getEditProfile = (req, res) => {
+  res.render("Jayanth/edit-profile", {
+    user: req.session.user,
+    activeSection: "profile",
+  });
+};
