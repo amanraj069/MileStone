@@ -5,15 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Active Jobs - FreelancePro</title>
     <link rel="stylesheet" href="/css/FreelancerD/static_elements/header.css" />
-    <link
-      rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
-    />
+    <link rel="stylesheet" href="/css/FreelancerD/static_elements/sidebar.css" />
     <link rel="stylesheet" href="/css/FreelancerD/active_job_style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
   <body>
     <div class="dashboard-wrapper">
@@ -42,10 +36,7 @@
                   >
                     <i class="fas fa-comment"></i>
                   </button>
-                  <button
-                    class="complain-btn"
-                    onclick="leaveJob('<%= job.id %>')"
-                  >
+                  <button class="complain-btn" onclick="leaveJob('<%= job.id %>')">
                     <i class="fas fa-sign-out-alt"></i>
                   </button>
                   <a href="/jobs/<%= job.id%>" class="see-more-btn">
@@ -73,10 +64,7 @@
                     <span><%= job.progress %>%</span>
                   </div>
                   <div class="progress-bar">
-                    <div
-                      class="progress-filled"
-                      style="width: <%= job.progress %>%"
-                    ></div>
+                    <div class="progress-filled" style="width: <%= job.progress %>%"></div>
                   </div>
                 </div>
               </div>
@@ -91,27 +79,45 @@
     async function leaveJob(jobId) {
       if (confirm("Are you sure you want to leave this job?")) {
         try {
-          const response = await fetch(
-            `/freelancerD/active_job/leave/${jobId}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          const response = await fetch(`/freelancerD/active_job/leave/${jobId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
           const data = await response.json();
           if (response.ok) {
             alert(data.message);
-            document
-              .querySelector(`.job-card[data-job-id="${jobId}"]`)
-              .remove();
+            document.querySelector(`.job-card[data-job-id="${jobId}"]`).remove();
           } else {
             alert(data.error || "Failed to leave the job. Please try again.");
           }
         } catch (error) {
           console.error("Error leaving job:", error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+    }
+
+    async function raiseComplaint(jobId) {
+      if (confirm("Are you sure you want to raise a complaint for this job?")) {
+        try {
+          const response = await fetch(`/freelancerD/active_job/complain/${jobId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            alert(data.message || "Complaint raised successfully.");
+          } else {
+            alert(data.error || "Failed to raise the complaint. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error raising complaint:", error);
           alert("An error occurred. Please try again.");
         }
       }

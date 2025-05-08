@@ -48,7 +48,6 @@ const userSchema = new Schema(
     },
     subscription: {
       type: String,
-      ref: "Subscription",
       enum: ["Basic", "Premium"],
       default: "Basic",
     },

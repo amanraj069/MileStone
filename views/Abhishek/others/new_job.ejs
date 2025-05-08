@@ -110,6 +110,12 @@
         color: #333;
         margin-bottom: 15px;
       }
+      .error-message {
+        color: #ff4d4f;
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -122,7 +128,7 @@
           </header>
           <div class="content">
             <div class="form-container">
-              <form action="/employerD/job_listings/new" method="POST">
+              <form id="jobForm" action="/employerD/job_listings/new" method="POST">
                 <div class="form-group">
                   <label for="title">Job Title</label>
                   <input type="text" id="title" name="title" required />
@@ -139,6 +145,8 @@
                     type="number"
                     id="budget_amount"
                     name="budget[amount]"
+                    min="0"
+                    step="0.01"
                     required
                   />
                 </div>
@@ -259,9 +267,11 @@
                     <div class="form-group">
                       <label for="milestone_payment_0">Amount to be paid</label>
                       <input
-                        type="text"
+                        type="number"
                         id="milestone_payment_0"
                         name="milestones[0][payment]"
+                        min="0"
+                        step="0.01"
                         required
                       />
                     </div>
@@ -271,6 +281,7 @@
                 <button type="button" class="add-milestone">
                   Add Milestone
                 </button>
+                <div class="error-message" id="errorMessage"></div>
                 <button type="submit" class="submit-btn">
                   Create Job Listing
                 </button>
@@ -283,6 +294,37 @@
     <script>
       let milestoneCount = 1;
 
+      // Function to calculate the sum of milestone payments
+      function calculateMilestoneSum() {
+        const paymentInputs = document.querySelectorAll('input[name$="[payment]"]');
+        let sum = 0;
+        paymentInputs.forEach((input) => {
+          const value = parseFloat(input.value) || 0;
+          sum += value;
+        });
+        return sum.toFixed(2); // Ensure 2 decimal places
+      }
+
+      // Function to validate budget and milestone sum
+      function validateForm() {
+        const budgetAmount = parseFloat(
+          document.getElementById("budget_amount").value
+        ) || 0;
+        const milestoneSum = parseFloat(calculateMilestoneSum());
+        const errorMessage = document.getElementById("errorMessage");
+
+        if (budgetAmount !== milestoneSum) {
+          errorMessage.textContent = `Error: The sum of milestone payments (Rs.${milestoneSum}) must equal the budget amount (Rs.${budgetAmount}).`;
+          errorMessage.style.display = "block";
+          return false;
+        } else {
+          errorMessage.textContent = "";
+          errorMessage.style.display = "none";
+          return true;
+        }
+      }
+
+      // Add milestone
       document.querySelector(".add-milestone").addEventListener("click", () => {
         const milestoneDiv = document.createElement("div");
         milestoneDiv.className = "milestone-group";
@@ -299,19 +341,23 @@
           </div>
           <div class="form-group">
             <label for="milestone_payment_${milestoneCount}">Payment</label>
-            <input type="text" id="milestone_payment_${milestoneCount}" name="milestones[${milestoneCount}][payment]" required />
+            <input type="number" id="milestone_payment_${milestoneCount}" name="milestones[${milestoneCount}][payment]" min="0" step="0.01" required />
           </div>
         `;
         document.getElementById("milestones").appendChild(milestoneDiv);
         milestoneCount++;
         reindexMilestones();
+        attachPaymentListeners(); // Re-attach listeners to new inputs
       });
 
+      // Remove milestone
       function removeMilestone(button) {
         button.parentElement.remove();
         reindexMilestones();
+        validateForm(); // Re-validate after removal
       }
 
+      // Reindex milestones
       function reindexMilestones() {
         const milestoneGroups = document.querySelectorAll(".milestone-group");
         milestoneGroups.forEach((group, index) => {
@@ -336,6 +382,26 @@
         });
         milestoneCount = milestoneGroups.length;
       }
+
+      // Attach input event listeners to payment and budget inputs
+      function attachPaymentListeners() {
+        const paymentInputs = document.querySelectorAll('input[name$="[payment]"]');
+        const budgetInput = document.getElementById("budget_amount");
+        const inputs = [...paymentInputs, budgetInput];
+        inputs.forEach((input) => {
+          input.addEventListener("input", validateForm);
+        });
+      }
+
+      // Form submission handler
+      document.getElementById("jobForm").addEventListener("submit", (event) => {
+        if (!validateForm()) {
+          event.preventDefault(); // Prevent form submission if validation fails
+        }
+      });
+
+      // Initialize payment listeners on page load
+      attachPaymentListeners();
     </script>
   </body>
 </html>
