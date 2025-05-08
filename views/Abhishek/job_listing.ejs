@@ -9,8 +9,8 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: 'job_listings'})
-      %>
+      <%- include('partials/sidebar', { user: user, activePage:
+      'job_listings'})%>
       <div class="main-content">
         <div class="container">
           <header>
@@ -28,11 +28,13 @@
           </header>
 
           <div class="filters">
-            <button class="filter-btn active">All Jobs</button>
-            <button class="filter-btn">Recent</button>
-            <button class="filter-btn">Remote</button>
-            <button class="filter-btn">Full-time</button>
-            <button class="filter-btn">Part-time</button>
+            <div class="filter-buttons">
+              <button class="filter-btn active">All Jobs</button>
+              <button class="filter-btn">Recent</button>
+              <button class="filter-btn">Remote</button>
+              <button class="filter-btn">Full-time</button>
+              <button class="filter-btn">Part-time</button>
+            </div>
             <a href="/employerD/job_listings/new">
               <button class="post-new-btn">Post New</button>
             </a>

@@ -15,6 +15,6 @@ router.get(
   homeController.getApplicationSubmitted
 );
 
-router.get("/profile", homeController.getProfile);
+router.get("/profile/:freelancerId", homeController.getProfile);
 
 module.exports = router;

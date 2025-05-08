@@ -9,7 +9,8 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: 'job_applications' }) %>
+      <%- include('partials/sidebar', { user: user, activePage:
+      'job_applications' }) %>
       <div class="main-content">
         <div class="container">
           <h1 class="section-title">Job Applications</h1>
@@ -38,55 +39,70 @@
 
           <div class="application-list">
             <% applications.forEach(application => { %>
-              <div
-                class="application-card visible"
-                data-freelancer="<%= application.freelancerName.toLowerCase() %>"
-                data-job="<%= application.jobTitle.toLowerCase() %>"
-              >
-                <div class="card-header">
-                  <img
-                    src="<%= application.freelancerPicture || '/assets/user_default.png' %>"
-                    alt="Profile"
-                    class="profile-img"
-                  />
-                  <div class="application-info">
-                    <a href="/freelancer/<%= application.freelancerId %>" class="freelancer-name">
-                      <%= application.freelancerName %>
-                    </a>
-                    <div class="job-title">
-                      Applied for: <%= application.jobTitle %>
-                    </div>
-                    <div class="application-date">
-                      Applied on: <%= new Date(application.appliedDate).toLocaleDateString() %>
-                    </div>
+            <div
+              class="application-card visible"
+              data-freelancer="<%= application.freelancerName.toLowerCase() %>"
+              data-job="<%= application.jobTitle.toLowerCase() %>"
+            >
+              <div class="card-header">
+                <img
+                  src="<%= application.freelancerPicture || '/assets/user_default.png' %>"
+                  alt="Profile"
+                  class="profile-img"
+                />
+                <div class="application-info">
+                  <a
+                    href="/profile  /<%= application.freelancerId %>"
+                    class="freelancer-name"
+                  >
+                    <%= application.freelancerName %>
+                  </a>
+                  <div class="job-title">
+                    Applied for: <%= application.jobTitle %>
                   </div>
-                  <div class="status <%= application.status.toLowerCase() %>">
-                    <%= application.status %>
+                  <div class="application-date">
+                    Applied on: <%= new
+                    Date(application.appliedDate).toLocaleDateString() %>
                   </div>
                 </div>
-                <div class="card-body">
-                  <div class="cover-message">
-                    <p class="info-label">Cover Message:</p>
-                    <p><%= application.coverMessage || 'No cover message provided' %></p>
-                  </div>
-                  <% if (application.resumeLink) { %>
-                    <div class="resume-link">
-                      <p class="info-label">Resume:</p>
-                      <a href="<%= application.resumeLink %>" target="_blank">View Resume</a>
-                    </div>
-                  <% } %>
-                </div>
-                <div class="card-footer">
-                  <% if (application.status === 'Pending') { %>
-                    <form action="/employerD/job_applications/<%= application.applicationId %>/accept" method="POST">
-                      <button type="submit" class="accept-btn">Accept</button>
-                    </form>
-                    <form action="/employerD/job_applications/<%= application.applicationId %>/reject" method="POST">
-                      <button type="submit" class="reject-btn">Reject</button>
-                    </form>
-                  <% } %>
+                <div class="status <%= application.status.toLowerCase() %>">
+                  <%= application.status %>
                 </div>
               </div>
+              <div class="card-body">
+                <div class="cover-message">
+                  <p class="info-label">Cover Message:</p>
+                  <p>
+                    <%= application.coverMessage || 'No cover message provided'
+                    %>
+                  </p>
+                </div>
+                <% if (application.resumeLink) { %>
+                <div class="resume-link">
+                  <p class="info-label">Resume:</p>
+                  <a href="<%= application.resumeLink %>" target="_blank"
+                    >View Resume</a
+                  >
+                </div>
+                <% } %>
+              </div>
+              <div class="card-footer">
+                <% if (application.status === 'Pending') { %>
+                <form
+                  action="/employerD/job_applications/<%= application.applicationId %>/accept"
+                  method="POST"
+                >
+                  <button type="submit" class="accept-btn">Accept</button>
+                </form>
+                <form
+                  action="/employerD/job_applications/<%= application.applicationId %>/reject"
+                  method="POST"
+                >
+                  <button type="submit" class="reject-btn">Reject</button>
+                </form>
+                <% } %>
+              </div>
+            </div>
             <% }) %>
           </div>
         </div>
@@ -94,42 +110,42 @@
     </div>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const applicationCards = document.querySelectorAll('.application-card');
+      document.addEventListener("DOMContentLoaded", () => {
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+        const applicationCards = document.querySelectorAll(".application-card");
 
         const filterApplications = () => {
           const searchTerm = searchInput.value.toLowerCase().trim();
 
-          applicationCards.forEach(card => {
-            const freelancerName = card.getAttribute('data-freelancer');
-            const jobTitle = card.getAttribute('data-job');
+          applicationCards.forEach((card) => {
+            const freelancerName = card.getAttribute("data-freelancer");
+            const jobTitle = card.getAttribute("data-job");
 
             if (
-              searchTerm === '' ||
+              searchTerm === "" ||
               freelancerName.includes(searchTerm) ||
               jobTitle.includes(searchTerm)
             ) {
-              card.classList.add('visible');
+              card.classList.add("visible");
             } else {
-              card.classList.remove('visible');
+              card.classList.remove("visible");
             }
           });
         };
 
         // Filter on button click
-        searchBtn.addEventListener('click', filterApplications);
+        searchBtn.addEventListener("click", filterApplications);
 
         // Filter on Enter key press
-        searchInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') {
+        searchInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
             filterApplications();
           }
         });
 
         // Filter as the user types
-        searchInput.addEventListener('input', filterApplications);
+        searchInput.addEventListener("input", filterApplications);
       });
     </script>
   </body>
