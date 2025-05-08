@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email format check
+    const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/; // Basic email format check
     if (!emailRegex.test(email)) {
       errorContainer.textContent += "Please enter a valid email address.\n";
       isValid = false;
@@ -82,5 +82,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Regular expressions defined within the script (no need to repeat outside)
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
