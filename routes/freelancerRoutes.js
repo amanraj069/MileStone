@@ -16,9 +16,9 @@ router.route("/payment").get(freelancerController.getFreelancerPayment);
 router.route("/skills_badges").get(freelancerController.getFreelancerSkills);
 
 // router.route("/subscription").get(freelancerController.getFreelancerSubscription);
-router.get("/subscription", employerController.getSubscription);
-router.get("/payment_success", employerController.getPaymentAnimation);
-router.post("/upgrade_subscription", employerController.upgradeSubscription);
+router.get("/subscription", freelancerController.getSubscription);
+router.get("/payment_success", freelancerController.getPaymentAnimation);
+router.post("/upgrade_subscription", freelancerController.upgradeSubscription);
 
 router.route("/skills_badges/quiz/:skillId").get(freelancerController.getSkillQuiz);
 router.route("/skills_badges/quiz/:skillId").post(freelancerController.submitSkillQuiz);
