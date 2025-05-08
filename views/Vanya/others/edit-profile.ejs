@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Freelancer Profile</title>
+    <link
+      rel="stylesheet"
+      href="/css/FreelancerD/static_elements/sidebar.css"
+    />
+    <link rel="stylesheet" href="/css/FreelancerD/profile.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <!-- Sidebar -->
+      <%- include('../partials/sidebar', {activePage: 'profile'}) %>
+      <div class="main-content">
+        <div class="container">
+          <div class="header">
+            <h1>Edit Freelancer Profile</h1>
+            <a href="/freelancerD/profile" class="back-button">
+              <Outlook.com
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back to Profile
+            </a>
+          </div>
+
+          <div class="edit-form-container">
+            <form id="profileEditForm" action="/freelancerD/profile/update" method="POST">
+              <div class="form-section">
+                <h3 class="form-section-title">Basic Information</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value="<%= user.name || '' %>"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      value="<%= user.role || '' %>"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="location">Location</label>
+                    <input
+                      type="text"
+                      id="location"
+                      name="location"
+                      value="<%= user.location || '' %>"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="profileImageUrl">Profile Image URL</label>
+                    <input
+                      type="url"
+                      id="profileImageUrl"
+                      name="profileImageUrl"
+                      value="<%= user.picture || '' %>"
+                      placeholder="Enter image URL"
+                    />
+                    <small class="field-note"
+                      >Enter a direct link to your profile image (e.g.,
+                      https://via.placeholder.com/150)</small
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Contact Information</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value="<%= user.email || '' %>"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      value="<%= user.phone || '' %>"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">About Me</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="about">About</label>
+                    <textarea id="about" name="about" rows="6"><%= user.aboutMe || '' %></textarea>
+                    <small class="field-note"
+                      >Separate paragraphs with a blank line</small
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Experience</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Experience</label>
+                    <div id="experienceContainer" class="experience-container">
+                      <% (user.experience || []).forEach((exp, index) => { %>
+                        <div class="experience-item" data-index="<%= index %>">
+                          <input
+                            type="text"
+                            class="experience-title"
+                            name="experience[<%= index %>][title]"
+                            value="<%= exp.title || '' %>"
+                            placeholder="Title"
+                          />
+                          <input
+                            type="text"
+                            class="experience-date"
+                            name="experience[<%= index %>][date]"
+                            value="<%= exp.date || '' %>"
+                            placeholder="Date"
+                          />
+                          <textarea
+                            class="experience-description"
+                            name="experience[<%= index %>][description]"
+                            rows="3"
+                            placeholder="Description"
+                          ><%= exp.description || '' %></textarea>
+                          <button
+                            type="button"
+                            class="remove-btn"
+                            onclick="removeItem(this, 'experience')"
+                          >Remove</button>
+                        </div>
+                      <% }) %>
+                      <button
+                        type="button"
+                        id="addExperienceBtn"
+                        class="add-btn"
+                      >
+                        Add Experience
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Education</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Education</label>
+                    <div id="educationContainer" class="education-container">
+                      <% (user.education || []).forEach((edu, index) => { %>
+                        <div class="education-item" data-index="<%= index %>">
+                          <input
+                            type="text"
+                            class="education-title"
+                            name="education[<%= index %>][degree]"
+                            value="<%= edu.degree || '' %>"
+                            placeholder="Degree"
+                          />
+                          <input
+                            type="text"
+                            class="education-institution"
+                            name="education[<%= index %>][institution]"
+                            value="<%= edu.institution || '' %>"
+                            placeholder="Institution"
+                          />
+                          <input
+                            type="text"
+                            class="education-date"
+                            name="education[<%= index %>][date]"
+                            value="<%= edu.date || '' %>"
+                            placeholder="Date"
+                          />
+                          <button
+                            type="button"
+                            class="remove-btn"
+                            onclick="removeItem(this, 'education')"
+                          >Remove</button>
+                        </div>
+                      <% }) %>
+                      <button
+                        type="button"
+                        id="addEducationBtn"
+                        class="add-btn"
+                      >
+                        Add Education
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Portfolio</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Portfolio</label>
+                    <div id="portfolioContainer" class="portfolio-container">
+                      <% (user.portfolio || []).forEach((port, index) => { %>
+                        <div class="portfolio-item" data-index="<%= index %>">
+                          <input
+                            type="url"
+                            class="portfolio-image"
+                            name="portfolio[<%= index %>][image]"
+                            value="<%= port.image || '' %>"
+                            placeholder="Image URL"
+                          />
+                          <input
+                            type="text"
+                            class="portfolio-title"
+                            name="portfolio[<%= index %>][title]"
+                            value="<%= port.title || '' %>"
+                            placeholder="Title"
+                          />
+                          <textarea
+                            class="portfolio-description"
+                            name="portfolio[<%= index %>][description]"
+                            rows="3"
+                            placeholder="Description"
+                          ><%= port.description || '' %></textarea>
+                          <input
+                            type="url"
+                            class="portfolio-link"
+                            name="portfolio[<%= index %>][link]"
+                            value="<%= port.link || '' %>"
+                            placeholder="Link"
+                          />
+                          <button
+                            type="button"
+                            class="remove-btn"
+                            onclick="removeItem(this, 'portfolio')"
+                          >Remove</button>
+                        </div>
+                      <% }) %>
+                      <button
+                        type="button"
+                        id="addPortfolioBtn"
+                        class="add-btn"
+                      >
+                        Add Portfolio Item
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">Resume</h3>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="resumeLink">Resume Link</label>
+                    <input
+                      type="url"
+                      id="resumeLink"
+                      name="resumeLink"
+                      value="<%= user.resume || '' %>"
+                      placeholder="Enter resume link"
+                    />
+                    <small class="field-note"
+                      >Enter a direct link to your resume (e.g.,
+                      https://example.com/resume.pdf)</small
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <a href="/freelancerD/profile" class="cancel-button">Cancel</a>
+                <button type="submit" class="save-button">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add Experience
+      document.getElementById('addExperienceBtn').addEventListener('click', () => {
+        const container = document.getElementById('experienceContainer');
+        const index = container.querySelectorAll('.experience-item').length;
+        const item = document.createElement('div');
+        item.className = 'experience-item';
+        item.setAttribute('data-index', index);
+        item.innerHTML = `
+          <input type="text" class="experience-title" name="experience[${index}][title]" placeholder="Title" />
+          <input type="text" class="experience-date" name="experience[${index}][date]" placeholder="Date" />
+          <textarea class="experience-description" name="experience[${index}][description]" rows="3" placeholder="Description"></textarea>
+          <button type="button" class="remove-btn" onclick="removeItem(this, 'experience')">Remove</button>
+        `;
+        container.insertBefore(item, document.getElementById('addExperienceBtn'));
+      });
+
+      // Add Education
+      document.getElementById('addEducationBtn').addEventListener('click', () => {
+        const container = document.getElementById('educationContainer');
+        const index = container.querySelectorAll('.education-item').length;
+        const item = document.createElement('div');
+        item.className = 'education-item';
+        item.setAttribute('data-index', index);
+        item.innerHTML = `
+          <input type="text" class="education-title" name="education[${index}][degree]" placeholder="Degree" />
+          <input type="text" class="education-institution" name="education[${index}][institution]" placeholder="Institution" />
+          <input type="text" class="education-date" name="education[${index}][date]" placeholder="Date" />
+          <button type="button" class="remove-btn" onclick="removeItem(this, 'education')">Remove</button>
+        `;
+        container.insertBefore(item, document.getElementById('addEducationBtn'));
+      });
+
+      // Add Portfolio
+      document.getElementById('addPortfolioBtn').addEventListener('click', () => {
+        const container = document.getElementById('portfolioContainer');
+        const index = container.querySelectorAll('.portfolio-item').length;
+        const item = document.createElement('div');
+        item.className = 'portfolio-item';
+        item.setAttribute('data-index', index);
+        item.innerHTML = `
+          <input type="url" class="portfolio-image" name="portfolio[${index}][image]" placeholder="Image URL" />
+          <input type="text" class="portfolio-title" name="portfolio[${index}][title]" placeholder="Title" />
+          <textarea class="portfolio-description" name="portfolio[${index}][description]" rows="3" placeholder="Description"></textarea>
+          <input type="url" class="portfolio-link" name="portfolio[${index}][link]" placeholder="Link" />
+          <button type="button" class="remove-btn" onclick="removeItem(this, 'portfolio')">Remove</button>
+        `;
+        container.insertBefore(item, document.getElementById('addPortfolioBtn'));
+      });
+
+      // Remove Item
+      function removeItem(button, type) {
+        button.parentElement.remove();
+        // Re-index items
+        const container = document.getElementById(`${type}Container`);
+        const items = container.querySelectorAll(`.${type}-item`);
+        items.forEach((item, index) => {
+          item.setAttribute('data-index', index);
+          item.querySelectorAll('input, textarea').forEach(input => {
+            const name = input.name.replace(/\[\d+\]/, `[${index}]`);
+            input.name = name;
+          });
+        });
+      }
+
+      // Form Submission
+      document.getElementById('profileEditForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        
+        // Convert skills to array of objects
+        const skillsInput = formData.get('skills');
+        const skillsArray = skillsInput
+          ? skillsInput.split(',').map(skill => ({ SkillId: skill.trim() }))
+          : [];
+
+        // Collect experience, education, and portfolio
+        const experience = [];
+        const education = [];
+        const portfolio = [];
+
+        form.querySelectorAll('.experience-item').forEach(item => {
+          const title = item.querySelector('.experience-title').value;
+          const date = item.querySelector('.experience-date').value;
+          const description = item.querySelector('.experience-description').value;
+          if (title || date || description) {
+            experience.push({ title, date, description });
+          }
+        });
+
+        form.querySelectorAll('.education-item').forEach(item => {
+          const degree = item.querySelector('.education-title').value;
+          const institution = item.querySelector('.education-institution').value;
+          const date = item.querySelector('.education-date').value;
+          if (degree || institution || date) {
+            education.push({ degree, institution, date });
+          }
+        });
+
+        form.querySelectorAll('.portfolio-item').forEach(item => {
+          const image = item.querySelector('.portfolio-image').value;
+          const title = item.querySelector('.portfolio-title').value;
+          const description = item.querySelector('.portfolio-description').value;
+          const link = item.querySelector('.portfolio-link').value;
+          if (image || title || description || link) {
+            portfolio.push({ image, title, description, link });
+          }
+        });
+
+        // Create JSON payload
+        const data = {
+          name: formData.get('name'),
+          title: formData.get('title'),
+          location: formData.get('location'),
+          profileImageUrl: formData.get('profileImageUrl'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          about: formData.get('about'),
+          skills: skillsArray,
+          experience,
+          education,
+          portfolio,
+          resumeLink: formData.get('resumeLink'),
+        };
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert(result.message);
+            window.location.href = '/freelancerD/profile';
+          } else {
+            alert(result.error);
+          }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+          alert('Failed to update profile');
+        }
+      });
+    </script>
+  </body>
+</html>

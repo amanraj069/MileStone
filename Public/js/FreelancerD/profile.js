@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadProfileData() {
-  const defaultImageUrl = 'https://via.placeholder.com/150';
   const savedProfile = localStorage.getItem('freelancerProfile');
 
   if (savedProfile) {
@@ -21,7 +20,7 @@ function loadProfileData() {
       // Update profile image
       const profileImage = document.getElementById('profileImage');
       if (profileImage) {
-          profileImage.src = profileData.profileImageUrl || defaultImageUrl;
+          profileImage.src = profileData.profileImageUrl;
           profileImage.onerror = () => {
               profileImage.src = defaultImageUrl;
           };

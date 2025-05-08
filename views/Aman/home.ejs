@@ -1,466 +1,981 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Milestone - Freelancer Platform</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milestone - Find Top Freelancers for Your Projects</title>
     <link rel="stylesheet" href="/css/home/home.css" />
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="logo">Milestone</div>
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Search for jobs or freelancers..."
-          onclick="window.location.href='/jobs'"
-          onfocus="this.blur()"
-        />
-        <button
-          class="svg"
-          onclick="window.location.href='/jobs'; event.preventDefault()"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="100"
-            height="100"
-            viewBox="0,0,255.98958,255.98958"
-          >
-            <g
-              fill="#ffffff"
-              fill-rule="nonzero"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="butt"
-              stroke-linejoin="miter"
-              stroke-miterlimit="10"
-              stroke-dasharray=""
-              stroke-dashoffset="0"
-              font-family="none"
-              font-weight="none"
-              font-size="none"
-              text-anchor="none"
-              style="mix-blend-mode: normal"
-            >
-              <g transform="scale(2,2)">
-                <path
-                  d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z"
-                ></path>
-              </g>
-            </g>
-          </svg>
-        </button>
-      </div>
-      <div class="nav-buttons">
-        <% if (user) { %>
-        <button onclick="window.location.href='<%= dashboardRoute %>'">
-          Dashboard
-        </button>
-        <% } else { %>
-        <button onclick="window.location.href='/login'">Sign In</button>
-        <% } %>
-      </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="light-mode">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/" style="font-size: 40px;">Mile<span>stone</span></a>
+                </div>
+                <div class="search-container">
+                    <form action="#" class="search-form">
+                        <input type="text" placeholder="Search for jobs or freelancers..." class="search-input">
+                        <button type="submit" class="search-button" onclick="window.location.href='/jobs'; event.preventDefault()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                        <svg class="theme-icon sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+                                fill="currentColor" />
+                            <path
+                                d="M12 2V4M12 20V22M2 12H4M20 12H22M4.93 4.93L6.34 6.34M17.66 17.66L19.07 19.07M4.93 19.07L6.34 17.66M17.66 6.34L19.07 4.93"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg class="theme-icon moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 12.79C20.41 13.14 19.77 13.4 19.1 13.55C17.47 13.93 15.73 13.71 14.27 12.93C12.8 12.15 11.7 10.85 11.2 9.3C10.7 7.75 10.84 6.05 11.6 4.59C11.94 3.93 12.41 3.33 13 2.79C10.36 3.17 8.03 4.81 6.84 7.14C5.65 9.47 5.74 12.19 7.09 14.43C8.44 16.67 10.87 18.11 13.53 18.31C16.19 18.51 18.73 17.45 20.45 15.49C20.9 14.99 21.27 14.43 21.55 13.84C21.36 13.5 21.18 13.15 21 12.79Z"
+                                fill="currentColor" />
+                        </svg>
+
+                    </button>
+                    
+                    <% if (user) { %>
+                    <a href="<%= dashboardRoute %>" class="btn btn-primary">
+                        <i class="fas fa-tv" id="icon_spacing"></i>Dashboard
+                    </a>
+                    <% } else { %>
+                    <a href="/login" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt" id="icon_spacing"></i>Sign In
+                    </a>
+                    <% } %>
+                    
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Scroll Navigation -->
+    <nav class="scroll-nav" id="scroll-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#blog">Blogs</a></li>
+                <li><a href="#faq">FAQs</a></li>
+                <li><a href="#footer">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero-content animate-on-scroll" data-animation="fadeInUp">
-          <h1>Welcome to Milestone</h1>
-          <p>Empower your career or business with top freelance talent.</p>
-          <div class="hero-buttons">
-            <button class="btn-primary" onclick="window.location.href='/jobs'">
-              Find Job
-            </button>
-            <button class="btn-secondary">Post a Job</button>
-          </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="container">
+            <nav class="mobile-nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#freelancers">Top Freelancers</a></li>
+                    <li><a href="#jobs">Job Opportunities</a></li>
+                    <li><a href="#testimonials">Success Stories</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="/login" class="btn btn-primary mobile-btn">Sign In</a></li>
+                </ul>
+            </nav>
         </div>
-      </section>
+    </div>
 
-      <!-- Find Your Perfect Freelance Match Section -->
-      <section class="find-match-section">
-        <div class="section-container">
-          <h2 class="animate-on-scroll" data-animation="slideInDown">
-            Find Your Perfect Freelance Match
-          </h2>
-          <p class="animate-on-scroll" data-animation="fadeInUp">
-            Connect with top talent or discover exciting projects that match
-            your skills.
-          </p>
-          <div class="category-grid">
-            <button
-              class="category-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <span class="icon">💻</span> Web Development
-              <span class="category-hover-text">Build stunning websites</span>
-            </button>
-            <button
-              class="category-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <span class="icon">🎨</span> Graphic Design
-              <span class="category-hover-text"
-                >Create eye-catching visuals</span
-              >
-            </button>
-            <button
-              class="category-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <span class="icon">✍️</span> Content Writing
-              <span class="category-hover-text">Craft compelling stories</span>
-            </button>
-            <button
-              class="category-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <span class="icon">📱</span> Mobile Apps
-              <span class="category-hover-text">Develop cutting-edge apps</span>
-            </button>
-            <button
-              class="category-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <span class="icon">📊</span> Data Analysis
-              <span class="category-hover-text">Unlock data insights</span>
-            </button>
-            <button
-              class="category-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <span class="icon">🎥</span> Video Editing
-              <span class="category-hover-text">Produce cinematic videos</span>
-            </button>
-          </div>
-          <button
-            class="explore-btn animate-on-scroll"
-            data-animation="fadeInUp"
-          >
-            Explore All Categories
-          </button>
-        </div>
-      </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">Elevate Your Career With Top Talent</h1>
+                <p class="fade-in">Connect with skilled freelancers or find exciting projects that match your expertise.
+                </p>
+                <div class="hero-buttons fade-in">
+                    <a href=/jobs class="btn btn-primary">
+                        <i class="fas fa-search" id="icon_spacing"></i> Find Jobs
+                    </a>
 
-      <!-- Top Freelancers Section -->
-      <section class="top-freelancers-section">
-        <div class="section-container">
-          <h2 class="animate-on-scroll" data-animation="slideInDown">
-            Meet Our Top Freelancers
-          </h2>
-          <div class="freelancer-list">
-            <div
-              class="freelancer-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <img
-                src="/assets/user_image.jpg"
-                alt="Aman Raj"
-                class="freelancer-img"
-              />
-              <div class="freelancer-info">
-                <h3>Aman Raj</h3>
-                <p><strong>Full Stack Developer</strong></p>
-                <p>React, Node.js, MongoDB</p>
-                <div class="rating">★★★★★ (4.9)</div>
-                <div class="freelancer-stats">
-                  <span>50+ Projects</span> | <span>100% Success Rate</span>
+                    <% if (user && user.role === "Employer") { %>
+                    <a href="employerD/job_listings/new" class="btn btn-outline">
+                        <i class="fas fa-plus" id="icon_spacing"></i> Post a Job
+                    </a>
+                    <% } else if (user) { %>
+                        <a href="javascript:void(0);" class="btn btn-outline" onclick="showUnauthorizedMessage()">
+                            <i class="fas fa-plus" id="icon_spacing"></i> Post a Job
+                        </a>
+                    <% } else { %>
+                        <a href="javascript:void(0);" class="btn btn-outline" onclick="showLoginUnauthorizedMessage()">
+                            <i class="fas fa-plus" id="icon_spacing"></i> Post a Job
+                        </a>
+                    <% } %>
+
                 </div>
-                <button
-                  class="hire-btn"
-                  onclick="window.location.href='/freelancer/1'"
-                >
-                  Hire Now
-                </button>
-              </div>
             </div>
-            <div
-              class="freelancer-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <img
-                src="/assets/user_image.jpg"
-                alt="Vanya Awasthi"
-                class="freelancer-img"
-              />
-              <div class="freelancer-info">
-                <h3>Vanya Awasthi</h3>
-                <p><strong>UI/UX Designer</strong></p>
-                <p>Figma, Adobe XD, Sketch</p>
-                <div class="rating">★★★★☆ (4.7)</div>
-                <div class="freelancer-stats">
-                  <span>30+ Designs</span> | <span>95% Success Rate</span>
+            <!-- Add the new image -->
+            <img src="/assets/home/Online resume-cuate.svg" alt="Decorative Image" class="hero-overlay-image1">
+            <img src="/assets/home/oversight-bro.svg" alt="Decorative Image" class="hero-overlay-image2">
+            <img src="/assets/home/Mobile Marketing-bro.svg" alt="Decorative Image" class="hero-overlay-image3">
+            <img src="/assets/home/Freelancer-bro.svg" alt="Decorative Image" class="hero-overlay-image4">
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up" style="margin-top: -40px;">
+                <h2>Our <span style="color: #2563eb;">achievement</span> at a glance</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up">
+                    <i class="fas fa-users"></i>
+                    <h3><span class="counter" data-target="10">0</span>K+</h3>
+                    <p>Active Freelancers</p>
                 </div>
-                <button
-                  class="hire-btn"
-                  onclick="window.location.href='/freelancer/2'"
-                >
-                  Hire Now
-                </button>
-              </div>
-            </div>
-            <div
-              class="freelancer-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <img
-                src="/assets/user_image.jpg"
-                alt="Deepak Anuragi"
-                class="freelancer-img"
-              />
-              <div class="freelancer-info">
-                <h3>Deepak Anuragi</h3>
-                <p><strong>SEO Specialist</strong></p>
-                <p>SEO, SEM, Analytics</p>
-                <div class="rating">★★★★★ (4.8)</div>
-                <div class="freelancer-stats">
-                  <span>40+ Campaigns</span> | <span>98% Success Rate</span>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-briefcase"></i>
+                    <h3><span class="counter" data-target="5">0</span>K+</h3>
+                    <p>Projects Completed</p>
                 </div>
-                <button
-                  class="hire-btn"
-                  onclick="window.location.href='/freelancer/3'"
-                >
-                  Hire Now
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-globe"></i>
+                    <h3><span class="counter" data-target="30">0</span>+</h3>
+                    <p>Countries Served</p>
+                </div>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-star"></i>
+                    <h3><span class="counter" data-target="4.9">0</span>/5</h3>
+                    <p>Client Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Everything You Need Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Everything You Need to <span style="color: #2563eb;">Succeed</span></h2>
+                <p>Milestone provides all the tools you need to find, hire, and work with top freelancers from around
+                    the world.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-search feature-icon-i"></i>
+                    </div>
+                    <h3>Smart Matching</h3>
+                    <p>Our AI-powered system connects you with the perfect freelancers for your specific project needs.
+                    </p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt feature-icon-i"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>Milestone payments ensure you only pay for completed work that meets your standards.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock feature-icon-i"></i>
+                    </div>
+                    <h3>Time Tracking</h3>
+                    <p>Built-in time tracking tools for hourly projects with screenshot verification.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-check feature-icon-i"></i>
+                    </div>
+                    <h3>Verified Talent</h3>
+                    <p>All freelancers undergo a thorough vetting process to ensure top quality.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-users feature-icon-i"></i>
+                    </div>
+                    <h3>Team Collaboration</h3>
+                    <p>Easily manage multiple freelancers with our collaboration tools.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt feature-icon-i"></i>
+                    </div>
+                    <h3>Fast Delivery</h3>
+                    <p>Get your projects completed quickly with our efficient workflow system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>How Milestone Works</h2>
+                <p>Simple steps to get started on your freelancing journey</p>
+            </div>
+            <!-- For Employers -->
+            <h3 class="steps-title" data-aos="fade-up">For Employers</h3>
+            <div class="steps employer-steps">
+                <div class="step" data-aos="fade-up">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Post Your Project</h3>
+                        <p>Describe your project in detail, including skills required, timeline, and budget.</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Review Proposals</h3>
+                        <p>Receive proposals from qualified freelancers and review their profiles and portfolios.</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Hire the Best Match</h3>
+                        <p>Select the freelancer who best fits your project needs and budget.</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Work & Collaborate</h3>
+                        <p>Use our platform to communicate, share files, and track progress.</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h3>Release Payment</h3>
+                        <p>Release milestone payments as work is completed to your satisfaction.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- For Freelancers -->
+            <h3 class="steps-title" data-aos="fade-up">For Freelancers</h3>
+            <div class="steps freelancer-steps">
+                <div class="step" data-aos="fade-up">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h3>Create an Account</h3>
+                        <p>Sign up and complete your profile with skills and experience</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Discover Opportunities</h3>
+                        <p>Browse jobs that match your needs</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Connect & Collaborate</h3>
+                        <p>Get hired and start working together</p>
+                    </div>
+                </div>
+                <div class="step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Complete Projects</h3>
+                        <p>Deliver quality work, get paid, and build your reputation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Freelancers Section -->
+    <section class="freelancers" id="freelancers">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Meet Our Top Freelancers</h2>
+                <p>Work with the best talent in the industry</p>
+            </div>
+            <div class="freelancers-carousel" id="freelancers-carousel">
+                <div class="freelancer-card" data-aos="fade-up">
+                    <div class="freelancer-badge">Featured</div>
+                    <div class="freelancer-header">
+                        <div class="freelancer-avatar">
+                            <img src="/assets/home/aman.png" alt="Aman Raj" loading="lazy">
+                        </div>
+                        <div class="freelancer-info">
+                            <h3>Aman Raj</h3>
+                            <p>Full Stack Developer</p>
+                        </div>
+                    </div>
+                    <div class="freelancer-skills">
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>MongoDB</span>
+                    </div>
+                    <div class="freelancer-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span>4.9</span>
+                    </div>
+                    <div class="freelancer-stats">
+                        <div class="stat">
+                            <i class="fas fa-briefcase"></i>
+                            <span>20+ Projects</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-check-circle"></i>
+                            <span>90% Success</span>
+                        </div>
+                    </div>
+                    <a href="/freelancers/aman-raj" class="btn btn-primary">Hire Now</a>
+                </div>
+                <div class="freelancer-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="freelancer-badge top-rated">Top Rated</div>
+                    <div class="freelancer-header">
+                        <div class="freelancer-avatar">
+                            <img src="/assets/home/vanya.png" alt="Vanya Awasthi"
+                                loading="lazy">
+                        </div>
+                        <div class="freelancer-info">
+                            <h3>Vanya Awasthi</h3>
+                            <p>UI/UX Designer</p>
+                        </div>
+                    </div>
+                    <div class="freelancer-skills">
+                        <span>Figma</span>
+                        <span>Adobe XD</span>
+                        <span>Sketch</span>
+                    </div>
+                    <div class="freelancer-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span>4.7</span>
+                    </div>
+                    <div class="freelancer-stats">
+                        <div class="stat">
+                            <i class="fas fa-palette"></i>
+                            <span>30+ Designs</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-check-circle"></i>
+                            <span>95% Success</span>
+                        </div>
+                    </div>
+                    <a href="/freelancers/vanya-awasthi" class="btn btn-primary">Hire Now</a>
+                </div>
+                <div class="freelancer-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="freelancer-badge rising-talent">Rising Talent</div>
+                    <div class="freelancer-header">
+                        <div class="freelancer-avatar">
+                            <img src="/assets/home/abhishek.jpg" alt="Abhishek Anand"
+                                loading="lazy">
+                        </div>
+                        <div class="freelancer-info">
+                            <h3>Abhishek Anand</h3>
+                            <p>Data Scientist</p>
+                        </div>
+                    </div>
+                    <div class="freelancer-skills">
+                        <span>Python</span>
+                        <span>Tensorflow</span>
+                        <span>Numpy</span>
+                    </div>
+                    <div class="freelancer-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span>4.8</span>
+                    </div>
+                    <div class="freelancer-stats">
+                        <div class="stat">
+                            <i class="fas fa-briefcase"></i>
+                            <span>10+ Projects</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-check-circle"></i>
+                            <span>95% Success</span>
+                        </div>
+                    </div>
+                    <a href="/freelancers/vanya-awasthi" class="btn btn-primary">Hire Now</a>
+                </div>
+                <div class="freelancer-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="freelancer-badge rising-talent">Rising Talent</div>
+                    <div class="freelancer-header">
+                        <div class="freelancer-avatar">
+                            <img src="/assets/home/deepak.jpg" alt="Deepak Anuragi"
+                                loading="lazy">
+                        </div>
+                        <div class="freelancer-info">
+                            <h3>Deepak Anuragi</h3>
+                            <p>SEO Specialist</p>
+                        </div>
+                    </div>
+                    <div class="freelancer-skills">
+                        <span>SEO</span>
+                        <span>SEM</span>
+                        <span>Analytics</span>
+                    </div>
+                    <div class="freelancer-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span>4.8</span>
+                    </div>
+                    <div class="freelancer-stats">
+                        <div class="stat">
+                            <i class="fas fa-chart-line"></i>
+                            <span>8+ Campaign</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-check-circle"></i>
+                            <span>98% Success</span>
+                        </div>
+                    </div>
+                    <a href="/freelancers/deepak-anuragi" class="btn btn-primary">Hire Now</a>
+                </div>
+                <div class="freelancer-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="freelancer-badge">Featured</div>
+                    <div class="freelancer-header">
+                        <div class="freelancer-avatar">
+                            <img src="/assets/home/jayanth.png" alt="Jayanth"
+                                loading="lazy">
+                        </div>
+                        <div class="freelancer-info">
+                            <h3>Jayanth Erukula</h3>
+                            <p>Content Writer</p>
+                        </div>
+                    </div>
+                    <div class="freelancer-skills">
+                        <span>Blogs</span>
+                        <span>SEO Writing</span>
+                    </div>
+                    <div class="freelancer-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span>4.6</span>
+                    </div>
+                    <div class="freelancer-stats">
+                        <div class="stat">
+                            <i class="fas fa-file-alt"></i>
+                            <span>60+ Articles</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-check-circle"></i>
+                            <span>97% Success</span>
+                        </div>
+                    </div>
+                    <a href="/freelancers/priya-sharma" class="btn btn-primary">Hire Now</a>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button id="prev-freelancer" class="carousel-control" aria-label="Previous freelancer">
+                    <i class="fas fa-chevron-left"></i>
                 </button>
-              </div>
+                <button id="next-freelancer" class="carousel-control" aria-label="Next freelancer">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Featured Jobs Section -->
-      <section class="featured-jobs">
-        <div class="section-container">
-          <h2 class="animate-on-scroll" data-animation="slideInDown">
-            Featured Job Opportunities
-          </h2>
-          <div class="jobs-grid">
-            <div
-              class="job-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <div class="job-badge">Urgent</div>
-              <h3>Frontend Developer</h3>
-              <p><strong>Tech:</strong> React, TypeScript, CSS</p>
-              <p><strong>Budget:</strong> ₹30,000 - ₹40,000</p>
-              <p><strong>Duration:</strong> 2 months</p>
-              <button class="view-btn" onclick="window.location.href='/job/1'">
-                View Details
-              </button>
+    <!-- Jobs Section -->
+    <section class="jobs" id="jobs">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Featured Job Opportunities</h2>
+                <p>Discover exciting projects across various domains</p>
             </div>
-            <div
-              class="job-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <div class="job-badge">New</div>
-              <h3>Graphic Designer</h3>
-              <p><strong>Tech:</strong> Photoshop, Illustrator</p>
-              <p><strong>Budget:</strong> ₹15,000 - ₹25,000</p>
-              <p><strong>Duration:</strong> 1 month</p>
-              <button class="view-btn" onclick="window.location.href='/job/2'">
-                View Details
-              </button>
+            <div class="jobs-grid">
+                <div class="job-card" data-aos="fade-up">
+                    <div class="job-badge urgent">Urgent</div>
+                    <h3>Frontend Developer</h3>
+                    <div class="job-details">
+                        <div class="job-skills">
+                            <i class="fas fa-code"></i>
+                            <span>React, TypeScript, CSS</span>
+                        </div>
+                        <div class="job-budget">
+                            <i class="fas fa-rupee-sign"></i>
+                            <span>₹30,000 - ₹40,000</span>
+                        </div>
+                        <div class="job-duration">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>2 months</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Looking for an experienced frontend developer to build a responsive web application with modern
+                        UI/UX.
+                    </p>
+                    <a href="/jobs" class="btn btn-outline">View Details <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="job-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="job-badge new">New</div>
+                    <h3>Graphic Designer</h3>
+                    <div class="job-details">
+                        <div class="job-skills">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>Photoshop, Illustrator</span>
+                        </div>
+                        <div class="job-budget">
+                            <i class="fas fa-rupee-sign"></i>
+                            <span>₹15,000 - ₹25,000</span>
+                        </div>
+                        <div class="job-duration">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>1 month</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Need a creative graphic designer to create branding materials including logo, business cards,
+                        and social media assets.
+                    </p>
+                    <a href="/jobs" class="btn btn-outline">View Details <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="job-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="job-badge high-demand">High Demand</div>
+                    <h3>Data Analyst</h3>
+                    <div class="job-details">
+                        <div class="job-skills">
+                            <i class="fas fa-database"></i>
+                            <span>Python, SQL, Excel</span>
+                        </div>
+                        <div class="job-budget">
+                            <i class="fas fa-rupee-sign"></i>
+                            <span>₹25,000 - ₹35,000</span>
+                        </div>
+                        <div class="job-duration">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>3 months</span>
+                        </div>
+                    </div>
+                    <p class="job-description">
+                        Seeking a data analyst to help analyze customer data, create dashboards, and provide actionable
+                        insights.
+                    </p>
+                    <a href="/jobs" class="btn btn-outline">View Details <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
-            <div
-              class="job-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <div class="job-badge">High Demand</div>
-              <h3>Data Analyst</h3>
-              <p><strong>Tech:</strong> Python, SQL, Excel</p>
-              <p><strong>Budget:</strong> ₹25,000 - ₹35,000</p>
-              <p><strong>Duration:</strong> 3 months</p>
-              <button class="view-btn" onclick="window.location.href='/job/3'">
-                View Details
-              </button>
+            <div class="section-footer" data-aos="fade-up">
+                <a href="/jobs" class="btn btn-primary">
+                    See All Jobs <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-          </div>
-          <a
-            href="/jobs"
-            class="see-all-jobs animate-on-scroll"
-            data-animation="fadeInUp"
-            >See All Jobs →</a
-          >
         </div>
-      </section>
+    </section>
 
-      <!-- Success Stories Section -->
-      <section class="success-stories">
-        <div class="section-container">
-          <h2 class="animate-on-scroll" data-animation="slideInDown">
-            Success Stories
-          </h2>
-          <div class="stories-grid">
-            <div
-              class="story-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <div class="story-icon">🏆</div>
-              <h3>Transforming Businesses</h3>
-              <p>
-                "Milestone helped us find a developer who transformed our
-                e-commerce site in just 6 weeks!"
-              </p>
-              <p class="author">- John Doe, CEO of ShopEasy</p>
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Success Stories</h2>
+                <p>See how Milestone has transformed careers and businesses</p>
             </div>
-            <div
-              class="story-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <div class="story-icon">✨</div>
-              <h3>Boosting Creativity</h3>
-              <p>
-                "The designers on Milestone brought our brand to life with
-                stunning visuals."
-              </p>
-              <p class="author">- Sarah Lee, Marketing Lead</p>
+            <div class="testimonials-carousel" id="testimonials-carousel">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>Milestone helped us find a developer who transformed our e-commerce site in just 6 weeks! The
+                            quality of work and communication exceeded our expectations.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="John Doe" loading="lazy">
+                        </div>
+                        <div class="author-info">
+                            <h4>John Doe</h4>
+                            <p>CEO of ShopEasy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>The designers on Milestone brought our brand to life with stunning visuals. They understood
+                            our vision perfectly and delivered beyond what we imagined possible.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="Sarah Lee" loading="lazy">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Lee</h4>
+                            <p>Marketing Lead</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>As a freelancer, Milestone has connected me with amazing clients and projects that align
+                            perfectly with my skills. The platform is intuitive and the payment system is reliable.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Michael Chen" loading="lazy">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Full-Stack Developer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>Milestone helped us find a blockchain developer who made our project in just 2 weeks! I sometimes exceed my own expectations. Such slay behaviour !</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/men/48.jpg" alt="John Doe" loading="lazy">
+                        </div>
+                        <div class="author-info">
+                            <h4>Dohn Toe</h4>
+                            <p>CEO of CryptoBust</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="carousel-controls">
+                <button id="prev-testimonial" class="carousel-control" aria-label="Previous testimonial">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="next-testimonial" class="carousel-control" aria-label="Next testimonial">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Latest Blog Posts Section -->
-      <section class="blog-posts">
-        <div class="section-container">
-          <h2 class="animate-on-scroll" data-animation="slideInDown">
-            Latest Blog Posts
-          </h2>
-          <div class="posts-grid">
-            <div
-              class="post-card animate-on-scroll"
-              data-animation="slideInLeft"
-            >
-              <div class="post-thumbnail">
-                <img
-                  src="/assets/blog.jpeg"
-                  alt="Top 10 Skills for Freelancers in 2025"
-                />
-              </div>
-              <h3>Top 10 Skills for Freelancers in 2025</h3>
-              <p>
-                Discover the most in-demand skills to boost your freelance
-                career.
-              </p>
-              <a href="/blog/1" class="read-more">Read More →</a>
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Latest <span style="color: #2563eb;">Blog</span> Posts</h2>
+                <p>Insights and tips to excel in the freelancing world</p>
             </div>
-            <div
-              class="post-card animate-on-scroll"
-              data-animation="slideInRight"
-            >
-              <div class="post-thumbnail">
-                <img
-                  src="/assets/blog.jpeg"
-                  alt="How to Price Your Freelance Services"
-                />
-              </div>
-              <h3>How to Price Your Freelance Services</h3>
-              <p>Learn the best strategies for setting competitive rates.</p>
-              <a href="/blog/2" class="read-more">Read More →</a>
+            <div class="blog-grid">
+                <div class="blog-card" data-aos="fade-up">
+                    <div class="blog-image">
+                        <img src="/assets/home/portfolio_1.avif"
+                            alt="Top 10 Skills for Freelancers in 2023" loading="lazy">
+                        <div class="blog-date">
+                            <span>22</span>
+                            <span>APR</span>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Career</div>
+                        <h3>Top 10 Skills for Freelancers in 2025</h3>
+                        <p>Discover the most in-demand skills that will help you stand out in the competitive
+                            freelancing market.</p>
+                        <a href="/blog" class="blog-link">Read More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="blog-image">
+                        <img src="/assets/home/portfolio_2.avif"
+                            alt="How to Price Your Freelance Services" loading="lazy">
+                        <div class="blog-date">
+                            <span>15</span>
+                            <span>APR</span>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Finance</div>
+                        <h3>How to Price Your Freelance Services</h3>
+                        <p>Learn effective strategies to price your services competitively while ensuring you're fairly
+                            compensated for your expertise.</p>
+                        <a href="/blog" class="blog-link">Read More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="blog-image">
+                        <img src="/assets/home/portfolio_3.avif"
+                            alt="Building a Strong Freelancer Portfolio" loading="lazy">
+                        <div class="blog-date">
+                            <span>08</span>
+                            <span>APR</span>
+                        </div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Portfolio</div>
+                        <h3>Building a Strong Freelancer Portfolio</h3>
+                        <p>Tips and best practices for creating a portfolio that showcases your skills and attracts
+                            high-quality clients.</p>
+                        <a href="/blog" class="blog-link">Read More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      <!-- FAQ Section -->
-      <section class="faq-section">
-        <div class="section-container">
-          <h2 class="animate-on-scroll" data-animation="slideInDown">
-            Frequently Asked Questions
-          </h2>
-          <div class="faq-grid">
-            <div
-              class="faq-card animate-on-scroll"
-              data-animation="fadeInUp"
-              data-delay="0"
-            >
-              <h3>How do I hire a freelancer?</h3>
-              <p>
-                Simply sign up, post a job, and browse profiles to find the
-                perfect match.
-              </p>
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Frequently Asked <span style="color: #2563eb;">Questions</span></h2>
+                <p>Get answers to common questions about Milestone</p>
             </div>
-            <div
-              class="faq-card animate-on-scroll"
-              data-animation="fadeInUp"
-              data-delay="0.2"
-            >
-              <h3>What payment methods are available?</h3>
-              <p>
-                We support secure payments via bank transfer, PayPal, and
-                escrow.
-              </p>
+            <div class="faq-accordion" data-aos="fade-up">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How do I hire a freelancer?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Hiring a freelancer on Milestone is simple. First, post a job with clear requirements or
+                            browse through our talent pool. Review profiles, portfolios, and ratings to find the right
+                            match. Once you've found the perfect freelancer, you can contact them directly, discuss your
+                            project details, and hire them through our secure platform.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What payment methods are available?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Milestone supports various payment methods including credit/debit cards, PayPal, bank
+                            transfers, and UPI for Indian users. Our secure payment system holds your payment in escrow
+                            until you approve the completed work, ensuring you only pay for satisfactory results.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How are freelancers verified?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>All freelancers on Milestone go through a comprehensive verification process. This includes
+                            identity verification, skills assessment, portfolio review, and background checks.
+                            Additionally, our rating system and client feedback help maintain high quality standards
+                            across the platform.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Is there a fee for using Milestone?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Creating an account and browsing freelancers or jobs on Milestone is completely free. Clients
+                            pay a 5% service fee when hiring freelancers, while freelancers pay a 10% commission on
+                            completed projects. These fees help us maintain the platform, provide secure payments, and
+                            offer customer support.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How does the milestone payment system work?
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our milestone payment system allows you to break projects into smaller deliverables. You fund
+                            each milestone upfront, but the payment is held in escrow until you approve the completed
+                            work. This provides security for both clients and freelancers, ensuring quality work and
+                            timely payments.</p>
+                    </div>
+                </div>
             </div>
-            <div
-              class="faq-card animate-on-scroll"
-              data-animation="fadeInUp"
-              data-delay="0.4"
-            >
-              <h3>How are freelancers verified?</h3>
-              <p>
-                All freelancers undergo a screening process to ensure quality
-                and reliability.
-              </p>
-            </div>
-          </div>
         </div>
-      </section>
-    </main>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content" data-aos="fade-up">
+                <h2>Ready to Start Your Freelancing Journey?</h2>
+                <p>Join thousands of freelancers and businesses on Milestone today</p>
+                <div class="cta-buttons">
+                    <a href="/signup" class="btn btn-primary">
+                        Get Started Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-outline" onclick="openContactModal()">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div class="contact-modal" id="contact-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Contact Us</h2>
+            <div>
+                <div class="modal-field">
+                    <label for="contact-name">Name</label>
+                    <input type="text" id="contact-name" placeholder="Your Name" required>
+                </div>
+                <div class="modal-field">
+                    <label for="contact-phone">Phone</label>
+                    <input type="tel" id="contact-phone" placeholder="Your Phone Number" required>
+                </div>
+                <div class="modal-field">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" placeholder="Your Email" required>
+                </div>
+                <div class="modal-field">
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" placeholder="Your Message" required></textarea>
+                </div>
+                <button class="btn btn-primary modal-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- unauthorize-modal Modal -->
+    <div class="unauthorize-modal" id="unauthorize-modal">
+        <div class="unauthorize-modal-overlay" onclick="closeUnauthorizeModal()"></div>
+        <div class="unauthorize-modal-content">
+            <button class="unauthorize-modal-close" onclick="closeUnauthorizeModal()">&times;</button>
+            <h2 style="color: red;">Action not Authorized</h2>
+            <p>You do not have permission to perform this action. Contact support if you think this is wrong.</p>
+        </div>
+    </div>
+    
+    <!-- unauthorize-login-modal Modal -->
+    <div class="login-modal" id="login-modal">
+        <div class="login-modal-overlay" onclick="openLoginModal()"></div>
+        <!-- <div class="login-modal-overlay" onclick="openLoginModal()"></div> -->
+        <div class="login-modal-content">
+            <button class="login-modal-close" onclick="closeLoginModal()">&times;</button>
+            <h2 style="color: red;">Login Required for Action</h2>
+            <p>Action cannot be performed. Please Log in or contact support.</p>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-section footer-logo">
-          <h3 class="footer-title">Milestone</h3>
-          <p class="centered">
-            Your go-to platform for hiring top freelancers. We'll fill some more
-            content here according to our need or we can remove this section if
-            not required.
-          </p>
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-about">
+                    <div class="logo">
+                        <a href="/">Mile<span>stone</span></a>
+                    </div>
+                    <p>Your go-to platform for hiring top freelancers and finding exciting projects. Connect,
+                        collaborate, and create with the best talent worldwide.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/jobs">Find Jobs</a></li>
+                            <li><a href="/freelancers">Hire Freelancers</a></li>
+                            <li><a href="/pricing">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>For Freelancers</h3>
+                        <ul>
+                            <li><a href="/find-work">Find Work</a></li>
+                            <li><a href="/create-profile">Create Profile</a></li>
+                            <li><a href="/freelancer-resources">Resources</a></li>
+                            <li><a href="/community">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>For Clients</h3>
+                        <ul>
+                            <li><a href="/post-job">Post a Job</a></li>
+                            <li><a href="/find-freelancers">Find Freelancers</a></li>
+                            <li><a href="/enterprise">Enterprise Solutions</a></li>
+                            <li><a href="/success-stories">Success Stories</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="/blog">Blog</a></li>
+                            <li><a href="/guides">Guides</a></li>
+                            <li><a href="/help">Help Center</a></li>
+                            <li><a href="javascript:void(0);" onclick="openContactModal()">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 Milestone. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/cookies">Cookie Policy</a>
+                </div>
+            </div>
         </div>
-        <div class="footer-section footer-links">
-          <h3 class="footer-title">Quick Links</h3>
-          <div class="quick-links">
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/login">Sign in</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 Milestone. All rights reserved.</p>
-      </div>
     </footer>
 
-    <!-- Scroll Animation Script -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const elements = document.querySelectorAll(".animate-on-scroll");
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-        const observer = new IntersectionObserver(
-          (entries, observer) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const animation = entry.target.dataset.animation;
-                const delay = entry.target.dataset.delay || 0;
-                entry.target.style.animationDelay = `${delay}s`;
-                entry.target.classList.add(`animate-${animation}`);
-                observer.unobserve(entry.target); // Stop observing once animated
-              }
-            });
-          },
-          {
-            threshold: 0.2, // Trigger when 20% of the element is visible
-          }
-        );
+    <script src="/js/home/home.js"></script>
+</body>
 
-        elements.forEach((element) => observer.observe(element));
-      });
-    </script>
-  </body>
 </html>

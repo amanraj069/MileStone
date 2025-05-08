@@ -71,7 +71,7 @@ function loadSavedProfileData() {
         setInputValue('location', profileData.location);
         setInputValue('email', profileData.email);
         setInputValue('phone', profileData.phone);
-        setInputValue('profileImageUrl', profileData.profileImageUrl || 'https://via.placeholder.com/150');
+        setInputValue('profileImageUrl', profileData.profileImageUrl);
         setTextareaValue('about', profileData.about);
         setInputValue('projects', profileData.projects);
         setInputValue('resumeLink', profileData.resumeLink);
@@ -134,7 +134,7 @@ function loadSavedProfileData() {
         });
         portfolioContainer.appendChild(document.getElementById('addPortfolioBtn'));
     } else {
-        setInputValue('profileImageUrl', 'https://via.placeholder.com/150');
+        setInputValue('profileImageUrl');
     }
 }
 
@@ -145,7 +145,7 @@ function saveProfileData() {
         location: getInputValue('location'),
         email: getInputValue('email'),
         phone: getInputValue('phone'),
-        profileImageUrl: getInputValue('profileImageUrl') || 'https://via.placeholder.com/150',
+        profileImageUrl: getInputValue('profileImageUrl'),
         about: getTextareaValue('about'),
         projects: getInputValue('projects'),
         resumeLink: getInputValue('resumeLink'),

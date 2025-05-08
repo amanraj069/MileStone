@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadProfileData();
 });
 
-function loadProfileData() {
-    const defaultImageUrl = 'https://via.placeholder.com/150';
+function loadProfileData() {;
     const savedProfile = localStorage.getItem('adminProfile');
 
     if (savedProfile) {
@@ -21,7 +20,7 @@ function loadProfileData() {
         // Update profile image
         const profileImage = document.getElementById('profileImage');
         if (profileImage) {
-            profileImage.src = profileData.picture || defaultImageUrl;
+            profileImage.src = profileData.picture;
             profileImage.onerror = () => {
                 profileImage.src = defaultImageUrl;
             };
