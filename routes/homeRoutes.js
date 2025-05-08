@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/", homeController.getHome);
 router.get("/blog", homeController.getBlog);
-router.get("/chat", homeController.getChat);
+router.get("/chat/:userId", homeController.getChat);
+router.post("/chat/:userId", homeController.sendMessage);
 router.get("/jobs", homeController.getJobListing);
 router.get("/jobs/:jobId", homeController.getJobDetails);
 router.get("/jobs/apply/:jobId", homeController.getJobApplication);

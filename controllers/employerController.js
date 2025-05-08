@@ -25,7 +25,7 @@ const employerController = {
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
-        .select("roleId name picture")
+        .select("roleId userId name picture")
         .lean();
 
       const freelancersWithDetails = jobs.map(job => {
@@ -38,6 +38,7 @@ const employerController = {
           startDate: job.assignedFreelancer.startDate,
           freelancer: {
             id: job.assignedFreelancer.freelancerId,
+            userId: user?.userId || "", // Include userId from User table
             name: user?.name || "Unknown Freelancer",
             picture: user?.picture || "/assets/user_female.png",
             rating: 4.7,

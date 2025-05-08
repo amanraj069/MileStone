@@ -21,6 +21,11 @@
             border-bottom: 1px solid #ddd;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
         }
         .header img {
             width: 40px;
@@ -38,6 +43,18 @@
             background-color: #00ff00;
             border-radius: 50%;
             margin-left: 5px;
+        }
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
         }
         .chat-area {
             flex: 1;
@@ -111,32 +128,53 @@
         .input-area button:hover {
             background-color: #0056b3;
         }
+        .error {
+            color: red;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="/assets/user_female.png" alt="Profile Picture">
-        <span>Vanya Awasthi</span>
-        <span class="status"></span>
+        <div class="user-info">
+            <img src="<%= recipient.picture %>" alt="Profile Picture">
+            <span><%= recipient.name %></span>
+            <span class="status"></span>
+        </div>
+        <button class="back-button" onclick="window.history.back()">Go Back</button>
     </div>
+    <% if (error) { %>
+        <div class="error"><%= error %></div>
+    <% } %>
     <div class="chat-area">
-        <div class="message sent">
-            <div class="bubble">Hi Vanya, are you available for a new project?</div>
-            <div class="time">10:30 am</div>
-        </div>
-        <div class="message received">
-            <img src="/assets/user_female.png" alt="Profile Picture">
-            <div class="bubble">Yes sir, I'm currently available. What kind of project do you have in mind?</div>
-            <div class="time">10:32 am</div>
-        </div>
-        <div class="message sent">
-            <div class="bubble">It's a web development project that should take about 2 weeks.</div>
-            <div class="time">10:35 am</div>
-        </div>
+        <% messages.forEach(message => { %>
+            <div class="message <%= message.from === user.id ? 'sent' : 'received' %>">
+                <% if (message.from === user.id) { %>
+                    <div class="time"><%= new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
+                    <div class="bubble"><%= message.messageData %></div>
+                    <img src="<%= user.picture || '/assets/user_female.png' %>" alt="Profile Picture">
+                <% } else { %>
+                    <img src="<%= recipient.picture %>" alt="Profile Picture">
+                    <div class="bubble"><%= message.messageData %></div>
+                    <div class="time"><%= new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
+                <% } %>
+            </div>
+        <% }) %>
     </div>
     <div class="input-area">
-        <input type="text" placeholder="Type your message...">
-        <button>➤</button>
+        <form action="/chat/<%= recipient.userId || '' %>" method="POST" style="display: flex; width: 100%;">
+            <input type="text" name="messageData" placeholder="Type your message..." required>
+            <button type="submit">➤</button>
+        </form>
     </div>
+
+    <script>
+        // Auto-scroll to the bottom of the chat area when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatArea = document.querySelector('.chat-area');
+            chatArea.scrollTop = chatArea.scrollHeight;
+        });
+    </script>
 </body>
 </html>

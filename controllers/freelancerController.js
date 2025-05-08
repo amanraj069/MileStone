@@ -18,6 +18,13 @@ exports.getFreelancerActiveJobs = async (req, res) => {
       "assignedFreelancer.status": "working",
     }).lean();
 
+    const employerIds = activeJobs
+      .map((job) => job.employerId)
+      .filter((id) => id);
+    const users = await User.find({ roleId: { $in: employerIds } })
+      .select("roleId userId")
+      .lean();
+
     const formattedJobs = await Promise.all(
       activeJobs.map(async (job) => {
         const paidAmount = job.milestones
@@ -36,6 +43,8 @@ exports.getFreelancerActiveJobs = async (req, res) => {
         }).lean();
         const companyName = employer ? employer.companyName : "Unknown Company";
 
+        const user = users.find((u) => u.roleId === job.employerId);
+
         return {
           id: job.jobId,
           title: job.title,
@@ -49,6 +58,7 @@ exports.getFreelancerActiveJobs = async (req, res) => {
             : "Not specified",
           progress: Math.round(progress),
           tech: job.description.skills || [],
+          employerUserId: user?.userId || "", // Include employer's userId from User table
         };
       })
     );
@@ -116,9 +126,9 @@ exports.getFreelancerProfile = async (req, res) => {
       throw new Error("Freelancer profile not found");
     }
 
-    const skillIds = (freelancer.skills || []).map(skill => skill.skillId);
+    const skillIds = (freelancer.skills || []).map((skill) => skill.skillId);
     const skills = await Skill.find({ skillId: { $in: skillIds } }).lean();
-    const skillNames = skills.map(skill => skill.name);
+    const skillNames = skills.map((skill) => skill.name);
 
     await res.render("Vanya/profile", {
       user: {
@@ -462,9 +472,9 @@ exports.submitSkillQuiz = async (req, res) => {
     const freelancerId = req.session.user.roleId;
     const answers = req.body;
 
-    console.log('Skill ID:', skillId);
-    console.log('Freelancer ID:', freelancerId);
-    console.log('Submitted Answers:', answers);
+    console.log("Skill ID:", skillId);
+    console.log("Freelancer ID:", freelancerId);
+    console.log("Submitted Answers:", answers);
 
     const skill = await Skill.findOne({ skillId }).lean();
     if (!skill || !skill.questions || skill.questions.length === 0) {
@@ -524,16 +534,23 @@ exports.getMilestone = async (req, res) => {
       return res.status(404).send("Job not found or you are not authorized");
     }
 
-    const employer = await Employer.findOne({ employerId: job.employerId }).lean();
+    const employer = await Employer.findOne({
+      employerId: job.employerId,
+    }).lean();
     const companyName = employer ? employer.companyName : "Unknown Company";
 
     const totalAmount = parseFloat(job.budget.amount) || 0;
     const paidAmount = job.milestones
-      .filter(m => m.status === "paid")
+      .filter((m) => m.status === "paid")
       .reduce((sum, m) => sum + parseFloat(m.payment), 0);
-    const paymentPercentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
-    const completedMilestones = job.milestones.filter(m => m.status === "paid").length;
-    const completionPercentage = Math.round((completedMilestones / job.milestones.length) * 100);
+    const paymentPercentage =
+      totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
+    const completedMilestones = job.milestones.filter(
+      (m) => m.status === "paid"
+    ).length;
+    const completionPercentage = Math.round(
+      (completedMilestones / job.milestones.length) * 100
+    );
 
     const jobDetails = {
       jobId: job.jobId,
@@ -544,9 +561,11 @@ exports.getMilestone = async (req, res) => {
         milestoneId: m.milestoneId,
         description: m.description,
         amount: parseFloat(m.payment),
-        deadline: m.deadline ? new Date(m.deadline).toLocaleDateString() : "No deadline",
+        deadline: m.deadline
+          ? new Date(m.deadline).toLocaleDateString()
+          : "No deadline",
         status: m.status,
-        requested: m.requested === 'true' || m.requested === true, // Convert string "true"/"false" to boolean
+        requested: m.requested === "true" || m.requested === true, // Convert string "true"/"false" to boolean
       })),
       progress: {
         completionPercentage,
@@ -558,7 +577,7 @@ exports.getMilestone = async (req, res) => {
       },
     };
 
-    res.render("Vanya/others/milestone", {
+    res.render("Vanya/other/milestone", {
       user: {
         name: req.session.user.name,
         email: req.session.user.email,
@@ -588,16 +607,24 @@ exports.requestMilestone = async (req, res) => {
     });
 
     if (!job) {
-      return res.status(404).json({ error: "Job not found or you are not authorized" });
+      return res
+        .status(404)
+        .json({ error: "Job not found or you are not authorized" });
     }
 
-    const milestone = job.milestones.find(m => m.milestoneId === milestoneId);
+    const milestone = job.milestones.find((m) => m.milestoneId === milestoneId);
     if (!milestone) {
       return res.status(404).json({ error: "Milestone not found" });
     }
 
-    if (milestone.status === "paid" || milestone.requested === 'true' || milestone.requested === true) {
-      return res.status(400).json({ error: "Milestone already paid or requested" });
+    if (
+      milestone.status === "paid" ||
+      milestone.requested === "true" ||
+      milestone.requested === true
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Milestone already paid or requested" });
     }
 
     milestone.requested = true;
