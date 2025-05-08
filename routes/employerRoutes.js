@@ -3,6 +3,7 @@ const router = express.Router();
 const employerController = require("../controllers/employerController");
 
 router.get("/current_jobs", employerController.getCurrentJobs);
+router.get("/payment", employerController.getPaymentAnimation);
 router.get("/job_listings", employerController.getJobListings);
 router.get("/job_listings/new", employerController.getNewJobForm);
 router.post("/job_listings/new", employerController.createJobListing);

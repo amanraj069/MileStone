@@ -22,7 +22,6 @@
               <h2>Your Plan</h2>
               <p><%= user.subscription || 'Basic' %> - <%= user.subscription === 'Premium' ? 'Ad-free, advanced tools, priority support.' : 'Includes basic features. Upgrade for more!' %></p>
             </div>
-            <button>Manage Subscription</button>
           </section>
 
           <section class="plan-options">
@@ -38,15 +37,12 @@
                 <h3>Premium</h3>
                 <p class="price">₹868.61/month</p>
                 <p>Ad-free, advanced tools, priority support.</p>
-                <button class="upgrade-btn" <%= user.subscription === 'Premium' ? 'disabled' : '' %>>
+                <button class="upgrade-btn" <%= user.subscription === 'Premium' ? 'disabled' : '' %> onclick="location.href='/employerD/payment'">
                   <%= user.subscription === 'Premium' ? 'Current Plan' : 'Upgrade to Premium' %>
                 </button>
               </div>
             </div>
           </section>
-          <footer>
-            <button class="confirm-btn">Confirm Upgrade</button>
-          </footer>
         </div>
       </div>
     </div>

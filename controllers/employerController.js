@@ -836,6 +836,13 @@ const employerController = {
       activePage: "transaction_history",
     });
   },
+  
+  getPaymentAnimation: (req, res) => {
+    res.render("Abhishek/others/payment", {
+      user: { name: req.session.user.name },
+      activePage: "subscription",
+    });
+  },
 };
 
 module.exports = employerController;

@@ -241,27 +241,6 @@ header p {
   text-decoration: underline;
 }
 
-/* Footer styles */
-footer {
-  text-align: center;
-}
-
-footer .confirm-btn {
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  padding: 15px 40px;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-footer .confirm-btn:hover {
-  background-color: #27ae60;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .current-plan {
