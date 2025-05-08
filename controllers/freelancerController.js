@@ -636,3 +636,50 @@ exports.requestMilestone = async (req, res) => {
     res.status(500).json({ error: "Failed to request milestone" });
   }
 };
+
+exports.getSubscription = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    if (!userId) {
+      throw new Error("User ID not found in session");
+    }
+
+    const user = await User.findOne({ userId }).lean();
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    res.render("Vanya/subscription", {
+      user: {
+        name: user.name,
+        subscription: user.subscription || "Basic",
+      },
+      activePage: "subscription",
+    });
+  } catch (error) {
+    console.error("Error fetching subscription:", error.message);
+    res.status(500).send("Error fetching subscription: " + error.message);
+  }
+};
+
+exports.upgradeSubscription = async (req, res) => {
+  try {
+    const user=req.session.user;
+    const userId = req.session.user.id;
+    if (!userId) {
+      return res.status(401).json({ success: false, message: "Not logged in" });
+    }
+    // Update the user's subscription to "Premium"
+    await User.updateOne({ userId }, { $set: { subscription: "Premium" } });
+    req.session.user.subscription = "Premium";
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.getPaymentAnimation = (req, res) => {
+  res.render("Vanya/others/payment", {
+    activePage: "subscription",
+  });
+};
