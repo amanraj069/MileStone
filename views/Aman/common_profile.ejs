@@ -12,21 +12,27 @@
         <div class="container">
           <div class="header">
             <h1>Freelancer Profile</h1>
-            <a href="/" class="edit-button"> Go to Home </a>
+            <a
+              href="javascript:void(0)"
+              onclick="window.history.back()"
+              class="edit-button"
+              >Go Back</a
+            >
           </div>
 
           <div class="profile-section">
             <div class="profile-image">
               <img
-                src="/assets/user_female.png"
+                src="<%= profileData.picture %>"
                 alt="Profile Image"
                 id="profileImage"
+                onerror="this.src='/assets/user_female.png';"
               />
             </div>
 
             <div class="profile-info">
               <div class="profile-header">
-                <h2 id="nameDisplay">Vanya Awasthi</h2>
+                <h2 id="nameDisplay"><%= profileData.name %></h2>
                 <div class="top-freelancer-badge">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +54,7 @@
                 </div>
               </div>
 
-              <div class="title" id="titleDisplay">Frontend Developer</div>
+              <div class="title" id="titleDisplay"><%= profileData.role %></div>
 
               <div class="location">
                 <svg
@@ -67,7 +73,7 @@
                   ></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <span id="locationDisplay">Pune, Maharashtra</span>
+                <span id="locationDisplay"><%= profileData.location %></span>
               </div>
 
               <div class="contact">
@@ -87,7 +93,7 @@
                   ></path>
                   <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
-                <span id="emailDisplay">vanya.awasthi@email.com</span>
+                <span id="emailDisplay"><%= profileData.email %></span>
               </div>
 
               <div class="contact">
@@ -106,7 +112,7 @@
                     d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
                   ></path>
                 </svg>
-                <span id="phoneDisplay">+91 8757462008</span>
+                <span id="phoneDisplay"><%= profileData.phone %></span>
               </div>
 
               <div class="rating-section">
@@ -127,122 +133,85 @@
               <div class="about-section">
                 <h3 class="section-title">About Me</h3>
                 <div class="about-content" id="aboutDisplay">
-                  <p>
-                    I am a passionate Frontend Developer with over 5 years of
-                    experience in building responsive and user-friendly web
-                    applications. I specialize in React, JavaScript, and modern
-                    CSS frameworks. My goal is to create seamless digital
-                    experiences that delight users and meet business objectives.
-                  </p>
+                  <p><%= profileData.aboutMe %></p>
                 </div>
               </div>
 
               <div class="skills-section">
                 <h3 class="section-title">Skills</h3>
                 <div class="skills-list" id="skillsDisplay">
-                  <span class="skill-tag">HTML5</span>
-                  <span class="skill-tag">CSS3</span>
-                  <span class="skill-tag">JavaScript</span>
-                  <span class="skill-tag">React</span>
-                  <span class="skill-tag">TypeScript</span>
-                  <span class="skill-tag">Angular</span>
-                  <span class="skill-tag">Node.js</span>
-                  <span class="skill-tag">Git</span>
+                  <% if (profileData.skills && profileData.skills.length > 0) {
+                  %> <% profileData.skills.forEach(skill => { %>
+                  <span class="skill-tag"><%= skill %></span>
+                  <% }) %> <% } else { %>
+                  <p>No skills added yet.</p>
+                  <% } %>
                 </div>
               </div>
 
               <div class="experience-section">
                 <h3 class="section-title">Experience</h3>
                 <div class="experience-list" id="experienceDisplay">
+                  <% if (profileData.experience && profileData.experience.length
+                  > 0) { %> <% profileData.experience.forEach(exp => { %>
                   <div class="experience-item">
-                    <h5>Senior Frontend Developer - Google</h5>
-                    <p class="experience-date">Jan 2022 - Present</p>
-                    <p>
-                      Led the development of search page enhancements, improving
-                      user engagement by 30%. Collaborated with UX designers to
-                      implement responsive designs using React and TypeScript.
-                    </p>
+                    <h5><%= exp.title || 'N/A' %></h5>
+                    <p class="experience-date"><%= exp.date || 'N/A' %></p>
+                    <p><%= exp.description || 'No description provided.' %></p>
                   </div>
-                  <div class="experience-item">
-                    <h5>Frontend Developer - Airbnb</h5>
-                    <p class="experience-date">Jun 2019 - Dec 2021</p>
-                    <p>
-                      Developed and maintained the booking system UI,
-                      integrating Angular and SCSS to create a seamless user
-                      experience. Reduced page load time by 20% through
-                      optimization techniques.
-                    </p>
-                  </div>
+                  <% }) %> <% } else { %>
+                  <p>No experience added yet.</p>
+                  <% } %>
                 </div>
               </div>
 
               <div class="education-section">
                 <h3 class="section-title">Education</h3>
                 <div class="education-list" id="educationDisplay">
+                  <% if (profileData.education && profileData.education.length >
+                  0) { %> <% profileData.education.forEach(edu => { %>
                   <div class="education-item">
-                    <h5>Bachelor of Science in Computer Science</h5>
+                    <h5><%= edu.degree || 'N/A' %></h5>
                     <p class="education-date">
-                      University of California, Berkeley
+                      <%= edu.institution || 'N/A' %>
                     </p>
-                    <p class="education-date">2015 - 2019</p>
+                    <p class="education-date"><%= edu.date || 'N/A' %></p>
                   </div>
+                  <% }) %> <% } else { %>
+                  <p>No education added yet.</p>
+                  <% } %>
                 </div>
               </div>
 
               <div class="portfolio-section">
                 <h3 class="section-title">Portfolio</h3>
                 <div class="portfolio-grid" id="portfolioDisplay">
+                  <% if (profileData.portfolio && profileData.portfolio.length >
+                  0) { %> <% profileData.portfolio.forEach(port => { %>
                   <div class="portfolio-item">
                     <img
-                      src="/assets/portfolio/ecom_portfolio.png"
-                      alt="E-commerce Website Redesign"
+                      src="<%= port.image || '/assets/portfolio/default.png' %>"
+                      alt="<%= port.title || 'Portfolio Item' %>"
+                      onerror="this.src='/assets/portfolio/default.png';"
                     />
-                    <h5>Website Redesign</h5>
-                    <p>
-                      A responsive e-commerce platform built with React and
-                      Node.js.
-                    </p>
-                    <a
-                      href="https://github.com/evershopcommerce/evershop"
-                      class="portfolio-link"
+                    <h5><%= port.title || 'N/A' %></h5>
+                    <p><%= port.description || 'No description provided.' %></p>
+                    <a href="<%= port.link || '#' %>" class="portfolio-link"
                       >View Project</a
                     >
                   </div>
-                  <div class="portfolio-item">
-                    <img
-                      src="/assets/portfolio/bookingsys_portfolio.png"
-                      alt="Booking System UI"
-                    />
-                    <h5>Booking System UI</h5>
-                    <p>
-                      Modern booking system UI developed using Angular and SCSS.
-                    </p>
-                    <a
-                      href="https://github.com/SakerDakak/Salonek"
-                      class="portfolio-link"
-                      >View Project</a
-                    >
-                  </div>
-                  <div class="portfolio-item">
-                    <img
-                      src="/assets/portfolio/streaming_portfolio.png"
-                      alt="Stream UI Optimization"
-                    />
-                    <h5>Stream UI Optimization</h5>
-                    <p>Optimized streaming platform UI with React and Redux.</p>
-                    <a
-                      href="https://github.com/Open-Streaming-Platform/open-streaming-platform"
-                      class="portfolio-link"
-                      >View Project</a
-                    >
-                  </div>
+                  <% }) %> <% } else { %>
+                  <p>No portfolio items added yet.</p>
+                  <% } %>
                 </div>
               </div>
 
               <div class="resume-section">
                 <h3 class="section-title">Resume</h3>
                 <div class="resume-content" id="resumeDisplay">
-                  <a href="#" class="resume-link">View Resume</a>
+                  <a href="<%= profileData.resume %>" class="resume-link"
+                    >View Resume</a
+                  >
                 </div>
               </div>
             </div>

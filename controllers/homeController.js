@@ -1,7 +1,10 @@
 const db = require("../database");
 const JobListing = require("../models/job_listing");
 const JobApplication = require("../models/job_application");
-const Employer = require("../models/employer"); // Add this to fetch employer details
+const Employer = require("../models/employer");
+const User = require("../models/user");
+const Freelancer = require("../models/freelancer");
+const Skill = require("../models/skill");
 
 exports.getHome = (req, res) => {
   let dashboardRoute = "";
@@ -105,7 +108,7 @@ exports.getJobDetails = async (req, res) => {
       user: req.session.user || null,
       dashboardRoute,
       job,
-      companyName: employer.companyName || "Not specified", // Pass the company name
+      companyName: employer.companyName || "Not specified",
     });
   } catch (error) {
     console.error("Error loading job details:", error);
@@ -165,22 +168,19 @@ exports.applyForJob = async (req, res) => {
     const { jobId, coverMessage, resumeLink } = req.body;
     const freelancerId = req.session.user.roleId;
 
-    console.log("Received jobId:", jobId); // Debug log
+    console.log("Received jobId:", jobId);
 
-    // Validate input
     if (!jobId || !coverMessage || !resumeLink) {
       return res.redirect(`/jobs/apply/${jobId}?error=Missing required fields`);
     }
 
-    // Verify job exists
     const job = await JobListing.findOne({ jobId });
-    console.log("Found job:", job); // Debug log
+    console.log("Found job:", job);
 
     if (!job) {
       return res.redirect(`/jobs/apply/${jobId}?error=Job not found`);
     }
 
-    // Check if freelancer has already applied to this job
     const existingApplication = await JobApplication.findOne({
       freelancerId,
       jobId,
@@ -190,7 +190,6 @@ exports.applyForJob = async (req, res) => {
       return res.redirect(`/jobs/apply/${jobId}?error=You can't apply to the same job more than once, wait for it to get approved.`);
     }
 
-    // Create new job application
     const jobApplication = new JobApplication({
       freelancerId,
       jobId,
@@ -201,7 +200,6 @@ exports.applyForJob = async (req, res) => {
 
     await jobApplication.save();
 
-    // Redirect to success page with jobId
     res.redirect(`/jobs/application-submitted/${jobId}?success=true`);
   } catch (error) {
     console.error("Error submitting job application:", error);
@@ -254,23 +252,69 @@ exports.getApplicationSubmitted = async (req, res) => {
   }
 };
 
-exports.getProfile = (req, res) => {
-  let dashboardRoute = "";
-  if (req.session && req.session.user) {
-    switch (req.session.user.role) {
-      case "Admin":
-        dashboardRoute = "/adminD/profile";
-        break;
-      case "Employer":
-        dashboardRoute = "/employerD/profile";
-        break;
-      case "Freelancer":
-        dashboardRoute = "/freelancerD/profile";
-        break;
+exports.getProfile = async (req, res) => {
+  try {
+    const freelancerId = req.params.freelancerId;
+    // console.log("Fetching profile for freelancerId:", freelancerId);
+
+    if (!freelancerId) {
+      return res.status(400).send("Freelancer ID is required");
     }
+
+    // Fetch the user where role is Freelancer and roleId matches freelancerId
+    const user = await User.findOne({ role: "Freelancer", roleId: freelancerId }).lean();
+    if (!user) {
+      return res.status(404).send("Freelancer user not found");
+    }
+
+    // Fetch the freelancer data using the freelancerId
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
+    if (!freelancer) {
+      return res.status(404).send("Freelancer profile not found");
+    }
+
+    // Fetch skill names based on skillIds in freelancer.skills
+    const skillIds = (freelancer.skills || []).map(skill => skill.skillId);
+    const skills = await Skill.find({ skillId: { $in: skillIds } }).lean();
+    const skillNames = skills.map(skill => skill.name);
+
+    // Set dashboard route based on logged-in user
+    let dashboardRoute = "";
+    if (req.session && req.session.user) {
+      switch (req.session.user.role) {
+        case "Admin":
+          dashboardRoute = "/adminD/profile";
+          break;
+        case "Employer":
+          dashboardRoute = "/employerD/profile";
+          break;
+        case "Freelancer":
+          dashboardRoute = "/freelancerD/profile";
+          break;
+      }
+    }
+
+    // Render the profile with the fetched data
+    res.render("Aman/common_profile", {
+      user: req.session && req.session.user ? req.session.user : null,
+      dashboardRoute,
+      profileData: {
+        name: user.name || "N/A",
+        role: user.role || "Freelancer",
+        location: user.location || "N/A",
+        email: user.email || "N/A",
+        phone: user.phone || "N/A",
+        picture: user.picture || "/assets/user_female.png",
+        aboutMe: user.aboutMe || "No description provided.",
+        skills: skillNames || [],
+        experience: freelancer.experience || [],
+        education: freelancer.education || [],
+        portfolio: freelancer.portfolio || [],
+        resume: freelancer.resume || "#",
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching freelancer profile:", error);
+    res.status(500).send("Server Error: Unable to load freelancer profile");
   }
-  res.render("Aman/common_profile", {
-    user: req.session && req.session.user ? req.session.user : null,
-    dashboardRoute,
-  });
 };

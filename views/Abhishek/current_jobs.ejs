@@ -52,7 +52,7 @@
                 />
                 <div class="freelancer-info">
                   <a
-                    href="/employerD/view_profile/<%= freelancerData.freelancer.id %>"
+                    href="/profile/<%= freelancerData.freelancer.id %>"
                     class="freelancer-name"
                     ><%= freelancerData.freelancer.name %></a
                   >
@@ -76,15 +76,15 @@
                   </div>
                 </div>
                 <div>
-                  <button class="mark-finished-btn">Pay</button>
+                  <!-- <button class="mark-finished-btn">Pay</button> -->
                 </div>
               </div>
               <div class="card-body">
-                <div class="skills">
+                <!-- <div class="skills">
                   <% freelancerData.skills.slice(0, 3).forEach(skill => { %>
                   <span class="skill-tag"><%= skill %></span>
                   <% }) %>
-                </div>
+                </div> -->
                 <div class="project-info">
                   <p class="info-label">Working on:</p>
                   <p class="project-name"><%= freelancerData.projectName %></p>

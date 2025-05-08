@@ -18,5 +18,7 @@ router
   .get(freelancerController.getFreelancerSubscription);
 router.route("/skills_badges/quiz/:skillId").get(freelancerController.getSkillQuiz);
 router.route("/skills_badges/quiz/:skillId").post(freelancerController.submitSkillQuiz);
+router.route("/milestone/:jobId").get(freelancerController.getMilestone);
+router.post("/milestone/:jobId/:milestoneId/request", freelancerController.requestMilestone);
 
 module.exports = router;

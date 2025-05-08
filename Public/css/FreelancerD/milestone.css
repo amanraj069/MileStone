@@ -142,21 +142,17 @@ body {
   border-left: 4px solid #10b981;
 }
 
-.milestone-row.requested {
-  background-color: #fef9c3; /* Light yellow background for better visibility */
-}
-
 .milestone-row.requested td {
-  border-left: 4px solid #eab308;
+  border-left: 4px solid #3b82f6;
 }
 
 .milestone-row.not-paid td {
   border-left: 4px solid #f59e0b;
 }
 
-.pay-btn {
+.request-btn {
   padding: 0.5rem 1rem;
-  background-color: #10b981;
+  background-color: #3b82f6;
   color: white;
   border: none;
   border-radius: 0.5rem;
@@ -165,109 +161,11 @@ body {
   transition: background-color 0.2s;
 }
 
-.pay-btn:hover:not(:disabled) {
-  background-color: #0d9668;
+.request-btn:hover:not(:disabled) {
+  background-color: #2563eb;
 }
 
-.pay-btn:disabled {
-  background-color: #d1fae5;
+.request-btn:disabled {
+  background-color: #bfdbfe;
   cursor: not-allowed;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.close-modal {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #64748b;
-}
-
-.modal-body {
-  padding: 1.5rem;
-}
-
-.modal-body p {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-select {
-  width: 100%;
-  padding: 0.625rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-  padding: 0 1.5rem 1.5rem;
-}
-
-.cancel-btn {
-  padding: 0.625rem 1rem;
-  background-color: transparent;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.save-btn {
-  padding: 0.625rem 1rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
 }

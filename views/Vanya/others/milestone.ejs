@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milestones - FreelancePro</title>
+    <link
+      rel="stylesheet"
+      href="/css/FreelancerD/static_elements/sidebar.css"
+    />
+    <link rel="stylesheet" href="/css/FreelancerD/milestone.css" />
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <%- include('../partials/sidebar', { user: user, activePage: 'payment' }) %>
+      <div class="main-content">
+        <div class="container">
+          <div class="header">
+            <h1 class="title">Milestones for Job</h1>
+          </div>
+          <% if (!job) { %>
+            <p>No job found.</p>
+          <% } else { %>
+            <div class="job-section">
+              <h2 class="job-title"><%= job.title %></h2>
+              <p><strong>Company:</strong> <%= job.company %></p>
+              <div class="progress-card">
+                <div class="progress-section">
+                  <div class="progress-header">
+                    <h3 class="progress-title">Project Completion</h3>
+                    <span class="progress-percentage"><%= job.progress.completionPercentage %>%</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: <%= job.progress.completionPercentage %>%"></div>
+                  </div>
+                  <div class="progress-labels">
+                    <span>Not Started</span>
+                    <span>In Progress</span>
+                    <span>Completed</span>
+                  </div>
+                </div>
+                <div class="progress-section">
+                  <div class="progress-header">
+                    <h3 class="progress-title">Payment Progress</h3>
+                    <span class="progress-amount">₹<%= job.progress.payment.paid.toFixed(2) %> of ₹<%= job.progress.payment.total.toFixed(2) %> (<%= job.progress.payment.percentage %>%)</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: <%= job.progress.payment.percentage %>%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="milestones-container">
+                <table class="milestone-table">
+                  <thead>
+                    <tr>
+                      <th>S.No</th>
+                      <th>Description</th>
+                      <th>Amount (₹)</th>
+                      <th>Deadline</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% job.milestones.forEach(milestone => { %>
+                      <tr class="milestone-row <%= milestone.status === 'paid' ? 'paid' : milestone.requested ? 'requested' : 'not-paid' %>">
+                        <td><%= milestone.serialNo %></td>
+                        <td><%= milestone.description %></td>
+                        <td>₹<%= milestone.amount.toLocaleString() %></td>
+                        <td><%= milestone.deadline %></td>
+                        <td>
+                          <% if (milestone.status === 'paid') { %>
+                            <button class="request-btn" disabled>Paid</button>
+                          <% } else if (milestone.requested) { %>
+                            <button class="request-btn" disabled>Requested</button>
+                          <% } else { %>
+                            <button class="request-btn" 
+                                    data-job-id="<%= job.jobId %>"
+                                    data-milestone-id="<%= milestone.milestoneId %>"
+                                    data-description="<%= milestone.description %>"
+                                    data-amount="<%= milestone.amount %>">Request</button>
+                          <% } %>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.request-btn:not(:disabled)').forEach(button => {
+          button.addEventListener('click', async () => {
+            const jobId = button.dataset.jobId;
+            const milestoneId = button.dataset.milestoneId;
+
+            try {
+              const response = await fetch(`/freelancerD/milestone/${jobId}/${milestoneId}/request`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+
+              if (!response.ok) {
+                throw new Error('Failed to request milestone');
+              }
+
+              const data = await response.json();
+              if (data.success) {
+                const milestoneRow = button.closest('tr');
+                milestoneRow.classList.remove('not-paid');
+                milestoneRow.classList.add('requested');
+                button.textContent = 'Requested';
+                button.disabled = true;
+              }
+            } catch (error) {
+              console.error('Error requesting milestone:', error.message);
+              alert('Failed to request milestone. Please try again.');
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

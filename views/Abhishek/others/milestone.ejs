@@ -60,7 +60,9 @@
                     </thead>
                     <tbody>
                       <% job.milestones.forEach(milestone => { %>
-                        <tr class="milestone-row <%= milestone.status === 'paid' ? 'paid' : 'not-paid' %>">
+                        <% const isRequested = milestone.requested === true || milestone.requested === 'true'; %>
+                        <% console.log(`Rendering milestone ${milestone.milestoneId}: status=${milestone.status}, requested=${milestone.requested}, isRequested=${isRequested}, class=${milestone.status === 'paid' ? 'paid' : isRequested ? 'requested' : 'not-paid'}`); %>
+                        <tr class="milestone-row <%= milestone.status === 'paid' ? 'paid' : isRequested ? 'requested' : 'not-paid' %>">
                           <td><%= milestone.serialNo %></td>
                           <td><%= milestone.description %></td>
                           <td>₹<%= milestone.amount.toLocaleString() %></td>
@@ -85,7 +87,6 @@
             <% }); %>
           <% } %>
         </div>
-        <!-- Payment Confirmation Modal -->
         <div class="modal-overlay" id="paymentModal">
           <div class="modal">
             <div class="modal-header">
@@ -123,7 +124,6 @@
         const paymentDescription = document.getElementById('paymentDescription');
         const paymentAmount = document.getElementById('paymentAmount');
 
-        // Open payment modal
         document.querySelectorAll('.pay-btn:not(:disabled)').forEach(button => {
           button.addEventListener('click', () => {
             const jobId = button.dataset.jobId;
@@ -132,14 +132,13 @@
             const amount = button.dataset.amount;
 
             paymentDescription.textContent = description;
-            paymentAmount.textContent = amount;
+            paymentAmount.textContent = Number(amount).toLocaleString();
             confirmPaymentBtn.dataset.jobId = jobId;
             confirmPaymentBtn.dataset.milestoneId = milestoneId;
             paymentModal.style.display = 'flex';
           });
         });
 
-        // Close payment modal
         const closePaymentModalFn = () => {
           paymentModal.style.display = 'none';
           delete confirmPaymentBtn.dataset.jobId;
@@ -149,7 +148,6 @@
         closePaymentModal.addEventListener('click', closePaymentModalFn);
         cancelPaymentBtn.addEventListener('click', closePaymentModalFn);
 
-        // Confirm payment
         confirmPaymentBtn.addEventListener('click', async () => {
           const jobId = confirmPaymentBtn.dataset.jobId;
           const milestoneId = confirmPaymentBtn.dataset.milestoneId;
@@ -168,32 +166,30 @@
 
             const data = await response.json();
             if (data.success) {
-              // Update UI
               const milestoneRow = document.querySelector(`.pay-btn[data-milestone-id="${milestoneId}"]`).closest('tr');
               milestoneRow.classList.remove('not-paid');
+              milestoneRow.classList.remove('requested');
               milestoneRow.classList.add('paid');
               milestoneRow.querySelector('.pay-btn').textContent = 'Paid';
               milestoneRow.querySelector('.pay-btn').disabled = true;
               paymentModal.style.display = 'none';
 
-              // Update payment progress
               const progressAmountElement = milestoneRow.closest('.job-section').querySelector('.progress-amount');
               const paidMatch = progressAmountElement.textContent.match(/₹([\d,]+)/);
               const totalMatch = progressAmountElement.textContent.match(/of ₹([\d,]+)/);
               if (!paidMatch || !totalMatch) {
                 throw new Error('Could not parse payment amounts');
               }
-              const paidAmount = parseFloat(paidMatch[1].replace(/,/g, '')) + parseFloat(paymentAmount.textContent);
+              const paidAmount = parseFloat(paidMatch[1].replace(/,/g, '')) + parseFloat(paymentAmount.textContent.replace(/,/g, ''));
               const totalAmount = parseFloat(totalMatch[1].replace(/,/g, ''));
-              const percentage = Math.round((paidAmount / totalAmount) * 100);
+              const percentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
               progressAmountElement.textContent = `₹${paidAmount.toLocaleString()} of ₹${totalAmount.toLocaleString()} (${percentage}%)`;
               const paymentProgressBar = milestoneRow.closest('.job-section').querySelector('.progress-section:last-child .progress-bar');
               paymentProgressBar.style.width = `${percentage}%`;
 
-              // Update project completion
               const completedCount = milestoneRow.closest('.job-section').querySelectorAll('.milestone-row.paid').length;
               const totalCount = milestoneRow.closest('.job-section').querySelectorAll('.milestone-row').length;
-              const completionPercentage = Math.round((completedCount / totalCount) * 100);
+              const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
               const completionPercentageElement = milestoneRow.closest('.job-section').querySelector('.progress-percentage');
               completionPercentageElement.textContent = `${completionPercentage}%`;
               const completionProgressBar = milestoneRow.closest('.job-section').querySelector('.progress-section:first-child .progress-bar');
@@ -203,6 +199,11 @@
             console.error('Error paying milestone:', error.message);
             alert('Failed to process payment. Please try again.');
           }
+        });
+
+        // Debug classes applied to milestone rows
+        document.querySelectorAll('.milestone-row').forEach(row => {
+          console.log(`Milestone row classes: ${row.className}`);
         });
       });
     </script>

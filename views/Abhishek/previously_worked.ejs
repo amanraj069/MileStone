@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sidebar Dashboard</title>
     <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-    <link rel="stylesheet" href="/css/EmployerD/current_jobs.css" />
+    <link rel="stylesheet" href="/css/EmployerD/previously_worked.css" />
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('partials/sidebar', { user: user, activePage: 'previously_worked' }) %>
+      <%- include('partials/sidebar', { user: user, activePage:
+      'previously_worked' }) %>
       <div class="main-content">
         <div class="container">
           <h1 class="section-title">Previously Worked Freelancers</h1>
@@ -18,7 +19,8 @@
             <input
               type="text"
               class="search-input"
-              placeholder="Search freelancers, skills..."
+              placeholder="Search freelancers, projects..."
+              id="searchInput"
             />
             <button class="search-btn">
               <svg
@@ -36,79 +38,86 @@
           </div>
 
           <div class="freelancer-list">
-            <% if (freelancers && freelancers.length > 0) { %>
-              <% freelancers.forEach(freelancerData => { %>
-                <div class="freelancer-card" data-rating="<%= freelancerData.freelancer.rating %>">
-                  <div class="card-header">
-                    <img
-                      src="<%= freelancerData.freelancer.picture %>"
-                      alt="Profile"
-                      class="profile-img"
-                    />
-                    <div class="freelancer-info">
-                      <a href="/profile/<%= freelancerData.freelancer.id %>" class="freelancer-name"
-                        ><%= freelancerData.freelancer.name %></a
-                      >
-                      <div class="rating">
-                        <% for (let i = 0; i < 5; i++) { %>
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="icon"
-                          >
-                            <path
-                              d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
-                            />
-                          </svg>
-                        <% } %>
-                        <span><%= freelancerData.freelancer.rating.toFixed(1) %></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="skills">
-                      <% freelancerData.skills.slice(0, 3).forEach(skill => { %>
-                        <span class="skill-tag"><%= skill %></span>
-                      <% }) %>
-                    </div>
-                    <div class="project-info">
-                      <p class="info-label">Worked on:</p>
-                      <p class="project-name"><%= freelancerData.projectName %></p>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <div class="Since-date">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        class="icon"
-                      >
-                        <path
-                          d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
-                        />
-                      </svg>
-                      <span>Completed <%= Math.floor((new Date() - new Date(freelancerData.completionDate)) / (1000 * 60 * 60 * 24)) %> days ago</span>
-                    </div>
-                    <a href="/employerD/previously_worked/chat/<%= freelancerData.jobId %>"
-                      ><button class="chat-btn">Chat</button></a
+            <% if (freelancers && freelancers.length > 0) { %> <%
+            freelancers.forEach(freelancerData => { %>
+            <div
+              class="freelancer-card"
+              data-rating="<%= freelancerData.freelancer.rating %>"
+              data-name="<%= freelancerData.freelancer.name.toLowerCase() %>"
+              data-project="<%= freelancerData.projectName.toLowerCase() %>"
+            >
+              <div class="card-header">
+                <img
+                  src="<%= freelancerData.freelancer.picture %>"
+                  alt="Profile"
+                  class="profile-img"
+                />
+                <div class="freelancer-info">
+                  <a
+                    href="/profile/<%= freelancerData.freelancer.id %>"
+                    class="freelancer-name"
+                    ><%= freelancerData.freelancer.name %></a
+                  >
+                  <div class="rating">
+                    <% for (let i = 0; i < 5; i++) { %>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="icon"
                     >
-                    <a href="/profile/<%= freelancerData.freelancer.id %>"
-                      ><button class="view-profile-btn">View Profile</button></a
+                      <path
+                        d="M12 .587l3.668 7.431 8.332 1.212-6.001 5.847 1.417 8.257L12 18.777l-7.416 3.907 1.417-8.257-6.001-5.847 8.332-1.212z"
+                      />
+                    </svg>
+                    <% } %>
+                    <span
+                      ><%= freelancerData.freelancer.rating.toFixed(1) %></span
                     >
                   </div>
                 </div>
-              <% }) %>
-            <% } else { %>
-              <p>No freelancers have previously worked on your projects.</p>
+              </div>
+              <div class="card-body">
+                <div class="project-info">
+                  <p class="info-label">Worked on:</p>
+                  <p class="project-name"><%= freelancerData.projectName %></p>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="Since-date">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="icon"
+                  >
+                    <path
+                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 16H5V8h14v11zm-4-6l-4 3V9l4 3z"
+                    />
+                  </svg>
+                  <span
+                    >Completed <%= Math.floor((new Date() - new
+                    Date(freelancerData.completionDate)) / (1000 * 60 * 60 *
+                    24)) %> days ago</span
+                  >
+                </div>
+                <a href="/chat/<%= freelancerData.userId %>">
+                  <button class="chat-btn">Chat</button>
+                </a>
+                <a href="/profile/<%= freelancerData.freelancer.id %>">
+                  <button class="view-profile-btn">Profile</button>
+                </a>
+              </div>
+            </div>
+            <% }) %> <% } else { %>
+            <p>No freelancers have previously worked on your projects.</p>
             <% } %>
           </div>
         </div>
       </div>
     </div>
-    <script src="/js/EmployerD/previous_freelancers.js"></script>
+    <script src="/js/EmployerD/previously_worked.js"></script>
   </body>
 </html>

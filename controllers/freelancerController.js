@@ -116,7 +116,6 @@ exports.getFreelancerProfile = async (req, res) => {
       throw new Error("Freelancer profile not found");
     }
 
-    // Fetch skill names based on skillIds in freelancer.skills
     const skillIds = (freelancer.skills || []).map(skill => skill.skillId);
     const skills = await Skill.find({ skillId: { $in: skillIds } }).lean();
     const skillNames = skills.map(skill => skill.name);
@@ -132,7 +131,7 @@ exports.getFreelancerProfile = async (req, res) => {
         aboutMe: user.aboutMe,
         subscription: user.subscription,
         role: user.role,
-        skills: skillNames, // Pass skill names instead of raw skill objects
+        skills: skillNames,
         experience: freelancer.experience || [],
         education: freelancer.education || [],
         portfolio: freelancer.portfolio || [],
@@ -314,8 +313,54 @@ exports.getFreelancerJobHistory = async (req, res) => {
 
 exports.getFreelancerPayment = async (req, res) => {
   try {
+    if (!req.session.user) {
+      return res.status(401).send("Unauthorized: Please log in");
+    }
+
+    const freelancerId = req.session.user.roleId;
+
+    const activeJobs = await JobListing.find({
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": "working",
+    }).lean();
+
+    const formattedJobs = await Promise.all(
+      activeJobs.map(async (job) => {
+        const paidAmount = job.milestones
+          .filter((milestone) => milestone.status === "paid")
+          .reduce(
+            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
+            0
+          );
+
+        const totalBudget = parseFloat(job.budget.amount) || 0;
+        const progress =
+          totalBudget > 0 ? Math.min((paidAmount / totalBudget) * 100, 100) : 0;
+
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
+        }).lean();
+        const companyName = employer ? employer.companyName : "Unknown Company";
+
+        return {
+          id: job.jobId,
+          title: job.title,
+          company: companyName,
+          skills: job.description.skills || [],
+          deadline: job.applicationDeadline
+            ? job.applicationDeadline.toLocaleDateString()
+            : "No deadline",
+          amount: job.budget.amount
+            ? `Rs.${parseFloat(job.budget.amount).toFixed(2)}`
+            : "Not specified",
+          progress: Math.round(progress),
+        };
+      })
+    );
+
     res.render("Vanya/payment", {
-      user: req.session.user || staticUser,
+      user: req.session.user,
+      jobs: formattedJobs,
       activePage: "payment",
     });
   } catch (error) {
@@ -332,22 +377,18 @@ exports.getFreelancerSkills = async (req, res) => {
 
     const freelancerId = req.session.user.roleId;
 
-    // Fetch freelancer's skills
     const freelancer = await Freelancer.findOne({ freelancerId }).lean();
     if (!freelancer) {
       return res.status(404).send("Freelancer profile not found");
     }
 
-    // Fetch all skills from the database
     const allSkills = await Skill.find().lean();
 
-    // Fetch skill names for freelancer's skills
     const freelancerSkillIds = freelancer.skills.map((skill) => skill.skillId);
     const freelancerSkills = await Skill.find({
       skillId: { $in: freelancerSkillIds },
     }).lean();
 
-    // Map all skills with quiz availability
     const skillsData = allSkills.map((skill) => ({
       skillId: skill.skillId,
       name: skill.name,
@@ -461,5 +502,110 @@ exports.submitSkillQuiz = async (req, res) => {
   } catch (error) {
     console.error("Error submitting quiz:", error.message);
     res.status(500).json({ error: "Server Error: Unable to submit quiz" });
+  }
+};
+
+exports.getMilestone = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).send("Unauthorized: Please log in");
+    }
+
+    const freelancerId = req.session.user.roleId;
+    const { jobId } = req.params;
+
+    const job = await JobListing.findOne({
+      jobId,
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": "working",
+    }).lean();
+
+    if (!job) {
+      return res.status(404).send("Job not found or you are not authorized");
+    }
+
+    const employer = await Employer.findOne({ employerId: job.employerId }).lean();
+    const companyName = employer ? employer.companyName : "Unknown Company";
+
+    const totalAmount = parseFloat(job.budget.amount) || 0;
+    const paidAmount = job.milestones
+      .filter(m => m.status === "paid")
+      .reduce((sum, m) => sum + parseFloat(m.payment), 0);
+    const paymentPercentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
+    const completedMilestones = job.milestones.filter(m => m.status === "paid").length;
+    const completionPercentage = Math.round((completedMilestones / job.milestones.length) * 100);
+
+    const jobDetails = {
+      jobId: job.jobId,
+      title: job.title,
+      company: companyName,
+      milestones: job.milestones.map((m, index) => ({
+        serialNo: index + 1,
+        milestoneId: m.milestoneId,
+        description: m.description,
+        amount: parseFloat(m.payment),
+        deadline: m.deadline ? new Date(m.deadline).toLocaleDateString() : "No deadline",
+        status: m.status,
+        requested: m.requested === 'true' || m.requested === true, // Convert string "true"/"false" to boolean
+      })),
+      progress: {
+        completionPercentage,
+        payment: {
+          paid: paidAmount,
+          total: totalAmount,
+          percentage: paymentPercentage,
+        },
+      },
+    };
+
+    res.render("Vanya/others/milestone", {
+      user: {
+        name: req.session.user.name,
+        email: req.session.user.email,
+      },
+      activePage: "payment",
+      job: jobDetails,
+    });
+  } catch (error) {
+    console.error("Error fetching milestones:", error.message);
+    res.status(500).send("Error fetching milestones: " + error.message);
+  }
+};
+
+exports.requestMilestone = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const freelancerId = req.session.user.roleId;
+    const { jobId, milestoneId } = req.params;
+
+    const job = await JobListing.findOne({
+      jobId,
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": "working",
+    });
+
+    if (!job) {
+      return res.status(404).json({ error: "Job not found or you are not authorized" });
+    }
+
+    const milestone = job.milestones.find(m => m.milestoneId === milestoneId);
+    if (!milestone) {
+      return res.status(404).json({ error: "Milestone not found" });
+    }
+
+    if (milestone.status === "paid" || milestone.requested === 'true' || milestone.requested === true) {
+      return res.status(400).json({ error: "Milestone already paid or requested" });
+    }
+
+    milestone.requested = true;
+    await job.save();
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error requesting milestone:", error.message);
+    res.status(500).json({ error: "Failed to request milestone" });
   }
 };
