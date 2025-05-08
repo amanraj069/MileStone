@@ -726,6 +726,22 @@ const employerController = {
     }
   },
 
+  upgradeSubscription: async (req, res) => {
+    try {
+      const user=req.session.user;
+      const userId = req.session.user.id;
+      if (!userId) {
+        return res.status(401).json({ success: false, message: "Not logged in" });
+      }
+      // Update the user's subscription to "Premium"
+      await User.updateOne({ userId }, { $set: { subscription: "Premium" } });
+      req.session.user.subscription = "Premium";
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  },
+
   payMilestone: async (req, res) => {
     try {
       const { jobId, milestoneId } = req.params;
@@ -770,7 +786,6 @@ const employerController = {
   
   getPaymentAnimation: (req, res) => {
     res.render("Abhishek/others/payment", {
-      user: { name: req.session.user.name },
       activePage: "subscription",
     });
   },

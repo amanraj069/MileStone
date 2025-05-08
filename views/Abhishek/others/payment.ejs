@@ -367,10 +367,18 @@
   </div> 
 
   <script>
-    // Redirect to profile page after 6 seconds
+    // Call backend to upgrade subscription
+    fetch('/employerD/upgrade_subscription', { method: 'POST' })
+      .then(res => res.json())
+      .then(data => {
+        // Optionally handle success/failure
+      });
+
+    // Redirect to profile page after 3 seconds
     setTimeout(() => {
-      window.location.href = '/employerD/profile?upgraded=true';
-    }, 6000);
+        //   window.location.href = '/employerD/profile?upgraded=true';
+      window.location.href = "<%= user.role === 'Freelancer' ? '/freelancerD/profile?upgraded=true' : '/employerD/profile?upgraded=true' %>";
+    }, 3000);
   </script>
 </body>
 </html>
