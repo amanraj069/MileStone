@@ -202,7 +202,7 @@ exports.getEditProfile = async (req, res) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
-    res.render("Jayanth/edit-profile", {
+    res.render("Jayanth/others/edit-profile", {
       user: user,
       activeSection: "profile",
     });
@@ -295,7 +295,7 @@ exports.deleteFreelancer = async (req, res) => {
 };
 
 exports.getAddQuiz = (req, res) => {
-  res.render("Jayanth/add-quiz", {
+  res.render("Jayanth/others/add-quiz", {
     user: req.session.user,
     activeSection: "quizzes",
   });
@@ -339,5 +339,52 @@ exports.deleteQuiz = async (req, res) => {
   } catch (error) {
     console.error("Error deleting quiz:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getEditQuiz = async (req, res) => {
+  try {
+    const skill = await Skill.findOne({ skillId: req.params.skillId }).lean();
+    if (!skill) {
+      return res.status(404).send("Skill not found");
+    }
+    res.render("Jayanth/others/edit-quiz", {
+      user: req.session.user,
+      activeSection: "quizzes",
+      skill,
+    });
+  } catch (error) {
+    console.error("Error in getEditQuiz:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.updateQuiz = async (req, res) => {
+  try {
+    const { name, questions } = req.body;
+    const parsedQuestions = typeof questions === 'string' ? JSON.parse(questions) : questions;
+
+    const updatedSkill = await Skill.findOneAndUpdate(
+      { skillId: req.params.skillId },
+      {
+        name,
+        questions: parsedQuestions.map(q => ({
+          questionText: q.questionText,
+          options: q.options,
+          correctAnswer: q.correctAnswer,
+          marks: parseInt(q.marks) || 1,
+        })),
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedSkill) {
+      return res.status(404).json({ message: "Skill not found" });
+    }
+
+    res.redirect("/adminD/quizzes");
+  } catch (error) {
+    console.error("Error updating quiz:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

@@ -18,5 +18,7 @@ router.get("/quizzes", adminController.getQuizzes);
 router.get("/quizzes/add", adminController.getAddQuiz);
 router.post("/quizzes/add", adminController.addQuiz);
 router.delete("/quizzes/:skillId", adminController.deleteQuiz);
+router.get("/quizzes/edit/:skillId", adminController.getEditQuiz);
+router.post("/quizzes/edit/:skillId", adminController.updateQuiz);
 
 module.exports = router;
