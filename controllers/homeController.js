@@ -31,6 +31,10 @@ exports.getBlog = (req, res) => {
   res.render("Aman/blog");
 };
 
+exports.getChat = (req, res) => {
+  res.render("Abhishek/others/chat");
+};
+
 exports.getJobListing = async (req, res) => {
   try {
     let dashboardRoute = "";
