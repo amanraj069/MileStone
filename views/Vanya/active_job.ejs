@@ -38,7 +38,7 @@
                 <div class="job-actions">
                   <button
                     class="chat-btn"
-                    onclick="window.location.href='/freelancerD/active_job/chat'"
+                    onclick="window.location.href='/chat/<%= job.employerUserId || job.id %>'"
                   >
                     <i class="fas fa-comment"></i>
                   </button>
