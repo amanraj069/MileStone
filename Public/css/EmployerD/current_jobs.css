@@ -32,12 +32,14 @@ a {
   font-weight: 600;
 }
 
-.mark-finished-btn {
+
+
+.raise-complaint-btn {
   padding: 6px 10px;
   background-color: transparent;
-  color: #4caf50;
+  color: #f51505;
   font-weight: bold;
-  border: 2px solid #4caf50;
+  border: 2px solid #f44336;
   border-radius: 15px;
   font-size: 12px;
   cursor: pointer;
@@ -47,13 +49,8 @@ a {
   gap: 5px;
 }
 
-.mark-finished-btn::before {
-  content: "✔";
-  font-size: 12px;
-}
-
-.mark-finished-btn:hover {
-  background-color: #4caf50;
+.raise-complaint-btn:hover {
+  background-color: #f44336;
   color: white;
 }
 

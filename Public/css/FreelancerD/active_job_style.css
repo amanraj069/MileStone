@@ -146,6 +146,7 @@ body::-webkit-scrollbar {
 .job-actions {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 .chat-btn,
@@ -180,6 +181,26 @@ body::-webkit-scrollbar {
 
 .complain-btn:hover {
   background-color: #fecaca;
+}
+
+.raise-complaint-btn {
+  padding: 6px 10px;
+  background-color: transparent;
+  color: #f51505;
+  font-weight: bold;
+  border: 2px solid #f44336;
+  border-radius: 15px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.raise-complaint-btn:hover {
+  background-color: #f44336;
+  color: white;
 }
 
 .see-more-btn {
