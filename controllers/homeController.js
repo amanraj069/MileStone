@@ -1,7 +1,11 @@
 const db = require("../database");
 const JobListing = require("../models/job_listing");
 const JobApplication = require("../models/job_application");
-const Employer = require("../models/employer"); // Add this to fetch employer details
+const Employer = require("../models/employer");
+const User = require("../models/user");
+const Freelancer = require("../models/freelancer");
+const Skill = require("../models/skill");
+const Message = require("../models/message");
 
 exports.getHome = (req, res) => {
   let dashboardRoute = "";
@@ -26,6 +30,98 @@ exports.getHome = (req, res) => {
 
 exports.getBlog = (req, res) => {
   res.render("Aman/blog");
+};
+
+exports.getChat = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    if (!userId) {
+      return res.status(400).send("User ID is required");
+    }
+
+    // Fetch the recipient user
+    const recipient = await User.findOne({ userId }).lean();
+    if (!recipient) {
+      return res.status(404).send("User not found");
+    }
+
+    // Ensure the user is logged in
+    if (!req.session.user) {
+      return res.redirect("/login?error=Please log in to chat");
+    }
+
+    // Fetch messages between the logged-in user and the recipient
+    const messages = await Message.find({
+      $or: [
+        { from: req.session.user.id, to: userId },
+        { from: userId, to: req.session.user.id },
+      ],
+    })
+      .sort({ createdAt: 1 })
+      .lean();
+
+    let dashboardRoute = "";
+    switch (req.session.user.role) {
+      case "Admin":
+        dashboardRoute = "/adminD/profile";
+        break;
+      case "Employer":
+        dashboardRoute = "/employerD/profile";
+        break;
+      case "Freelancer":
+        dashboardRoute = "/freelancerD/profile";
+        break;
+    }
+    res.render("Aman/chat", {
+      user: req.session.user,
+      dashboardRoute,
+      recipient: {
+        userId: recipient.userId,
+        name: recipient.name || "Unknown User",
+        picture: recipient.picture || "/assets/user_female.png",
+      },
+      messages,
+      error: req.query.error || null,
+    });
+  } catch (error) {
+    console.error("Error loading chat:", error);
+    res.status(500).send("Server Error");
+  }
+};
+
+exports.sendMessage = async (req, res) => {
+  const userId = req.params.userId; // Define userId at function scope
+  try {
+    if (!req.session.user || !req.session.user.id) {
+      return res.redirect(
+        `/chat/${userId}?error=Please log in to send messages`
+      );
+    }
+
+    const { messageData } = req.body;
+
+    if (!userId || !messageData) {
+      return res.redirect(`/chat/${userId}?error=Missing required fields`);
+    }
+
+    const recipient = await User.findOne({ userId }).lean();
+    if (!recipient) {
+      return res.redirect(`/chat/${userId}?error=User not found`);
+    }
+
+    const message = new Message({
+      from: req.session.user.id,
+      to: userId,
+      messageData,
+    });
+
+    await message.save();
+
+    res.redirect(`/chat/${userId}`);
+  } catch (error) {
+    console.error("Error sending message:", error);
+    res.redirect(`/chat/${userId}?error=Failed to send message`);
+  }
 };
 
 exports.getJobListing = async (req, res) => {
@@ -75,11 +171,15 @@ exports.getJobDetails = async (req, res) => {
     console.log("Fetched job:", job);
 
     if (!job) {
-      return res.status(404).send("Job not found. Please select a job from the listings.");
+      return res
+        .status(404)
+        .send("Job not found. Please select a job from the listings.");
     }
 
     // Fetch the employer details using the employerId from the job
-    const employer = await Employer.findOne({ employerId: job.employerId }).lean();
+    const employer = await Employer.findOne({
+      employerId: job.employerId,
+    }).lean();
     console.log("Fetched employer:", employer);
 
     if (!employer) {
@@ -105,7 +205,7 @@ exports.getJobDetails = async (req, res) => {
       user: req.session.user || null,
       dashboardRoute,
       job,
-      companyName: employer.companyName || "Not specified", // Pass the company name
+      companyName: employer.companyName || "Not specified",
     });
   } catch (error) {
     console.error("Error loading job details:", error);
@@ -159,53 +259,54 @@ exports.getJobApplication = async (req, res) => {
 exports.applyForJob = async (req, res) => {
   try {
     if (!req.session.user || req.session.user.role !== "Freelancer") {
-      return res.redirect(`/jobs/apply/${req.params.jobId}?error=Unauthorized: Please log in as a Freelancer`);
+      return res.redirect(
+        `/jobs/apply/${req.params.jobId}?error=Unauthorized: Please log in as a Freelancer`
+      );
     }
 
     const { jobId, coverMessage, resumeLink } = req.body;
     const freelancerId = req.session.user.roleId;
 
-    console.log("Received jobId:", jobId); // Debug log
+    console.log("Received jobId:", jobId);
 
-    // Validate input
     if (!jobId || !coverMessage || !resumeLink) {
       return res.redirect(`/jobs/apply/${jobId}?error=Missing required fields`);
     }
 
-    // Verify job exists
     const job = await JobListing.findOne({ jobId });
-    console.log("Found job:", job); // Debug log
+    console.log("Found job:", job);
 
     if (!job) {
       return res.redirect(`/jobs/apply/${jobId}?error=Job not found`);
     }
 
-    // Check if freelancer has already applied to this job
     const existingApplication = await JobApplication.findOne({
       freelancerId,
       jobId,
     });
 
     if (existingApplication) {
-      return res.redirect(`/jobs/apply/${jobId}?error=You can't apply to the same job more than once, wait for it to get approved.`);
+      return res.redirect(
+        `/jobs/apply/${jobId}?error=You can't apply to the same job more than once, wait for it to get approved.`
+      );
     }
 
-    // Create new job application
     const jobApplication = new JobApplication({
       freelancerId,
       jobId,
       coverMessage,
       resumeLink,
-      status: "Pending"
+      status: "Pending",
     });
 
     await jobApplication.save();
 
-    // Redirect to success page with jobId
     res.redirect(`/jobs/application-submitted/${jobId}?success=true`);
   } catch (error) {
     console.error("Error submitting job application:", error);
-    res.redirect(`/jobs/apply/${req.body.jobId}?error=Failed to submit application`);
+    res.redirect(
+      `/jobs/apply/${req.body.jobId}?error=Failed to submit application`
+    );
   }
 };
 
@@ -222,7 +323,9 @@ exports.getApplicationSubmitted = async (req, res) => {
     console.log("Fetched job for success page:", job);
 
     if (!job) {
-      return res.status(404).send("Job not found. Please select a job from the listings.");
+      return res
+        .status(404)
+        .send("Job not found. Please select a job from the listings.");
     }
 
     let dashboardRoute = "";
@@ -254,23 +357,72 @@ exports.getApplicationSubmitted = async (req, res) => {
   }
 };
 
-exports.getProfile = (req, res) => {
-  let dashboardRoute = "";
-  if (req.session && req.session.user) {
-    switch (req.session.user.role) {
-      case "Admin":
-        dashboardRoute = "/adminD/profile";
-        break;
-      case "Employer":
-        dashboardRoute = "/employerD/profile";
-        break;
-      case "Freelancer":
-        dashboardRoute = "/freelancerD/profile";
-        break;
+exports.getProfile = async (req, res) => {
+  try {
+    const freelancerId = req.params.freelancerId;
+    // console.log("Fetching profile for freelancerId:", freelancerId);
+
+    if (!freelancerId) {
+      return res.status(400).send("Freelancer ID is required");
     }
+
+    // Fetch the user where role is Freelancer and roleId matches freelancerId
+    const user = await User.findOne({
+      role: "Freelancer",
+      roleId: freelancerId,
+    }).lean();
+    if (!user) {
+      return res.status(404).send("Freelancer user not found");
+    }
+
+    // Fetch the freelancer data using the freelancerId
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
+    if (!freelancer) {
+      return res.status(404).send("Freelancer profile not found");
+    }
+
+    // Fetch skill names based on skillIds in freelancer.skills
+    const skillIds = (freelancer.skills || []).map((skill) => skill.skillId);
+    const skills = await Skill.find({ skillId: { $in: skillIds } }).lean();
+    const skillNames = skills.map((skill) => skill.name);
+
+    // Set dashboard route based on logged-in user
+    let dashboardRoute = "";
+    if (req.session && req.session.user) {
+      switch (req.session.user.role) {
+        case "Admin":
+          dashboardRoute = "/adminD/profile";
+          break;
+        case "Employer":
+          dashboardRoute = "/employerD/profile";
+          break;
+        case "Freelancer":
+          dashboardRoute = "/freelancerD/profile";
+          break;
+      }
+    }
+
+    // Render the profile with the fetched data
+    res.render("Aman/common_profile", {
+      user: req.session && req.session.user ? req.session.user : null,
+      dashboardRoute,
+      profileData: {
+        name: user.name || "N/A",
+        role: user.role || "Freelancer",
+        location: user.location || "N/A",
+        email: user.email || "N/A",
+        phone: user.phone || "N/A",
+        picture: user.picture || "/assets/user_female.png",
+        aboutMe: user.aboutMe || "No description provided.",
+        skills: skillNames || [],
+        experience: freelancer.experience || [],
+        education: freelancer.education || [],
+        portfolio: freelancer.portfolio || [],
+        resume: freelancer.resume || "#",
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching freelancer profile:", error);
+    res.status(500).send("Server Error: Unable to load freelancer profile");
   }
-  res.render("Aman/common_profile", {
-    user: req.session && req.session.user ? req.session.user : null,
-    dashboardRoute,
-  });
 };

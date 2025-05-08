@@ -29,7 +29,8 @@ const userSchema = new Schema(
     },
     picture: {
       type: String,
-      default: "",
+      default:
+        "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png",
     },
     location: {
       type: String,
@@ -47,7 +48,6 @@ const userSchema = new Schema(
     },
     subscription: {
       type: String,
-      ref: "Subscription",
       enum: ["Basic", "Premium"],
       default: "Basic",
     },

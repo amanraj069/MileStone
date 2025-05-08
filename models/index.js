@@ -6,9 +6,8 @@ const JobListing = require("./job_listing");
 const JobApplication = require("./job_application");
 const Complaint = require("./complaint");
 const Subscription = require("./subscription");
-const Transaction = require("./transaction");
-const Rating = require("./rating");
 const Skill = require("./skill");
+const Message = require("./message");
 
 module.exports = {
   User,
@@ -19,7 +18,6 @@ module.exports = {
   JobApplication,
   Complaint,
   Subscription,
-  Transaction,
-  Rating,
   Skill,
+  Message,
 };

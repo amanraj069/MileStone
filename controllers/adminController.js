@@ -69,7 +69,11 @@ exports.getFreelancers = async (req, res) => {
               .join(", ")
           : "";
         return {
-          ...user,
+          userId: user.userId,
+          name: user.name,
+          picture: user.picture,
+          rating: user.rating,
+          experience: details?.experience,
           skills,
         };
       })
@@ -114,10 +118,16 @@ exports.getEmployers = async (req, res) => {
     const employerData = employers
       .map((user) => {
         const details = employerDetails.find((d) => d.userId === user.userId);
-        return {
-          ...user,
+        const employerEntry = {
+          userId: user.userId, // Explicitly include userId
+          name: user.name,
+          picture: user.picture,
+          rating: user.rating,
+          location: user.location,
           companyName: details ? details.companyName : "",
         };
+        console.log(`Employer data for ${user.name}:`, employerEntry); // Debugging
+        return employerEntry;
       })
       .filter((employer) => {
         if (!searchQuery) return true;
@@ -144,6 +154,7 @@ exports.getEmployers = async (req, res) => {
   }
 };
 
+// ... other controller methods remain unchanged ...
 exports.getComplaints = (req, res) => {
   res.render("Jayanth/complaints", {
     user: req.session.user,

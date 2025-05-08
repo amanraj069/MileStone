@@ -131,11 +131,11 @@ exports.postLogin = async (req, res) => {
 
         console.log(`Redirecting ${role} to dashboard`);
         try {
-          if (role === "admin") {
+          if (role === "Admin") {
             res.redirect("/adminD/profile");
-          } else if (role === "employer") {
+          } else if (role === "Employer") {
             res.redirect("/employerD/profile");
-          } else if (role === "freelancer") {
+          } else if (role === "Freelancer") {
             res.redirect("/freelancerD/profile");
           } else {
             console.error("Invalid role for redirect:", role);

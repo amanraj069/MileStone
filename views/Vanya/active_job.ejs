@@ -30,10 +30,10 @@
                   <img src="<%= job.logo %>" alt="Company Logo" />
                 </div>
                 <div class="job-actions">
-                  <button class="raise-complaint-btn" onclick="raiseComplaint('<%= job.id %>')">
-                    Raise Complaint
-                  </button>
-                  <button class="chat-btn" onclick="window.location.href='/freelancerD/active_job/chat'">
+                  <button
+                    class="chat-btn"
+                    onclick="window.location.href='/chat/<%= job.employerUserId || job.id %>'"
+                  >
                     <i class="fas fa-comment"></i>
                   </button>
                   <button class="complain-btn" onclick="leaveJob('<%= job.id %>')">

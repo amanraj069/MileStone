@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f5f5f5;
+            width: 55%;
+        }
+        .header {
+            background-color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header .user-info {
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .header span {
+            font-weight: bold;
+        }
+        .header .status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        .chat-area {
+            flex: 1;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            overflow-y: auto;
+            background-color: #fff;
+        }   
+        .message {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+        }
+        .message.sent {
+            justify-content: flex-end;
+        }
+        .message.received {
+            justify-content: flex-start;
+        }
+        .message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+        .message .bubble {
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 60%;
+            position: relative;
+        }
+        .message.sent .bubble {
+            background-color: #007bff;
+            color: white;
+        }
+        .message.received .bubble {
+            background-color: #e9ecef;
+            color: black;
+        }
+        .message .time {
+            font-size: 0.8em;
+            color: #666;
+            margin: 0 10px;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            outline: none;
+        }
+        .input-area button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-area button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">
+            <img src="<%= recipient.picture %>" alt="Profile Picture">
+            <span><%= recipient.name %></span>
+            <span class="status"></span>
+        </div>
+        <button class="back-button" onclick="window.history.back()">Go Back</button>
+    </div>
+    <% if (error) { %>
+        <div class="error"><%= error %></div>
+    <% } %>
+    <div class="chat-area">
+        <% messages.forEach(message => { %>
+            <div class="message <%= message.from === user.id ? 'sent' : 'received' %>">
+                <% if (message.from === user.id) { %>
+                    <div class="time"><%= new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
+                    <div class="bubble"><%= message.messageData %></div>
+                    <img src="<%= user.picture || '/assets/user_female.png' %>" alt="Profile Picture">
+                <% } else { %>
+                    <img src="<%= recipient.picture %>" alt="Profile Picture">
+                    <div class="bubble"><%= message.messageData %></div>
+                    <div class="time"><%= new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
+                <% } %>
+            </div>
+        <% }) %>
+    </div>
+    <div class="input-area">
+        <form action="/chat/<%= recipient.userId || '' %>" method="POST" style="display: flex; width: 100%;">
+            <input type="text" name="messageData" placeholder="Type your message..." required>
+            <button type="submit">➤</button>
+        </form>
+    </div>
+
+    <script>
+        // Auto-scroll to the bottom of the chat area when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatArea = document.querySelector('.chat-area');
+            chatArea.scrollTop = chatArea.scrollHeight;
+        });
+    </script>
+</body>
+</html>

@@ -18,133 +18,42 @@
       <!-- Main Content Area -->
       <div class="main-content">
         <!-- Payments Section -->
-        <div id="payments" class="content-section active">
+        <div id="current-job" class="content-section active">
           <div class="header">
-            <h2>Payments</h2>
-            <p></p>
+            <h2>Payments for Current Jobs</h2>
+            <p>View payment details and milestone progress for your active jobs</p>
           </div>
 
-          <div class="payment-content">
-            <!-- Current Subscription -->
-            <div class="payment-section">
-              <h4>Current Subscription</h4>
-              <div class="subscription-details">
-                <p><strong>Plan:</strong> Pro Plan</p>
-                <p><strong>Amount:</strong> Rs.29.99/month</p>
-                <p><strong>Next Billing Date:</strong> April 7, 2025</p>
-                <a
-                  href="/freelancerD/subscription"
-                  class="manage-subscription-btn"
-                >
-                  Manage Subscription
-                </a>
-              </div>
-            </div>
-
-            <!-- Payment Methods -->
-            <div class="payment-section">
-              <h4>Payment Methods</h4>
-              <div class="payment-methods">
-                <div class="payment-method">
-                  <i class="fab fa-cc-visa"></i>
-                  <span>Visa ending in 1234</span>
-                  <span class="expiry-date">Exp: 12/25</span>
-                  <button class="remove-method-btn">Remove</button>
-                </div>
-                <div class="payment-method">
-                  <i class="fab fa-cc-mastercard"></i>
-                  <span>Mastercard ending in 5678</span>
-                  <span class="expiry-date">Exp: 09/24</span>
-                  <button class="remove-method-btn">Remove</button>
-                </div>
-              </div>
-              <div class="add-payment-method">
-                <h5>Add New Payment Method</h5>
-                <form id="payment-form">
-                  <div class="form-group">
-                    <label for="card-number">Card Number</label>
-                    <input
-                      type="text"
-                      id="card-number"
-                      placeholder="1234 5678 9012 3456"
-                      required
-                    />
+          <div class="job-content">
+            <% if (jobs && jobs.length > 0) { %>
+              <% jobs.forEach(job => { %>
+                <!-- Combined Job Details and Milestone Progress -->
+                <div class="job-section">
+                  <h4>Job Overview</h4>
+                  <div class="job-details">
+                    <p><strong>Job Name:</strong> <%= job.title %></p>
+                    <p><strong>Company:</strong> <%= job.company %></p>
+                    <p><strong>Skills:</strong> <%= job.skills.join(', ') %></p>
+                    <p><strong>Deadline:</strong> <%= job.deadline %></p>
+                    <p><strong>Amount:</strong> <%= job.amount %></p>
                   </div>
-                  <div class="form-group">
-                    <label for="card-holder">Card Holder Name</label>
-                    <input
-                      type="text"
-                      id="card-holder"
-                      placeholder="Vanya Awasthi"
-                      required
-                    />
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group">
-                      <label for="expiry-date">Expiry Date</label>
-                      <input
-                        type="text"
-                        id="expiry-date"
-                        placeholder="MM/YY"
-                        required
-                      />
+                  <div class="milestone-details">
+                    <h5>Milestone Progress</h5>
+                    <div class="progress-bar-container">
+                      <div class="progress-bar">
+                        <div class="progress" style="width: <%= job.progress %>%"></div>
+                      </div>
+                      <p class="progress-percentage"><%= job.progress %>%</p>
                     </div>
-                    <div class="form-group">
-                      <label for="cvv">CVV</label>
-                      <input type="text" id="cvv" placeholder="123" required />
-                    </div>
+                    <a href="/freelancerD/milestone/<%= job.id %>" class="milestone-btn">
+                      View Milestones
+                    </a>
                   </div>
-                  <button type="submit" class="add-method-btn">
-                    Add Payment Method
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            <!-- Payment History -->
-            <div class="payment-section">
-              <h4>Payment History</h4>
-              <table class="payment-history-table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Receipt</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Mar 7, 2025</td>
-                    <td>Pro Plan Subscription</td>
-                    <td>Rs.29.99</td>
-                    <td class="status success">Success</td>
-                    <td>
-                      <a href="#" class="view-receipt">View Receipt</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Feb 7, 2025</td>
-                    <td>Pro Plan Subscription</td>
-                    <td>Rs.29.99</td>
-                    <td class="status success">Success</td>
-                    <td>
-                      <a href="#" class="view-receipt">View Receipt</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Jan 7, 2025</td>
-                    <td>Pro Plan Subscription</td>
-                    <td>Rs.29.99</td>
-                    <td class="status failed">Failed</td>
-                    <td>
-                      <a href="#" class="view-receipt">Retry Payment</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p>No active jobs found.</p>
+            <% } %>
           </div>
         </div>
       </div>

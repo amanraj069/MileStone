@@ -25,7 +25,7 @@ const employerController = {
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
-        .select("roleId name picture")
+        .select("roleId userId name picture")
         .lean();
 
       const freelancersWithDetails = jobs.map(job => {
@@ -38,6 +38,7 @@ const employerController = {
           startDate: job.assignedFreelancer.startDate,
           freelancer: {
             id: job.assignedFreelancer.freelancerId,
+            userId: user?.userId || "", // Include userId from User table
             name: user?.name || "Unknown Freelancer",
             picture: user?.picture || "/assets/user_female.png",
             rating: 4.7,
@@ -188,6 +189,7 @@ const employerController = {
           deadline: m.deadline,
           payment: m.payment,
           status: "not-paid",
+          requested: false,
         })),
       });
 
@@ -270,7 +272,8 @@ const employerController = {
           description: m.description,
           deadline: m.deadline,
           payment: m.payment,
-          status: m.status || "pending",
+          status: m.status || "not-paid",
+          requested: m.requested === 'true' || m.requested === true,
         })),
       };
 
@@ -571,7 +574,6 @@ const employerController = {
         throw new Error("Employer roleId not found in session");
       }
   
-      // Fetch jobs where an assigned freelancer exists and status is either working or finished
       const jobs = await JobListing.find({
         employerId,
         status: "closed",
@@ -579,18 +581,13 @@ const employerController = {
         "assignedFreelancer.status": { $in: ["working", "finished"] }
       }).lean();
   
-      // Extract freelancer IDs from jobs
       const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
-      
-      // Fetch user details for the freelancers
       const users = await User.find({ roleId: { $in: freelancerIds } })
         .select("roleId name picture")
         .lean();
   
-      // Map job data with freelancer information
       const transactions = jobs.map(job => {
         const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
-        
         return {
           jobId: job.jobId,
           projectTitle: job.title,
@@ -623,7 +620,6 @@ const employerController = {
         throw new Error("Employer roleId not found in session");
       }
   
-      // Check if specific jobId is provided in query params
       const { jobId } = req.query;
       const query = {
         employerId,
@@ -631,12 +627,10 @@ const employerController = {
         "assignedFreelancer.status": { $in: ["working", "finished"] }
       };
   
-      // If jobId is provided, add it to the query
       if (jobId) {
         query.jobId = jobId;
       }
   
-      // Fetch jobs where assignedFreelancer.status is either working or finished
       const jobs = await JobListing.find(query).lean();
   
       const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
@@ -647,7 +641,6 @@ const employerController = {
         .select("roleId name picture")
         .lean();
   
-      // Calculate progress and map milestones
       const jobDetails = jobs.map(job => {
         const freelancer = freelancers.find(f => f.freelancerId === job.assignedFreelancer.freelancerId);
         const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
@@ -655,10 +648,24 @@ const employerController = {
         const totalAmount = job.budget.amount;
         const paidAmount = job.milestones
           .filter(m => m.status === "paid")
-          .reduce((sum, m) => sum + parseFloat(m.payment), 0);
-        const paymentPercentage = Math.round((paidAmount / totalAmount) * 100);
+          .reduce((sum, m) => sum + parseFloat(m.payment || 0), 0);
+        const paymentPercentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
         const completedMilestones = job.milestones.filter(m => m.status === "paid").length;
-        const completionPercentage = Math.round((completedMilestones / job.milestones.length) * 100);
+        const completionPercentage = job.milestones.length > 0 ? Math.round((completedMilestones / job.milestones.length) * 100) : 0;
+  
+        const milestonesWithDebug = job.milestones.map((m, index) => {
+          const isRequested = m.requested === true || m.requested === 'true';
+          console.log(`Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}`);
+          return {
+            serialNo: index + 1,
+            milestoneId: m.milestoneId,
+            description: m.description,
+            amount: parseFloat(m.payment || 0),
+            deadline: m.deadline || "No deadline",
+            status: m.status,
+            requested: isRequested,
+          };
+        });
   
         return {
           jobId: job.jobId,
@@ -667,15 +674,9 @@ const employerController = {
             id: job.assignedFreelancer.freelancerId,
             name: user?.name || "Unknown Freelancer",
             picture: user?.picture || "/assets/user_female.png",
+            status: job.assignedFreelancer.status
           },
-          milestones: job.milestones.map((m, index) => ({
-            serialNo: index + 1,
-            milestoneId: m.milestoneId,
-            description: m.description,
-            amount: parseFloat(m.payment),
-            deadline: m.deadline,
-            status: m.status,
-          })),
+          milestones: milestonesWithDebug,
           progress: {
             completionPercentage,
             payment: {
@@ -726,82 +727,6 @@ const employerController = {
     }
   },
 
-  getMilestone: async (req, res) => {
-    try {
-      const employerId = req.session.user.roleId;
-      if (!employerId) {
-        throw new Error("Employer roleId not found in session");
-      }
-
-      // Fetch jobs where assignedFreelancer.status is either working or finished
-      const jobs = await JobListing.find({
-        employerId,
-        "assignedFreelancer.freelancerId": { $ne: "" },
-        "assignedFreelancer.status": { $in: ["working", "finished"] },
-      }).lean();
-
-      const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
-      const freelancers = await Freelancer.find({ freelancerId: { $in: freelancerIds } })
-        .select("freelancerId skills")
-        .lean();
-      const users = await User.find({ roleId: { $in: freelancerIds } })
-        .select("roleId name picture")
-        .lean();
-
-      // Calculate progress and map milestones
-      const jobDetails = jobs.map(job => {
-        const freelancer = freelancers.find(f => f.freelancerId === job.assignedFreelancer.freelancerId);
-        const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
-
-        const totalAmount = job.budget.amount;
-        const paidAmount = job.milestones
-          .filter(m => m.status === "paid")
-          .reduce((sum, m) => sum + parseFloat(m.payment), 0);
-        const paymentPercentage = Math.round((paidAmount / totalAmount) * 100);
-        const completedMilestones = job.milestones.filter(m => m.status === "paid").length;
-        const completionPercentage = Math.round((completedMilestones / job.milestones.length) * 100);
-
-        return {
-          jobId: job.jobId,
-          title: job.title,
-          freelancer: {
-            id: job.assignedFreelancer.freelancerId,
-            name: user?.name || "Unknown Freelancer",
-            picture: user?.picture || "/assets/user_female.png",
-          },
-          milestones: job.milestones.map((m, index) => ({
-            serialNo: index + 1,
-            milestoneId: m.milestoneId,
-            description: m.description,
-            amount: parseFloat(m.payment),
-            deadline: m.deadline,
-            status: m.status,
-          })),
-          progress: {
-            completionPercentage,
-            payment: {
-              paid: paidAmount,
-              total: totalAmount,
-              percentage: paymentPercentage,
-            },
-          },
-        };
-      });
-
-      res.render("Abhishek/others/milestone", {
-        user: {
-          name: req.session.user.name,
-          email: req.session.user.email,
-        },
-        activePage: "transaction_history",
-        jobs: jobDetails,
-      });
-    } catch (error) {
-      console.error("Error fetching milestones:", error.message);
-      res.status(500).send("Error fetching milestones: " + error.message);
-    }
-  },
-
   payMilestone: async (req, res) => {
     try {
       const { jobId, milestoneId } = req.params;
@@ -821,6 +746,13 @@ const employerController = {
       }
 
       milestone.status = "paid";
+      milestone.requested = false;
+
+      const allMilestonesPaid = job.milestones.every(m => m.status === "paid");
+      if (allMilestonesPaid) {
+        job.assignedFreelancer.status = "finished";
+      }
+
       await job.save();
 
       res.json({ success: true });

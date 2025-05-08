@@ -61,9 +61,15 @@ header {
 
 .filters {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  justify-content: space-between; /* Ensure filter buttons are on the left and Post New on the right */
   align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px; /* Space between filter buttons */
+  flex-wrap: wrap; /* Allow wrapping if needed */
 }
 
 .filter-btn {
@@ -95,23 +101,22 @@ header {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s;
-  margin-left: auto;
 }
 
 .post-new-btn:hover {
   background-color: #218838;
 }
 
-.content {
+/* .content {
   display: flex;
   gap: 20px;
-}
+} */
 
 .left-panel {
-  width: 280px;
+  width: 290px;
   background-color: white;
   border-radius: 8px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -387,10 +392,15 @@ header {
   }
 
   .filters {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-buttons {
+    margin-bottom: 10px;
   }
 
   .post-new-btn {
-    margin-left: 0;
+    align-self: flex-end; /* Keep Post New button on the right on smaller screens */
   }
 }

@@ -110,7 +110,7 @@
                   >
                 </div>
                 <a
-                  href="/employerD/current_jobs/chat/<%= freelancerData.jobId %>"
+                  href="/chat/<%= freelancerData.freelancer.userId || freelancerData.freelancer.id %>"
                   ><button class="chat-btn">Chat</button></a
                 >
                 <a href="/jobs/<%= freelancerData.jobId %>"
