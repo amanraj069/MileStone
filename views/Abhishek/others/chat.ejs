@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f5f5f5;
+            width: 55%;
+        }
+        .header {
+            background-color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .header span {
+            font-weight: bold;
+        }
+        .header .status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .chat-area {
+            flex: 1;
+            padding: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            overflow-y: auto;
+            background-color: #fff;
+        }   
+        .message {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+        }
+        .message.sent {
+            justify-content: flex-end;
+        }
+        .message.received {
+            justify-content: flex-start;
+        }
+        .message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+        .message .bubble {
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 60%;
+            position: relative;
+        }
+        .message.sent .bubble {
+            background-color: #007bff;
+            color: white;
+        }
+        .message.received .bubble {
+            background-color: #e9ecef;
+            color: black;
+        }
+        .message .time {
+            font-size: 0.8em;
+            color: #666;
+            margin: 0 10px;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            outline: none;
+        }
+        .input-area button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-area button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/assets/user_female.png" alt="Profile Picture">
+        <span>Vanya Awasthi</span>
+        <span class="status"></span>
+    </div>
+    <div class="chat-area">
+        <div class="message sent">
+            <div class="bubble">Hi Vanya, are you available for a new project?</div>
+            <div class="time">10:30 am</div>
+        </div>
+        <div class="message received">
+            <img src="/assets/user_female.png" alt="Profile Picture">
+            <div class="bubble">Yes sir, I'm currently available. What kind of project do you have in mind?</div>
+            <div class="time">10:32 am</div>
+        </div>
+        <div class="message sent">
+            <div class="bubble">It's a web development project that should take about 2 weeks.</div>
+            <div class="time">10:35 am</div>
+        </div>
+    </div>
+    <div class="input-area">
+        <input type="text" placeholder="Type your message...">
+        <button>➤</button>
+    </div>
+</body>
+</html>
