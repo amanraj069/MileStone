@@ -577,7 +577,7 @@ exports.getMilestone = async (req, res) => {
       },
     };
 
-    res.render("Vanya/other/milestone", {
+    res.render("Vanya/others/milestone", {
       user: {
         name: req.session.user.name,
         email: req.session.user.email,
