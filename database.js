@@ -15,7 +15,7 @@ if (!connectionString) {
 }
 
 // Connect to MongoDB
-mongoose
+const connectDB = mongoose
   .connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -23,11 +23,12 @@ mongoose
   })
   .then(() => {
     console.log("Connected to MongoDB successfully");
+    return mongoose;
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err.message);
     process.exit(1);
   });
 
-// Export the mongoose instance
-module.exports = mongoose;
+// Export the connection promise
+module.exports = connectDB;
