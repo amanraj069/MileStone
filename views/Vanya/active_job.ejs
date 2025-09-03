@@ -33,13 +33,17 @@
                   <button
                     class="chat-btn"
                     onclick="window.location.href='/chat/<%= job.employerUserId || job.id %>'"
+                    title="Chat with Employer"
                   >
                     <i class="fas fa-comment"></i>
                   </button>
-                  <button class="complain-btn" onclick="leaveJob('<%= job.id %>')">
+                  <button class="complain-btn" onclick="raiseComplaint('<%= job.id %>')" title="Raise Complaint">
+                    <i class="fas fa-exclamation-triangle"></i>
+                  </button>
+                  <button class="leave-job-btn" onclick="leaveJob('<%= job.id %>')" title="Leave Job">
                     <i class="fas fa-sign-out-alt"></i>
                   </button>
-                  <a href="/jobs/<%= job.id%>" class="see-more-btn">
+                  <a href="/jobs/<%= job.id%>" class="see-more-btn" title="View Details">
                     <i class="fas fa-eye"></i>
                   </a>
                 </div>
@@ -101,23 +105,33 @@
     }
 
     async function raiseComplaint(jobId) {
-      if (confirm("Are you sure you want to raise a complaint for this job?")) {
+      const complaintType = prompt("Please enter the type of complaint (e.g., 'Payment Issue', 'Scope Change', 'Communication Problem'):");
+      if (!complaintType) return;
+      
+      const issue = prompt("Please describe the issue in detail:");
+      if (!issue) return;
+      
+      if (confirm("Are you sure you want to submit this complaint?")) {
         try {
           const response = await fetch(`/freelancerD/active_job/complain/${jobId}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              complaintType: complaintType,
+              issue: issue
+            })
           });
 
           const data = await response.json();
           if (response.ok) {
-            alert(data.message || "Complaint raised successfully.");
+            alert(data.message || "Complaint submitted successfully! Our team will review it shortly.");
           } else {
-            alert(data.error || "Failed to raise the complaint. Please try again.");
+            alert(data.error || "Failed to submit the complaint. Please try again.");
           }
         } catch (error) {
-          console.error("Error raising complaint:", error);
+          console.error("Error submitting complaint:", error);
           alert("An error occurred. Please try again.");
         }
       }

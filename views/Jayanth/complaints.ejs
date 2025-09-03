@@ -16,7 +16,7 @@
           <h1>Complaints</h1>
           <div class="search-bar" style="margin-bottom: 20px;">
             <form action="/adminD/complaints" method="GET" style="display: flex; align-items: center;">
-              <input type="text" name="q" placeholder="Search..." style="padding: 8px; flex: 1; border: 1px solid #ddd; border-radius: 4px 0 0 4px; background-color: #f0f0f0;">
+              <input type="text" name="q" value="<%= searchQuery || '' %>" placeholder="Search by user, issue, or type..." style="padding: 8px; flex: 1; border: 1px solid #ddd; border-radius: 4px 0 0 4px; background-color: #f0f0f0;">
               <button type="submit" style="padding: 8px; background-color: #3949ab; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="11" cy="11" r="8"></circle>
@@ -25,75 +25,124 @@
               </button>
             </form>
           </div>
+          
+          <!-- Filter Tabs -->
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="current" onclick="filterComplaints('current')">
+              Current Complaints
+            </button>
+            <button class="filter-tab" data-filter="dismissed" onclick="filterComplaints('dismissed')">
+              Dismissed Complaints
+            </button>
+            <button class="filter-tab" data-filter="past" onclick="filterComplaints('past')">
+              Past Complaints
+            </button>
+          </div>
           <div class="complaints-container">
-            <div class="complaint-card pending">
-              <div class="complaint-header">
-                <span class="status-icon pending">
-                  <!-- Clock SVG -->
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    />
-                    <path
-                      d="M12 6V12L16 14"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                    />
-                  </svg>
-                </span>
-                <h3>Complaint #1253</h3>
-                <span class="status pending">
-                  pending
-                </span>
-              </div>
-              <div class="complaint-body">
-                <div class="parties">
-                  <div class="party">
-                    <p>
-                      <strong>Freelancer:</strong>
-                      Sarah Johnson
-                    </p>
+            <% if (complaints && complaints.length > 0) { %>
+              <% complaints.forEach(complaint => { %>
+                <div class="complaint-card <%= complaint.status %>" data-status="<%= complaint.status %>">
+                  <div class="complaint-header">
+                    <span class="status-icon <%= complaint.status %>">
+                      <% if (complaint.status === 'pending') { %>
+                        <!-- Clock SVG -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                          <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                      <% } else if (complaint.status === 'resolved') { %>
+                        <!-- Check SVG -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      <% } else { %>
+                        <!-- Progress SVG -->
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                          <path d="M8 12L12 16L16 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      <% } %>
+                    </span>
+                    <h3>Complaint #<%= complaint.complaintId.substring(0, 8) %></h3>
+                    <span class="status <%= complaint.status %>">
+                      <%= complaint.status %>
+                    </span>
                   </div>
-                  <div class="party">
-                    <p>
-                      <strong>Employer:</strong>
-                      TechSolutions Inc.
+                  <div class="complaint-body">
+                    <div class="parties">
+                      <div class="party">
+                        <p>
+                          <strong>Submitted by:</strong>
+                          <%= complaint.submittedByName %> (<%= complaint.submittedByRole %>)
+                        </p>
+                      </div>
+                      <div class="party">
+                        <p>
+                          <strong>Against:</strong>
+                          <%= complaint.againstUserName %> (<%= complaint.againstUserRole %>)
+                        </p>
+                      </div>
+                    </div>
+                    <p><strong>Type:</strong> <%= complaint.complaintType %></p>
+                    <% if (complaint.jobId) { %>
+                      <p><strong>Job ID:</strong> <%= complaint.jobId %></p>
+                    <% } %>
+                    <p class="complaint-desc">
+                      <strong>Issue:</strong>
+                      <%= complaint.issue %>
                     </p>
+                    <p><strong>Date:</strong> <%= complaint.formattedDate %></p>
+                    <% if (complaint.status === 'resolved' && complaint.resolution) { %>
+                      <p><strong>Resolution:</strong> <%= complaint.resolution %></p>
+                    <% } %>
+                  </div>
+                  <div class="complaint-actions">
+                    <% if (complaint.status === 'resolved') { %>
+                      <button class="btn-resolved" disabled>Resolved</button>
+                    <% } else if (complaint.status === 'dismissed') { %>
+                      <button class="btn-dismissed" disabled>Dismissed</button>
+                    <% } else { %>
+                      <button class="btn-view-actions" onclick="toggleActions(this)">View Actions</button>
+                    <% } %>
+                    
+                    <div class="additional-actions" style="display: none;">
+                      <div class="action-buttons">
+                        <!-- Contact button for the person who raised the complaint -->
+                        <button class="btn-contact" onclick="contactUser('<%= complaint.submittedBy %>', '<%= complaint.submittedByName %>')">
+                          Contact <%= complaint.submittedByRole %>
+                        </button>
+                        
+                        <!-- Dismiss button (only show if not resolved or dismissed) -->
+                        <% if (complaint.status !== 'resolved' && complaint.status !== 'dismissed') { %>
+                          <button class="btn-dismiss" onclick="dismissComplaint('<%= complaint.complaintId %>')">
+                            Dismiss Complaint
+                          </button>
+                        <% } %>
+                        
+                        <!-- Change Rating button (placeholder) -->
+                        <button class="btn-rating" onclick="changeRating('<%= complaint.againstUser %>', '<%= complaint.againstUserName %>')">
+                          Change Rating
+                        </button>
+                        
+                        <!-- Mark as Resolved button (now shown after actions are expanded) -->
+                        <% if (complaint.status !== 'resolved' && complaint.status !== 'dismissed') { %>
+                          <button class="btn-resolve" onclick="resolveComplaint('<%= complaint.complaintId %>')">
+                            Mark as Resolved
+                          </button>
+                        <% } %>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <p class="complaint-desc">
-                  <strong>Issue:</strong>
-                  Delayed payments for completed work
-                </p>
+              <% }); %>
+            <% } else { %>
+              <div class="no-complaints">
+                <p>No complaints found.</p>
+                <% if (searchQuery) { %>
+                  <p>Try adjusting your search criteria.</p>
+                <% } %>
               </div>
-              <div class="complaint-actions">
-                <button class="btn-resolve">View Details</button>
-                <div class="additional-actions">
-                  <div class="action-buttons">
-                    <button class="btn-contact freelancer">
-                      Contact Freelancer
-                    </button>
-                    <button class="btn-contact employer">
-                      Contact Employer
-                    </button>
-                    <button class="btn-rating freelancer">
-                      Dispute Resolved
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <% } %>
           </div>
         </section>
       </div>

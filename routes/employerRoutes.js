@@ -23,5 +23,6 @@ router.post("/milestone/:jobId/:milestoneId/pay", employerController.payMileston
 router.get("/subscription", employerController.getSubscription);
 router.get("/payment", employerController.getPaymentAnimation);
 router.post("/upgrade_subscription", employerController.upgradeSubscription);
+router.post("/current_jobs/complain/:jobId", employerController.submitComplaint);
 
 module.exports = router;

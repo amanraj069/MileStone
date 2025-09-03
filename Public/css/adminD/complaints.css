@@ -6,6 +6,42 @@
     margin-top: 20px;
 }
 
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    padding: 10px 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 25px;
+    background-color: white;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.filter-tab:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    transform: translateY(-1px);
+}
+
+.filter-tab.active {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
 .complaint-card {
     background-color: white;
     border-radius: 8px;
@@ -31,6 +67,10 @@
 
 .complaint-card.resolved {
     border-left-color: #4caf50; /* Green for Resolved */
+}
+
+.complaint-card.dismissed {
+    border-left-color: #e63946; /* Red for Dismissed */
 }
 
 /* Header */
@@ -138,6 +178,34 @@
     align-items: flex-end;
 }
 
+.btn-view-actions {
+    background: linear-gradient(90deg, #f97316, #fb923c);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    height: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    min-width: 160px;
+}
+
+.btn-view-actions:hover {
+    background: linear-gradient(90deg, #ea580c, #f97316);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn-view-actions:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
 .btn-resolve {
     background: linear-gradient(90deg, #2e7d32, #81c784);
     color: white;
@@ -178,20 +246,57 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+/* Resolved button styling */
+.btn-resolved {
+    background: #808080 !important; /* Grey color for resolved */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    height: 40px;
+    cursor: default;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    opacity: 0.8;
+}
+
+/* Dismissed button styling */
+.btn-dismissed {
+    background: #e63946 !important; /* Red color for dismissed */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    height: 40px;
+    cursor: default;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    opacity: 0.8;
+}
+
 .additional-actions {
     display: none;
     margin-top: 8px;
     width: 100%;
     background: #f9fafb;
-    padding: 8px;
-    border-radius: 6px;
+    padding: 12px;
+    border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
 }
 
 .action-buttons {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
     width: 100%;
 }
 
@@ -206,35 +311,55 @@
     gap: 8px;
 }
 
-.btn-contact, .btn-rating {
+.btn-contact, .btn-rating, .btn-dismiss, .btn-resolve {
     flex: 1;
-    padding: 10px 30px; /* Reduced horizontal padding from 8px to 6px */
-    border-radius: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
     border: none;
-    min-height:60px;
+    min-height: 36px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     text-align: center;
-    min-width: 110px; /* Increased width for these buttons */
+    min-width: 100px;
 }
 
-.btn-contact.freelancer {
-    background: linear-gradient(90deg, #1976d2, #42a5f5);
-    color: white;
-}
-
-.btn-contact.employer {
-    background: linear-gradient(90deg, #512da8, #9575cd);
+/* Contact button styling */
+.btn-contact {
+    background: #1d4ed8; /* Blue for contact */
     color: white;
 }
 
 .btn-contact:hover {
-    background: linear-gradient(90deg, #1565c0, #1976d2);
+    background: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Dismiss button styling */
+.btn-dismiss {
+    background: #e63946; /* Red for dismiss */
+    color: white;
+}
+
+.btn-dismiss:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Rating button styling */
+.btn-rating {
+    background: #ec4899; /* Pink for rating */
+    color: white;
+}
+
+.btn-rating:hover {
+    background: #be185d; /* Dark pink hover */
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
@@ -249,31 +374,41 @@
     color: white;
 }
 
-.btn-rating:hover {
-    background: linear-gradient(90deg, #e64a19, #ef6c00);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-}
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .parties {
         flex-direction: column;
         gap: 10px;
     }
-    .btn-resolve {
-        margin:auto;
+    
+    .filter-tabs {
+        padding: 0 10px;
+        gap: 8px;
+        justify-content: center;
+    }
+    
+    .filter-tab {
+        padding: 8px 16px;
+        font-size: 13px;
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .btn-view-actions {
+        margin: auto;
         width: 95%; 
-        height:40px;
+        height: 40px;
         border-radius: 15px;
     }
+    
     .action-buttons {
-        flex-direction: column;
-        gap: 6px;
+        grid-template-columns: 1fr;
+        gap: 8px;
     }
 
-    .btn-contact, .btn-rating {
+    .btn-contact, .btn-rating, .btn-dismiss, .btn-resolve {
         width: 100%;
-        min-width: unset; /* Remove min-width on smaller screens */
+        min-width: unset;
+        padding: 10px;
     }
 }

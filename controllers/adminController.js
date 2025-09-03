@@ -5,6 +5,7 @@ const Employer = require("../models/employer");
 const Freelancer = require("../models/freelancer");
 const JobListing = require("../models/job_listing");
 const Skill = require("../models/skill");
+const Complaint = require("../models/complaint");
 
 exports.getAdminDashboard = (req, res) => {
   res.redirect("/adminD/profile");
@@ -155,11 +156,126 @@ exports.getEmployers = async (req, res) => {
 };
 
 // ... other controller methods remain unchanged ...
-exports.getComplaints = (req, res) => {
-  res.render("Jayanth/complaints", {
-    user: req.session.user,
-    activeSection: "complaints",
-  });
+exports.getComplaints = async (req, res) => {
+  try {
+    const searchQuery = req.query.q ? req.query.q.trim() : "";
+    
+    // Fetch all complaints from the database
+    const complaints = await Complaint.find().lean();
+    
+    // Get user details for complainants and complained against users
+    const userIds = [...new Set([
+      ...complaints.map(c => c.submittedBy),
+      ...complaints.map(c => c.againstUser)
+    ])];
+    
+    const users = await User.find({ userId: { $in: userIds } }).lean();
+    const userMap = users.reduce((map, user) => {
+      map[user.userId] = user;
+      return map;
+    }, {});
+    
+    // Format complaints data
+    const formattedComplaints = complaints
+      .map(complaint => {
+        const submittedByUser = userMap[complaint.submittedBy];
+        const againstUserData = userMap[complaint.againstUser];
+        
+        return {
+          ...complaint,
+          submittedByName: submittedByUser?.name || "Unknown User",
+          submittedByRole: submittedByUser?.role || "Unknown",
+          againstUserName: againstUserData?.name || "Unknown User",
+          againstUserRole: againstUserData?.role || "Unknown",
+          formattedDate: new Date(complaint.submittedDate).toLocaleDateString("en-US", {
+            timeZone: "UTC",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          }),
+        };
+      })
+      .filter(complaint => {
+        if (!searchQuery) return true;
+        const nameMatch = 
+          complaint.submittedByName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          complaint.againstUserName.toLowerCase().includes(searchQuery.toLowerCase());
+        const issueMatch = complaint.issue.toLowerCase().includes(searchQuery.toLowerCase());
+        const typeMatch = complaint.complaintType.toLowerCase().includes(searchQuery.toLowerCase());
+        return nameMatch || issueMatch || typeMatch;
+      })
+      .sort((a, b) => new Date(b.submittedDate) - new Date(a.submittedDate)); // Sort by newest first
+    
+    res.render("Jayanth/complaints", {
+      user: req.session.user,
+      activeSection: "complaints",
+      complaints: formattedComplaints,
+      searchQuery
+    });
+  } catch (error) {
+    console.error("Error fetching complaints:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.resolveComplaint = async (req, res) => {
+  try {
+    const { complaintId } = req.params;
+    const { resolution } = req.body;
+    
+    const complaint = await Complaint.findOneAndUpdate(
+      { complaintId: complaintId },
+      {
+        status: "resolved",
+        resolution: resolution || "Complaint resolved by admin",
+        resolvedDate: new Date()
+      },
+      { new: true }
+    );
+    
+    if (!complaint) {
+      return res.status(404).json({ error: "Complaint not found" });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: "Complaint resolved successfully",
+      complaint: complaint
+    });
+  } catch (error) {
+    console.error("Error resolving complaint:", error);
+    res.status(500).json({ error: "Failed to resolve complaint" });
+  }
+};
+
+exports.dismissComplaint = async (req, res) => {
+  try {
+    const { complaintId } = req.params;
+    const { reason } = req.body;
+    
+    const complaint = await Complaint.findOneAndUpdate(
+      { complaintId: complaintId },
+      {
+        status: "dismissed",
+        resolution: reason || "Complaint dismissed by admin",
+        resolvedDate: new Date()
+      },
+      { new: true }
+    );
+    
+    if (!complaint) {
+      return res.status(404).json({ error: "Complaint not found" });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: "Complaint dismissed successfully",
+      complaint: complaint
+    });
+  } catch (error) {
+    console.error("Error dismissing complaint:", error);
+    res.status(500).json({ error: "Failed to dismiss complaint" });
+  }
 };
 
 exports.getQuizzes = async (req, res) => {
