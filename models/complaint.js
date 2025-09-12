@@ -7,7 +7,9 @@ const complaintSchema = new Schema({
     type: String, 
     required: true, 
     unique: true,
-    default: uuidv4 
+    default: function() {
+      return uuidv4();
+    }
   },
   submittedBy: { 
     type: String, 
@@ -34,7 +36,7 @@ const complaintSchema = new Schema({
   },
   status: { 
     type: String, 
-    enum: ['pending', 'in-progress', 'resolved'],
+    enum: ['pending', 'in-progress', 'resolved', 'dismissed'],
     default: 'pending' 
   },
   resolution: { 

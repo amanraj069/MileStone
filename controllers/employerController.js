@@ -3,6 +3,7 @@ const JobApplication = require("../models/job_application");
 const User = require("../models/user");
 const Employer = require("../models/employer");
 const Freelancer = require("../models/freelancer");
+const Complaint = require("../models/complaint");
 
 const employerController = {
   getCurrentJobs: async (req, res) => {
@@ -789,6 +790,64 @@ const employerController = {
     res.render("Abhishek/others/payment", {
       activePage: "subscription",
     });
+  },
+  
+  submitComplaint: async (req, res) => {
+    try {
+      console.log("Employer complaint submission started");
+      console.log("Job ID:", req.params.jobId);
+      console.log("Request body:", req.body);
+      console.log("User session:", req.session.user);
+      
+      const { jobId } = req.params;
+      const { complaintType, againstUser, issue } = req.body;
+      
+      if (!req.session.user) {
+        console.log("Unauthorized access attempt");
+        return res.status(401).json({ error: "Unauthorized: Please log in" });
+      }
+      
+      // Get job details to find freelancer
+      const job = await JobListing.findOne({ jobId: jobId }).lean();
+      console.log("Job found:", job);
+      
+      if (!job) {
+        console.log("Job not found for ID:", jobId);
+        return res.status(404).json({ error: "Job not found" });
+      }
+      
+      // Create complaint data
+      const submittedById = req.session.user.id; // Fixed: use 'id' instead of 'userId'
+      console.log("DEBUG: req.session.user.id =", submittedById);
+      console.log("DEBUG: typeof submittedById =", typeof submittedById);
+      
+      const complaintData = {
+        submittedBy: submittedById,
+        againstUser: againstUser || (job.assignedFreelancer ? job.assignedFreelancer.freelancerId : null),
+        complaintType: complaintType || "Job Related",
+        jobId: jobId,
+        issue: issue || "Issue with freelancer regarding job completion",
+        status: "pending"
+      };
+      
+      console.log("Creating complaint with data:", complaintData);
+      
+      // Create complaint
+      const complaint = new Complaint(complaintData);
+      const savedComplaint = await complaint.save();
+      
+      console.log("Complaint saved successfully:", savedComplaint);
+      
+      res.json({ 
+        success: true, 
+        message: "Complaint submitted successfully",
+        complaintId: savedComplaint.complaintId
+      });
+    } catch (error) {
+      console.error("Error submitting complaint:", error);
+      console.error("Error stack:", error.stack);
+      res.status(500).json({ error: "Failed to submit complaint", details: error.message });
+    }
   },
 };
 

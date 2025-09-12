@@ -151,6 +151,7 @@ body::-webkit-scrollbar {
 
 .chat-btn,
 .complain-btn,
+.leave-job-btn,
 .see-more-btn {
   width: 40px;
   height: 40px;
@@ -181,6 +182,16 @@ body::-webkit-scrollbar {
 
 .complain-btn:hover {
   background-color: #fecaca;
+}
+
+.leave-job-btn {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.leave-job-btn:hover {
+  background-color: #fed7aa;
+  color: #ea580c;
 }
 
 .raise-complaint-btn {
@@ -312,6 +323,7 @@ body::-webkit-scrollbar {
 
   .chat-btn,
   .complain-btn,
+  .leave-job-btn,
   .see-more-btn {
     width: 36px;
     height: 36px;
@@ -384,6 +396,7 @@ body::-webkit-scrollbar {
 
   .chat-btn,
   .complain-btn,
+  .leave-job-btn,
   .see-more-btn {
     width: 32px;
     height: 32px;

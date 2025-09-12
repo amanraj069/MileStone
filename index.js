@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+const connectDB = require("./database"); // Updated to import connectDB
 
 const adminRouter = require("./routes/adminRoutes");
 const employerRouter = require("./routes/employerRoutes");
@@ -84,22 +85,26 @@ app.get("/", authController.getHome);
 
 app.get("/login", redirectIfLoggedIn, (req, res) => {
   res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  res.render("Aman/login"); // views/Aman/login.ejs
+  res.render("Aman/login");
 });
 
 app.get("/signup", redirectIfLoggedIn, (req, res) => {
   res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  res.render("Aman/signup"); // views/Aman/signup.ejs
+  res.render("Aman/signup");
 });
 
-// Route modules
 app.use("/", authRouter);
 app.use("/", homeRouter);
 app.use("/adminD", restrictToRole(["Admin"]), adminRouter);
 app.use("/employerD", restrictToRole(["Employer"]), employerRouter);
 app.use("/freelancerD", restrictToRole(["Freelancer"]), freelancerRouter);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+// Start server after MongoDB connection
+connectDB.then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+  });
+}).catch((err) => {
+  console.error("Failed to start server due to MongoDB connection error:", err);
+  process.exit(1);
 });

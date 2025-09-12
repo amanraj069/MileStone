@@ -24,5 +24,6 @@ router.route("/skills_badges/quiz/:skillId").get(freelancerController.getSkillQu
 router.route("/skills_badges/quiz/:skillId").post(freelancerController.submitSkillQuiz);
 router.route("/milestone/:jobId").get(freelancerController.getMilestone);
 router.post("/milestone/:jobId/:milestoneId/request", freelancerController.requestMilestone);
+router.post("/active_job/complain/:jobId", freelancerController.submitComplaint);
 
 module.exports = router;

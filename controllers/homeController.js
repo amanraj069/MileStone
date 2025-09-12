@@ -6,6 +6,7 @@ const User = require("../models/user");
 const Freelancer = require("../models/freelancer");
 const Skill = require("../models/skill");
 const Message = require("../models/message");
+const Complaint = require("../models/complaint");
 
 exports.getHome = (req, res) => {
   let dashboardRoute = "";
@@ -424,5 +425,30 @@ exports.getProfile = async (req, res) => {
   } catch (error) {
     console.error("Error fetching freelancer profile:", error);
     res.status(500).send("Server Error: Unable to load freelancer profile");
+  }
+};
+
+exports.testComplaint = async (req, res) => {
+  try {
+    console.log("Testing complaint creation...");
+    
+    const testComplaint = new Complaint({
+      submittedBy: "test-user-123",
+      againstUser: "test-user-456", 
+      complaintType: "Test Complaint",
+      issue: "This is a test complaint",
+      status: "pending"
+    });
+    
+    console.log("Complaint object created:", testComplaint);
+    
+    const saved = await testComplaint.save();
+    console.log("Complaint saved successfully:", saved);
+    
+    res.json({ success: true, complaint: saved });
+  } catch (error) {
+    console.error("Error creating test complaint:", error);
+    console.error("Error stack:", error.stack);
+    res.json({ error: error.message, stack: error.stack });
   }
 };
