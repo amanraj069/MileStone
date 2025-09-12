@@ -4,6 +4,7 @@ const User = require("../models/user");
 const Employer = require("../models/employer");
 const Freelancer = require("../models/freelancer");
 const Complaint = require("../models/complaint");
+const { uploadToCloudinary } = require("../middleware/imageUpload");
 
 const employerController = {
   getCurrentJobs: async (req, res) => {
@@ -421,7 +422,8 @@ const employerController = {
         throw new Error("User ID or Employer roleId not found in session");
       }
 
-      const user = await User.findOne({ userId }).lean();
+      // Fetch fresh data from database
+      const user = await User.findOne({ userId });
       if (!user) {
         throw new Error("User not found");
       }
@@ -431,14 +433,18 @@ const employerController = {
         throw new Error("Employer not found");
       }
 
+      // Log for debugging
+      console.log("User picture from DB:", user.picture);
+      console.log("User picture from session:", req.session.user.picture);
+
       res.render("Abhishek/profile", {
         user: {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          picture: user.picture,
+          picture: user.picture, // Use fresh data from database
           location: user.location,
-          socialMedia: user.socialMedia,
+          socialMedia: user.socialMedia || {},
           aboutMe: user.aboutMe,
           subscription: user.subscription,
           role: user.role,
@@ -510,7 +516,6 @@ const employerController = {
       const {
         companyName,
         location,
-        companyImageUrl,
         websiteLink,
         email,
         phone,
@@ -521,10 +526,22 @@ const employerController = {
         aboutContent,
       } = req.body;
 
+      // Handle image upload - use new image URL if uploaded, otherwise keep existing
+      let pictureUrl = req.session.user.picture; // Default to existing picture
+      if (req.file) {
+        try {
+          const uploadResult = await uploadToCloudinary(req.file.buffer);
+          pictureUrl = uploadResult.secure_url; // Cloudinary secure URL
+        } catch (uploadError) {
+          console.error("Error uploading image to Cloudinary:", uploadError);
+          throw new Error("Failed to upload image. Please try again.");
+        }
+      }
+
       const userUpdate = {
         email,
         phone,
-        picture: companyImageUrl,
+        picture: pictureUrl,
         location,
         socialMedia: {
           linkedin: linkedinUrl || "",
@@ -560,6 +577,7 @@ const employerController = {
 
       req.session.user.name = user.name;
       req.session.user.email = user.email;
+      req.session.user.picture = user.picture;
 
       res.redirect("/employerD/profile");
     } catch (error) {
