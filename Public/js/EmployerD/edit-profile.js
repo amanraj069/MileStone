@@ -70,43 +70,45 @@ function showImagePreview(file) {
             existingPreview.remove();
         }
         
-        // Create new preview
+        // Create new preview container
         const previewContainer = document.createElement('div');
         previewContainer.className = 'new-image-preview';
         previewContainer.style.cssText = `
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f0f9ff;
-            border-radius: 8px;
-            border: 1px solid #1e88e5;
-            text-align: center;
+            margin-top: 15px;
+            text-align: left;
         `;
         
+        // Create preview image
         const previewImg = document.createElement('img');
         previewImg.src = e.target.result;
         previewImg.style.cssText = `
-            max-width: 100px;
-            max-height: 100px;
-            border-radius: 8px;
-            border: 2px solid #1e88e5;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            border: 3px solid #1e88e5;
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.2);
+            object-fit: cover;
+            display: block;
         `;
         
+        // Create preview text
         const previewText = document.createElement('p');
         previewText.textContent = 'New image preview';
         previewText.style.cssText = `
             color: #1e88e5;
-            font-size: 12px;
-            margin-top: 5px;
+            font-size: 14px;
+            margin-top: 8px;
             font-weight: 600;
+            margin-bottom: 0;
         `;
         
         previewContainer.appendChild(previewImg);
         previewContainer.appendChild(previewText);
         
-        // Insert after the file input
+        // Insert after the field note
         const fileInput = document.getElementById('companyImage');
-        fileInput.parentNode.appendChild(previewContainer);
+        const fieldNote = fileInput.parentNode.querySelector('.field-note');
+        fieldNote.parentNode.insertBefore(previewContainer, fieldNote.nextSibling);
     };
     reader.readAsDataURL(file);
 }

@@ -448,23 +448,3 @@ h1 {
   box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
   outline: none;
 }
-
-.current-image-preview {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #f8fafc;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  text-align: center;
-}
-
-.current-image-preview img {
-  border: 2px solid #e2e8f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.current-image-preview p {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 5px;
-}
