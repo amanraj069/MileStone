@@ -26,7 +26,7 @@
         </div>
 
         <div class="edit-form-container">
-          <form id="profileEditForm" action="/employerD/profile/edit" method="POST">
+          <form id="profileEditForm" action="/employerD/profile/edit" method="POST" enctype="multipart/form-data">
             <div class="form-section">
               <h3 class="form-section-title">Basic Information</h3>
 
@@ -46,9 +46,9 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="companyImageUrl">Company Image URL</label>
-                  <input type="url" id="companyImageUrl" name="companyImageUrl" value="<%= user.picture %>" placeholder="Enter image URL">
-                  <small class="field-note">Enter a direct link to your company logo image (e.g., https://via.placeholder.com/150)</small>
+                  <label for="companyImage">Company Image</label>
+                  <input type="file" id="companyImage" name="companyImage" accept="image/*">
+                  <small class="field-note">Upload your company logo (JPG, PNG, GIF, WebP - Max 5MB)</small>
                 </div>
               </div>
 

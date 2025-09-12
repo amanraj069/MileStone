@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Catwithatail/MileStone#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.7.0",
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
@@ -28,6 +29,8 @@
     "kill-port": "^2.0.1",
     "mongodb": "^6.13.0",
     "mongoose": "^8.16.5",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
     "node": "^23.8.0",
     "nodemon": "^3.1.9",
     "sqlite3": "^5.1.7",
