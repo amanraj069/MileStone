@@ -13,6 +13,15 @@
       <%- include('Partials/sidebar', { user: user, activeSection: 'complaints' }) %>
       <div class="main-content">
         <section id="complaints" class="section-content active">
+          <!-- Notification Banner -->
+          <div id="notification-banner" class="notification-banner">
+            <div class="banner-content">
+              <span id="banner-icon" class="banner-icon"></span>
+              <span id="banner-message" class="banner-message"></span>
+              <button class="banner-close" onclick="document.getElementById('notification-banner').classList.remove('show')">&times;</button>
+            </div>
+          </div>
+          
           <h1>Complaints</h1>
           <div class="search-bar" style="margin-bottom: 20px;">
             <form action="/adminD/complaints" method="GET" style="display: flex; align-items: center;">
@@ -41,7 +50,7 @@
           <div class="complaints-container">
             <% if (complaints && complaints.length > 0) { %>
               <% complaints.forEach(complaint => { %>
-                <div class="complaint-card <%= complaint.status %>" data-status="<%= complaint.status %>">
+                <div class="complaint-card <%= complaint.status %>" data-status="<%= complaint.status %>" data-complaint-id="<%= complaint.complaintId %>">
                   <div class="complaint-header">
                     <span class="status-icon <%= complaint.status %>">
                       <% if (complaint.status === 'pending') { %>
