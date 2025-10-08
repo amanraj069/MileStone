@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - Employer Dashboard</title>
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css">
+    <link rel="stylesheet" href="/css/EmployerD/submit_complaint.css">
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <%- include('partials/sidebar', { user: user, activePage: activePage }) %>
+        
+        <div class="main-content">
+            <!-- Success/Error Notification Banner -->
+            <div id="notification-banner" class="notification-banner">
+                <div class="banner-content">
+                    <span id="banner-icon" class="banner-icon"></span>
+                    <span id="banner-message" class="banner-message"></span>
+                    <button class="banner-close" onclick="document.getElementById('notification-banner').classList.remove('show')">&times;</button>
+                </div>
+            </div>
+
+            <div class="complaint-container">
+                <div class="header-section">
+                    <button class="back-btn" onclick="history.back()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m12 19-7-7 7-7"/>
+                            <path d="m19 12H5"/>
+                        </svg>
+                        Back to Current Jobs
+                    </button>
+                    <h1>Submit Complaint</h1>
+                    <p class="subtitle">Report an issue with your freelancer</p>
+                </div>
+
+                <div class="complaint-form-wrapper">
+                    <div class="job-info-card">
+                        <h3>Job Details</h3>
+                        <div class="job-details">
+                            <div class="detail-item">
+                                <label>Job Title:</label>
+                                <span><%= job.title %></span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Freelancer Name:</label>
+                                <span><%= freelancer ? freelancer.name : 'Not Assigned' %></span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Job Type:</label>
+                                <span><%= job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1) %></span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Budget:</label>
+                                <span>$<%= job.budget.amount %> / <%= job.budget.period %></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="complaint-form-card">
+                        <h3>Complaint Information</h3>
+                        <form id="complaintForm" class="complaint-form">
+                            <div class="form-group">
+                                <label for="complaintType">Complaint Type *</label>
+                                <select id="complaintType" name="complaintType" required class="form-select">
+                                    <option value="">Select complaint type</option>
+                                    <option value="Poor Work Quality">Poor Work Quality</option>
+                                    <option value="Missed Deadline">Missed Deadline</option>
+                                    <option value="Communication Issue">Communication Issue</option>
+                                    <option value="Scope Violation">Scope Violation</option>
+                                    <option value="Unprofessional Behavior">Unprofessional Behavior</option>
+                                    <option value="No Response">No Response</option>
+                                    <option value="Incomplete Work">Incomplete Work</option>
+                                    <option value="Contract Breach">Contract Breach</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="issue">Detailed Description *</label>
+                                <textarea id="issue" name="issue" rows="6" required class="form-textarea" 
+                                    placeholder="Please provide a detailed description of the issue you're experiencing with the freelancer. Include relevant dates, communications, and any evidence that supports your complaint."></textarea>
+                                <div class="char-counter">
+                                    <span id="charCount">0</span>/1000 characters
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="priority">Priority Level</label>
+                                <select id="priority" name="priority" class="form-select">
+                                    <option value="low">Low - Minor issue</option>
+                                    <option value="medium" selected>Medium - Standard issue</option>
+                                    <option value="high">High - Urgent issue</option>
+                                </select>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-cancel" onclick="history.back()">Cancel</button>
+                                <button type="submit" class="btn-submit">
+                                    <span class="btn-text">Submit Complaint</span>
+                                    <span class="btn-loading" style="display: none;">
+                                        <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                                        </svg>
+                                        Submitting...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/EmployerD/submit_complaint.js"></script>
+</body>
+
+</html>

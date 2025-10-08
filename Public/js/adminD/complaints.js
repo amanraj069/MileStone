@@ -1,30 +1,45 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize filter functionality
-    initializeFilters();
+    // Initialize filter functionality only if there's no active search
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSearchActive = urlParams.has('q') && urlParams.get('q').trim() !== '';
     
-    // Search functionality
-    const searchInput = document.querySelector('.search-bar input[name="q"]');
-    const searchForm = document.querySelector('.search-bar form');
+    if (!isSearchActive) {
+        initializeFilters();
+    } else {
+        // If search is active, show all cards and don't apply filters
+        const complaintsCards = document.querySelectorAll('.complaint-card');
+        complaintsCards.forEach(card => {
+            card.style.display = 'block';
+        });
+        
+        // Remove active state from all filter tabs when search is active
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        filterTabs.forEach(tab => tab.classList.remove('active'));
+    }
+    
+    // Search functionality - server-side search only
+    const searchInput = document.querySelector('#search-input');
+    const searchForm = document.querySelector('#search-form');
 
     if (searchForm) {
         searchForm.addEventListener('submit', function(event) {
-            // Allow form submission to go through for server-side search
+            const query = searchInput.value.trim();
+            console.log('Search form submitted with query:', query);
+            
+            // If empty search, redirect to clear results
+            if (query === '') {
+                event.preventDefault();
+                window.location.href = '/adminD/complaints';
+            }
         });
     }
 
+    // Allow Enter key to submit search
     if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const visibleCards = document.querySelectorAll('.complaint-card:not([style*="display: none"])');
-            
-            visibleCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                searchForm.submit();
+            }
         });
     }
 });
@@ -40,6 +55,17 @@ function initializeFilters() {
 
 // Filter complaints based on status
 function filterComplaints(filterType) {
+    // Check if search is active
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSearchActive = urlParams.has('q') && urlParams.get('q').trim() !== '';
+    
+    // If search is active, redirect with filter parameter to maintain search
+    if (isSearchActive) {
+        const searchQuery = urlParams.get('q');
+        window.location.href = `/adminD/complaints?q=${encodeURIComponent(searchQuery)}&filter=${filterType}`;
+        return;
+    }
+    
     const complaintsCards = document.querySelectorAll('.complaint-card');
     const currentTab = document.querySelector('.filter-tab[data-filter="current"]');
     const dismissedTab = document.querySelector('.filter-tab[data-filter="dismissed"]');

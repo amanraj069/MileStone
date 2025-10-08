@@ -104,37 +104,9 @@
       }
     }
 
-    async function raiseComplaint(jobId) {
-      const complaintType = prompt("Please enter the type of complaint (e.g., 'Payment Issue', 'Scope Change', 'Communication Problem'):");
-      if (!complaintType) return;
-      
-      const issue = prompt("Please describe the issue in detail:");
-      if (!issue) return;
-      
-      if (confirm("Are you sure you want to submit this complaint?")) {
-        try {
-          const response = await fetch(`/freelancerD/active_job/complain/${jobId}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              complaintType: complaintType,
-              issue: issue
-            })
-          });
-
-          const data = await response.json();
-          if (response.ok) {
-            alert(data.message || "Complaint submitted successfully! Our team will review it shortly.");
-          } else {
-            alert(data.error || "Failed to submit the complaint. Please try again.");
-          }
-        } catch (error) {
-          console.error("Error submitting complaint:", error);
-          alert("An error occurred. Please try again.");
-        }
-      }
+    function raiseComplaint(jobId) {
+      // Redirect to the dedicated complaint submission page
+      window.location.href = `/freelancerD/submit-complaint/${jobId}`;
     }
   </script>
 </html>

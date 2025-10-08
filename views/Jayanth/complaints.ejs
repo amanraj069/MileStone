@@ -24,15 +24,21 @@
           
           <h1>Complaints</h1>
           <div class="search-bar" style="margin-bottom: 20px;">
-            <form action="/adminD/complaints" method="GET" style="display: flex; align-items: center;">
-              <input type="text" name="q" value="<%= searchQuery || '' %>" placeholder="Search by user, issue, or type..." style="padding: 8px; flex: 1; border: 1px solid #ddd; border-radius: 4px 0 0 4px; background-color: #f0f0f0;">
-              <button type="submit" style="padding: 8px; background-color: #3949ab; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+            <form action="/adminD/complaints" method="GET" style="display: flex; align-items: center;" id="search-form">
+              <input type="text" name="q" value="<%= searchQuery || '' %>" placeholder="Search by user, issue, or type..." style="padding: 10px; flex: 1; border: 1px solid #ddd; border-radius: 6px 0 0 6px; background-color: white; font-size: 14px;" id="search-input">
+              <button type="submit" style="padding: 10px 12px; background-color: #3949ab; border: none; border-radius: 0 6px 6px 0; cursor: pointer; transition: background-color 0.2s;" title="Search">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
               </button>
             </form>
+            <% if (searchQuery) { %>
+              <div style="margin-top: 10px; padding: 8px; background-color: #e3f2fd; border-radius: 4px; font-size: 14px; color: #1976d2;">
+                <strong>Search results for:</strong> "<%= searchQuery %>" 
+                <a href="/adminD/complaints" style="margin-left: 10px; color: #1976d2; text-decoration: none;">[Clear search]</a>
+              </div>
+            <% } %>
           </div>
           
           <!-- Filter Tabs -->
