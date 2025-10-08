@@ -1,186 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employer Profile</title>
-  <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-  <link rel="stylesheet" href="/css/EmployerD/profile.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="dashboard-wrapper">
-    <%- include('partials/sidebar', { user: user, activePage: 'profile' }) %>
-    <div class="main-content">
-      <div class="container">
-        <div class="header">
-          <h1>Employer Profile</h1>
-          <a href="/employerD/profile/edit" class="edit-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit Profile
-          </a>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile - Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 30px;
+        min-height: 100vh;
+      }
+
+      .page-header {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #2563eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .content-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      }
+
+      .profile-section {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .profile-image-container {
+        flex-shrink: 0;
+      }
+
+      .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #2563eb;
+      }
+
+      .profile-details {
+        flex: 1;
+      }
+
+      .company-name {
+        font-size: 32px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #666;
+      }
+
+      .info-item i {
+        color: #2563eb;
+        width: 20px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      }
+
+      .rating-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .stars {
+        color: #ffc107;
+        font-size: 18px;
+      }
+
+      .grid-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .about-content p {
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .subscription-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .subscription-badge {
+        background: #d1f2eb;
+        color: #27ae60;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/sidebar', { user: user, activePage: 'profile' }) %>
+
+    <div class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Profile</h1>
+          <p class="page-subtitle">
+            Manage your company profile and information
+          </p>
+        </div>
+        <a href="/employerD/profile/edit" class="btn btn-primary">
+          <i class="fas fa-edit"></i> Edit Profile
+        </a>
+      </div>
+
+      <div class="content-card">
         <div class="profile-section">
-          <div class="profile-image">
-            <img src="<%= user.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png' %>" alt="Company Logo" id="companyLogo">
+          <div class="profile-image-container">
+            <img
+              src="<%= user.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png' %>"
+              alt="Company Logo"
+              class="profile-image"
+            />
           </div>
 
-          <script>
-            console.log('User picture URL:', '<%= user.picture %>');
-            console.log('Image src:', document.querySelector('#companyLogo') ? document.querySelector('#companyLogo').src : 'Image not found');
-          </script>
+          <div class="profile-details">
+            <h2 class="company-name"><%= company.name %></h2>
+            <div class="badge">
+              <i class="fas fa-medal"></i>
+              Top Employer
+            </div>
 
-          <div class="profile-info">
-            <div class="profile-header">
-              <h2 class="company-name" id="companyNameDisplay"><%= company.name %></h2>
-              <div class="top-employer-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="8" r="7"></circle>
-                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                </svg>
-                Top Employer
+            <div class="info-grid">
+              <div class="info-item">
+                <i class="fas fa-user-tie"></i>
+                <span><%= user.role %></span>
               </div>
-            </div>
-
-            <div class="profile-meta">
-              <div class="meta-item">
-                <span class="meta-label">Role:</span>
-                <span class="meta-value" id="roleDisplay"><%= user.role %></span>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span><%= user.location || 'Not specified' %></span>
               </div>
-            </div>
-
-            <div class="location">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span id="locationDisplay"><%= user.location || 'Not specified' %></span>
-            </div>
-
-            <div class="website">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
-              <a href="<%= company.website || '#' %>" id="websiteDisplay" target="_blank"><%= company.website || 'Not specified' %></a>
-            </div>
-
-            <div class="contact">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <span id="emailDisplay"><%= user.email %></span>
-            </div>
-
-            <div class="contact">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span id="phoneDisplay"><%= user.phone || 'Not specified' %></span>
-            </div>
-
-            <div class="social-links" id="socialLinksDisplay">
-              <% if (user.socialMedia && user.socialMedia.linkedin) { %>
-              <div class="social-link-container">
-                <a href="<%= user.socialMedia.linkedin %>" class="social-link" data-platform="linkedin" id="linkedinLink">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                </a>
-                <span class="social-url">LinkedIn</span>
+              <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span><%= user.email %></span>
               </div>
-              <% } %>
-              <% if (user.socialMedia && user.socialMedia.twitter) { %>
-              <div class="social-link-container">
-                <a href="<%= user.socialMedia.twitter %>" class="social-link" data-platform="twitter" id="twitterLink">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                  </svg>
-                </a>
-                <span class="social-url">Twitter</span>
+              <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span><%= user.phone || 'Not specified' %></span>
               </div>
-              <% } %>
-              <% if (user.socialMedia && user.socialMedia.facebook) { %>
-              <div class="social-link-container">
-                <a href="<%= user.socialMedia.facebook %>" class="social-link" data-platform="facebook" id="facebookLink">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                  </svg>
-                </a>
-                <span class="social-url">Facebook</span>
-              </div>
-              <% } %>
-              <% if (user.socialMedia && user.socialMedia.instagram) { %>
-              <div class="social-link-container">
-                <a href="<%= user.socialMedia.instagram %>" class="social-link" data-platform="instagram" id="instagramLink">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
-                </a>
-                <span class="social-url">Instagram</span>
+              <% if (company.website) { %>
+              <div class="info-item">
+                <i class="fas fa-globe"></i>
+                <a
+                  href="<%= company.website %>"
+                  target="_blank"
+                  style="color: #2563eb"
+                  ><%= company.website %></a
+                >
               </div>
               <% } %>
             </div>
+
+            <% if (user.socialMedia) { %>
+            <div class="social-links">
+              <% if (user.socialMedia.linkedin) { %>
+              <a
+                href="<%= user.socialMedia.linkedin %>"
+                class="social-link"
+                target="_blank"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <% } %> <% if (user.socialMedia.twitter) { %>
+              <a
+                href="<%= user.socialMedia.twitter %>"
+                class="social-link"
+                target="_blank"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <% } %> <% if (user.socialMedia.facebook) { %>
+              <a
+                href="<%= user.socialMedia.facebook %>"
+                class="social-link"
+                target="_blank"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <% } %> <% if (user.socialMedia.instagram) { %>
+              <a
+                href="<%= user.socialMedia.instagram %>"
+                class="social-link"
+                target="_blank"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+              <% } %>
+            </div>
+            <% } %>
 
             <div class="rating-section">
-              <div class="rating">
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">★</span>
-                <span class="star">☆</span>
-                <span>4.2</span>
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
               </div>
-              <div class="rating-count">(54 reviews)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid-container">
-          <div class="about-section">
-            <h3 class="section-title">About <span id="aboutCompanyName"><%= company.name %></span></h3>
-            <div class="about-content" id="aboutContentDisplay">
-              <% if (user.aboutMe) { %>
-                <% user.aboutMe.split('\n\n').forEach(paragraph => { %>
-                  <p><%= paragraph %></p><br />
-                <% }) %>
-              <% } else { %>
-                <p>No about information provided.</p>
-              <% } %>
-            </div>
-          </div>
-
-          <div class="subscription-section">
-            <h3 class="section-title">Subscription</h3>
-            <div class="subscription-info">
-              <span class="meta-label">Subscription Type:</span>
-              <span class="meta-value subscription-badge" id="subscriptionDisplay"><%= user.subscription || 'None' %></span>
+              <span>4.2 (54 reviews)</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script src="/js/EmployerD/profile.js"></script>
-</body>
+      <div class="grid-container">
+        <div class="content-card">
+          <h3 class="section-title">About <%= company.name %></h3>
+          <div class="about-content">
+            <% if (user.aboutMe) { %> <%
+            user.aboutMe.split('\n\n').forEach(paragraph => { %>
+            <p><%= paragraph %></p>
+            <% }) %> <% } else { %>
+            <p>No about information provided.</p>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <h3 class="section-title">Subscription</h3>
+          <div class="subscription-info">
+            <span>Current Plan:</span>
+            <span class="subscription-badge"
+              ><%= user.subscription || 'Free' %></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
