@@ -136,7 +136,9 @@ exports.getEmployers = async (req, res) => {
           ? employer.name.toLowerCase().includes(searchQuery.toLowerCase())
           : false;
         const companyNameMatch = employer.companyName
-          ? employer.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+          ? employer.companyName
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
           : false;
         return nameMatch || companyNameMatch;
       });
@@ -159,58 +161,71 @@ exports.getEmployers = async (req, res) => {
 exports.getComplaints = async (req, res) => {
   try {
     const searchQuery = req.query.q ? req.query.q.trim() : "";
-    
+
     // Fetch all complaints from the database
     const complaints = await Complaint.find().lean();
-    
+
     // Get user details for complainants and complained against users
-    const userIds = [...new Set([
-      ...complaints.map(c => c.submittedBy),
-      ...complaints.map(c => c.againstUser)
-    ])];
-    
+    const userIds = [
+      ...new Set([
+        ...complaints.map((c) => c.submittedBy),
+        ...complaints.map((c) => c.againstUser),
+      ]),
+    ];
+
     const users = await User.find({ userId: { $in: userIds } }).lean();
     const userMap = users.reduce((map, user) => {
       map[user.userId] = user;
       return map;
     }, {});
-    
+
     // Format complaints data
     const formattedComplaints = complaints
-      .map(complaint => {
+      .map((complaint) => {
         const submittedByUser = userMap[complaint.submittedBy];
         const againstUserData = userMap[complaint.againstUser];
-        
+
         return {
           ...complaint,
           submittedByName: submittedByUser?.name || "Unknown User",
           submittedByRole: submittedByUser?.role || "Unknown",
           againstUserName: againstUserData?.name || "Unknown User",
           againstUserRole: againstUserData?.role || "Unknown",
-          formattedDate: new Date(complaint.submittedDate).toLocaleDateString("en-US", {
-            timeZone: "UTC",
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }),
+          formattedDate: new Date(complaint.submittedDate).toLocaleDateString(
+            "en-US",
+            {
+              timeZone: "UTC",
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }
+          ),
         };
       })
-      .filter(complaint => {
+      .filter((complaint) => {
         if (!searchQuery) return true;
-        const nameMatch = 
-          complaint.submittedByName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          complaint.againstUserName.toLowerCase().includes(searchQuery.toLowerCase());
-        const issueMatch = complaint.issue.toLowerCase().includes(searchQuery.toLowerCase());
-        const typeMatch = complaint.complaintType.toLowerCase().includes(searchQuery.toLowerCase());
+        const nameMatch =
+          complaint.submittedByName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          complaint.againstUserName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        const issueMatch = complaint.issue
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
+        const typeMatch = complaint.complaintType
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
         return nameMatch || issueMatch || typeMatch;
       })
       .sort((a, b) => new Date(b.submittedDate) - new Date(a.submittedDate)); // Sort by newest first
-    
+
     res.render("Jayanth/complaints", {
       user: req.session.user,
       activeSection: "complaints",
       complaints: formattedComplaints,
-      searchQuery
+      searchQuery,
     });
   } catch (error) {
     console.error("Error fetching complaints:", error);
@@ -222,25 +237,25 @@ exports.resolveComplaint = async (req, res) => {
   try {
     const { complaintId } = req.params;
     const { resolution } = req.body;
-    
+
     const complaint = await Complaint.findOneAndUpdate(
       { complaintId: complaintId },
       {
         status: "resolved",
         resolution: resolution || "Complaint resolved by admin",
-        resolvedDate: new Date()
+        resolvedDate: new Date(),
       },
       { new: true }
     );
-    
+
     if (!complaint) {
       return res.status(404).json({ error: "Complaint not found" });
     }
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: "Complaint resolved successfully",
-      complaint: complaint
+      complaint: complaint,
     });
   } catch (error) {
     console.error("Error resolving complaint:", error);
@@ -252,25 +267,25 @@ exports.dismissComplaint = async (req, res) => {
   try {
     const { complaintId } = req.params;
     const { reason } = req.body;
-    
+
     const complaint = await Complaint.findOneAndUpdate(
       { complaintId: complaintId },
       {
         status: "dismissed",
         resolution: reason || "Complaint dismissed by admin",
-        resolvedDate: new Date()
+        resolvedDate: new Date(),
       },
       { new: true }
     );
-    
+
     if (!complaint) {
       return res.status(404).json({ error: "Complaint not found" });
     }
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: "Complaint dismissed successfully",
-      complaint: complaint
+      complaint: complaint,
     });
   } catch (error) {
     console.error("Error dismissing complaint:", error);
@@ -281,20 +296,20 @@ exports.dismissComplaint = async (req, res) => {
 exports.getQuizzes = async (req, res) => {
   try {
     const searchQuery = req.query.q ? req.query.q.trim() : "";
-    
+
     let query = {};
     if (searchQuery) {
-      query.name = { $regex: searchQuery, $options: 'i' };
+      query.name = { $regex: searchQuery, $options: "i" };
     }
-    
+
     const skills = await Skill.find(query).lean();
-    
+
     const skillData = skills.map((skill) => ({
       ...skill,
       questionCount: skill.questions.length,
       totalMarks: skill.questions.reduce((sum, q) => sum + q.marks, 0),
     }));
-    
+
     res.render("Jayanth/quizzes", {
       user: req.session.user,
       activeSection: "quizzes",
@@ -431,21 +446,20 @@ exports.getAddQuiz = (req, res) => {
 exports.addQuiz = async (req, res) => {
   try {
     const { name, questions } = req.body;
-    
-    const parsedQuestions = typeof questions === 'string' 
-      ? JSON.parse(questions) 
-      : questions;
-    
+
+    const parsedQuestions =
+      typeof questions === "string" ? JSON.parse(questions) : questions;
+
     const newSkill = new Skill({
       name,
-      questions: parsedQuestions.map(q => ({
+      questions: parsedQuestions.map((q) => ({
         questionText: q.questionText,
         options: q.options,
         correctAnswer: q.correctAnswer,
-        marks: parseInt(q.marks) || 1
-      }))
+        marks: parseInt(q.marks) || 1,
+      })),
     });
-    
+
     await newSkill.save();
     res.redirect("/adminD/quizzes");
   } catch (error) {
@@ -457,11 +471,11 @@ exports.addQuiz = async (req, res) => {
 exports.deleteQuiz = async (req, res) => {
   try {
     const result = await Skill.deleteOne({ skillId: req.params.skillId });
-    
+
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: "Skill not found" });
     }
-    
+
     res.json({ message: "Skill and quiz deleted successfully" });
   } catch (error) {
     console.error("Error deleting quiz:", error);
@@ -489,13 +503,14 @@ exports.getEditQuiz = async (req, res) => {
 exports.updateQuiz = async (req, res) => {
   try {
     const { name, questions } = req.body;
-    const parsedQuestions = typeof questions === 'string' ? JSON.parse(questions) : questions;
+    const parsedQuestions =
+      typeof questions === "string" ? JSON.parse(questions) : questions;
 
     const updatedSkill = await Skill.findOneAndUpdate(
       { skillId: req.params.skillId },
       {
         name,
-        questions: parsedQuestions.map(q => ({
+        questions: parsedQuestions.map((q) => ({
           questionText: q.questionText,
           options: q.options,
           correctAnswer: q.correctAnswer,
@@ -513,5 +528,87 @@ exports.updateQuiz = async (req, res) => {
   } catch (error) {
     console.error("Error updating quiz:", error);
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+exports.updateFreelancerRating = async (req, res) => {
+  try {
+    // Check if current user is admin
+    if (req.session.user.role !== "Admin") {
+      return res
+        .status(403)
+        .json({ message: "Access denied. Admin role required." });
+    }
+
+    const { userId } = req.params;
+    const { rating } = req.body;
+
+    // Validate rating
+    if (!rating || rating < 1 || rating > 5) {
+      return res
+        .status(400)
+        .json({ message: "Rating must be between 1 and 5" });
+    }
+
+    // Update freelancer rating
+    const updatedUser = await User.findOneAndUpdate(
+      { userId, role: "Freelancer" },
+      { rating: parseFloat(rating) },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Freelancer not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Freelancer rating updated successfully",
+      rating: updatedUser.rating,
+    });
+  } catch (error) {
+    console.error("Error updating freelancer rating:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.updateEmployerRating = async (req, res) => {
+  try {
+    // Check if current user is admin
+    if (req.session.user.role !== "Admin") {
+      return res
+        .status(403)
+        .json({ message: "Access denied. Admin role required." });
+    }
+
+    const { userId } = req.params;
+    const { rating } = req.body;
+
+    // Validate rating
+    if (!rating || rating < 1 || rating > 5) {
+      return res
+        .status(400)
+        .json({ message: "Rating must be between 1 and 5" });
+    }
+
+    // Update employer rating
+    const updatedUser = await User.findOneAndUpdate(
+      { userId, role: "Employer" },
+      { rating: parseFloat(rating) },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Employer not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Employer rating updated successfully",
+      rating: updatedUser.rating,
+    });
+  } catch (error) {
+    console.error("Error updating employer rating:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

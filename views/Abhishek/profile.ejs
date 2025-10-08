@@ -27,8 +27,13 @@
 
         <div class="profile-section">
           <div class="profile-image">
-            <img src="<%= user.picture %>" alt="Company Logo" id="companyLogo">
+            <img src="<%= user.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png' %>" alt="Company Logo" id="companyLogo">
           </div>
+
+          <script>
+            console.log('User picture URL:', '<%= user.picture %>');
+            console.log('Image src:', document.querySelector('#companyLogo') ? document.querySelector('#companyLogo').src : 'Image not found');
+          </script>
 
           <div class="profile-info">
             <div class="profile-header">
@@ -86,7 +91,7 @@
             </div>
 
             <div class="social-links" id="socialLinksDisplay">
-              <% if (user.socialMedia.linkedin) { %>
+              <% if (user.socialMedia && user.socialMedia.linkedin) { %>
               <div class="social-link-container">
                 <a href="<%= user.socialMedia.linkedin %>" class="social-link" data-platform="linkedin" id="linkedinLink">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -96,10 +101,10 @@
                     <circle cx="4" cy="4" r="2"></circle>
                   </svg>
                 </a>
-                <span class="social-url">LinkedIn</历程
+                <span class="social-url">LinkedIn</span>
               </div>
               <% } %>
-              <% if (user.socialMedia.twitter) { %>
+              <% if (user.socialMedia && user.socialMedia.twitter) { %>
               <div class="social-link-container">
                 <a href="<%= user.socialMedia.twitter %>" class="social-link" data-platform="twitter" id="twitterLink">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -110,7 +115,7 @@
                 <span class="social-url">Twitter</span>
               </div>
               <% } %>
-              <% if (user.socialMedia.facebook) { %>
+              <% if (user.socialMedia && user.socialMedia.facebook) { %>
               <div class="social-link-container">
                 <a href="<%= user.socialMedia.facebook %>" class="social-link" data-platform="facebook" id="facebookLink">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -121,7 +126,7 @@
                 <span class="social-url">Facebook</span>
               </div>
               <% } %>
-              <% if (user.socialMedia.instagram) { %>
+              <% if (user.socialMedia && user.socialMedia.instagram) { %>
               <div class="social-link-container">
                 <a href="<%= user.socialMedia.instagram %>" class="social-link" data-platform="instagram" id="instagramLink">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"

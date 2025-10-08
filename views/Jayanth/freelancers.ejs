@@ -9,7 +9,8 @@
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('Partials/sidebar', { user: user, activeSection: 'freelancers' }) %>
+      <%- include('Partials/sidebar', { user: user, activeSection: 'freelancers'
+      }) %>
       <div class="main-content">
         <section id="freelancers" class="section-content active">
           <h1>Freelancers</h1>
@@ -78,8 +79,7 @@
           <div class="user-list">
             <% if (freelancers.length === 0) { %>
             <p>No freelancers found.</p>
-            <% } else { %>
-            <% freelancers.forEach(freelancer => { %>
+            <% } else { %> <% freelancers.forEach(freelancer => { %>
             <div class="user-card">
               <div class="user-avatar">
                 <img
@@ -93,7 +93,8 @@
                   <%= freelancer.experience?.[0]?.title || 'Freelancer' %>
                 </p>
                 <div class="rating">
-                  <% for(let i = 0; i < Math.floor(freelancer.rating || 4.5); i++) { %>
+                  <% for(let i = 0; i < Math.floor(freelancer.rating || 4.5);
+                  i++) { %>
                   <svg
                     width="16"
                     height="16"
@@ -105,8 +106,7 @@
                       d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
                     />
                   </svg>
-                  <% } %>
-                  <% if((freelancer.rating || 4.5) % 1 !== 0) { %>
+                  <% } %> <% if((freelancer.rating || 4.5) % 1 !== 0) { %>
                   <svg
                     width="16"
                     height="16"
@@ -121,7 +121,7 @@
                   <% } %>
                   <span><%= freelancer.rating || '4.5' %></span>
                 </div>
-                  <!-- <p class="user-skills">
+                <!-- <p class="user-skills">
                     <%= freelancer.skills || 'No skills listed' %>
                   </p> -->
               </div>
@@ -141,6 +141,25 @@
                     />
                   </svg>
                   <a href="/chat/<%= freelancer.userId || 'default' %>">Chat</a>
+                </button>
+                <button
+                  class="btn-warning"
+                  onclick="editRating('<%= freelancer.userId %>', '<%= freelancer.rating || 4.5 %>', 'freelancer')"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                    />
+                  </svg>
+                  Edit Rating
                 </button>
                 <button
                   class="btn-danger"
@@ -164,8 +183,7 @@
                 </button>
               </div>
             </div>
-            <% }) %>
-            <% } %>
+            <% }) %> <% } %>
           </div>
         </section>
       </div>
@@ -197,6 +215,53 @@
             console.error(error);
             alert("Server error");
           }
+        }
+      }
+
+      function editRating(userId, currentRating, userType) {
+        const newRating = prompt(
+          `Enter new rating for this ${userType} (1-5):`,
+          currentRating
+        );
+
+        if (newRating === null) return; // User cancelled
+
+        const rating = parseFloat(newRating);
+
+        if (isNaN(rating) || rating < 1 || rating > 5) {
+          alert("Please enter a valid rating between 1 and 5");
+          return;
+        }
+
+        updateRating(userId, rating, userType);
+      }
+
+      async function updateRating(userId, rating, userType) {
+        try {
+          const endpoint =
+            userType === "freelancer"
+              ? `/adminD/freelancers/${userId}/rating`
+              : `/adminD/employers/${userId}/rating`;
+
+          const response = await fetch(endpoint, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ rating }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert(result.message);
+            window.location.reload();
+          } else {
+            alert(result.message || `Failed to update ${userType} rating`);
+          }
+        } catch (error) {
+          console.error(`Error updating ${userType} rating:`, error);
+          alert("Server error");
         }
       }
     </script>

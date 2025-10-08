@@ -7,13 +7,26 @@ router.get("/job_listings", adminController.getJobListings);
 router.get("/freelancers", adminController.getFreelancers);
 router.get("/employers", adminController.getEmployers);
 router.get("/complaints", adminController.getComplaints);
-router.post("/complaints/:complaintId/resolve", adminController.resolveComplaint);
-router.post("/complaints/:complaintId/dismiss", adminController.dismissComplaint);
+router.post(
+  "/complaints/:complaintId/resolve",
+  adminController.resolveComplaint
+);
+router.post(
+  "/complaints/:complaintId/dismiss",
+  adminController.dismissComplaint
+);
 router.get("/profile", adminController.getProfile);
 router.get("/profile/edit", adminController.getEditProfile);
 router.post("/profile/edit", adminController.updateProfile);
 router.delete("/employers/:userId", adminController.deleteEmployer);
 router.delete("/freelancers/:userId", adminController.deleteFreelancer);
+
+// Rating update routes
+router.put(
+  "/freelancers/:userId/rating",
+  adminController.updateFreelancerRating
+);
+router.put("/employers/:userId/rating", adminController.updateEmployerRating);
 
 // New quiz routes
 router.get("/quizzes", adminController.getQuizzes);

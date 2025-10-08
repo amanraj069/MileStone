@@ -4,6 +4,27 @@ const User = require("../models/user");
 const Employer = require("../models/employer");
 const Freelancer = require("../models/freelancer");
 const Complaint = require("../models/complaint");
+const { uploadToCloudinary } = require("../middleware/imageUpload");
+
+// Helper function to get complete user data for sidebar
+const getUserData = async (userId) => {
+  try {
+    const user = await User.findOne({ userId }).lean();
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return {
+      name: user.name,
+      email: user.email,
+      picture: user.picture,
+      role: user.role
+    };
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    // Return session data as fallback
+    return null;
+  }
+};
 
 const employerController = {
   getCurrentJobs: async (req, res) => {
@@ -47,8 +68,10 @@ const employerController = {
         };
       });
 
+      const userData = await getUserData(req.session.user.id) || req.session.user;
+
       res.render("Abhishek/current_jobs", {
-        user: { name: req.session.user.name },
+        user: userData,
         activePage: "current_jobs",
         freelancers: freelancersWithDetails,
       });
@@ -99,8 +122,10 @@ const employerController = {
         };
       });
 
+      const userData = await getUserData(req.session.user.id) || req.session.user;
+
       res.render("Abhishek/previously_worked", {
-        user: { name: req.session.user.name },
+        user: userData,
         activePage: "previously_worked",
         freelancers: freelancersWithDetails,
       });
@@ -113,9 +138,13 @@ const employerController = {
   getJobListings: async (req, res) => {
     try {
       const employerId = req.session.user.roleId;
+      const userId = req.session.user.id;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
+
+      // Get complete user data for sidebar
+      const userData = await getUserData(userId) || req.session.user;
 
       const jobListings = await JobListing.find({
         employerId,
@@ -125,7 +154,7 @@ const employerController = {
         .lean();
 
       res.render("Abhishek/job_listing", {
-        user: { name: req.session.user.name },
+        user: userData,
         activePage: "job_listings",
         jobListings,
       });
@@ -135,9 +164,10 @@ const employerController = {
     }
   },
 
-  getNewJobForm: (req, res) => {
+  getNewJobForm: async (req, res) => {
+    const userData = await getUserData(req.session.user.id) || req.session.user;
     res.render("Abhishek/others/new_job", {
-      user: { name: req.session.user.name },
+      user: userData,
       activePage: "job_listings",
     });
   },
@@ -329,8 +359,10 @@ const employerController = {
         };
       });
 
+      const userData = await getUserData(req.session.user.id) || req.session.user;
+
       res.render("Abhishek/job_applications", {
-        user: { name: req.session.user.name },
+        user: userData,
         activePage: "job_applications",
         applications: applicationsWithDetails,
       });
@@ -421,7 +453,8 @@ const employerController = {
         throw new Error("User ID or Employer roleId not found in session");
       }
 
-      const user = await User.findOne({ userId }).lean();
+      // Fetch fresh data from database
+      const user = await User.findOne({ userId });
       if (!user) {
         throw new Error("User not found");
       }
@@ -431,14 +464,18 @@ const employerController = {
         throw new Error("Employer not found");
       }
 
+      // Log for debugging
+      console.log("User picture from DB:", user.picture);
+      console.log("User picture from session:", req.session.user.picture);
+
       res.render("Abhishek/profile", {
         user: {
           name: user.name,
           email: user.email,
           phone: user.phone,
-          picture: user.picture,
+          picture: user.picture, // Use fresh data from database
           location: user.location,
-          socialMedia: user.socialMedia,
+          socialMedia: user.socialMedia || {},
           aboutMe: user.aboutMe,
           subscription: user.subscription,
           role: user.role,
@@ -510,7 +547,6 @@ const employerController = {
       const {
         companyName,
         location,
-        companyImageUrl,
         websiteLink,
         email,
         phone,
@@ -521,10 +557,22 @@ const employerController = {
         aboutContent,
       } = req.body;
 
+      // Handle image upload - use new image URL if uploaded, otherwise keep existing
+      let pictureUrl = req.session.user.picture; // Default to existing picture
+      if (req.file) {
+        try {
+          const uploadResult = await uploadToCloudinary(req.file.buffer);
+          pictureUrl = uploadResult.secure_url; // Cloudinary secure URL
+        } catch (uploadError) {
+          console.error("Error uploading image to Cloudinary:", uploadError);
+          throw new Error("Failed to upload image. Please try again.");
+        }
+      }
+
       const userUpdate = {
         email,
         phone,
-        picture: companyImageUrl,
+        picture: pictureUrl,
         location,
         socialMedia: {
           linkedin: linkedinUrl || "",
@@ -560,6 +608,7 @@ const employerController = {
 
       req.session.user.name = user.name;
       req.session.user.email = user.email;
+      req.session.user.picture = user.picture;
 
       res.redirect("/employerD/profile");
     } catch (error) {
@@ -603,8 +652,10 @@ const employerController = {
         };
       });
   
+      const userData = await getUserData(req.session.user.id) || req.session.user;
+  
       res.render("Abhishek/transaction", {
-        user: { name: req.session.user.name },
+        user: userData,
         activePage: "transaction_history",
         transactions: transactions
       });
@@ -718,6 +769,8 @@ const employerController = {
       res.render("Abhishek/subscription", {
         user: {
           name: user.name,
+          picture: user.picture,
+          role: user.role,
           subscription: user.subscription || "Basic",
         },
         activePage: "subscription",

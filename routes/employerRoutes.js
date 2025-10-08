@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const employerController = require("../controllers/employerController");
+const { upload } = require("../middleware/imageUpload");
 
 router.get("/current_jobs", employerController.getCurrentJobs);
 router.get("/job_listings", employerController.getJobListings);
@@ -13,7 +14,7 @@ router.post("/job_applications/:applicationId/accept", employerController.accept
 router.post("/job_applications/:applicationId/reject", employerController.rejectJobApplication);
 router.get("/profile", employerController.getProfile);
 router.get("/profile/edit", employerController.getEditProfile);
-router.post("/profile/edit", employerController.updateProfile);
+router.post("/profile/edit", upload.single('companyImage'), employerController.updateProfile);
 router.get("/transaction_history", employerController.getTransactionHistory);
 router.get("/transaction_history/milestone", employerController.getMilestone);
 router.get("/previously_worked", employerController.getPreviouslyWorked);

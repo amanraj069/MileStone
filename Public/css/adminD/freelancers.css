@@ -70,7 +70,8 @@
 }
 
 .btn-primary,
-.btn-danger {
+.btn-danger,
+.btn-warning {
   padding: 8px 16px;
   border-radius: 6px;
   border: none;
@@ -103,6 +104,15 @@
 
 .btn-danger:hover {
   background-color: #e53935;
+}
+
+.btn-warning {
+  background-color: #ff9800;
+  color: white;
+}
+
+.btn-warning:hover {
+  background-color: #f57c00;
 }
 .hidden {
   display: none;

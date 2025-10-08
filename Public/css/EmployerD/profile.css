@@ -427,3 +427,24 @@ h1 {
     text-align: center;
   }
 }
+
+/* File upload styling */
+.form-group input[type="file"] {
+  padding: 8px;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-group input[type="file"]:hover {
+  border-color: #1e88e5;
+  background-color: #f0f9ff;
+}
+
+.form-group input[type="file"]:focus {
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+  outline: none;
+}
