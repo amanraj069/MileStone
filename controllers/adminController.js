@@ -38,7 +38,7 @@ exports.getJobListings = async (req, res) => {
 
     res.render("Jayanth/job_listings", {
       user: req.session.user,
-      activeSection: "job_listings",
+      activePage: "job_listings",
       jobs: jobData,
     });
   } catch (error) {
@@ -93,7 +93,7 @@ exports.getFreelancers = async (req, res) => {
 
     res.render("Jayanth/freelancers", {
       user: req.session.user,
-      activeSection: "freelancers",
+      activePage: "freelancers",
       freelancers: freelancerData,
       searchQuery,
     });
@@ -147,7 +147,7 @@ exports.getEmployers = async (req, res) => {
 
     res.render("Jayanth/employers", {
       user: req.session.user,
-      activeSection: "employers",
+      activePage: "employers",
       employers: employerData,
       searchQuery,
     });
@@ -223,7 +223,7 @@ exports.getComplaints = async (req, res) => {
 
     res.render("Jayanth/complaints", {
       user: req.session.user,
-      activeSection: "complaints",
+      activePage: "complaints",
       complaints: formattedComplaints,
       searchQuery,
     });
@@ -312,7 +312,7 @@ exports.getQuizzes = async (req, res) => {
 
     res.render("Jayanth/quizzes", {
       user: req.session.user,
-      activeSection: "quizzes",
+      activePage: "quizzes",
       skills: skillData,
       searchQuery,
     });
@@ -330,7 +330,7 @@ exports.getProfile = async (req, res) => {
     }
     res.render("Jayanth/profile", {
       user: user,
-      activeSection: "profile",
+      activePage: "profile",
     });
   } catch (error) {
     console.error(error);
@@ -346,7 +346,7 @@ exports.getEditProfile = async (req, res) => {
     }
     res.render("Jayanth/others/edit-profile", {
       user: user,
-      activeSection: "profile",
+      activePage: "profile",
     });
   } catch (error) {
     console.error(error);
@@ -439,7 +439,7 @@ exports.deleteFreelancer = async (req, res) => {
 exports.getAddQuiz = (req, res) => {
   res.render("Jayanth/others/add-quiz", {
     user: req.session.user,
-    activeSection: "quizzes",
+    activePage: "quizzes",
   });
 };
 
@@ -491,7 +491,7 @@ exports.getEditQuiz = async (req, res) => {
     }
     res.render("Jayanth/others/edit-quiz", {
       user: req.session.user,
-      activeSection: "quizzes",
+      activePage: "quizzes",
       skill,
     });
   } catch (error) {

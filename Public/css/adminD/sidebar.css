@@ -17,7 +17,8 @@ body {
 
 .sidebar-container {
   width: 290px;
-  background-color: #e6eef8;
+  /* background-color: #e6eef8; */
+  background-color: white;
   position: fixed;
   top: 0;
   left: 0;
@@ -34,7 +35,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 .left-panel::-webkit-scrollbar {
@@ -62,7 +63,7 @@ body {
   font-weight: 600;
   color: #333;
   margin-top: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   text-align: center;
   line-height: 1.2;
 }
@@ -194,7 +195,7 @@ body {
   }
 
   .logout-btn {
-    padding: 8px;
+    padding: 2px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -279,13 +280,4 @@ body {
     width: 100%;
     min-height: auto;
   }
-}
-
-.sidebar-menu-item.quizzes .sidebar-menu-icon svg {
-  stroke: currentColor;
-}
-
-.sidebar-menu-item.quizzes.active .sidebar-menu-icon svg,
-.sidebar-menu-item.quizzes:hover .sidebar-menu-icon svg {
-  stroke: #fff;
 }
