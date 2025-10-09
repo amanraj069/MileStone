@@ -4,17 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Freelancer Dashboard - Profile</title>
-    <link
-      rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
-    />
+    <link rel="stylesheet" href="/css/FreelancerD/static_elements/header.css" />
     <link rel="stylesheet" href="/css/FreelancerD/profile.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'profile'}) %>
+      <%- include('./partials/sidebar', {activePage: 'profile', user: user}) %>
       <div class="main-content">
         <div class="container">
           <div class="header">
@@ -43,12 +40,13 @@
           </div>
 
           <div class="profile-section">
-            <div class="profile-image">
-              <img src="<%= user.picture %>" alt="Profile Image"
-              id="profileImage" />
+            <div class="profile-left">
+              <div class="profile-image-small">
+                <img src="<%= user.picture %>" alt="Profile Image" id="profileImage" />
+              </div>
             </div>
 
-            <div class="profile-info">
+            <div class="profile-right">
               <div class="profile-header">
                 <h2 id="nameDisplay"><%= user.name || 'N/A' %></h2>
                 <div class="top-freelancer-badge">
