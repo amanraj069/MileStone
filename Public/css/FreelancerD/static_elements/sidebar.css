@@ -17,7 +17,8 @@ body {
 
 .sidebar-container {
   width: 290px;
-  background-color: #e6eef8;
+  /* background-color: #e6eef8; */
+  background-color: white;
   position: fixed;
   top: 0;
   left: 0;
@@ -34,7 +35,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 .left-panel::-webkit-scrollbar {
@@ -50,20 +51,11 @@ body {
   width: 100px;
   height: 100px;
   flex-shrink: 0;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #d1dbe8; /* Fallback background if image fails */
 }
 
-.profile-img {
+.profile-img-container svg {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Scales image to fill container without distortion */
-  object-position: center;
-  border-radius: 50%; /* Ensures circular shape */
 }
 
 .profile-name {
@@ -71,7 +63,7 @@ body {
   font-weight: 600;
   color: #333;
   margin-top: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   text-align: center;
   line-height: 1.2;
 }
@@ -179,13 +171,6 @@ body {
     height: 50px;
   }
 
-  .profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-
   .profile-name {
     font-size: 12px;
     margin-top: 8px;
@@ -210,7 +195,7 @@ body {
   }
 
   .logout-btn {
-    padding: 8px;
+    padding: 2px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -252,13 +237,7 @@ body {
   .profile-img-container {
     width: 40px;
     height: 40px;
-  }
-
-  .profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+    margin-right: 10px;
   }
 
   .profile-name {
