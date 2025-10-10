@@ -95,16 +95,60 @@
 
       .profile-image-container {
         flex-shrink: 0;
-        height: 300px;
-        width: 300px;
+        height: 260px;
+        width: 260px;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 20px;
       }
 
       .profile-image {
-        width: 30px;
-        height: 30px;
+        width: 300px;
+        height: 300px;
         border-radius: 50%;
         object-fit: cover;
         border: 3px solid #2563eb;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+        background: white;
+      }
+
+      .profile-image-container:hover {
+        transform: scale(1.04);
+      }
+
+      .profile-image-container:hover .profile-image {
+        border: 5px solid white;
+      }
+
+      .profile-image-container::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, #27ae60 0deg, #27ae60 270deg, #e0e0e0 270deg, #e0e0e0 360deg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1;
+      }
+
+      .profile-image-container:hover::before {
+        opacity: 1;
+        animation: rotateBorder 1s linear infinite;
+      }
+
+      @keyframes rotateBorder {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       .profile-details {
@@ -293,8 +337,8 @@
             Manage your company profile and information
           </p>
         </div>
-        <a href="/employerD/profile/edit" class="btn btn-primary">
-          <i class="fas fa-edit"></i> Edit Profile
+        <a href="/employerD/profile/edit" class="btn btn-primary" id="editProfileBtn">
+          <i class="fas fa-edit"></i> <span id="editBtnText">Edit Profile</span>
         </a>
       </div>
 
@@ -305,7 +349,10 @@
               src="<%= user.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png' %>"
               alt="Company Logo"
               class="profile-image"
+              id="profileImage"
+              title="Click to update profile image"
             />
+            <input type="file" id="imageUploadInput" accept="image/*" style="display: none;" />
           </div>
 
           <div class="profile-details">
@@ -421,5 +468,143 @@
         </div>
       </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Edit Profile button hover text change
+        const editBtn = document.getElementById('editProfileBtn');
+        const editBtnText = document.getElementById('editBtnText');
+        
+        if (editBtn && editBtnText) {
+          editBtn.addEventListener('mouseenter', function() {
+            editBtnText.textContent = 'Update Profile Details';
+          });
+          
+          editBtn.addEventListener('mouseleave', function() {
+            editBtnText.textContent = 'Edit Profile';
+          });
+        }
+
+        // Profile image click to upload functionality
+        const profileImage = document.getElementById('profileImage');
+        const imageUploadInput = document.getElementById('imageUploadInput');
+        
+        if (profileImage && imageUploadInput) {
+          profileImage.addEventListener('click', function() {
+            imageUploadInput.click();
+          });
+          
+          imageUploadInput.addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+              alert('Please select a valid image file.');
+              return;
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+              alert('File size must be less than 5MB.');
+              return;
+            }
+            
+            // Show loading state
+            profileImage.style.opacity = '0.7';
+            profileImage.style.cursor = 'wait';
+            
+            try {
+              await uploadProfileImage(file);
+            } catch (error) {
+              console.error('Upload failed:', error);
+              alert('Failed to upload image. Please try again.');
+            } finally {
+              // Reset loading state
+              profileImage.style.opacity = '1';
+              profileImage.style.cursor = 'pointer';
+            }
+          });
+        }
+        
+        // Async function to handle image upload using fetch API
+        async function uploadProfileImage(file) {
+          const formData = new FormData();
+          formData.append('picture', file);
+          
+          try {
+            const response = await fetch('/employerD/profile/upload-image', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+              }
+            });
+            
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            
+            if (result.success) {
+              // Update the profile image immediately
+              profileImage.src = result.imageUrl;
+              
+              // Show success message
+              showNotification('Profile image updated successfully!', 'success');
+            } else {
+              throw new Error(result.message || 'Upload failed');
+            }
+          } catch (error) {
+            console.error('Error uploading image:', error);
+            throw error;
+          }
+        }
+        
+        // Utility function to show notifications
+        function showNotification(message, type = 'info') {
+          // Create notification element
+          const notification = document.createElement('div');
+          notification.className = `notification notification-${type}`;
+          notification.textContent = message;
+          
+          // Add styles
+          Object.assign(notification.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            padding: '15px 20px',
+            backgroundColor: type === 'success' ? '#27ae60' : type === 'error' ? '#e74c3c' : '#3498db',
+            color: 'white',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            zIndex: '9999',
+            fontSize: '14px',
+            fontWeight: '500',
+            opacity: '0',
+            transform: 'translateX(100%)',
+            transition: 'all 0.3s ease'
+          });
+          
+          document.body.appendChild(notification);
+          
+          // Animate in
+          setTimeout(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(0)';
+          }, 100);
+          
+          // Remove after delay
+          setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+              document.body.removeChild(notification);
+            }, 300);
+          }, 3000);
+        }
+      });
+    </script>
   </body>
 </html>
