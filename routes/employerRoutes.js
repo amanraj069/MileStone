@@ -15,6 +15,7 @@ router.post("/job_applications/:applicationId/reject", employerController.reject
 router.get("/profile", employerController.getProfile);
 router.get("/profile/edit", employerController.getEditProfile);
 router.post("/profile/edit", upload.single('companyImage'), employerController.updateProfile);
+router.post("/profile/upload-image", upload.single('picture'), employerController.uploadProfileImage);
 router.get("/transaction_history", employerController.getTransactionHistory);
 router.get("/transaction_history/milestone", employerController.getMilestone);
 router.get("/previously_worked", employerController.getPreviouslyWorked);
