@@ -16,7 +16,7 @@ body {
 }
 
 .sidebar-container {
-  width: 290px;
+  width: 280px;
   /* background-color: #e6eef8; */
   background-color: white;
   position: fixed;
@@ -29,7 +29,7 @@ body {
 }
 
 .left-panel {
-  width: 290px;
+  width: 280px;
   height: 100vh;
   position: relative;
   display: flex;

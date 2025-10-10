@@ -4,17 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Skill Quiz - <%= skill.name %></title>
-    <link
-      rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
-    />
     <link rel="stylesheet" href="/css/FreelancerD/quiz_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'skills_badges'}) %>
+      <%- include('./partials/sidebar', {activePage: 'skills_badges', user: user}) %>
 
       <!-- Main Content Area -->
       <div class="main-content">

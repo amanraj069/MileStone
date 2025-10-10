@@ -4,6 +4,7 @@ const Employer = require("../models/employer");
 const Freelancer = require("../models/freelancer");
 const Skill = require("../models/skill");
 const Complaint = require("../models/complaint");
+const { uploadToCloudinary } = require("../middleware/imageUpload");
 
 exports.getFreelancerActiveJobs = async (req, res) => {
   try {
@@ -12,6 +13,9 @@ exports.getFreelancerActiveJobs = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
+    
+    // Fetch user data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
 
     const activeJobs = await JobListing.find({
       "assignedFreelancer.freelancerId": freelancerId,
@@ -64,7 +68,17 @@ exports.getFreelancerActiveJobs = async (req, res) => {
     );
 
     res.render("Vanya/active_job", {
-      user: req.session.user,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
+      },
       active_jobs: formattedJobs,
       activePage: "active_job",
     });
@@ -201,16 +215,59 @@ exports.updateFreelancerProfile = async (req, res) => {
       name,
       title,
       location,
-      profileImageUrl,
       email,
       phone,
       about,
-      experience,
-      education,
-      portfolio,
+      experienceData,
+      educationData,
+      portfolioData,
       resumeLink,
       skills,
     } = req.body;
+
+    // Get current user data to preserve existing picture if no new file uploaded
+    // Parse data early so we can use it for file processing
+    const parsedExperience =
+      typeof experienceData === "string" ? JSON.parse(experienceData) : experienceData || [];
+    const parsedEducation =
+      typeof educationData === "string" ? JSON.parse(educationData) : educationData || [];
+    const parsedPortfolio =
+      typeof portfolioData === "string" ? JSON.parse(portfolioData) : portfolioData || [];
+    const parsedSkills =
+      typeof skills === "string" ? JSON.parse(skills) : skills || [];
+
+    const currentUser = await User.findOne({ roleId: freelancerId }).lean();
+    let pictureUrl = currentUser?.picture; // Default to existing picture
+
+    // Handle profile image upload
+    if (req.files && req.files.profileImage && req.files.profileImage[0]) {
+      try {
+        const uploadResult = await uploadToCloudinary(req.files.profileImage[0].buffer, 'freelancer-profiles', 'image');
+        pictureUrl = uploadResult.secure_url; // Cloudinary secure URL
+      } catch (uploadError) {
+        console.error("Error uploading profile image to Cloudinary:", uploadError);
+        return res.status(500).json({ error: "Failed to upload profile image" });
+      }
+    }
+
+    // Handle portfolio images upload
+    let updatedPortfolio = [...parsedPortfolio]; // Create a copy to modify
+    if (req.files && req.files.portfolioImages && req.files.portfolioImages.length > 0) {
+      try {
+        for (let i = 0; i < req.files.portfolioImages.length; i++) {
+          const file = req.files.portfolioImages[i];
+          const uploadResult = await uploadToCloudinary(file.buffer, 'freelancer-portfolio', 'image');
+          
+          // Find the corresponding portfolio item and update its image
+          if (updatedPortfolio[i]) {
+            updatedPortfolio[i].image = uploadResult.secure_url;
+          }
+        }
+      } catch (uploadError) {
+        console.error("Error uploading portfolio images to Cloudinary:", uploadError);
+        return res.status(500).json({ error: "Failed to upload portfolio images" });
+      }
+    }
 
     const userUpdate = await User.updateOne(
       { roleId: freelancerId },
@@ -220,7 +277,7 @@ exports.updateFreelancerProfile = async (req, res) => {
           email,
           phone,
           location,
-          picture: profileImageUrl,
+          picture: pictureUrl,
           aboutMe: about,
         },
       }
@@ -230,24 +287,15 @@ exports.updateFreelancerProfile = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const parsedExperience =
-      typeof experience === "string" ? JSON.parse(experience) : experience;
-    const parsedEducation =
-      typeof education === "string" ? JSON.parse(education) : education;
-    const parsedPortfolio =
-      typeof portfolio === "string" ? JSON.parse(portfolio) : portfolio;
-    const parsedSkills =
-      typeof skills === "string" ? JSON.parse(skills) : skills;
-
     const freelancerUpdate = await Freelancer.updateOne(
       { freelancerId: freelancerId },
       {
         $set: {
-          resume: resumeLink,
+          resume: resumeLink, // Use the provided resume link
           skills: parsedSkills || [],
           experience: parsedExperience || [],
           education: parsedEducation || [],
-          portfolio: parsedPortfolio || [],
+          portfolio: updatedPortfolio || [], // Use updated portfolio with images
         },
       }
     );
@@ -270,6 +318,9 @@ exports.getFreelancerJobHistory = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
+    
+    // Fetch user data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
 
     const historyJobs = await JobListing.find({
       "assignedFreelancer.freelancerId": freelancerId,
@@ -311,7 +362,17 @@ exports.getFreelancerJobHistory = async (req, res) => {
     );
 
     res.render("Vanya/job_history", {
-      user: req.session.user,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
+      },
       history_jobs: formattedJobs,
       activePage: "job_history",
     });
@@ -328,6 +389,10 @@ exports.getFreelancerPayment = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
+    
+    // Fetch user and freelancer data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
 
     const activeJobs = await JobListing.find({
       "assignedFreelancer.freelancerId": freelancerId,
@@ -369,7 +434,17 @@ exports.getFreelancerPayment = async (req, res) => {
     );
 
     res.render("Vanya/payment", {
-      user: req.session.user,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
+      },
       jobs: formattedJobs,
       activePage: "payment",
     });
@@ -386,6 +461,9 @@ exports.getFreelancerSkills = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
+    
+    // Fetch user data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
 
     const freelancer = await Freelancer.findOne({ freelancerId }).lean();
     if (!freelancer) {
@@ -407,7 +485,17 @@ exports.getFreelancerSkills = async (req, res) => {
     }));
 
     res.render("Vanya/skills_badges", {
-      user: req.session.user,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
+      },
       skills: skillsData,
       freelancerSkills: freelancerSkills.map((skill) => skill.name),
       activePage: "skills_badges",
@@ -420,8 +508,30 @@ exports.getFreelancerSkills = async (req, res) => {
 
 exports.getFreelancerSubscription = async (req, res) => {
   try {
+    if (!req.session.user) {
+      return res.status(401).send("Unauthorized: Please log in");
+    }
+
+    // Fetch user data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
+    
+    if (!user) {
+      console.error("User not found in database for ID:", req.session.user.id);
+      return res.status(404).send("User not found");
+    }
+    
     res.render("Vanya/subscription", {
-      user: req.session.user || staticUser,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
+      },
       activePage: "subscription",
     });
   } catch (error) {
@@ -437,6 +547,10 @@ exports.getSkillQuiz = async (req, res) => {
     }
 
     const skillId = req.params.skillId;
+    
+    // Fetch user data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
+    
     const skill = await Skill.findOne({ skillId }).lean();
 
     if (!skill) {
@@ -448,7 +562,17 @@ exports.getSkillQuiz = async (req, res) => {
     }
 
     res.render("Vanya/quiz", {
-      user: req.session.user,
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
+      },
       skill: {
         skillId: skill.skillId,
         name: skill.name,
@@ -523,6 +647,9 @@ exports.getMilestone = async (req, res) => {
 
     const freelancerId = req.session.user.roleId;
     const { jobId } = req.params;
+    
+    // Fetch user data for proper user object construction
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
 
     const job = await JobListing.findOne({
       jobId,
@@ -579,8 +706,15 @@ exports.getMilestone = async (req, res) => {
 
     res.render("Vanya/others/milestone", {
       user: {
-        name: req.session.user.name,
-        email: req.session.user.email,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
+        subscription: user.subscription,
+        role: user.role,
       },
       activePage: "payment",
       job: jobDetails,
@@ -652,7 +786,14 @@ exports.getSubscription = async (req, res) => {
     res.render("Vanya/subscription", {
       user: {
         name: user.name,
+        email: user.email,
+        phone: user.phone,
+        picture: user.picture,
+        location: user.location,
+        socialMedia: user.socialMedia,
+        aboutMe: user.aboutMe,
         subscription: user.subscription || "Basic",
+        role: user.role,
       },
       activePage: "subscription",
     });

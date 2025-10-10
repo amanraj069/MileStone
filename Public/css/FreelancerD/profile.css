@@ -11,6 +11,15 @@ body {
   line-height: 1.6;
 }
 
+.main-content {
+  flex-grow: 1;
+  padding: 24px;
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -57,12 +66,12 @@ h1 {
 /* Profile Section */
 .profile-section {
   display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
+  align-items: flex-start;
+  gap: 20px;
   margin-bottom: 40px;
   background-color: white;
   border-radius: 12px;
-  padding: 40px;
+  padding: 30px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s;
 }
@@ -71,23 +80,37 @@ h1 {
   transform: translateY(-5px);
 }
 
-.profile-image {
-  width: 240px;
-  height: 240px;
+.profile-left {
+  flex-shrink: 0;
+}
+
+.profile-image-small {
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #1e88e5;
+  border: 3px solid #1e88e5;
   transition: border-color 0.3s;
 }
 
-.profile-image:hover {
+.profile-image-small:hover {
   border-color: #1e40af;
 }
 
-.profile-image img {
+.profile-image-small img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.profile-right {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Keep the old profile-image class for backward compatibility but hide it */
+.profile-image {
+  display: none;
 }
 
 .profile-info {
@@ -498,6 +521,13 @@ h1 {
 
   .profile-section {
     padding: 20px;
+    gap: 15px;
+  }
+
+  .profile-image-small {
+    width: 90px;
+    height: 90px;
+    border-width: 2px;
   }
 
   .profile-image {
