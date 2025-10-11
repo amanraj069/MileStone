@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payments & Milestones - ZeroGravity</title>
+    <title>Payments & Milestones</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -91,6 +91,44 @@
                 <p class="milestone-description">
                   <%= milestone.description %>
                 </p>
+
+                <!-- Sub-tasks Section -->
+                <% if (milestone.subTasks && milestone.subTasks.length > 0) { %>
+                <div class="subtasks-section">
+                  <div class="subtasks-header">
+                    <span class="subtasks-title">Sub-tasks Progress</span>
+                    <span class="subtasks-progress">
+                      <%= milestone.subTasks.filter(st => st.status === 'completed').length %>/<%= milestone.subTasks.length %>
+                    </span>
+                  </div>
+                  <div class="subtasks-list">
+                    <% milestone.subTasks.forEach(subTask => { %>
+                    <div class="subtask-item <%= subTask.status %>">
+                      <div class="subtask-status-icon">
+                        <% if (subTask.status === 'completed') { %>
+                          <i class="fas fa-check"></i>
+                        <% } else if (subTask.status === 'in-progress') { %>
+                          <i class="fas fa-clock"></i>
+                        <% } else { %>
+                          <i class="far fa-circle"></i>
+                        <% } %>
+                      </div>
+                      <span class="subtask-description"><%= subTask.description %></span>
+                      <% if (subTask.status === 'completed' && subTask.completedDate) { %>
+                        <span class="subtask-date">
+                          <i class="fas fa-calendar-check"></i>
+                          <%= new Date(subTask.completedDate).toLocaleDateString() %>
+                        </span>
+                      <% } %>
+                    </div>
+                    <% }); %>
+                  </div>
+                  <div class="subtasks-progress-bar">
+                    <div class="progress-bar" style="width: <%= milestone.completionPercentage || 0 %>%"></div>
+                  </div>
+                </div>
+                <% } %>
+
                 <div class="milestone-details">
                   <div class="milestone-detail">
                     <span class="detail-label">Amount</span>
@@ -150,8 +188,25 @@
           border-radius: 12px;
           width: 90%;
           max-width: 500px;
+          position: relative;
         "
       >
+        <button 
+          id="closePaymentModal" 
+          style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #64748b;
+            padding: 5px;
+          "
+        >
+          ×
+        </button>
         <h3 style="margin-bottom: 20px; color: #1e293b">Confirm Payment</h3>
         <p>
           <strong>Description:</strong> <span id="paymentDescription"></span>
@@ -206,7 +261,7 @@
         const paymentAmount = document.getElementById("paymentAmount");
 
         document
-          .querySelectorAll(".pay-btn:not(:disabled)")
+          .querySelectorAll(".payment-button:not(:disabled)")
           .forEach((button) => {
             button.addEventListener("click", () => {
               const jobId = button.dataset.jobId;
@@ -252,57 +307,43 @@
 
             const data = await response.json();
             if (data.success) {
-              const milestoneRow = document
-                .querySelector(`.pay-btn[data-milestone-id="${milestoneId}"]`)
-                .closest("tr");
-              milestoneRow.classList.remove("not-paid");
-              milestoneRow.classList.remove("requested");
-              milestoneRow.classList.add("paid");
-              milestoneRow.querySelector(".pay-btn").textContent = "Paid";
-              milestoneRow.querySelector(".pay-btn").disabled = true;
+              const milestoneCard = document
+                .querySelector(`.payment-button[data-milestone-id="${milestoneId}"]`)
+                .closest(".milestone-card");
+              milestoneCard.classList.remove("not-paid");
+              milestoneCard.classList.remove("requested");
+              milestoneCard.classList.add("paid");
+              const paymentButton = milestoneCard.querySelector(".payment-button");
+              paymentButton.innerHTML = '<i class="fas fa-check"></i> Paid';
+              paymentButton.disabled = true;
               paymentModal.style.display = "none";
 
-              const progressAmountElement = milestoneRow
-                .closest(".job-section")
-                .querySelector(".progress-amount");
-              const paidMatch =
-                progressAmountElement.textContent.match(/₹([\d,]+)/);
-              const totalMatch =
-                progressAmountElement.textContent.match(/of ₹([\d,]+)/);
-              if (!paidMatch || !totalMatch) {
-                throw new Error("Could not parse payment amounts");
+              // Update payment progress
+              const jobSection = milestoneCard.closest(".job-section");
+              const progressAmountElement = jobSection.querySelector(".progress-section:last-child .progress-percentage");
+              const currentText = progressAmountElement.textContent;
+              const paidMatch = currentText.match(/₹([\d,]+)/);
+              const totalMatch = currentText.match(/of ₹([\d,]+)/);
+              
+              if (paidMatch && totalMatch) {
+                const currentPaidAmount = parseFloat(paidMatch[1].replace(/,/g, ""));
+                const newPaidAmount = currentPaidAmount + parseFloat(paymentAmount.textContent.replace(/,/g, ""));
+                const totalAmount = parseFloat(totalMatch[1].replace(/,/g, ""));
+                const percentage = totalAmount > 0 ? Math.round((newPaidAmount / totalAmount) * 100) : 0;
+                
+                progressAmountElement.textContent = `₹${newPaidAmount.toLocaleString()} of ₹${totalAmount.toLocaleString()} (${percentage}%)`;
+                const paymentProgressBar = jobSection.querySelector(".progress-section:last-child .progress-bar");
+                paymentProgressBar.style.width = `${percentage}%`;
               }
-              const paidAmount =
-                parseFloat(paidMatch[1].replace(/,/g, "")) +
-                parseFloat(paymentAmount.textContent.replace(/,/g, ""));
-              const totalAmount = parseFloat(totalMatch[1].replace(/,/g, ""));
-              const percentage =
-                totalAmount > 0
-                  ? Math.round((paidAmount / totalAmount) * 100)
-                  : 0;
-              progressAmountElement.textContent = `₹${paidAmount.toLocaleString()} of ₹${totalAmount.toLocaleString()} (${percentage}%)`;
-              const paymentProgressBar = milestoneRow
-                .closest(".job-section")
-                .querySelector(".progress-section:last-child .progress-bar");
-              paymentProgressBar.style.width = `${percentage}%`;
 
-              const completedCount = milestoneRow
-                .closest(".job-section")
-                .querySelectorAll(".milestone-row.paid").length;
-              const totalCount = milestoneRow
-                .closest(".job-section")
-                .querySelectorAll(".milestone-row").length;
-              const completionPercentage =
-                totalCount > 0
-                  ? Math.round((completedCount / totalCount) * 100)
-                  : 0;
-              const completionPercentageElement = milestoneRow
-                .closest(".job-section")
-                .querySelector(".progress-percentage");
+              // Update completion progress
+              const completedCount = jobSection.querySelectorAll(".milestone-card.paid").length;
+              const totalCount = jobSection.querySelectorAll(".milestone-card").length;
+              const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+              
+              const completionPercentageElement = jobSection.querySelector(".progress-section:first-child .progress-percentage");
               completionPercentageElement.textContent = `${completionPercentage}%`;
-              const completionProgressBar = milestoneRow
-                .closest(".job-section")
-                .querySelector(".progress-section:first-child .progress-bar");
+              const completionProgressBar = jobSection.querySelector(".progress-section:first-child .progress-bar");
               completionProgressBar.style.width = `${completionPercentage}%`;
             }
           } catch (error) {
@@ -311,9 +352,9 @@
           }
         });
 
-        // Debug classes applied to milestone rows
-        document.querySelectorAll(".milestone-row").forEach((row) => {
-          console.log(`Milestone row classes: ${row.className}`);
+        // Debug classes applied to milestone cards
+        document.querySelectorAll(".milestone-card").forEach((card) => {
+          console.log(`Milestone card classes: ${card.className}`);
         });
       });
     </script>

@@ -38,7 +38,7 @@ const jobListingSchema = new Schema(
     },
     experienceLevel: {
       type: String,
-      enum: ["entry", "intermediate", "expert"],
+      enum: ["Entry", "Mid", "Senior"],
       required: true,
     },
     remote: {
@@ -70,12 +70,38 @@ const jobListingSchema = new Schema(
         payment: { type: String, required: true },
         status: {
           type: String,
-          enum: ["paid", "not-paid"],
+          enum: ["paid", "not-paid", "in-progress"],
           default: "not-paid",
         },
         requested: {
           type: Boolean,
           default: false,
+        },
+        subTasks: [
+          {
+            subTaskId: {
+              type: String,
+              default: uuidv4,
+            },
+            description: { type: String, required: true },
+            status: {
+              type: String,
+              enum: ["pending", "in-progress", "completed"],
+              default: "pending",
+            },
+            completedDate: {
+              type: Date,
+              default: null,
+            },
+            notes: {
+              type: String,
+              default: "",
+            },
+          },
+        ],
+        completionPercentage: {
+          type: Number,
+          default: 0,
         },
       },
     ],

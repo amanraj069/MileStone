@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Job</title>
+    <title>Create New Job</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -121,6 +122,17 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="imageUrl" class="required">Company Logo URL</label>
+                  <input
+                    type="url"
+                    id="imageUrl"
+                    name="imageUrl"
+                    required
+                  />
+                  <small class="form-hint">Enter the URL path for the company logo</small>
+                </div>
+
+                <div class="form-group">
                   <label for="description" class="required"
                     >Project Description</label
                   >
@@ -132,48 +144,16 @@
                   ></textarea>
                 </div>
 
-                <div class="form-grid two-col" style="margin-top: 30px;">
-                  <div class="form-group">
-                    <label for="budget" class="required"
-                      >Total Budget (₹)</label
-                    >
-                    <input
-                      type="number"
-                      id="budget"
-                      name="budget[amount]"
-                      placeholder="Enter total project budget"
-                      min="1000"
-                      required
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="budget-period" class="required">Payment Period</label>
-                    <select id="budget-period" name="budget[period]" required>
-                      <option value="">Select payment type</option>
-                      <option value="fixed">Fixed Price</option>
-                      <option value="hourly">Per Hour</option>
-                      <option value="milestone">Milestone Based</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-grid two-col">
-                  <div class="form-group">
-                    <label for="deadline" class="required">Project Deadline</label>
-                    <input type="date" id="deadline" name="applicationDeadline" required />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="jobType" class="required">Job Type</label>
-                    <select id="jobType" name="jobType" required>
-                      <option value="">Select job type</option>
-                      <option value="full-time">Full Time</option>
-                      <option value="part-time">Part Time</option>
-                      <option value="contract">Contract</option>
-                      <option value="freelance">Freelance</option>
-                    </select>
-                  </div>
+                <div class="form-group">
+                  <label for="budget" class="required">Budget Amount (₹)</label>
+                  <input
+                    type="number"
+                    id="budget"
+                    name="budget[amount]"
+                    placeholder="Enter total project budget"
+                    min="1000"
+                    required
+                  />
                 </div>
 
                 <div class="form-grid two-col">
@@ -183,27 +163,44 @@
                       type="text"
                       id="location"
                       name="location"
-                      placeholder="e.g., Remote, Mumbai, India"
+                      placeholder="e.g., Remote"
                     />
                   </div>
 
                   <div class="form-group">
+                    <label for="jobType" class="required">Job Type</label>
+                    <select id="jobType" name="jobType" required>
+                      <option value="">Select job type</option>
+                      <option value="full-time">Full-time</option>
+                      <option value="part-time">Part-time</option>
+                      <option value="contract">Contract</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-grid two-col">
+                  <div class="form-group">
                     <label for="experienceLevel" class="required">Experience Level</label>
                     <select id="experienceLevel" name="experienceLevel" required>
                       <option value="">Select experience level</option>
-                      <option value="entry">Entry Level (0-2 years)</option>
-                      <option value="intermediate">Intermediate (2-5 years)</option>
-                      <option value="expert">Expert (5+ years)</option>
+                      <option value="Entry">Entry Level</option>
+                      <option value="Mid">Mid Level</option>
+                      <option value="Senior">Senior Level</option>
                     </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="deadline" class="required">Application Deadline</label>
+                    <input type="date" id="deadline" name="applicationDeadline" required />
                   </div>
                 </div>
 
                 <div class="form-group">
                   <div class="checkbox-group">
                     <label class="checkbox-label">
-                      <input type="checkbox" name="remote" value="true" />
+                      <input type="checkbox" id="remote" name="remote" value="true" />
                       <span class="checkmark"></span>
-                      This is a remote position
+                      Remote Work Available
                     </label>
                   </div>
                 </div>
@@ -218,34 +215,20 @@
 
                 <div class="form-group">
                   <label for="responsibilities" class="required"
-                    >Key Responsibilities</label
+                    >Key Responsibilities (one per line)</label
                   >
                   <textarea
                     id="responsibilities"
-                    name="description[responsibilities]"
-                    placeholder="List the main responsibilities and tasks (one per line)&#10;• Develop responsive web application&#10;• Implement user authentication&#10;• Create RESTful APIs"
+                    name="responsibilities"
                     required
                   ></textarea>
                 </div>
 
                 <div class="form-group">
-                  <label for="requirements" class="required"
-                    >Technical Requirements</label
-                  >
-                  <textarea
-                    id="requirements"
-                    name="description[requirements]"
-                    placeholder="Specify technical requirements and qualifications (one per line)&#10;• 3+ years experience with React.js&#10;• Knowledge of Node.js and MongoDB&#10;• Experience with Git version control"
-                    required
-                  ></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="skills" class="required">Required Skills</label>
+                  <label for="skills" class="required">Required Skills & Requirements (one per line)</label>
                   <textarea
                     id="skills"
-                    name="description[skills]"
-                    placeholder="List required skills separated by commas&#10;React.js, Node.js, MongoDB, Express.js, HTML5, CSS3, JavaScript"
+                    name="skills"
                     required
                   ></textarea>
                 </div>
@@ -254,7 +237,7 @@
               <!-- Milestones Section -->
               <div class="form-section" id="section-3">
                 <h2 class="section-title">
-                  <i class="fas fa-flag-checkered"></i>
+                  <i class="fas fa-rocket"></i>
                   Project Milestones
                 </h2>
 
@@ -285,7 +268,6 @@
               <div class="form-actions">
                 <div class="error-message" id="errorMessage"></div>
                 <button type="submit" class="submit-btn">
-                  <i class="fas fa-rocket"></i>
                   Create Job Listing
                 </button>
               </div>
@@ -300,235 +282,6 @@
       <i class="fas fa-question"></i>
     </div>
 
-    <script>
-      let milestoneCount = 0;
-
-      // Update progress indicator
-      function updateProgress() {
-        const form = document.getElementById("jobForm");
-        const formData = new FormData(form);
-
-        // Check basic info completion
-        const basicComplete = 
-          formData.get("title")?.trim() &&
-          formData.get("category")?.trim() &&
-          formData.get("description[text]")?.trim() &&
-          formData.get("budget[amount]")?.trim() &&
-          formData.get("budget[period]")?.trim() &&
-          formData.get("applicationDeadline")?.trim() &&
-          formData.get("jobType")?.trim() &&
-          formData.get("experienceLevel")?.trim();
-
-        // Check requirements completion
-        const reqComplete = 
-          formData.get("description[responsibilities]")?.trim() &&
-          formData.get("description[requirements]")?.trim() &&
-          formData.get("description[skills]")?.trim();
-
-        // Check milestones
-        const milestonesComplete = milestoneCount > 0;
-
-        // Update step indicators
-        updateStepStatus("step-1", basicComplete);
-        updateStepStatus("step-2", reqComplete);
-        updateStepStatus("step-3", milestonesComplete);
-        updateStepStatus(
-          "step-4",
-          basicComplete && reqComplete && milestonesComplete
-        );
-      }
-
-      function updateStepStatus(stepId, completed) {
-        const step = document.getElementById(stepId);
-        step.classList.toggle("completed", completed);
-        step.classList.toggle("active", !completed);
-      }
-
-      // Add milestone function
-      function addMilestone() {
-        milestoneCount++;
-        const container = document.getElementById("milestones");
-        const emptyState = document.getElementById("empty-state");
-
-        if (emptyState) {
-          emptyState.style.display = "none";
-        }
-
-        const milestoneHtml = `
-          <div class="milestone-item" id="milestone-${milestoneCount}">
-            <div class="milestone-header">
-              <div class="milestone-number">${milestoneCount}</div>
-              <button type="button" class="remove-milestone-btn" onclick="removeMilestone(${milestoneCount})">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="required">Milestone Description</label>
-                <textarea 
-                  name="milestones[${milestoneCount}][description]" 
-                  placeholder="Describe what will be delivered in this milestone..."
-                  required
-                ></textarea>
-              </div>
-            </div>
-            
-            <div class="form-grid two-col">
-              <div class="form-group">
-                <label class="required">Deadline</label>
-                <input 
-                  type="date" 
-                  name="milestones[${milestoneCount}][deadline]" 
-                  required 
-                />
-              </div>
-              <div class="form-group">
-                <label class="required">Payment Amount (₹)</label>
-                <input 
-                  type="number" 
-                  name="milestones[${milestoneCount}][payment]" 
-                  placeholder="Amount for this milestone"
-                  min="100" 
-                  step="0.01" 
-                  required 
-                />
-              </div>
-            </div>
-          </div>
-        `;
-
-        container.insertAdjacentHTML("beforeend", milestoneHtml);
-        updateProgress();
-
-        // Animate the new milestone
-        const newMilestone = document.getElementById(
-          `milestone-${milestoneCount}`
-        );
-        newMilestone.style.opacity = "0";
-        newMilestone.style.transform = "translateY(20px)";
-        setTimeout(() => {
-          newMilestone.style.transition = "all 0.5s ease";
-          newMilestone.style.opacity = "1";
-          newMilestone.style.transform = "translateY(0)";
-        }, 100);
-      }
-
-      // Remove milestone function
-      function removeMilestone(id) {
-        const milestone = document.getElementById(`milestone-${id}`);
-        milestone.style.transition = "all 0.3s ease";
-        milestone.style.opacity = "0";
-        milestone.style.transform = "translateX(-100%)";
-
-        setTimeout(() => {
-          milestone.remove();
-          milestoneCount--;
-
-          if (milestoneCount === 0) {
-            document.getElementById("empty-state").style.display = "block";
-          }
-
-          // Renumber remaining milestones
-          const remainingMilestones =
-            document.querySelectorAll(".milestone-item");
-          remainingMilestones.forEach((milestone, index) => {
-            const newNumber = index + 1;
-            milestone.querySelector(".milestone-number").textContent =
-              newNumber;
-            milestone.id = `milestone-${newNumber}`;
-
-            // Update form field names
-            const inputs = milestone.querySelectorAll("input, textarea");
-            inputs.forEach((input) => {
-              const name = input.name;
-              if (name) {
-                input.name = name.replace(/\[\d+\]/, `[${newNumber}]`);
-              }
-            });
-          });
-
-          milestoneCount = remainingMilestones.length;
-          updateProgress();
-        }, 300);
-      }
-
-      // Form validation and submission
-      function validateForm() {
-        const form = document.getElementById("jobForm");
-        const errorMessage = document.getElementById("errorMessage");
-
-        // Check if total milestone payments match budget
-        const budget = parseFloat(document.getElementById("budget").value) || 0;
-        const milestonePayments = Array.from(
-          document.querySelectorAll('input[name$="[payment]"]')
-        ).reduce((sum, input) => sum + (parseFloat(input.value) || 0), 0);
-
-        if (milestoneCount === 0) {
-          errorMessage.textContent =
-            "Please add at least one milestone to your project.";
-          errorMessage.style.display = "block";
-          return false;
-        }
-
-        if (Math.abs(budget - milestonePayments) > 1) {
-          errorMessage.textContent = `Total milestone payments (₹${milestonePayments.toLocaleString()}) should equal the project budget (₹${budget.toLocaleString()}).`;
-          errorMessage.style.display = "block";
-          return false;
-        }
-
-        errorMessage.style.display = "none";
-        return true;
-      }
-
-      // Event listeners
-      document.addEventListener("DOMContentLoaded", () => {
-        // Add milestone button
-        document
-          .getElementById("addMilestoneBtn")
-          .addEventListener("click", addMilestone);
-
-        // Form submission
-        document.getElementById("jobForm").addEventListener("submit", (e) => {
-          if (!validateForm()) {
-            e.preventDefault();
-            return false;
-          }
-          
-          // Process skills field to ensure proper formatting
-          const skillsField = document.querySelector('textarea[name="description[skills]"]');
-          if (skillsField && skillsField.value) {
-            // Convert comma-separated to line-separated for backend compatibility
-            const skills = skillsField.value
-              .split(/[,\n]/)
-              .map(skill => skill.trim())
-              .filter(skill => skill)
-              .join('\n');
-            skillsField.value = skills;
-          }
-        });
-
-        // Progress tracking
-        const form = document.getElementById("jobForm");
-        form.addEventListener("input", updateProgress);
-        form.addEventListener("change", updateProgress);
-
-        // Floating help
-        document
-          .querySelector(".floating-help")
-          .addEventListener("click", () => {
-            alert(
-              "Need help creating your job listing?\n\n• Be specific about your requirements\n• Break your project into clear milestones\n• Set realistic deadlines and budgets\n• Include all necessary technical details"
-            );
-          });
-
-        // Set minimum date to today
-        const dateInputs = document.querySelectorAll('input[type="date"]');
-        const today = new Date().toISOString().split("T")[0];
-        dateInputs.forEach((input) => {
-          input.min = today;
-        });
-      });
-    </script>
+    <script src="/js/EmployerD/new_job.js"></script>
   </body>
 </html>

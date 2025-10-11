@@ -208,13 +208,17 @@ const employerController = {
     try {
       const {
         title,
+        category,
+        imageUrl,
+        description,
         budget,
         location,
         jobType,
         experienceLevel,
         remote,
         applicationDeadline,
-        description,
+        responsibilities,
+        skills,
         milestones,
       } = req.body;
 
@@ -228,44 +232,57 @@ const employerController = {
       const user = await User.findOne({ userId });
       const employerImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
 
+      // Parse milestones array if it's not already parsed
+      let parsedMilestones = [];
+      if (milestones && typeof milestones === 'object') {
+        parsedMilestones = Object.values(milestones);
+      } else if (Array.isArray(milestones)) {
+        parsedMilestones = milestones;
+      }
+
       const newJob = new JobListing({
         employerId,
         imageUrl: employerImageUrl,
         title,
         budget: {
-          amount: Number(budget.amount),
-          period: budget.period,
+          amount: Number(budget?.amount) || Number(budget) || 0,
+          period: budget?.period || "fixed",
         },
-        location,
-        jobType,
-        experienceLevel,
-        remote: remote === "true",
-        applicationDeadline,
+        location: location || "Remote",
+        jobType: jobType || "contract",
+        experienceLevel: experienceLevel || "Mid",
+        remote: remote === "true" || remote === true,
+        applicationDeadline: new Date(applicationDeadline),
         description: {
-          text: description?.text || '',
-          responsibilities: description?.responsibilities
-            ? description.responsibilities.split("\n").filter((r) => r.trim())
-            : [],
-          requirements: description?.requirements
-            ? description.requirements.split("\n").filter((r) => r.trim())
-            : [],
-          skills: description?.skills
-            ? description.skills.split("\n").filter((s) => s.trim())
-            : [],
+          text: description?.text || description || "",
+          responsibilities: responsibilities ? responsibilities.split("\n").filter((r) => r.trim()) : [],
+          requirements: [], // No longer using separate requirements field
+          skills: skills ? skills.split(/[,\n]/).map(s => s.trim()).filter((s) => s) : [],
         },
-        milestones: milestones && Array.isArray(milestones) ? milestones.map((m) => ({
-          description: m.description,
-          deadline: m.deadline,
-          payment: m.payment,
+        milestones: parsedMilestones.map((m) => ({
+          description: m.description || "",
+          deadline: m.deadline || "",
+          payment: m.payment || "0",
           status: "not-paid",
           requested: false,
-        })) : [],
+          subTasks: m.subTasks ? Object.values(m.subTasks).map((st) => ({
+            description: st.description || "",
+            status: "pending",
+            completedDate: null,
+            notes: "",
+          })) : [],
+          completionPercentage: 0,
+        })),
       });
 
       await newJob.save();
       res.redirect("/employerD/job_listings");
     } catch (error) {
       console.error("Error creating job listing:", error.message);
+      console.error("Full error:", error);
+      console.error("Request body:", JSON.stringify(req.body, null, 2));
+      console.error("Description value:", description);
+      console.error("Experience Level value:", experienceLevel);
       res.status(500).send("Error creating job listing: " + error.message);
     }
   },
@@ -343,6 +360,14 @@ const employerController = {
           payment: m.payment,
           status: m.status || "not-paid",
           requested: m.requested === "true" || m.requested === true,
+          subTasks: m.subTasks ? m.subTasks.map((st) => ({
+            subTaskId: st.subTaskId || require('uuid').v4(),
+            description: st.description,
+            status: st.status || "pending",
+            completedDate: st.completedDate || null,
+            notes: st.notes || "",
+          })) : [],
+          completionPercentage: m.completionPercentage || 0,
         })),
       };
 
@@ -823,6 +848,8 @@ const employerController = {
             deadline: m.deadline || "No deadline",
             status: m.status,
             requested: isRequested,
+            subTasks: m.subTasks || [],
+            completionPercentage: m.completionPercentage || 0,
           };
         });
 
@@ -984,9 +1011,6 @@ const employerController = {
 
       // Create complaint data
       const submittedById = req.session.user.id; // Fixed: use 'id' instead of 'userId'
-      console.log("DEBUG: req.session.user.id =", submittedById);
-      console.log("DEBUG: typeof submittedById =", typeof submittedById);
-
       const complaintData = {
         submittedBy: submittedById,
         againstUser:
@@ -995,6 +1019,135 @@ const employerController = {
         complaintType: complaintType || "Job Related",
         jobId: jobId,
         issue: issue || "Issue with freelancer regarding job completion",
+        status: "pending",
+      };
+
+      console.log("Creating complaint with data:", complaintData);
+
+      // Create complaint
+      const complaint = new Complaint(complaintData);
+      const savedComplaint = await complaint.save();
+
+      console.log("Complaint saved successfully:", savedComplaint);
+
+      res.json({
+        success: true,
+        message: "Complaint submitted successfully",
+        complaintId: savedComplaint.complaintId,
+      });
+    } catch (error) {
+      console.error("Error submitting complaint:", error);
+      console.error("Error stack:", error.stack);
+      res
+        .status(500)
+        .json({ error: "Failed to submit complaint", details: error.message });
+    }
+  },
+
+  getComplaintForm: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+      const jobId = req.query.jobId;
+
+      if (!userId) {
+        return res.redirect('/login');
+      }
+
+      // Get user information
+      const user = await User.findOne({ userId }).lean();
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      let job = null;
+      if (jobId) {
+        // Get job information if jobId is provided
+        job = await JobListing.findOne({ 
+          jobId: jobId,
+          employerId: req.session.user.roleId 
+        }).lean();
+        
+        if (job) {
+          // Get freelancer information if assigned
+          if (job.assignedFreelancer && job.assignedFreelancer.freelancerId) {
+            const freelancer = await Freelancer.findOne({ 
+              freelancerId: job.assignedFreelancer.freelancerId 
+            }).lean();
+            if (freelancer) {
+              job.assignedFreelancer.name = freelancer.name;
+            }
+          }
+        }
+      }
+
+      res.render("Abhishek/complaint_form", {
+        user: {
+          name: user.name,
+          picture: user.picture,
+          role: user.role,
+          email: user.email
+        },
+        job: job,
+        activePage: "current_jobs",
+      });
+    } catch (error) {
+      console.error("Error loading complaint form:", error.message);
+      res.status(500).send("Error loading complaint form: " + error.message);
+    }
+  },
+
+  submitComplaintForm: async (req, res) => {
+    try {
+      const { 
+        jobId, 
+        againstUser, 
+        complaintType, 
+        priority, 
+        issue, 
+        expectedResolution,
+        contactEmail,
+        preferredContact
+      } = req.body;
+      
+      if (!req.session.user) {
+        return res.status(401).json({ error: "Unauthorized: Please log in" });
+      }
+
+      // Validate required fields
+      if (!complaintType || !issue) {
+        return res.status(400).json({ error: "Complaint type and issue description are required" });
+      }
+
+      if (issue.trim().length < 5) {
+        return res.status(400).json({ error: "Issue description must be at least 5 characters" });
+      }
+
+      // Get job details if jobId is provided
+      let job = null;
+      let finalAgainstUser = againstUser;
+      
+      if (jobId) {
+        job = await JobListing.findOne({ jobId: jobId }).lean();
+        
+        if (job && job.assignedFreelancer && !finalAgainstUser) {
+          finalAgainstUser = job.assignedFreelancer.freelancerId;
+        }
+      }
+
+      // Create complaint data
+      const submittedById = req.session.user.id;
+      console.log("DEBUG: req.session.user.id =", submittedById);
+
+      const complaintData = {
+        submittedBy: submittedById,
+        againstUser: finalAgainstUser || 'general',
+        complaintType: complaintType,
+        jobId: jobId || '',
+        issue: issue.trim(),
+        priority: priority || 'Medium',
+        expectedResolution: expectedResolution ? expectedResolution.trim() : '',
+        contactEmail: contactEmail || req.session.user.email || '',
+        preferredContact: preferredContact || 'email',
         status: "pending",
       };
 
