@@ -105,5 +105,222 @@
         <% } %>
       </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get DOM elements
+        const searchInput = document.querySelector('.search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const jobCards = document.querySelectorAll('.job-card');
+        
+        let currentFilter = 'All Jobs';
+        
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+          filterJobs();
+        });
+        
+        // Filter button functionality
+        filterButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Update current filter
+            currentFilter = this.textContent.trim();
+            
+            // Filter jobs
+            filterJobs();
+          });
+        });
+        
+        function filterJobs() {
+          const searchTerm = searchInput.value.toLowerCase().trim();
+          let visibleCount = 0;
+          
+          jobCards.forEach(card => {
+            const jobTitle = card.querySelector('.job-title').textContent.toLowerCase();
+            const jobPrice = card.querySelector('.job-price').textContent.toLowerCase();
+            const techTags = Array.from(card.querySelectorAll('.tech-tag')).map(tag => tag.textContent.toLowerCase());
+            const jobMeta = card.querySelector('.job-meta').textContent.toLowerCase();
+            
+            // Check if search term matches
+            const matchesSearch = searchTerm === '' || 
+              jobTitle.includes(searchTerm) ||
+              jobPrice.includes(searchTerm) ||
+              techTags.some(tag => tag.includes(searchTerm)) ||
+              jobMeta.includes(searchTerm);
+            
+            // Check if filter matches
+            const matchesFilter = checkFilterMatch(card, currentFilter);
+            
+            // Show/hide job card based on both search and filter
+            if (matchesSearch && matchesFilter) {
+              card.style.display = 'flex';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+          
+          // Show/hide no results message
+          updateNoResultsMessage(visibleCount);
+        }
+        
+        function checkFilterMatch(card, filter) {
+          const jobMeta = card.querySelector('.job-meta').textContent.toLowerCase();
+          const postedDaysAgo = extractDaysAgo(card);
+          
+          switch (filter) {
+            case 'All Jobs':
+              return true;
+              
+            case 'Recent':
+              return postedDaysAgo <= 7; // Jobs posted within last 7 days
+              
+            case 'Remote':
+              return jobMeta.includes('remote') || jobMeta.includes('work from home');
+              
+            case 'Full-time':
+              return jobMeta.includes('full-time') || jobMeta.includes('full time');
+              
+            case 'Part-time':
+              return jobMeta.includes('part-time') || jobMeta.includes('part time');
+              
+            default:
+              return true;
+          }
+        }
+        
+        function extractDaysAgo(card) {
+          const metaText = card.querySelector('.job-meta').textContent;
+          const match = metaText.match(/Posted (\d+) days ago/);
+          return match ? parseInt(match[1]) : 0;
+        }
+        
+        function updateNoResultsMessage(visibleCount) {
+          let noResultsMsg = document.querySelector('.no-results-message');
+          
+          if (visibleCount === 0 && jobCards.length > 0) {
+            // Create no results message if it doesn't exist
+            if (!noResultsMsg) {
+              noResultsMsg = document.createElement('div');
+              noResultsMsg.className = 'no-results-message';
+              noResultsMsg.innerHTML = `
+                <div style="text-align: center; padding: 50px; color: #666;">
+                  <i class="fas fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
+                  <h3>No jobs found</h3>
+                  <p>Try adjusting your search criteria or filters</p>
+                </div>
+              `;
+              
+              // Insert after the last job card or at the end of content
+              const contentCard = document.querySelector('.content-card');
+              contentCard.appendChild(noResultsMsg);
+            }
+            noResultsMsg.style.display = 'block';
+          } else if (noResultsMsg) {
+            noResultsMsg.style.display = 'none';
+          }
+        }
+        
+        // Add some helper functions for better search experience
+        
+        // Debounce search to improve performance
+        function debounce(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+        
+        // Replace the direct input listener with debounced version
+        const debouncedFilter = debounce(filterJobs, 300);
+        searchInput.removeEventListener('input', filterJobs);
+        searchInput.addEventListener('input', debouncedFilter);
+        
+        // Add search placeholder animation
+        const placeholders = [
+          'Search jobs, companies...',
+          'Try "React", "Node.js"...',
+          'Search by location...',
+          'Find your next opportunity...'
+        ];
+        
+        let placeholderIndex = 0;
+        
+        function animatePlaceholder() {
+          if (searchInput.value === '') {
+            searchInput.placeholder = placeholders[placeholderIndex];
+            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+          }
+        }
+        
+        // Change placeholder every 3 seconds
+        setInterval(animatePlaceholder, 3000);
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+          // Ctrl/Cmd + K to focus search
+          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInput.focus();
+          }
+          
+          // Escape to clear search
+          if (e.key === 'Escape' && document.activeElement === searchInput) {
+            searchInput.value = '';
+            filterJobs();
+          }
+        });
+        
+        // Add search results counter
+        function updateResultsCounter() {
+          const visibleJobs = Array.from(jobCards).filter(card => card.style.display !== 'none').length;
+          const totalJobs = jobCards.length;
+          
+          let counter = document.querySelector('.results-counter');
+          if (!counter) {
+            counter = document.createElement('div');
+            counter.className = 'results-counter';
+            counter.style.cssText = `
+              color: #666;
+              font-size: 14px;
+              margin-bottom: 20px;
+              padding: 10px 0;
+              border-bottom: 1px solid #eee;
+            `;
+            
+            const contentCard = document.querySelector('.content-card');
+            const firstJobCard = document.querySelector('.job-card');
+            if (firstJobCard) {
+              contentCard.insertBefore(counter, firstJobCard);
+            }
+          }
+          
+          if (searchInput.value.trim() !== '' || currentFilter !== 'All Jobs') {
+            counter.textContent = `Showing ${visibleJobs} of ${totalJobs} jobs`;
+            counter.style.display = 'block';
+          } else {
+            counter.style.display = 'none';
+          }
+        }
+        
+        // Update the filterJobs function to include results counter
+        const originalFilterJobs = filterJobs;
+        filterJobs = function() {
+          originalFilterJobs();
+          updateResultsCounter();
+        };
+      });
+    </script>
   </body>
 </html>
