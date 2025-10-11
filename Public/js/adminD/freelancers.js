@@ -1,38 +1,75 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Placeholder for future interactivity (e.g., chat or delete actions)
-    const chatButtons = document.querySelectorAll('.btn-primary');
-    const deleteButtons = document.querySelectorAll('.btn-danger');
+function validateSearch() {
+  const searchInput = document.getElementById("searchInput").value.trim();
+  if (searchInput.length < 1) {
+    alert("Please enter a search term");
+    return false;
+  }
+  return true;
+}
 
-    chatButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            console.log('Chat button clicked'); // Replace with actual chat logic
-        });
+async function deleteFreelancer(userId) {
+  if (confirm("Are you sure you want to delete this freelancer?")) {
+    try {
+      const response = await fetch(`/adminD/freelancers/${userId}`, {
+        method: "DELETE",
+      });
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        window.location.reload();
+      } else {
+        alert(result.message || "Failed to delete freelancer");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server error");
+    }
+  }
+}
+
+function editRating(userId, currentRating, userType) {
+  const newRating = prompt(
+    `Enter new rating for this ${userType} (1-5):`,
+    currentRating
+  );
+
+  if (newRating === null) return; // User cancelled
+
+  const rating = parseFloat(newRating);
+
+  if (isNaN(rating) || rating < 1 || rating > 5) {
+    alert("Please enter a valid rating between 1 and 5");
+    return;
+  }
+
+  updateRating(userId, rating, userType);
+}
+
+async function updateRating(userId, rating, userType) {
+  try {
+    const endpoint =
+      userType === "freelancer"
+        ? `/adminD/freelancers/${userId}/rating`
+        : `/adminD/employers/${userId}/rating`;
+
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ rating }),
     });
 
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            alert('Delete button clicked'); // Replace with actual delete logic
-        });
-    });
+    const result = await response.json();
 
-    // Search functionality
-    const searchInput = document.querySelector('.search-bar input[name="q"]');
-    const userCards = document.querySelectorAll('.user-card');
-    const searchForm = document.querySelector('.search-bar form');
-
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-    });
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        userCards.forEach(card => {
-            const text = card.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
-        });
-    });
-});
+    if (response.ok) {
+      alert(result.message);
+      window.location.reload();
+    } else {
+      alert(result.message || `Failed to update ${userType} rating`);
+    }
+  } catch (error) {
+    console.error(`Error updating ${userType} rating:`, error);
+    alert("Server error");
+  }
+}

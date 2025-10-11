@@ -6,8 +6,9 @@
     <title>Payments & Milestones - ZeroGravity</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      href="/fontawesome/css/all.min.css"
     />
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
     <link rel="stylesheet" href="/css/EmployerD/milestone.css" />
   </head>
   <body>
@@ -51,7 +52,7 @@
                 <div class="progress-bar-container">
                   <div
                     class="progress-bar"
-                    style="width: <%= job.progress.completionPercentage %>%"
+                    data-width="<%= job.progress.completionPercentage %>"
                   ></div>
                 </div>
               </div>
@@ -67,7 +68,7 @@
                 <div class="progress-bar-container">
                   <div
                     class="progress-bar"
-                    style="width: <%= job.progress.payment.percentage %>%"
+                    data-width="<%= job.progress.payment.percentage %>"
                   ></div>
                 </div>
               </div>
@@ -314,6 +315,12 @@
         // Debug classes applied to milestone rows
         document.querySelectorAll(".milestone-row").forEach((row) => {
           console.log(`Milestone row classes: ${row.className}`);
+        });
+
+        // Initialize progress bars from data-width attributes
+        document.querySelectorAll(".progress-bar[data-width]").forEach((bar) => {
+          const width = bar.getAttribute("data-width");
+          bar.style.width = `${width}%`;
         });
       });
     </script>

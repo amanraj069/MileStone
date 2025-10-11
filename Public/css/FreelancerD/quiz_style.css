@@ -234,3 +234,8 @@
       padding: 24px;
     }
   }
+
+/* Utility classes */
+.hidden {
+  display: none !important;
+}

@@ -1,23 +1,4 @@
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f5fa;
-    color: #333;
-}
-
-/* Main Content */
-.main-content {
-    margin-left: 290px;
-    padding: 30px;
-    min-height: 100vh;
-    background-color: #f0f5fa;
-}
+/* Submit Complaint Page Specific Styles */
 
 /* Notification Banner */
 .notification-banner {
@@ -61,7 +42,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
     font-size: 14px;
     color: white;
 }
@@ -70,8 +50,20 @@ body {
     background-color: #10b981;
 }
 
+.notification-banner.success .banner-icon::before {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
 .notification-banner.error .banner-icon {
     background-color: #ef4444;
+}
+
+.notification-banner.error .banner-icon::before {
+    content: "\f00d";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
 }
 
 .banner-message {
@@ -83,7 +75,7 @@ body {
 .banner-close {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 18px;
     color: #9ca3af;
     cursor: pointer;
     padding: 0;
@@ -129,10 +121,15 @@ body {
     text-decoration: none;
 }
 
+.back-btn i {
+    font-size: 14px;
+}
+
 .back-btn:hover {
     background: #0056b3;
     color: white;
     text-decoration: none;
+    transform: translateX(-2px);
 }
 
 .header-section h1 {
@@ -180,13 +177,8 @@ body {
     gap: 10px;
 }
 
-.job-info-card h3::before {
-    content: "📋";
-    font-size: 1.1em;
-}
-
-.complaint-form-card h3::before {
-    content: "⚠️";
+.job-info-card h3 i, .complaint-form-card h3 i {
+    color: #007bff;
     font-size: 1.1em;
 }
 
@@ -237,6 +229,14 @@ body {
 .form-group label {
     font-weight: 600;
     color: #333;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-group label i {
+    color: #007bff;
     font-size: 14px;
 }
 
@@ -295,6 +295,14 @@ body {
     transition: all 0.3s ease;
     border: none;
     min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-cancel i, .btn-submit i {
+    font-size: 14px;
 }
 
 .btn-cancel {
@@ -327,7 +335,13 @@ body {
 }
 
 /* Loading Animation */
-.spinner {
+.btn-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fa-spinner {
     animation: spin 1s linear infinite;
 }
 
@@ -392,4 +406,3 @@ body {
         margin-left: 0;
     }
 }
-

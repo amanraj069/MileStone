@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Default admin image
+    const defaultImageUrl = 'https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg?semt=ais_hybrid&w=740';
+    
     // Load profile data from localStorage if available
     loadProfileData();
 });
 
-function loadProfileData() {;
+function loadProfileData() {
+    const defaultImageUrl = 'https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg?semt=ais_hybrid&w=740';
     const savedProfile = localStorage.getItem('adminProfile');
 
     if (savedProfile) {

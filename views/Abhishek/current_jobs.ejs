@@ -6,8 +6,9 @@
     <title>Current Jobs - Dashboard</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      href="/fontawesome/css/all.min.css"
     />
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
     <link rel="stylesheet" href="/css/EmployerD/current_jobs.css" />
   </head>
   <body>
@@ -87,7 +88,7 @@
             <button
               class="btn btn-danger"
               data-job-id="<%= freelancerData.jobId %>"
-              data-freelancer-id="<%= freelancerData.freelancer.freelancerId %>"
+              data-freelancer-id="<%= freelancerData.freelancer.id %>"
             >
               Raise Complaint
             </button>
@@ -141,5 +142,7 @@
         <% } %>
       </div>
     </div>
+
+    <script src="/js/EmployerD/current_jobs.js"></script>
   </body>
 </html>

@@ -1,58 +1,5 @@
 /* Edit Profile Page - Employer Dashboard Styling */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8fafc;
-  color: #334155;
-  line-height: 1.6;
-}
-
-.dashboard-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  margin-left: 260px;
-  padding: 30px;
-  background-color: #f8fafc;
-}
-
-.page-header {
-  background: white;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-  border-left: 4px solid #2563eb;
-}
-
-.page-title {
-  font-size: 28px;
-  color: #1e293b;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.page-subtitle {
-  color: #64748b;
-  font-size: 16px;
-}
-
-.content-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-}
-
 .form-section {
   margin-bottom: 35px;
 }

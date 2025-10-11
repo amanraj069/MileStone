@@ -85,16 +85,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  const complainButtons = document.querySelectorAll(".raise-complaint-btn");
+  // Handle both old and new complaint button selectors
+  const complainButtons = document.querySelectorAll(".raise-complaint-btn, .btn-danger[data-job-id]");
   const chatButtons = document.querySelectorAll(".chat-btn");
   const seeMoreButtons = document.querySelectorAll(".see-more-btn");
   const markFinishedButtons = document.querySelectorAll(".mark-finished-btn");
 
   complainButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
       const jobId = button.getAttribute('data-job-id');
-      // Redirect to the dedicated complaint submission page
-      window.location.href = `/employerD/submit-complaint/${jobId}`;
+      if (jobId) {
+        // Redirect to the dedicated complaint submission page
+        window.location.href = `/employerD/submit-complaint/${jobId}`;
+      } else {
+        alert('Job ID not found. Please try again.');
+      }
     });
   });
 

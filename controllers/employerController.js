@@ -935,6 +935,51 @@ const employerController = {
       res.status(500).json({ error: "Failed to submit complaint", details: error.message });
     }
   },
+
+  uploadProfileImage: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+
+      if (!userId) {
+        return res.status(400).json({ success: false, message: "User ID not found in session" });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: "No image file provided" });
+      }
+
+      // Upload image to Cloudinary
+      const uploadResult = await uploadToCloudinary(req.file.buffer);
+      const pictureUrl = uploadResult.secure_url;
+
+      // Update user's picture in database
+      const user = await User.findOneAndUpdate(
+        { userId },
+        { $set: { picture: pictureUrl } },
+        { new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+
+      // Update session
+      req.session.user.picture = user.picture;
+
+      res.json({ 
+        success: true, 
+        message: "Profile image updated successfully",
+        imageUrl: pictureUrl 
+      });
+
+    } catch (error) {
+      console.error("Error uploading profile image:", error.message);
+      res.status(500).json({ 
+        success: false, 
+        message: "Failed to upload image: " + error.message 
+      });
+    }
+  },
 };
 
 module.exports = employerController;

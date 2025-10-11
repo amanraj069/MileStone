@@ -1,34 +1,6 @@
 /* New Job Listing Page - Professional Dashboard Styling */
 
-/* Global Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  min-height: 100vh;
-  line-height: 1.6;
-  color: #1e293b;
-}
-
-/* Dashboard Layout */
-.dashboard-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-
-.main-content {
-  flex: 1;
-  margin-left: 260px;
-  padding: 40px;
-  transition: all 0.3s ease;
-}
-
-/* Page Header */
+/* Page Header - Custom styling for this page */
 .page-header {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
   color: white;
