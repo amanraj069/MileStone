@@ -3,280 +3,570 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Employers</title>
-    <link rel="stylesheet" href="/css/adminD/sidebar.css" />
-    <link rel="stylesheet" href="/css/adminD/employers.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Employers Management - Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 20px;
+        min-height: 100vh;
+        max-width: calc(100vw - 280px);
+        overflow-x: hidden;
+      }
+
+      .page-header {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #2563eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .content-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        margin-bottom: 20px;
+      }
+
+      .search-container {
+        margin-bottom: 25px;
+      }
+
+      .search-form {
+        display: flex;
+        align-items: center;
+        max-width: 600px;
+        position: relative;
+        gap: 10px;
+      }
+
+      .search-input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        background: white;
+      }
+
+      .search-button {
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .search-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      }
+
+      .clear-search {
+        background: linear-gradient(45deg, #ef4444, #dc2626);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .clear-search:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        border-left: 4px solid #2563eb;
+      }
+
+      .stat-number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .user-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px;
+      }
+
+      .user-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e1e5e9;
+      }
+
+      .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .user-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 3px solid #e1e5e9;
+        flex-shrink: 0;
+      }
+
+      .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .user-info {
+        flex: 1;
+      }
+
+      .user-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .user-title {
+        color: #2563eb;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      .user-location {
+        color: #666;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 8px;
+      }
+
+      .rating-stars {
+        color: #fbbf24;
+        display: flex;
+        gap: 2px;
+      }
+
+      .rating-value {
+        color: #666;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .user-meta {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 8px;
+        margin: 15px 0;
+      }
+
+      .meta-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+
+      .meta-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .meta-label {
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .meta-value {
+        color: #333;
+        font-weight: 500;
+      }
+
+      .user-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+      }
+
+      .action-btn {
+        flex: 1;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      }
+
+      .btn-warning {
+        background: linear-gradient(45deg, #f59e0b, #d97706);
+        color: white;
+      }
+
+      .btn-warning:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+      }
+
+      .btn-danger {
+        background: linear-gradient(45deg, #ef4444, #dc2626);
+        color: white;
+      }
+
+      .btn-danger:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+        background: #f8f9fa;
+        border-radius: 12px;
+        border: 2px dashed #e1e5e9;
+        grid-column: 1 / -1;
+      }
+
+      .no-results i {
+        font-size: 48px;
+        color: #ccc;
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .no-results p {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      /* Responsive design */
+      @media (max-width: 1200px) {
+        .main-content {
+          margin-left: 260px;
+          padding: 15px;
+          max-width: calc(100vw - 280px);
+        }
+
+        .user-list {
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          margin-left: 0;
+          padding: 10px;
+          max-width: 100vw;
+        }
+
+        .page-header {
+          padding: 15px;
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+
+        .content-card {
+          padding: 15px;
+        }
+
+        .search-form {
+          flex-direction: column;
+          max-width: 100%;
+        }
+
+        .search-input {
+          border-radius: 8px;
+        }
+
+        .user-list {
+          grid-template-columns: 1fr;
+        }
+
+        .user-actions {
+          flex-direction: column;
+        }
+
+        .stats-container {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="dashboard-wrapper">
-      <%- include('Partials/sidebar', { user: user, activePage: 'employers'
-      }) %>
-      <div class="main-content">
-        <section id="employers" class="section-content active">
-          <h1>Employers</h1>
-          <div class="search-bar" style="margin-bottom: 20px">
-            <form
-              action="/adminD/employers"
-              method="GET"
-              style="display: flex; align-items: center"
-              onsubmit="return validateSearch()"
-            >
-              <input
-                type="text"
-                name="q"
-                id="searchInput"
-                value="<%= searchQuery %>"
-                placeholder="Search by name or company..."
-                style="
-                  padding: 10px;
-                  flex: 1;
-                  border: 1px solid #ddd;
-                  border-radius: 4px 0 0 4px;
-                  background-color: #f5f5f5;
-                  font-size: 14px;
-                "
-              />
-              <button
-                type="submit"
-                style="
-                  padding: 10px;
-                  background-color: #3949ab;
-                  border: none;
-                  border-radius: 0 4px 4px 0;
-                  cursor: pointer;
-                "
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  stroke-width="2"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </button>
-              <% if (searchQuery) { %>
-              <a
-                href="/adminD/employers"
-                style="
-                  padding: 10px;
-                  background-color: #f44336;
-                  color: white;
-                  border-radius: 4px;
-                  margin-left: 10px;
-                  text-decoration: none;
-                  font-size: 14px;
-                "
-                >Clear Search</a
-              >
-              <% } %>
-            </form>
+    <%- include('Partials/sidebar', { user: user, activePage: 'employers' }) %>
+
+    <div class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Employers Management</h1>
+          <p class="page-subtitle">
+            Monitor and manage employer accounts on the platform
+          </p>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-number"><%= employers.length %></div>
+          <div class="stat-label">Total Employers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= employers.filter(e => e.isActive).length || 0 %>
           </div>
-          <div class="user-list">
-            <% if (employers.length === 0) { %>
+          <div class="stat-label">Active Employers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= employers.length > 0 ? (employers.reduce((sum, e) => sum +
+            (e.rating || 4.5), 0) / employers.length).toFixed(1) : '0.0' %>
+          </div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="search-container">
+          <form
+            action="/adminD/employers"
+            method="GET"
+            class="search-form"
+            onsubmit="return validateSearch()"
+          >
+            <input
+              type="text"
+              name="q"
+              id="searchInput"
+              value="<%= searchQuery || '' %>"
+              placeholder="Search by company name, contact name, or location..."
+              class="search-input"
+            />
+            <button type="submit" class="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+            <% if (searchQuery) { %>
+            <a href="/adminD/employers" class="clear-search">
+              <i class="fas fa-times"></i> Clear
+            </a>
+            <% } %>
+          </form>
+        </div>
+
+        <div class="user-list">
+          <% if (employers.length === 0) { %>
+          <div class="no-results">
+            <i class="fas fa-building"></i>
             <p>No employers found.</p>
-            <% } else { %> <% employers.forEach(employer => { %>
-            <div class="user-card">
+            <% if (searchQuery) { %>
+            <p>Try adjusting your search criteria.</p>
+            <% } %>
+          </div>
+          <% } else { %> <% employers.forEach(employer => { %>
+          <div class="user-card">
+            <div class="user-header">
               <div class="user-avatar">
                 <img
                   src="<%= employer.picture || '/assets/company_logo.jpg' %>"
                   alt="Company Logo"
+                  onerror="this.src='/assets/company_logo.jpg'"
                 />
               </div>
               <div class="user-info">
-                <h3><%= employer.companyName || 'Unnamed Company' %></h3>
+                <h3 class="user-name">
+                  <%= employer.companyName || 'Unnamed Company' %>
+                </h3>
                 <p class="user-title">
+                  <i class="fas fa-user-tie"></i>
                   <%= employer.name || 'No contact name' %>
                 </p>
                 <div class="rating">
-                  <% for(let i = 0; i < Math.floor(employer.rating || 4.5); i++)
-                  { %>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                    />
-                  </svg>
-                  <% } %> <% if((employer.rating || 4.5) % 1 !== 0) { %>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77V2Z"
-                    />
-                  </svg>
-                  <% } %>
-                  <span><%= employer.rating || '4.5' %></span>
+                  <div class="rating-stars">
+                    <% const rating = employer.rating || 4.5; %> <% for(let i =
+                    1; i <= 5; i++) { %> <% if (i <= Math.floor(rating)) { %>
+                    <i class="fas fa-star"></i>
+                    <% } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+                    %>
+                    <i class="fas fa-star-half-alt"></i>
+                    <% } else { %>
+                    <i class="far fa-star"></i>
+                    <% } %> <% } %>
+                  </div>
+                  <span class="rating-value"><%= rating %></span>
                 </div>
                 <p class="user-location">
+                  <i class="fas fa-map-marker-alt"></i>
                   <%= employer.location || 'Location not specified' %>
                 </p>
               </div>
-              <div class="user-actions">
-                <button
-                  class="btn-primary"
-                  onclick="initChat('<%= employer.userId %>')"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
-                    />
-                  </svg>
-                  <a href="/chat/<%= employer.userId || 'default' %>">Chat</a>
-                </button>
-                <button
-                  class="btn-warning"
-                  onclick="editRating('<%= employer.userId %>', '<%= employer.rating || 4.5 %>', 'employer')"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                    />
-                  </svg>
-                  Edit Rating
-                </button>
-                <button
-                  class="btn-danger"
-                  onclick="deleteEmployer('<%= employer.userId %>')"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M3 6H5H21" />
-                    <path
-                      d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
-                    />
-                  </svg>
-                  Delete
-                </button>
+            </div>
+
+            <div class="user-meta">
+              <div class="meta-item">
+                <span class="meta-label">
+                  <i class="fas fa-envelope"></i> Email
+                </span>
+                <span class="meta-value"><%= employer.email || 'N/A' %></span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">
+                  <i class="fas fa-phone"></i> Phone
+                </span>
+                <span class="meta-value"><%= employer.phone || 'N/A' %></span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">
+                  <i class="fas fa-briefcase"></i> Jobs Posted
+                </span>
+                <span class="meta-value"><%= employer.jobsPosted || 0 %></span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">
+                  <i class="fas fa-calendar"></i> Joined
+                </span>
+                <span class="meta-value">
+                  <%= new Date(employer.createdAt ||
+                  Date.now()).toLocaleDateString() %>
+                </span>
               </div>
             </div>
-            <% }) %> <% } %>
+
+            <div class="user-actions">
+              <a
+                href="/chat/<%= employer.userId || 'default' %>"
+                class="action-btn btn-primary"
+              >
+                <i class="fas fa-comments"></i>
+                Chat
+              </a>
+              <button
+                class="action-btn btn-warning"
+                onclick="editRating('<%= employer.userId %>', '<%= employer.rating || 4.5 %>', 'employer')"
+              >
+                <i class="fas fa-star"></i>
+                Edit Rating
+              </button>
+              <button
+                class="action-btn btn-danger"
+                onclick="deleteEmployer('<%= employer.userId %>')"
+              >
+                <i class="fas fa-trash"></i>
+                Delete
+              </button>
+            </div>
           </div>
-        </section>
+          <% }) %> <% } %>
+        </div>
       </div>
     </div>
-    <script>
-      function validateSearch() {
-        const searchInput = document.getElementById("searchInput").value.trim();
-        if (searchInput.length < 1) {
-          alert("Please enter a search term");
-          return false;
-        }
-        return true;
-      }
 
-      function initChat(userId) {
-        console.log("Initiating chat with userId:", userId); // Debugging
-        if (!userId || userId === "default") {
-          alert("Unable to start chat: Invalid user ID");
-          return;
-        }
-        window.location.href = `/chat/${userId}`;
-      }
-
-      async function deleteEmployer(userId) {
-        if (confirm("Are you sure you want to delete this employer?")) {
-          try {
-            const response = await fetch(`/adminD/employers/${userId}`, {
-              method: "DELETE",
-            });
-            const result = await response.json();
-            if (response.ok) {
-              alert(result.message);
-              window.location.reload();
-            } else {
-              alert(result.message || "Failed to delete employer");
-            }
-          } catch (error) {
-            console.error("Error deleting employer:", error);
-            alert("Server error");
-          }
-        }
-      }
-
-      function editRating(userId, currentRating, userType) {
-        const newRating = prompt(
-          `Enter new rating for this ${userType} (1-5):`,
-          currentRating
-        );
-
-        if (newRating === null) return; // User cancelled
-
-        const rating = parseFloat(newRating);
-
-        if (isNaN(rating) || rating < 1 || rating > 5) {
-          alert("Please enter a valid rating between 1 and 5");
-          return;
-        }
-
-        updateRating(userId, rating, userType);
-      }
-
-      async function updateRating(userId, rating, userType) {
-        try {
-          const endpoint =
-            userType === "freelancer"
-              ? `/adminD/freelancers/${userId}/rating`
-              : `/adminD/employers/${userId}/rating`;
-
-          const response = await fetch(endpoint, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ rating }),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            alert(result.message);
-            window.location.reload();
-          } else {
-            alert(result.message || `Failed to update ${userType} rating`);
-          }
-        } catch (error) {
-          console.error(`Error updating ${userType} rating:`, error);
-          alert("Server error");
-        }
-      }
-    </script>
+    <script src="/js/adminD/employers.js"></script>
   </body>
 </html>

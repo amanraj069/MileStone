@@ -13,35 +13,70 @@ body {
   line-height: 1.5;
 }
 
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 30px;
+  background-color: #f8fafc;
+}
+
 .container {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: 0 auto;
+  padding: 0;
 }
 
 /* Header Styles */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-left: 4px solid #3b82f6;
 }
 
 .title {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #3b82f6;
-}
-
-.job-title {
-  font-size: 1.5rem;
+  font-size: 28px;
   font-weight: 600;
   color: #1e293b;
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title::before {
+  content: "\f140";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 24px;
+  margin-right: 8px;
 }
 
 .job-section {
-  margin-bottom: 2rem;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.job-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.job-section > p {
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 /* Progress Card Styles */
@@ -168,4 +203,335 @@ body {
 .request-btn:disabled {
   background-color: #bfdbfe;
   cursor: not-allowed;
+}
+
+/* Updated Milestone Card Styles */
+.milestones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.milestone-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.milestone-card.paid {
+  border-left-color: #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+}
+
+.milestone-card.requested {
+  border-left-color: #f59e0b;
+  background: linear-gradient(135deg, #fefbf2 0%, #ffffff 100%);
+}
+
+.milestone-card.not-paid {
+  border-left-color: #64748b;
+}
+
+.milestone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.milestone-info {
+  flex: 1;
+}
+
+.milestone-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 5px;
+}
+
+.milestone-description {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.milestone-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.milestone-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #059669;
+}
+
+.milestone-deadline {
+  font-size: 12px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* Sub-tasks Styles */
+.subtasks-section {
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.subtasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subtasks-title {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subtasks-progress {
+  font-size: 12px;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.subtasks-progress-bar {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+.subtasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.subtask-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.subtask-item.completed {
+  background: #f0fdf4;
+  border-color: #10b981;
+}
+
+.subtask-item.in-progress {
+  background: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.subtask-item.pending {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.subtask-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.subtask-item.completed .subtask-checkbox {
+  background: #10b981;
+  color: white;
+}
+
+.subtask-item.in-progress .subtask-checkbox {
+  background: #f59e0b;
+  color: white;
+}
+
+.subtask-item.pending .subtask-checkbox {
+  background: #94a3b8;
+  color: white;
+}
+
+.subtask-checkbox:hover {
+  transform: scale(1.1);
+}
+
+.subtask-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.subtask-description {
+  font-size: 14px;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.subtask-date {
+  font-size: 11px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subtask-notes {
+  font-size: 12px;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border-left: 3px solid #3b82f6;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.subtask-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.subtask-action-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.subtask-action-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.subtask-action-btn.complete {
+  background: #10b981;
+}
+
+.subtask-action-btn:hover {
+  transform: scale(1.05);
+}
+
+.milestone-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.request-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.request-btn:not(:disabled) {
+  background: #3b82f6;
+  color: white;
+}
+
+.request-btn:not(:disabled):hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.request-btn.paid {
+  background: #10b981;
+  color: white;
+}
+
+.request-btn.requested {
+  background: #f59e0b;
+  color: white;
+}
+
+.request-btn:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .milestone-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .milestone-meta {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 15px;
+  }
+  
+  .subtasks-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .subtask-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .subtask-actions {
+    align-self: flex-end;
+  }
 }

@@ -166,6 +166,20 @@ header {
   background-color: #0854a0;
 }
 
+.already-applied-message {
+  background-color: #c2ffb6;
+  color: #588c52;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #d6e8f5;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+}
+
 .job-description,
 .milestones {
   background-color: white;
