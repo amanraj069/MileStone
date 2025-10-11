@@ -38,7 +38,7 @@ const jobListingSchema = new Schema(
     },
     experienceLevel: {
       type: String,
-      enum: ["entry", "intermediate", "expert"],
+      enum: ["Entry", "Mid", "Senior"],
       required: true,
     },
     remote: {

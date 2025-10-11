@@ -254,7 +254,7 @@ const employerController = {
         remote: remote === "true" || remote === true,
         applicationDeadline: new Date(applicationDeadline),
         description: {
-          text: description || "",
+          text: description?.text || description || "",
           responsibilities: responsibilities ? responsibilities.split("\n").filter((r) => r.trim()) : [],
           requirements: [], // No longer using separate requirements field
           skills: skills ? skills.split(/[,\n]/).map(s => s.trim()).filter((s) => s) : [],
@@ -279,7 +279,10 @@ const employerController = {
       res.redirect("/employerD/job_listings");
     } catch (error) {
       console.error("Error creating job listing:", error.message);
-      console.error("Request body:", req.body);
+      console.error("Full error:", error);
+      console.error("Request body:", JSON.stringify(req.body, null, 2));
+      console.error("Description value:", description);
+      console.error("Experience Level value:", experienceLevel);
       res.status(500).send("Error creating job listing: " + error.message);
     }
   },
