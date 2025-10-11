@@ -362,3 +362,264 @@ body {
   background-color: #d1fae5;
   cursor: not-allowed;
 }
+
+/* Payment button styles */
+.payment-button {
+  padding: 10px 20px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.payment-button:not(:disabled):hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+}
+
+.payment-button:disabled {
+  background-color: #d1fae5;
+  color: #064e3b;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Milestone cards grid */
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.milestone-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.milestone-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.milestone-card.paid {
+  border-left-color: #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+}
+
+.milestone-card.requested {
+  border-left-color: #f59e0b;
+  background: linear-gradient(135deg, #fefbf2 0%, #ffffff 100%);
+}
+
+.milestone-card.pending {
+  border-left-color: #64748b;
+}
+
+.milestone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.milestone-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.milestone-description {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.milestone-details {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.milestone-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 12px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.milestone-status {
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.milestone-status.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.milestone-status.in-progress {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.milestone-status.pending {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+@media (max-width: 768px) {
+  .milestones-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .milestone-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .milestone-details {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Sub-tasks Styling */
+.subtasks-section {
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.subtasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.subtasks-title {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+}
+
+.subtasks-progress {
+  font-size: 12px;
+  color: #64748b;
+  background: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.subtasks-list {
+  margin-bottom: 10px;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.subtask-item.completed {
+  background: #f0fdf4;
+  border-left: 3px solid #10b981;
+}
+
+.subtask-item.in-progress {
+  background: #fef3c7;
+  border-left: 3px solid #f59e0b;
+}
+
+.subtask-item.pending {
+  background: #f1f5f9;
+  border-left: 3px solid #94a3b8;
+}
+
+.subtask-status-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.subtask-item.completed .subtask-status-icon {
+  background: #10b981;
+  color: white;
+}
+
+.subtask-item.in-progress .subtask-status-icon {
+  background: #f59e0b;
+  color: white;
+}
+
+.subtask-item.pending .subtask-status-icon {
+  background: #94a3b8;
+  color: white;
+}
+
+.subtask-description {
+  flex: 1;
+  font-size: 13px;
+  color: #475569;
+}
+
+.subtask-date {
+  font-size: 11px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subtasks-progress-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.subtasks-progress-bar .progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  transition: width 0.3s ease;
+}

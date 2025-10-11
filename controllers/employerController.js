@@ -208,14 +208,17 @@ const employerController = {
     try {
       const {
         title,
-        budget,
+        category,
         imageUrl,
+        description,
+        budget,
         location,
         jobType,
         experienceLevel,
         remote,
         applicationDeadline,
-        description,
+        responsibilities,
+        skills,
         milestones,
       } = req.body;
 
@@ -224,35 +227,46 @@ const employerController = {
         throw new Error("Employer roleId not found in session");
       }
 
+      // Parse milestones array if it's not already parsed
+      let parsedMilestones = [];
+      if (milestones && typeof milestones === 'object') {
+        parsedMilestones = Object.values(milestones);
+      } else if (Array.isArray(milestones)) {
+        parsedMilestones = milestones;
+      }
+
       const newJob = new JobListing({
         employerId,
-        imageUrl,
+        imageUrl: imageUrl || "/assets/public_jobs/C1.jpeg",
         title,
         budget: {
-          amount: Number(budget.amount),
-          period: budget.period,
+          amount: Number(budget?.amount) || Number(budget) || 0,
+          period: budget?.period || "fixed",
         },
-        location,
-        jobType,
-        experienceLevel,
-        remote: remote === "true",
-        applicationDeadline,
+        location: location || "Remote",
+        jobType: jobType || "contract",
+        experienceLevel: experienceLevel || "Mid",
+        remote: remote === "true" || remote === true,
+        applicationDeadline: new Date(applicationDeadline),
         description: {
-          text: description.text,
-          responsibilities: description.responsibilities
-            .split("\n")
-            .filter((r) => r.trim()),
-          requirements: description.requirements
-            .split("\n")
-            .filter((r) => r.trim()),
-          skills: description.skills.split("\n").filter((s) => s.trim()),
+          text: description || "",
+          responsibilities: responsibilities ? responsibilities.split("\n").filter((r) => r.trim()) : [],
+          requirements: [], // No longer using separate requirements field
+          skills: skills ? skills.split(/[,\n]/).map(s => s.trim()).filter((s) => s) : [],
         },
-        milestones: milestones.map((m) => ({
-          description: m.description,
-          deadline: m.deadline,
-          payment: m.payment,
+        milestones: parsedMilestones.map((m) => ({
+          description: m.description || "",
+          deadline: m.deadline || "",
+          payment: m.payment || "0",
           status: "not-paid",
           requested: false,
+          subTasks: m.subTasks ? Object.values(m.subTasks).map((st) => ({
+            description: st.description || "",
+            status: "pending",
+            completedDate: null,
+            notes: "",
+          })) : [],
+          completionPercentage: 0,
         })),
       });
 
@@ -260,6 +274,7 @@ const employerController = {
       res.redirect("/employerD/job_listings");
     } catch (error) {
       console.error("Error creating job listing:", error.message);
+      console.error("Request body:", req.body);
       res.status(500).send("Error creating job listing: " + error.message);
     }
   },
@@ -337,6 +352,14 @@ const employerController = {
           payment: m.payment,
           status: m.status || "not-paid",
           requested: m.requested === "true" || m.requested === true,
+          subTasks: m.subTasks ? m.subTasks.map((st) => ({
+            subTaskId: st.subTaskId || require('uuid').v4(),
+            description: st.description,
+            status: st.status || "pending",
+            completedDate: st.completedDate || null,
+            notes: st.notes || "",
+          })) : [],
+          completionPercentage: m.completionPercentage || 0,
         })),
       };
 
@@ -817,6 +840,8 @@ const employerController = {
             deadline: m.deadline || "No deadline",
             status: m.status,
             requested: isRequested,
+            subTasks: m.subTasks || [],
+            completionPercentage: m.completionPercentage || 0,
           };
         });
 

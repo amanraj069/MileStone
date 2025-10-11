@@ -693,6 +693,8 @@ exports.getMilestone = async (req, res) => {
           : "No deadline",
         status: m.status,
         requested: m.requested === "true" || m.requested === true, // Convert string "true"/"false" to boolean
+        subTasks: m.subTasks || [],
+        completionPercentage: m.completionPercentage || 0,
       })),
       progress: {
         completionPercentage,
@@ -880,5 +882,68 @@ exports.submitComplaint = async (req, res) => {
     console.error("Error submitting complaint:", error);
     console.error("Error stack:", error.stack);
     res.status(500).json({ error: "Failed to submit complaint", details: error.message });
+  }
+};
+
+// Update sub-task status
+exports.updateSubTaskStatus = async (req, res) => {
+  try {
+    const { jobId, milestoneId, subTaskId } = req.params;
+    const { status, notes } = req.body;
+    const freelancerId = req.session.user.roleId;
+
+    if (!freelancerId) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const job = await JobListing.findOne({
+      jobId,
+      "assignedFreelancer.freelancerId": freelancerId,
+    });
+
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const milestone = job.milestones.find(m => m.milestoneId === milestoneId);
+    if (!milestone) {
+      return res.status(404).json({ success: false, message: "Milestone not found" });
+    }
+
+    const subTask = milestone.subTasks.find(st => st.subTaskId === subTaskId);
+    if (!subTask) {
+      return res.status(404).json({ success: false, message: "Sub-task not found" });
+    }
+
+    // Update sub-task
+    subTask.status = status;
+    subTask.notes = notes || subTask.notes;
+    if (status === 'completed') {
+      subTask.completedDate = new Date();
+    }
+
+    // Calculate milestone completion percentage
+    const completedSubTasks = milestone.subTasks.filter(st => st.status === 'completed').length;
+    milestone.completionPercentage = milestone.subTasks.length > 0 
+      ? Math.round((completedSubTasks / milestone.subTasks.length) * 100) 
+      : 0;
+
+    // Update milestone status based on sub-task completion
+    if (milestone.completionPercentage === 100) {
+      milestone.status = 'in-progress'; // Ready for payment request
+    } else if (milestone.completionPercentage > 0) {
+      milestone.status = 'in-progress';
+    }
+
+    await job.save();
+
+    res.json({ 
+      success: true, 
+      message: "Sub-task updated successfully",
+      completionPercentage: milestone.completionPercentage
+    });
+  } catch (error) {
+    console.error("Error updating sub-task:", error);
+    res.status(500).json({ success: false, message: "Failed to update sub-task" });
   }
 };
