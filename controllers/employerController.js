@@ -17,7 +17,7 @@ const getUserData = async (userId) => {
       name: user.name,
       email: user.email,
       picture: user.picture,
-      role: user.role
+      role: user.role,
     };
   } catch (error) {
     console.error("Error fetching user data:", error);
@@ -41,18 +41,26 @@ const employerController = {
         "assignedFreelancer.status": "working",
       }).lean();
 
-      const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
+      const freelancerIds = jobs
+        .map((job) => job.assignedFreelancer.freelancerId)
+        .filter((id) => id);
 
-      const freelancers = await Freelancer.find({ freelancerId: { $in: freelancerIds } })
+      const freelancers = await Freelancer.find({
+        freelancerId: { $in: freelancerIds },
+      })
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
         .select("roleId userId name picture")
         .lean();
 
-      const freelancersWithDetails = jobs.map(job => {
-        const freelancer = freelancers.find(f => f.freelancerId === job.assignedFreelancer.freelancerId);
-        const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
+      const freelancersWithDetails = jobs.map((job) => {
+        const freelancer = freelancers.find(
+          (f) => f.freelancerId === job.assignedFreelancer.freelancerId
+        );
+        const user = users.find(
+          (u) => u.roleId === job.assignedFreelancer.freelancerId
+        );
         return {
           jobId: job.jobId,
           projectName: job.title,
@@ -68,7 +76,8 @@ const employerController = {
         };
       });
 
-      const userData = await getUserData(req.session.user.id) || req.session.user;
+      const userData =
+        (await getUserData(req.session.user.id)) || req.session.user;
 
       res.render("Abhishek/current_jobs", {
         user: userData,
@@ -95,18 +104,26 @@ const employerController = {
         "assignedFreelancer.status": "finished",
       }).lean();
 
-      const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
+      const freelancerIds = jobs
+        .map((job) => job.assignedFreelancer.freelancerId)
+        .filter((id) => id);
 
-      const freelancers = await Freelancer.find({ freelancerId: { $in: freelancerIds } })
+      const freelancers = await Freelancer.find({
+        freelancerId: { $in: freelancerIds },
+      })
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
         .select("roleId name picture")
         .lean();
 
-      const freelancersWithDetails = jobs.map(job => {
-        const freelancer = freelancers.find(f => f.freelancerId === job.assignedFreelancer.freelancerId);
-        const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
+      const freelancersWithDetails = jobs.map((job) => {
+        const freelancer = freelancers.find(
+          (f) => f.freelancerId === job.assignedFreelancer.freelancerId
+        );
+        const user = users.find(
+          (u) => u.roleId === job.assignedFreelancer.freelancerId
+        );
         const completionDate = job.updatedAt || new Date();
         return {
           jobId: job.jobId,
@@ -122,7 +139,8 @@ const employerController = {
         };
       });
 
-      const userData = await getUserData(req.session.user.id) || req.session.user;
+      const userData =
+        (await getUserData(req.session.user.id)) || req.session.user;
 
       res.render("Abhishek/previously_worked", {
         user: userData,
@@ -130,8 +148,13 @@ const employerController = {
         freelancers: freelancersWithDetails,
       });
     } catch (error) {
-      console.error("Error fetching previously worked freelancers:", error.message);
-      res.status(500).send("Error fetching previously worked freelancers: " + error.message);
+      console.error(
+        "Error fetching previously worked freelancers:",
+        error.message
+      );
+      res
+        .status(500)
+        .send("Error fetching previously worked freelancers: " + error.message);
     }
   },
 
@@ -144,7 +167,7 @@ const employerController = {
       }
 
       // Get complete user data for sidebar
-      const userData = await getUserData(userId) || req.session.user;
+      const userData = (await getUserData(userId)) || req.session.user;
 
       const jobListings = await JobListing.find({
         employerId,
@@ -153,10 +176,18 @@ const employerController = {
         .sort({ postedDate: -1 })
         .lean();
 
+      // Get all jobIds for this employer
+      const jobIds = jobListings.map((job) => job.jobId);
+      // Fetch all job applications for these jobs
+      const jobApplications = await JobApplication.find({
+        jobId: { $in: jobIds },
+      }).lean();
+
       res.render("Abhishek/job_listing", {
         user: userData,
         activePage: "job_listings",
         jobListings,
+        jobApplications,
       });
     } catch (error) {
       console.error("Error fetching job listings:", error.message);
@@ -165,7 +196,8 @@ const employerController = {
   },
 
   getNewJobForm: async (req, res) => {
-    const userData = await getUserData(req.session.user.id) || req.session.user;
+    const userData =
+      (await getUserData(req.session.user.id)) || req.session.user;
     res.render("Abhishek/others/new_job", {
       user: userData,
       activePage: "job_listings",
@@ -304,7 +336,7 @@ const employerController = {
           deadline: m.deadline,
           payment: m.payment,
           status: m.status || "not-paid",
-          requested: m.requested === 'true' || m.requested === true,
+          requested: m.requested === "true" || m.requested === true,
         })),
       };
 
@@ -359,7 +391,8 @@ const employerController = {
         };
       });
 
-      const userData = await getUserData(req.session.user.id) || req.session.user;
+      const userData =
+        (await getUserData(req.session.user.id)) || req.session.user;
 
       res.render("Abhishek/job_applications", {
         user: userData,
@@ -668,21 +701,25 @@ const employerController = {
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
-  
+
       const jobs = await JobListing.find({
         employerId,
         status: "closed",
         "assignedFreelancer.freelancerId": { $ne: "" },
-        "assignedFreelancer.status": { $in: ["working", "finished"] }
+        "assignedFreelancer.status": { $in: ["working", "finished"] },
       }).lean();
-  
-      const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
+
+      const freelancerIds = jobs
+        .map((job) => job.assignedFreelancer.freelancerId)
+        .filter((id) => id);
       const users = await User.find({ roleId: { $in: freelancerIds } })
         .select("roleId name picture")
         .lean();
-  
-      const transactions = jobs.map(job => {
-        const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
+
+      const transactions = jobs.map((job) => {
+        const user = users.find(
+          (u) => u.roleId === job.assignedFreelancer.freelancerId
+        );
         return {
           jobId: job.jobId,
           projectTitle: job.title,
@@ -692,21 +729,24 @@ const employerController = {
           freelancer: {
             id: job.assignedFreelancer.freelancerId,
             name: user?.name || "Unknown Freelancer",
-            picture: user?.picture || "/assets/user_female.png"
-          }
+            picture: user?.picture || "/assets/user_female.png",
+          },
         };
       });
-  
-      const userData = await getUserData(req.session.user.id) || req.session.user;
-  
+
+      const userData =
+        (await getUserData(req.session.user.id)) || req.session.user;
+
       res.render("Abhishek/transaction", {
         user: userData,
         activePage: "transaction_history",
-        transactions: transactions
+        transactions: transactions,
       });
     } catch (error) {
       console.error("Error fetching transaction history:", error.message);
-      res.status(500).send("Error fetching transaction history: " + error.message);
+      res
+        .status(500)
+        .send("Error fetching transaction history: " + error.message);
     }
   },
 
@@ -716,43 +756,59 @@ const employerController = {
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
       }
-  
+
       const { jobId } = req.query;
       const query = {
         employerId,
         "assignedFreelancer.freelancerId": { $ne: "" },
-        "assignedFreelancer.status": { $in: ["working", "finished"] }
+        "assignedFreelancer.status": { $in: ["working", "finished"] },
       };
-  
+
       if (jobId) {
         query.jobId = jobId;
       }
-  
+
       const jobs = await JobListing.find(query).lean();
-  
-      const freelancerIds = jobs.map(job => job.assignedFreelancer.freelancerId).filter(id => id);
-      const freelancers = await Freelancer.find({ freelancerId: { $in: freelancerIds } })
+
+      const freelancerIds = jobs
+        .map((job) => job.assignedFreelancer.freelancerId)
+        .filter((id) => id);
+      const freelancers = await Freelancer.find({
+        freelancerId: { $in: freelancerIds },
+      })
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
         .select("roleId name picture")
         .lean();
-  
-      const jobDetails = jobs.map(job => {
-        const freelancer = freelancers.find(f => f.freelancerId === job.assignedFreelancer.freelancerId);
-        const user = users.find(u => u.roleId === job.assignedFreelancer.freelancerId);
-  
+
+      const jobDetails = jobs.map((job) => {
+        const freelancer = freelancers.find(
+          (f) => f.freelancerId === job.assignedFreelancer.freelancerId
+        );
+        const user = users.find(
+          (u) => u.roleId === job.assignedFreelancer.freelancerId
+        );
+
         const totalAmount = job.budget.amount;
         const paidAmount = job.milestones
-          .filter(m => m.status === "paid")
+          .filter((m) => m.status === "paid")
           .reduce((sum, m) => sum + parseFloat(m.payment || 0), 0);
-        const paymentPercentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
-        const completedMilestones = job.milestones.filter(m => m.status === "paid").length;
-        const completionPercentage = job.milestones.length > 0 ? Math.round((completedMilestones / job.milestones.length) * 100) : 0;
-  
+        const paymentPercentage =
+          totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
+        const completedMilestones = job.milestones.filter(
+          (m) => m.status === "paid"
+        ).length;
+        const completionPercentage =
+          job.milestones.length > 0
+            ? Math.round((completedMilestones / job.milestones.length) * 100)
+            : 0;
+
         const milestonesWithDebug = job.milestones.map((m, index) => {
-          const isRequested = m.requested === true || m.requested === 'true';
-          console.log(`Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}`);
+          const isRequested = m.requested === true || m.requested === "true";
+          console.log(
+            `Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}`
+          );
           return {
             serialNo: index + 1,
             milestoneId: m.milestoneId,
@@ -763,7 +819,7 @@ const employerController = {
             requested: isRequested,
           };
         });
-  
+
         return {
           jobId: job.jobId,
           title: job.title,
@@ -771,7 +827,7 @@ const employerController = {
             id: job.assignedFreelancer.freelancerId,
             name: user?.name || "Unknown Freelancer",
             picture: user?.picture || "/assets/user_female.png",
-            status: job.assignedFreelancer.status
+            status: job.assignedFreelancer.status,
           },
           milestones: milestonesWithDebug,
           progress: {
@@ -784,7 +840,7 @@ const employerController = {
           },
         };
       });
-  
+
       res.render("Abhishek/others/milestone", {
         user: {
           name: req.session.user.name,
@@ -828,10 +884,12 @@ const employerController = {
 
   upgradeSubscription: async (req, res) => {
     try {
-      const user=req.session.user;
+      const user = req.session.user;
       const userId = req.session.user.id;
       if (!userId) {
-        return res.status(401).json({ success: false, message: "Not logged in" });
+        return res
+          .status(401)
+          .json({ success: false, message: "Not logged in" });
       }
       // Update the user's subscription to "Premium"
       await User.updateOne({ userId }, { $set: { subscription: "Premium" } });
@@ -855,7 +913,9 @@ const employerController = {
         throw new Error("Job not found or you are not authorized");
       }
 
-      const milestone = job.milestones.find(m => m.milestoneId === milestoneId);
+      const milestone = job.milestones.find(
+        (m) => m.milestoneId === milestoneId
+      );
       if (!milestone) {
         throw new Error("Milestone not found");
       }
@@ -863,7 +923,9 @@ const employerController = {
       milestone.status = "paid";
       milestone.requested = false;
 
-      const allMilestonesPaid = job.milestones.every(m => m.status === "paid");
+      const allMilestonesPaid = job.milestones.every(
+        (m) => m.status === "paid"
+      );
       if (allMilestonesPaid) {
         job.assignedFreelancer.status = "finished";
       }
@@ -883,68 +945,72 @@ const employerController = {
       activePage: "transaction_history",
     });
   },
-  
+
   getPaymentAnimation: (req, res) => {
     res.render("Abhishek/others/payment", {
       activePage: "subscription",
     });
   },
-  
+
   submitComplaint: async (req, res) => {
     try {
       console.log("Employer complaint submission started");
       console.log("Job ID:", req.params.jobId);
       console.log("Request body:", req.body);
       console.log("User session:", req.session.user);
-      
+
       const { jobId } = req.params;
       const { complaintType, againstUser, issue } = req.body;
-      
+
       if (!req.session.user) {
         console.log("Unauthorized access attempt");
         return res.status(401).json({ error: "Unauthorized: Please log in" });
       }
-      
+
       // Get job details to find freelancer
       const job = await JobListing.findOne({ jobId: jobId }).lean();
       console.log("Job found:", job);
-      
+
       if (!job) {
         console.log("Job not found for ID:", jobId);
         return res.status(404).json({ error: "Job not found" });
       }
-      
+
       // Create complaint data
       const submittedById = req.session.user.id; // Fixed: use 'id' instead of 'userId'
       console.log("DEBUG: req.session.user.id =", submittedById);
       console.log("DEBUG: typeof submittedById =", typeof submittedById);
-      
+
       const complaintData = {
         submittedBy: submittedById,
-        againstUser: againstUser || (job.assignedFreelancer ? job.assignedFreelancer.freelancerId : null),
+        againstUser:
+          againstUser ||
+          (job.assignedFreelancer ? job.assignedFreelancer.freelancerId : null),
         complaintType: complaintType || "Job Related",
         jobId: jobId,
         issue: issue || "Issue with freelancer regarding job completion",
-        status: "pending"
+        status: "pending",
       };
-      
+
       console.log("Creating complaint with data:", complaintData);
-      
+
       // Create complaint
       const complaint = new Complaint(complaintData);
       const savedComplaint = await complaint.save();
-      
+
       console.log("Complaint saved successfully:", savedComplaint);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         message: "Complaint submitted successfully",
-        complaintId: savedComplaint.complaintId
+        complaintId: savedComplaint.complaintId,
       });
     } catch (error) {
       console.error("Error submitting complaint:", error);
       console.error("Error stack:", error.stack);
-      res.status(500).json({ error: "Failed to submit complaint", details: error.message });
+      res
+        .status(500)
+        .json({ error: "Failed to submit complaint", details: error.message });
     }
   },
 };

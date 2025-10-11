@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-dotenv.config({ path: './.env' }); // Explicitly specify .env path
+dotenv.config({ path: "./.env" });
 
 // MongoDB connection string from .env
 const connectionString = process.env.MONGODB_URI;
 
-// Debug log to verify URI
-console.log("MongoDB URI:", connectionString);
+// console.log("MongoDB URI:", connectionString);
 
 // Validate connection string
 if (!connectionString) {
@@ -17,8 +16,6 @@ if (!connectionString) {
 // Connect to MongoDB
 const connectDB = mongoose
   .connect(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 20000,
   })
   .then(() => {

@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Employer Profile</title>
-  <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-  <link rel="stylesheet" href="/css/EmployerD/profile.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Edit Employer Profile - ZeroGravity</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/EmployerD/edit-profile.css">
 </head>
 <body>
   <div class="dashboard-wrapper">
     <%- include('../partials/sidebar', { user: user, activePage: 'profile' }) %>
+    
     <div class="main-content">
-      <div class="container">
-        <div class="header">
-          <h1>Edit Employer Profile</h1>
+      <div class="page-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h1 class="page-title"><i class="fas fa-user-edit"></i> Edit Profile</h1>
+            <p class="page-subtitle">Update your company information and profile details</p>
+          </div>
           <a href="/employerD/profile" class="back-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
+            <i class="fas fa-arrow-left"></i>
             Back to Profile
           </a>
         </div>
+      </div>
 
-        <div class="edit-form-container">
-          <form id="profileEditForm" action="/employerD/profile/edit" method="POST" enctype="multipart/form-data">
+      <div class="content-card">
+        <form id="profileEditForm" action="/employerD/profile/edit" method="POST" enctype="multipart/form-data">
             <div class="form-section">
-              <h3 class="form-section-title">Basic Information</h3>
+              <h3 class="form-section-title"><i class="fas fa-building"></i> Basic Information</h3>
 
               <div class="form-row">
                 <div class="form-group">
@@ -127,7 +127,7 @@
             </div>
 
             <div class="form-section">
-              <h3 class="form-section-title">About Company</h3>
+              <h3 class="form-section-title"><i class="fas fa-info-circle"></i> About Company</h3>
 
               <div class="form-row">
                 <div class="form-group">
@@ -138,8 +138,12 @@
             </div>
 
             <div class="form-actions">
-              <a href="/employerD/profile" class="cancel-button">Cancel</a>
-              <button type="submit" class="save-button">Save Changes</button>
+              <a href="/employerD/profile" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+              </a>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Changes
+              </button>
             </div>
           </form>
         </div>
