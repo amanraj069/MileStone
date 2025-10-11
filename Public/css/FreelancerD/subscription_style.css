@@ -12,6 +12,15 @@ body {
   line-height: 1.6;
 }
 
+.main-content {
+  flex-grow: 1;
+  padding: 24px;
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  background-color: #f7f9fc;
+  min-height: 100vh;
+}
+
 .container {
   max-width: 1000px;
   margin: 0px auto;

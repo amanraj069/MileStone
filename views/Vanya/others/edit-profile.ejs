@@ -4,26 +4,119 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit Freelancer Profile</title>
-    <link
-      rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
-    />
     <link rel="stylesheet" href="/css/FreelancerD/profile.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      .image-preview {
+        margin-top: 15px;
+        padding: 20px;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        text-align: center;
+        background-color: #fafafa;
+        transition: border-color 0.3s ease;
+      }
+
+      .image-preview:hover {
+        border-color: #2563eb;
+      }
+
+      .image-preview img {
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .preview-placeholder {
+        padding: 40px 20px;
+        color: #666;
+      }
+
+      .preview-placeholder i {
+        font-size: 48px;
+        margin-bottom: 10px;
+        color: #ccc;
+      }
+
+      .preview-placeholder p {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      .preview-label {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #666;
+        font-weight: 500;
+      }
+
+      .image-preview.has-image {
+        border-color: #10b981;
+        background-color: #f0fdf4;
+      }
+
+      .error-message {
+        color: #dc2626;
+        font-size: 12px;
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      .form-group input.error {
+        border-color: #dc2626 !important;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+      }
+
+      .form-group input.valid {
+        border-color: #10b981 !important;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+      }
+
+      .portfolio-preview {
+        margin-top: 10px;
+        padding: 15px;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        text-align: center;
+        background-color: #fafafa;
+        transition: border-color 0.3s ease;
+      }
+
+      .portfolio-preview:hover {
+        border-color: #2563eb;
+      }
+
+      .portfolio-preview img {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .portfolio-preview.has-image {
+        border-color: #10b981;
+        background-color: #f0fdf4;
+      }
+
+
+    </style>
   </head>
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('../partials/sidebar', {activePage: 'profile'}) %>
+      <%- include('../partials/sidebar', {activePage: 'profile', user: user}) %>
       <div class="main-content">
         <div class="container">
           <div class="header">
             <h1>Edit Freelancer Profile</h1>
             <a href="/freelancerD/profile" class="back-button">
-              <Outlook.com
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -43,7 +136,7 @@
           </div>
 
           <div class="edit-form-container">
-            <form id="profileEditForm" action="/freelancerD/profile/update" method="POST">
+            <form id="profileEditForm" action="/freelancerD/profile/update" method="POST" enctype="multipart/form-data">
               <div class="form-section">
                 <h3 class="form-section-title">Basic Information</h3>
 
@@ -85,18 +178,29 @@
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="profileImageUrl">Profile Image URL</label>
+                    <label for="profileImage">Profile Image</label>
                     <input
-                      type="url"
-                      id="profileImageUrl"
-                      name="profileImageUrl"
-                      value="<%= user.picture || '' %>"
-                      placeholder="Enter image URL"
+                      type="file"
+                      id="profileImage"
+                      name="profileImage"
+                      accept="image/*"
+                      onchange="previewImage(this)"
                     />
                     <small class="field-note"
-                      >Enter a direct link to your profile image (e.g.,
-                      https://via.placeholder.com/150)</small
+                      >Upload your profile image (JPG, PNG, GIF, WebP - Max 5MB)</small
                     >
+                    <!-- Image Preview -->
+                    <div id="imagePreview" class="image-preview">
+                      <% if (user.picture && user.picture !== '') { %>
+                        <img src="<%= user.picture %>" alt="Current Profile Image" id="previewImg">
+                        <p class="preview-label">Current Profile Image</p>
+                      <% } else { %>
+                        <div class="preview-placeholder" id="previewPlaceholder">
+                          <i class="fas fa-user-circle"></i>
+                          <p>No image selected</p>
+                        </div>
+                      <% } %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -120,11 +224,17 @@
                   <div class="form-group">
                     <label for="phone">Phone</label>
                     <input
-                      type="text"
+                      type="tel"
                       id="phone"
                       name="phone"
                       value="<%= user.phone || '' %>"
+                      pattern="[0-9\s\-\+\(\)]{10,15}"
+                      maxlength="15"
+                      placeholder="Enter your phone number"
+                      title="Please enter a valid phone number (10-15 digits)"
                     />
+                    <small class="field-note">Enter a valid phone number (10-15 digits)</small>
+                    <div id="phoneError" class="error-message" style="display: none;"></div>
                   </div>
                 </div>
               </div>
@@ -249,13 +359,27 @@
                     <div id="portfolioContainer" class="portfolio-container">
                       <% (user.portfolio || []).forEach((port, index) => { %>
                         <div class="portfolio-item" data-index="<%= index %>">
+                          <label for="portfolioImage<%= index %>">Portfolio Image</label>
                           <input
-                            type="url"
-                            class="portfolio-image"
-                            name="portfolio[<%= index %>][image]"
-                            value="<%= port.image || '' %>"
-                            placeholder="Image URL"
+                            type="file"
+                            id="portfolioImage<%= index %>"
+                            class="portfolio-image-file"
+                            name="portfolioImages"
+                            accept="image/*"
+                            onchange="previewPortfolioImage(this, '<%= index %>')"
                           />
+                          <small class="field-note">Upload portfolio image (JPG, PNG, GIF, WebP - Max 5MB)</small>
+                          <div id="portfolioPreview<%= index %>" class="portfolio-preview">
+                            <% if (port.image && port.image !== '') { %>
+                              <img src="<%= port.image %>" alt="Portfolio Image" id="portfolioPreviewImg<%= index %>">
+                              <p class="preview-label">Current Portfolio Image</p>
+                            <% } else { %>
+                              <div class="preview-placeholder" id="portfolioPreviewPlaceholder<%= index %>">
+                                <i class="fas fa-image"></i>
+                                <p>No image selected</p>
+                              </div>
+                            <% } %>
+                          </div>
                           <input
                             type="text"
                             class="portfolio-title"
@@ -274,7 +398,7 @@
                             class="portfolio-link"
                             name="portfolio[<%= index %>][link]"
                             value="<%= port.link || '' %>"
-                            placeholder="Link"
+                            placeholder="Project Link (Optional)"
                           />
                           <button
                             type="button"
@@ -327,6 +451,172 @@
     </div>
 
     <script>
+      // Image Preview Function
+      function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const previewPlaceholder = document.getElementById('previewPlaceholder');
+        
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            // Remove placeholder if it exists
+            if (previewPlaceholder) {
+              previewPlaceholder.remove();
+            }
+            
+            // Create or update image element
+            if (previewImg) {
+              previewImg.src = e.target.result;
+            } else {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.alt = 'Profile Image Preview';
+              img.id = 'previewImg';
+              
+              const label = document.createElement('p');
+              label.className = 'preview-label';
+              label.textContent = 'New Profile Image';
+              
+              preview.innerHTML = '';
+              preview.appendChild(img);
+              preview.appendChild(label);
+            }
+            
+            // Update preview container styling
+            preview.classList.add('has-image');
+            
+            // Update label for existing image
+            const existingLabel = preview.querySelector('.preview-label');
+            if (existingLabel) {
+              existingLabel.textContent = 'New Profile Image';
+            }
+          };
+          
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      // Portfolio Image Preview Function
+      function previewPortfolioImage(input, index) {
+        const preview = document.getElementById(`portfolioPreview${index}`);
+        const previewImg = document.getElementById(`portfolioPreviewImg${index}`);
+        const previewPlaceholder = document.getElementById(`portfolioPreviewPlaceholder${index}`);
+        
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            // Remove placeholder if it exists
+            if (previewPlaceholder) {
+              previewPlaceholder.remove();
+            }
+            
+            // Create or update image element
+            if (previewImg) {
+              previewImg.src = e.target.result;
+            } else {
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.alt = 'Portfolio Image Preview';
+              img.id = `portfolioPreviewImg${index}`;
+              
+              const label = document.createElement('p');
+              label.className = 'preview-label';
+              label.textContent = 'New Portfolio Image';
+              
+              preview.innerHTML = '';
+              preview.appendChild(img);
+              preview.appendChild(label);
+            }
+            
+            // Update preview container styling
+            preview.classList.add('has-image');
+            
+            // Update label for existing image
+            const existingLabel = preview.querySelector('.preview-label');
+            if (existingLabel) {
+              existingLabel.textContent = 'New Portfolio Image';
+            }
+          };
+          
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      // Phone Number Validation
+      function validatePhoneNumber(phoneNumber) {
+        // Remove all non-digit characters for validation
+        const digitsOnly = phoneNumber.replace(/\D/g, '');
+        
+        // Check if it's between 10-15 digits
+        if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+          return false;
+        }
+        
+        // Additional pattern check for common phone formats
+        const phonePattern = /^[\+]?[1-9][\d]{0,4}?[\s\-\.]?[\(]?[\d]{1,4}[\)]?[\s\-\.]?[\d]{1,4}[\s\-\.]?[\d]{1,9}$/;
+        return phonePattern.test(phoneNumber);
+      }
+
+      function displayPhoneError(message) {
+        const errorDiv = document.getElementById('phoneError');
+        const phoneInput = document.getElementById('phone');
+        
+        if (message) {
+          errorDiv.textContent = message;
+          errorDiv.style.display = 'block';
+          phoneInput.classList.add('error');
+          phoneInput.classList.remove('valid');
+        } else {
+          errorDiv.style.display = 'none';
+          phoneInput.classList.remove('error');
+          phoneInput.classList.add('valid');
+        }
+      }
+
+      // Real-time phone validation
+      document.getElementById('phone').addEventListener('input', function(e) {
+        const phoneValue = e.target.value.trim();
+        
+        if (phoneValue === '') {
+          displayPhoneError('');
+          e.target.classList.remove('error', 'valid');
+          return;
+        }
+        
+        if (!validatePhoneNumber(phoneValue)) {
+          displayPhoneError('Please enter a valid phone number (10-15 digits)');
+        } else {
+          displayPhoneError('');
+        }
+      });
+
+      // Phone number formatting (optional - formats as user types)
+      document.getElementById('phone').addEventListener('keyup', function(e) {
+        let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+        let formattedValue = '';
+        
+        if (value.length > 0) {
+          if (value.length <= 3) {
+            formattedValue = value;
+          } else if (value.length <= 6) {
+            formattedValue = value.slice(0, 3) + '-' + value.slice(3);
+          } else if (value.length <= 10) {
+            formattedValue = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6);
+          } else {
+            // For international numbers, don't format automatically
+            formattedValue = e.target.value;
+          }
+        }
+        
+        // Only apply formatting for numbers 10 digits or less
+        if (value.length <= 10) {
+          e.target.value = formattedValue;
+        }
+      });
+
       // Add Experience
       document.getElementById('addExperienceBtn').addEventListener('click', () => {
         const container = document.getElementById('experienceContainer');
@@ -367,10 +657,18 @@
         item.className = 'portfolio-item';
         item.setAttribute('data-index', index);
         item.innerHTML = `
-          <input type="url" class="portfolio-image" name="portfolio[${index}][image]" placeholder="Image URL" />
+          <label for="portfolioImage${index}">Portfolio Image</label>
+          <input type="file" id="portfolioImage${index}" class="portfolio-image-file" name="portfolioImages" accept="image/*" onchange="previewPortfolioImage(this, '${index}')" />
+          <small class="field-note">Upload portfolio image (JPG, PNG, GIF, WebP - Max 5MB)</small>
+          <div id="portfolioPreview${index}" class="portfolio-preview">
+            <div class="preview-placeholder" id="portfolioPreviewPlaceholder${index}">
+              <i class="fas fa-image"></i>
+              <p>No image selected</p>
+            </div>
+          </div>
           <input type="text" class="portfolio-title" name="portfolio[${index}][title]" placeholder="Title" />
           <textarea class="portfolio-description" name="portfolio[${index}][description]" rows="3" placeholder="Description"></textarea>
-          <input type="url" class="portfolio-link" name="portfolio[${index}][link]" placeholder="Link" />
+          <input type="url" class="portfolio-link" name="portfolio[${index}][link]" placeholder="Project Link (Optional)" />
           <button type="button" class="remove-btn" onclick="removeItem(this, 'portfolio')">Remove</button>
         `;
         container.insertBefore(item, document.getElementById('addPortfolioBtn'));
@@ -395,14 +693,19 @@
       document.getElementById('profileEditForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const form = e.target;
+        
+        // Validate phone number before submission
+        const phoneInput = document.getElementById('phone');
+        const phoneValue = phoneInput.value.trim();
+        
+        if (phoneValue && !validatePhoneNumber(phoneValue)) {
+          displayPhoneError('Please enter a valid phone number before submitting');
+          phoneInput.focus();
+          return;
+        }
+        
         const formData = new FormData(form);
         
-        // Convert skills to array of objects
-        const skillsInput = formData.get('skills');
-        const skillsArray = skillsInput
-          ? skillsInput.split(',').map(skill => ({ SkillId: skill.trim() }))
-          : [];
-
         // Collect experience, education, and portfolio
         const experience = [];
         const education = [];
@@ -426,39 +729,25 @@
           }
         });
 
-        form.querySelectorAll('.portfolio-item').forEach(item => {
-          const image = item.querySelector('.portfolio-image').value;
+        form.querySelectorAll('.portfolio-item').forEach((item, index) => {
           const title = item.querySelector('.portfolio-title').value;
           const description = item.querySelector('.portfolio-description').value;
           const link = item.querySelector('.portfolio-link').value;
-          if (image || title || description || link) {
-            portfolio.push({ image, title, description, link });
+          // Note: Portfolio images will be handled separately as files
+          if (title || description || link) {
+            portfolio.push({ title, description, link, index });
           }
         });
 
-        // Create JSON payload
-        const data = {
-          name: formData.get('name'),
-          title: formData.get('title'),
-          location: formData.get('location'),
-          profileImageUrl: formData.get('profileImageUrl'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          about: formData.get('about'),
-          skills: skillsArray,
-          experience,
-          education,
-          portfolio,
-          resumeLink: formData.get('resumeLink'),
-        };
+        // Add structured data to FormData
+        formData.append('experienceData', JSON.stringify(experience));
+        formData.append('educationData', JSON.stringify(education));
+        formData.append('portfolioData', JSON.stringify(portfolio));
 
         try {
           const response = await fetch(form.action, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
+            body: formData, // Send FormData directly for file upload support
           });
 
           const result = await response.json();

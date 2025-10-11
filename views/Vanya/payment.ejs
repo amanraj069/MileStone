@@ -3,58 +3,234 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payments - FreelancePro</title>
+    <title>Payments - Dashboard</title>
     <link
       rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/css/FreelancerD/payment_style.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 30px;
+        min-height: 100vh;
+      }
+
+      .page-header {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #2563eb;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .content-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 20px;
+      }
+
+      .job-section {
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .job-section:hover {
+        border-color: #2563eb;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .job-section h4 {
+        color: #2563eb;
+        font-size: 18px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .job-details {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .job-details p {
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .job-details strong {
+        color: #333;
+        min-width: 120px;
+      }
+
+      .milestone-details {
+        background: #f0f9ff;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #2563eb;
+      }
+
+      .milestone-details h5 {
+        color: #1e40af;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+
+      .progress-bar-container {
+        margin-bottom: 15px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 12px;
+        background: #e1e5e9;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(45deg, #2563eb, #10b981);
+        transition: width 0.3s ease;
+        border-radius: 6px;
+      }
+
+      .progress-percentage {
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .milestone-btn {
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .milestone-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      }
+
+      .no-jobs {
+        text-align: center;
+        padding: 50px;
+        color: #666;
+      }
+
+      .no-jobs i {
+        font-size: 48px;
+        color: #ddd;
+        margin-bottom: 20px;
+      }
+
+      .amount-highlight {
+        color: #10b981;
+        font-weight: 600;
+      }
+    </style>
   </head>
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'payment'}) %>
+      <%- include('./partials/sidebar', {activePage: 'payment', user: user}) %>
 
       <!-- Main Content Area -->
       <div class="main-content">
-        <!-- Payments Section -->
-        <div id="current-job" class="content-section active">
-          <div class="header">
-            <h2>Payments for Current Jobs</h2>
-            <p>View payment details and milestone progress for your active jobs</p>
-          </div>
+        <div class="page-header">
+          <h1 class="page-title">Payments</h1>
+          <p class="page-subtitle">
+            View payment details and milestone progress for your active jobs
+          </p>
+        </div>
 
-          <div class="job-content">
-            <% if (jobs && jobs.length > 0) { %>
-              <% jobs.forEach(job => { %>
-                <!-- Combined Job Details and Milestone Progress -->
-                <div class="job-section">
-                  <h4>Job Overview</h4>
-                  <div class="job-details">
-                    <p><strong>Job Name:</strong> <%= job.title %></p>
-                    <p><strong>Company:</strong> <%= job.company %></p>
-                    <p><strong>Skills:</strong> <%= job.skills.join(', ') %></p>
-                    <p><strong>Deadline:</strong> <%= job.deadline %></p>
-                    <p><strong>Amount:</strong> <%= job.amount %></p>
-                  </div>
-                  <div class="milestone-details">
-                    <h5>Milestone Progress</h5>
-                    <div class="progress-bar-container">
-                      <div class="progress-bar">
-                        <div class="progress" style="width: <%= job.progress %>%"></div>
-                      </div>
-                      <p class="progress-percentage"><%= job.progress %>%</p>
-                    </div>
-                    <a href="/freelancerD/milestone/<%= job.id %>" class="milestone-btn">
-                      View Milestones
-                    </a>
-                  </div>
+        <div class="content-card">
+          <% if (jobs && jobs.length > 0) { %> <% jobs.forEach(job => { %>
+          <div class="job-section">
+            <h4><i class="fas fa-briefcase"></i> Job Overview</h4>
+            <div class="job-details">
+              <p><strong>Job Name:</strong> <span><%= job.title %></span></p>
+              <p><strong>Company:</strong> <span><%= job.company %></span></p>
+              <p>
+                <strong>Skills:</strong>
+                <span><%= job.skills.join(', ') %></span>
+              </p>
+              <p><strong>Deadline:</strong> <span><%= job.deadline %></span></p>
+              <p>
+                <strong>Amount:</strong>
+                <span class="amount-highlight"><%= job.amount %></span>
+              </p>
+            </div>
+            <div class="milestone-details">
+              <h5><i class="fas fa-chart-line"></i> Milestone Progress</h5>
+              <div class="progress-bar-container">
+                <div class="progress-bar">
+                  <div
+                    class="progress"
+                    style="width: <%= job.progress %>%"
+                  ></div>
                 </div>
-              <% }) %>
-            <% } else { %>
-              <p>No active jobs found.</p>
-            <% } %>
+                <p class="progress-percentage"><%= job.progress %>% Complete</p>
+              </div>
+              <a
+                href="/freelancerD/milestone/<%= job.id %>"
+                class="milestone-btn"
+              >
+                <i class="fas fa-eye"></i> View Milestones
+              </a>
+            </div>
           </div>
+          <% }) %> <% } else { %>
+          <div class="no-jobs">
+            <i class="fas fa-wallet"></i>
+            <h3>No active jobs found</h3>
+            <p>You don't have any active jobs with payment information.</p>
+          </div>
+          <% } %>
         </div>
       </div>
     </div>

@@ -6,11 +6,12 @@
     <title>Add New Skill Quiz</title>
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
     <link rel="stylesheet" href="/css/adminD/add-quiz.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style></style>
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('../Partials/sidebar', { user: user, activeSection: 'quizzes' }) %>
+      <%- include('../Partials/sidebar', { user: user, activePage: 'quizzes' }) %>
       <div class="main-content">
         <section id="add-quiz" class="section-content active">
           <div class="section-title">

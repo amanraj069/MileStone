@@ -3,58 +3,285 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Skill Quiz - <%= skill.name %></title>
+    <title>Skill Quiz - <%= skill.name %> - Dashboard</title>
     <link
       rel="stylesheet"
-      href="/css/FreelancerD/static_elements/sidebar.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/css/FreelancerD/quiz_style.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 30px;
+        min-height: 100vh;
+      }
+
+      .page-header {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #2563eb;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .content-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 20px;
+      }
+
+      .quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .question-card {
+        background: #f8f9fa;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .question-card:hover {
+        border-color: #2563eb;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .question-card h4 {
+        color: #2563eb;
+        margin-bottom: 15px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .question-card p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        background: white;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .option:hover {
+        border-color: #2563eb;
+        background: #f0f9ff;
+      }
+
+      .option input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #2563eb;
+      }
+
+      .option span {
+        font-size: 15px;
+        flex: 1;
+      }
+
+      .submit-quiz-btn {
+        width: 100%;
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 30px;
+      }
+
+      .submit-quiz-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+      }
+
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+
+      .popup-content {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .popup-content h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .popup-content p {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #666;
+        line-height: 1.5;
+      }
+
+      .popup-btn {
+        background: #2563eb;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .popup-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+      }
+
+      .quiz-progress {
+        background: #e1e5e9;
+        height: 6px;
+        border-radius: 3px;
+        margin-bottom: 30px;
+        overflow: hidden;
+      }
+
+      .quiz-progress-bar {
+        background: linear-gradient(45deg, #2563eb, #10b981);
+        height: 100%;
+        transition: width 0.3s ease;
+      }
+    </style>
   </head>
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'skills_badges'}) %>
+      <%- include('./partials/sidebar', {activePage: 'skills_badges', user:
+      user}) %>
 
       <!-- Main Content Area -->
       <div class="main-content">
-        <div id="quiz" class="content-section active">
-          <div class="header">
-            <h2>Quiz: <%= skill.name %></h2>
-            <p>Test your knowledge to earn this skill for your profile.</p>
+        <div class="page-header">
+          <h1 class="page-title">Quiz: <%= skill.name %></h1>
+          <p class="page-subtitle">
+            Test your knowledge to earn this skill for your profile
+          </p>
+        </div>
+
+        <div class="content-card">
+          <div class="quiz-progress">
+            <div
+              class="quiz-progress-bar"
+              style="width: 0%"
+              id="progressBar"
+            ></div>
           </div>
 
           <div class="quiz-container">
             <form id="quiz-form">
               <% skill.questions.forEach((question, index) => { %>
-                <div class="question-card">
-                  <h4>Question <%= index + 1 %> (<%= question.marks %> marks)</h4>
-                  <p><%= question.questionText %></p>
-                  <div class="options">
-                    <% question.options.forEach((option, optIndex) => { %>
-                      <label class="option">
-                        <input
-                          type="radio"
-                          name="<%= question.questionId %>"
-                          value="<%= option %>"
-                          required
-                        />
-                        <span><%= String.fromCharCode(65 + optIndex) %>. <%= option %></span>
-                      </label>
-                    <% }) %>
-                  </div>
+              <div class="question-card">
+                <h4>
+                  <i class="fas fa-question-circle"></i>
+                  Question <%= index + 1 %> (<%= question.marks %> marks)
+                </h4>
+                <p><%= question.questionText %></p>
+                <div class="options">
+                  <% question.options.forEach((option, optIndex) => { %>
+                  <label class="option">
+                    <input
+                      type="radio"
+                      name="<%= question.questionId %>"
+                      value="<%= option %>"
+                      required
+                      onchange="updateProgress()"
+                    />
+                    <span
+                      ><%= String.fromCharCode(65 + optIndex) %>. <%= option
+                      %></span
+                    >
+                  </label>
+                  <% }) %>
                 </div>
+              </div>
               <% }) %>
-              <button type="submit" class="submit-quiz-btn">Submit Quiz</button>
+              <button type="submit" class="submit-quiz-btn">
+                <i class="fas fa-paper-plane"></i>
+                Submit Quiz
+              </button>
             </form>
           </div>
 
           <!-- Result Popup -->
-          <div id="result-popup" class="popup" style="display: none;">
+          <div id="result-popup" class="popup" style="display: none">
             <div class="popup-content">
               <h3 id="result-title"></h3>
               <p id="result-message"></p>
               <p id="result-score"></p>
-              <button id="result-close-btn" class="popup-btn">Done</button>
+              <button id="result-close-btn" class="popup-btn">
+                <i class="fas fa-check"></i>
+                Done
+              </button>
             </div>
           </div>
         </div>
@@ -62,20 +289,26 @@
     </div>
 
     <script>
-      const skillId = '<%= skill.skillId %>'; // Ensure skillId is properly rendered
-      console.log('Skill ID:', skillId); // Debug log
+      const skillId = '<%= skill.skillId %>';
+      const totalQuestions = <%= skill.questions.length %>;
+      console.log('Skill ID:', skillId);
+
+      function updateProgress() {
+        const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+        const progress = (answeredQuestions / totalQuestions) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+      }
 
       document.getElementById('quiz-form').addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Collect answers from the form
         const formData = new FormData(e.target);
         const answers = {};
         for (let [key, value] of formData.entries()) {
           answers[key] = value;
         }
 
-        console.log('Answers:', answers); // Debug log
+        console.log('Answers:', answers);
 
         try {
           const response = await fetch(`/freelancerD/skills_badges/quiz/${skillId}`, {

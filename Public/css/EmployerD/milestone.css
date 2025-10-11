@@ -1,25 +1,266 @@
-/* Base Styles */
+/* Milestone Page - Employer Dashboard Styling */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8fafc;
-  color: #1e293b;
-  line-height: 1.5;
+  color: #334155;
+  line-height: 1.6;
 }
 
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 30px;
+  background-color: #f8fafc;
+}
+
+.page-header {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-left: 4px solid #2563eb;
+}
+
+.page-title {
+  font-size: 28px;
+  color: #1e293b;
+  margin-bottom: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-subtitle {
+  color: #64748b;
+  font-size: 16px;
+}
+
+.content-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.job-section {
+  margin-bottom: 40px;
+}
+
+.job-title {
+  font-size: 24px;
+  color: #1e293b;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #e1e5e9;
+  padding-bottom: 10px;
+}
+
+.job-info {
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.progress-card {
+  background: #f8fafc;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.progress-title {
+  font-size: 20px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.progress-percentage {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #e1e5e9;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.milestones-grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.milestone-card {
+  background: white;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.milestone-card:hover {
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.milestone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.milestone-title {
+  font-size: 18px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.milestone-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.milestone-status.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.milestone-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.milestone-status.in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.milestone-description {
+  color: #64748b;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.milestone-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.milestone-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-label {
+  font-size: 12px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.payment-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.payment-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.payment-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.no-jobs {
+  text-align: center;
+  color: #64748b;
+  font-size: 18px;
+  padding: 60px 20px;
+}
+
+.empty-state {
+  background: white;
+  border-radius: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  border: 2px dashed #e1e5e9;
+}
+
+.empty-state i {
+  font-size: 48px;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+/* Additional legacy support for existing table styles */
 .container {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-/* Header Styles */
 .header {
   display: flex;
   justify-content: space-between;
@@ -33,28 +274,6 @@ body {
   color: #3b82f6;
 }
 
-.job-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1rem;
-}
-
-.job-section {
-  margin-bottom: 2rem;
-}
-
-/* Progress Card Styles */
-.progress-card {
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  margin-top: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e2e8f0;
-}
-
 .progress-section {
   margin-bottom: 1.5rem;
 }
@@ -63,38 +282,9 @@ body {
   margin-bottom: 0;
 }
 
-.progress-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.progress-title {
-  font-weight: 500;
-  font-size: 1rem;
-}
-
-.progress-percentage,
 .progress-amount {
   font-size: 0.875rem;
   font-weight: 500;
-}
-
-.progress-bar-container {
-  height: 0.5rem;
-  background-color: #f1f5f9;
-  border-radius: 9999px;
-  overflow: hidden;
-  margin-bottom: 0.5rem;
-}
-
-.progress-bar {
-  height: 100%;
-  background-color: #3b82f6;
-  border-radius: 9999px;
-  width: 0%;
-  transition: width 0.3s ease;
 }
 
 .progress-labels {
@@ -104,7 +294,6 @@ body {
   color: #64748b;
 }
 
-/* Milestone Table Styles */
 .milestones-container {
   margin-top: 1.5rem;
 }
@@ -143,7 +332,7 @@ body {
 }
 
 .milestone-row.requested {
-  background-color: #fef9c3; /* Light yellow background for better visibility */
+  background-color: #fef9c3;
 }
 
 .milestone-row.requested td {
@@ -172,102 +361,4 @@ body {
 .pay-btn:disabled {
   background-color: #d1fae5;
   cursor: not-allowed;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal {
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.close-modal {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #64748b;
-}
-
-.modal-body {
-  padding: 1.5rem;
-}
-
-.modal-body p {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-select {
-  width: 100%;
-  padding: 0.625rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
-  padding: 0 1.5rem 1.5rem;
-}
-
-.cancel-btn {
-  padding: 0.625rem 1rem;
-  background-color: transparent;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.save-btn {
-  padding: 0.625rem 1rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
 }

@@ -6,10 +6,11 @@
     <title>Job Listings</title>
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
     <link rel="stylesheet" href="/css/adminD/job_listings.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('Partials/sidebar', { user: user, activeSection:
+      <%- include('Partials/sidebar', { user: user, activePage:
       'job_listings' }) %>
       <div class="main-content">
         <section id="job_listings" class="section-content active">

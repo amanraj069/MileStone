@@ -3,25 +3,223 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebar Dashboard - Subscription</title>
-    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
-    <link rel="stylesheet" href="/css/EmployerD/subscription.css" />
+    <title>Subscription - Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 30px;
+        min-height: 100vh;
+      }
+
+      .page-header {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #2563eb;
+        text-align: center;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        color: #666;
+        font-size: 16px;
+      }
+
+      .content-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 20px;
+      }
+
+      .current-plan {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 4px solid #2563eb;
+        margin-bottom: 30px;
+      }
+
+      .current-plan h2 {
+        color: #1e40af;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .current-plan p {
+        color: #3b82f6;
+        font-size: 16px;
+      }
+
+      .plan-options h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 24px;
+      }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .plan-card {
+        background: white;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .plan-card:hover {
+        border-color: #2563eb;
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .plan-card.premium {
+        border-color: #f59e0b;
+        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        position: relative;
+      }
+
+      .plan-card.premium:before {
+        content: "RECOMMENDED";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #f59e0b;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .plan-card h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .plan-card .price {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 15px;
+      }
+
+      .plan-card.premium .price {
+        color: #f59e0b;
+      }
+
+      .plan-card p {
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.5;
+      }
+
+      .plan-card button {
+        width: 100%;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .plan-card button:not(.upgrade-btn) {
+        background: #e5e7eb;
+        color: #6b7280;
+      }
+
+      .upgrade-btn {
+        background: linear-gradient(45deg, #f59e0b, #d97706);
+        color: white;
+      }
+
+      .upgrade-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+      }
+
+      .plan-card button:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      .features-list {
+        text-align: left;
+        margin: 20px 0;
+      }
+
+      .features-list li {
+        padding: 8px 0;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .features-list i {
+        color: #10b981;
+        width: 16px;
+      }
+    </style>
   </head>
   <body>
     <div class="dashboard-wrapper">
       <%- include('partials/sidebar', { user: user, activePage: 'subscription' }) %>
+      
       <div class="main-content">
-        <div class="container">
-          <header>
-            <h1>Subscription Plans</h1>
-            <p>Unlock premium features with a plan that suits you.</p>
-          </header>
+        <div class="page-header">
+          <h1 class="page-title">Subscription Plans</h1>
+          <p class="page-subtitle">Unlock premium features with a plan that suits you</p>
+        </div>
 
+        <div class="content-card">
           <section class="current-plan">
-            <div class="plan-info">
-              <h2>Your Plan</h2>
-              <p><%= user.subscription || 'Basic' %> - <%= user.subscription === 'Premium' ? 'Ad-free, advanced tools, priority support.' : 'Includes basic features. Upgrade for more!' %></p>
-            </div>
+            <h2>
+              <i class="fas fa-crown"></i>
+              Your Current Plan
+            </h2>
+            <p>
+              <strong><%= user.subscription || 'Basic' %></strong> - 
+              <%= user.subscription === 'Premium' ? 'Ad-free, advanced tools, priority support.' : 'Includes basic features. Upgrade for more!' %>
+            </p>
           </section>
 
           <section class="plan-options">
@@ -30,13 +228,30 @@
               <div class="plan-card">
                 <h3>Basic</h3>
                 <p class="price">₹0/month</p>
-                <p>Limited access, core functionality, ads included.</p>
-                <button <%= user.subscription === 'Basic' ? 'disabled' : '' %>><%= user.subscription === 'Basic' ? 'Current Plan' : 'Basic Features Included' %></button>
+                <p>Perfect for getting started with basic functionality and essential features.</p>
+                <ul class="features-list">
+                  <li><i class="fas fa-check"></i> Core functionality</li>
+                  <li><i class="fas fa-check"></i> Limited project access</li>
+                  <li><i class="fas fa-check"></i> Basic support</li>
+                  <li><i class="fas fa-times" style="color: #ef4444;"></i> Ads included</li>
+                </ul>
+                <button <%= user.subscription === 'Basic' ? 'disabled' : '' %>>
+                  <%= user.subscription === 'Basic' ? 'Current Plan' : 'Basic Features Included' %>
+                </button>
               </div>
+              
               <div class="plan-card premium">
                 <h3>Premium</h3>
                 <p class="price">₹868.61/month</p>
-                <p>Ad-free, advanced tools, priority support.</p>
+                <p>Unlock your full potential with advanced tools and premium support.</p>
+                <ul class="features-list">
+                  <li><i class="fas fa-check"></i> All basic features</li>
+                  <li><i class="fas fa-check"></i> Unlimited projects</li>
+                  <li><i class="fas fa-check"></i> Advanced analytics</li>
+                  <li><i class="fas fa-check"></i> Priority support</li>
+                  <li><i class="fas fa-check"></i> Ad-free experience</li>
+                  <li><i class="fas fa-check"></i> Advanced tools</li>
+                </ul>
                 <button class="upgrade-btn" <%= user.subscription === 'Premium' ? 'disabled' : '' %> onclick="location.href='/freelancerD/payment_success'">
                   <%= user.subscription === 'Premium' ? 'Current Plan' : 'Upgrade to Premium' %>
                 </button>

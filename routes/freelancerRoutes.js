@@ -1,12 +1,16 @@
 const express = require("express");
 const freelancerController = require("../controllers/freelancerController");
 const employerController = require("../controllers/employerController");
+const { upload } = require("../middleware/imageUpload");
 
 const router = express.Router();
 
 router.route("/profile").get(freelancerController.getFreelancerProfile);
 router.route("/profile/edit").get(freelancerController.getEditFreelancerProfile);
-router.route("/profile/update").post(freelancerController.updateFreelancerProfile);
+router.route("/profile/update").post(upload.fields([
+  { name: 'profileImage', maxCount: 1 },
+  { name: 'portfolioImages', maxCount: 10 }
+]), freelancerController.updateFreelancerProfile);
 router.route("/active_job").get(freelancerController.getFreelancerActiveJobs);
 router
   .route("/active_job/leave/:jobId")
