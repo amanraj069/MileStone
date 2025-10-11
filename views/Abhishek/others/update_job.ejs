@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Update Job Listing - ZeroGravity</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/css/EmployerD/sidebar.css">
     <link rel="stylesheet" href="/css/EmployerD/update_job.css">
   </head>
-  <body>
+  <body data-milestone-count="<%= job.milestones.length %>">
     <div class="dashboard-wrapper">
       <%- include('../partials/sidebar', { user: user, activePage: 'job_listings' }) %>
       <div class="main-content">
@@ -175,7 +176,8 @@
       </div>
     </div>
     <script>
-      let milestoneCount = <%- job.milestones.length %>;
+      const milestoneCount = parseInt(document.body.getAttribute('data-milestone-count')) || 0;
+      let currentMilestoneCount = milestoneCount;
 
       document.querySelector(".add-milestone").addEventListener("click", () => {
         const milestoneDiv = document.createElement("div");

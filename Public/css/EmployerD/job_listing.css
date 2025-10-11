@@ -1,18 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  background-color: #f3f2ef;
-  color: #333;
-}
-
-.main-content {
-  padding: 20px;
-}
+/* Job Listing Page Specific Styles */
 
 .container {
   max-width: 1200px;

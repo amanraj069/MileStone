@@ -6,7 +6,7 @@
     <title>Complaints</title>
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
     <link rel="stylesheet" href="/css/adminD/complaints.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
     
   </head>
 
@@ -15,17 +15,32 @@
       <%- include('Partials/sidebar', { user: user, activePage: 'complaints' }) %>
       <div class="main-content">
         <section id="complaints" class="section-content active">
+          <!-- Notification Banner -->
+          <div id="notification-banner" class="notification-banner">
+            <div class="banner-content">
+              <span id="banner-icon" class="banner-icon"></span>
+              <span id="banner-message" class="banner-message"></span>
+              <button class="banner-close" onclick="document.getElementById('notification-banner').classList.remove('show')">&times;</button>
+            </div>
+          </div>
+          
           <h1>Complaints</h1>
-          <div class="search-bar" style="margin-bottom: 20px;">
-            <form action="/adminD/complaints" method="GET" style="display: flex; align-items: center;">
-              <input type="text" name="q" value="<%= searchQuery || '' %>" placeholder="Search by user, issue, or type..." style="padding: 8px; flex: 1; border: 1px solid #ddd; border-radius: 4px 0 0 4px; background-color: #f0f0f0;">
-              <button type="submit" style="padding: 8px; background-color: #3949ab; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+          <div class="search-bar">
+            <form action="/adminD/complaints" method="GET" id="search-form">
+              <input type="text" name="q" value="<%= searchQuery || '' %>" placeholder="Search by user, issue, or type..." id="search-input">
+              <button type="submit" title="Search">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="11" cy="11" r="8"></circle>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
               </button>
             </form>
+            <% if (searchQuery) { %>
+              <div class="search-results-info">
+                <strong>Search results for:</strong> "<%= searchQuery %>" 
+                <a href="/adminD/complaints">[Clear search]</a>
+              </div>
+            <% } %>
           </div>
           
           <!-- Filter Tabs -->
@@ -43,7 +58,7 @@
           <div class="complaints-container">
             <% if (complaints && complaints.length > 0) { %>
               <% complaints.forEach(complaint => { %>
-                <div class="complaint-card <%= complaint.status %>" data-status="<%= complaint.status %>">
+                <div class="complaint-card <%= complaint.status %>" data-status="<%= complaint.status %>" data-complaint-id="<%= complaint.complaintId %>">
                   <div class="complaint-header">
                     <span class="status-icon <%= complaint.status %>">
                       <% if (complaint.status === 'pending') { %>
@@ -107,7 +122,7 @@
                       <button class="btn-view-actions" onclick="toggleActions(this)">View Actions</button>
                     <% } %>
                     
-                    <div class="additional-actions" style="display: none;">
+                    <div class="additional-actions">
                       <div class="action-buttons">
                         <!-- Contact button for the person who raised the complaint -->
                         <button class="btn-contact" onclick="contactUser('<%= complaint.submittedBy %>', '<%= complaint.submittedByName %>')">

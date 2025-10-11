@@ -6,7 +6,7 @@
     <title>Employers</title>
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
     <link rel="stylesheet" href="/css/adminD/employers.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
   </head>
   <body>
     <div class="dashboard-wrapper">
@@ -15,11 +15,11 @@
       <div class="main-content">
         <section id="employers" class="section-content active">
           <h1>Employers</h1>
-          <div class="search-bar" style="margin-bottom: 20px">
+          <div class="search-bar search-bar-margin">
             <form
               action="/adminD/employers"
               method="GET"
-              style="display: flex; align-items: center"
+              class="search-form-flex"
               onsubmit="return validateSearch()"
             >
               <input
@@ -28,24 +28,11 @@
                 id="searchInput"
                 value="<%= searchQuery %>"
                 placeholder="Search by name or company..."
-                style="
-                  padding: 10px;
-                  flex: 1;
-                  border: 1px solid #ddd;
-                  border-radius: 4px 0 0 4px;
-                  background-color: #f5f5f5;
-                  font-size: 14px;
-                "
+                class="search-input-employers"
               />
               <button
                 type="submit"
-                style="
-                  padding: 10px;
-                  background-color: #3949ab;
-                  border: none;
-                  border-radius: 0 4px 4px 0;
-                  cursor: pointer;
-                "
+                class="search-button-employers"
               >
                 <svg
                   width="16"
@@ -63,15 +50,7 @@
               <% if (searchQuery) { %>
               <a
                 href="/adminD/employers"
-                style="
-                  padding: 10px;
-                  background-color: #f44336;
-                  color: white;
-                  border-radius: 4px;
-                  margin-left: 10px;
-                  text-decoration: none;
-                  font-size: 14px;
-                "
+                class="clear-search-link"
                 >Clear Search</a
               >
               <% } %>
@@ -192,91 +171,7 @@
         </section>
       </div>
     </div>
-    <script>
-      function validateSearch() {
-        const searchInput = document.getElementById("searchInput").value.trim();
-        if (searchInput.length < 1) {
-          alert("Please enter a search term");
-          return false;
-        }
-        return true;
-      }
 
-      function initChat(userId) {
-        console.log("Initiating chat with userId:", userId); // Debugging
-        if (!userId || userId === "default") {
-          alert("Unable to start chat: Invalid user ID");
-          return;
-        }
-        window.location.href = `/chat/${userId}`;
-      }
-
-      async function deleteEmployer(userId) {
-        if (confirm("Are you sure you want to delete this employer?")) {
-          try {
-            const response = await fetch(`/adminD/employers/${userId}`, {
-              method: "DELETE",
-            });
-            const result = await response.json();
-            if (response.ok) {
-              alert(result.message);
-              window.location.reload();
-            } else {
-              alert(result.message || "Failed to delete employer");
-            }
-          } catch (error) {
-            console.error("Error deleting employer:", error);
-            alert("Server error");
-          }
-        }
-      }
-
-      function editRating(userId, currentRating, userType) {
-        const newRating = prompt(
-          `Enter new rating for this ${userType} (1-5):`,
-          currentRating
-        );
-
-        if (newRating === null) return; // User cancelled
-
-        const rating = parseFloat(newRating);
-
-        if (isNaN(rating) || rating < 1 || rating > 5) {
-          alert("Please enter a valid rating between 1 and 5");
-          return;
-        }
-
-        updateRating(userId, rating, userType);
-      }
-
-      async function updateRating(userId, rating, userType) {
-        try {
-          const endpoint =
-            userType === "freelancer"
-              ? `/adminD/freelancers/${userId}/rating`
-              : `/adminD/employers/${userId}/rating`;
-
-          const response = await fetch(endpoint, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ rating }),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            alert(result.message);
-            window.location.reload();
-          } else {
-            alert(result.message || `Failed to update ${userType} rating`);
-          }
-        } catch (error) {
-          console.error(`Error updating ${userType} rating:`, error);
-          alert("Server error");
-        }
-      }
-    </script>
+    <script src="/js/adminD/employers.js"></script>
   </body>
 </html>

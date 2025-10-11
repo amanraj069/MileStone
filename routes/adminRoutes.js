@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/adminController");
+const { upload } = require("../middleware/imageUpload");
 
 router.get("/", adminController.getAdminDashboard);
 router.get("/job_listings", adminController.getJobListings);
@@ -18,6 +19,7 @@ router.post(
 router.get("/profile", adminController.getProfile);
 router.get("/profile/edit", adminController.getEditProfile);
 router.post("/profile/edit", adminController.updateProfile);
+router.post("/profile/upload-image", upload.single('picture'), adminController.uploadProfileImage);
 router.delete("/employers/:userId", adminController.deleteEmployer);
 router.delete("/freelancers/:userId", adminController.deleteFreelancer);
 

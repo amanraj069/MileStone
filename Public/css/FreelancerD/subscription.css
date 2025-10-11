@@ -1,0 +1,179 @@
+/* Freelancer Subscription Page CSS */
+
+.main-content {
+  margin-left: 260px;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+.page-header {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-left: 4px solid #2563eb;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  color: #666;
+  font-size: 16px;
+}
+
+.content-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.current-plan {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 4px solid #2563eb;
+  margin-bottom: 30px;
+}
+
+.current-plan h2 {
+  color: #1e40af;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.current-plan p {
+  color: #3b82f6;
+  font-size: 16px;
+}
+
+.plan-options h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 24px;
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.plan-card {
+  background: white;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.plan-card:hover {
+  border-color: #2563eb;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card.premium {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  position: relative;
+}
+
+.plan-card.premium:before {
+  content: "RECOMMENDED";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f59e0b;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.plan-card h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.plan-card .price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 15px;
+}
+
+.plan-card.premium .price {
+  color: #f59e0b;
+}
+
+.plan-card p {
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.plan-card button {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.plan-card button:not(.upgrade-btn) {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+.upgrade-btn {
+  background: linear-gradient(45deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+}
+
+.plan-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.features-list {
+  text-align: left;
+  margin: 20px 0;
+}
+
+.features-list li {
+  padding: 8px 0;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.features-list i {
+  color: #10b981;
+  width: 16px;
+}

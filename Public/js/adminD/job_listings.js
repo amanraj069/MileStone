@@ -5,7 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
-            // Add filtering logic here if needed (e.g., filter job cards)
+            
+            const filter = this.getAttribute("data-filter");
+            document.querySelectorAll(".job-card").forEach((card) => {
+              if (
+                filter === "all" ||
+                card.getAttribute("data-status") === filter
+              ) {
+                card.classList.remove("hidden");
+              } else {
+                card.classList.add("hidden");
+              }
+            });
         });
     });
 

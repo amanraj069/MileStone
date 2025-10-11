@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
   </head>
   <body>
     <div class="dashboard-wrapper">
@@ -70,18 +70,27 @@
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="picture">Profile Picture URL</label>
-                    <input
-                      type="url"
-                      id="picture"
-                      name="picture"
-                      value="<%= user.picture || '' %>"
-                      placeholder="Enter image URL"
-                    />
-                    <small class="field-note"
-                      >Enter a direct link to your profile image (e.g.,
-                      https://via.placeholder.com/150)</small
-                    >
+                    <label for="profileImageUpload">Profile Picture</label>
+                    <div class="image-upload-container">
+                      <div class="current-image">
+                        <img src="<%= user.picture || 'https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg?semt=ais_hybrid&w=740' %>" 
+                             alt="Current Profile" id="imagePreview" class="profile-preview"
+                             data-original="<%= user.picture || 'https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg?semt=ais_hybrid&w=740' %>">
+                      </div>
+                      <div class="upload-controls">
+                        <input type="file" id="profileImageUpload" name="picture" accept="image/*" class="file-input">
+                        <label for="profileImageUpload" class="upload-button">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                          </svg>
+                          Choose Image
+                        </label>
+                        <button type="button" id="uploadImageBtn" class="upload-action-btn hidden">Upload</button>
+                      </div>
+                    </div>
+                    <small class="field-note">Choose a profile picture (JPG, PNG, GIF up to 5MB)</small>
                   </div>
                 </div>
               </div>

@@ -216,3 +216,29 @@
     font-size: 16px;
   }
 }
+
+/* Additional classes for inline styles */
+.search-bar-margin {
+  margin-bottom: 20px;
+}
+
+.search-form-flex {
+  display: flex;
+  align-items: center;
+}
+
+.search-input-style {
+  padding: 8px;
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  background-color: #f0f0f0;
+}
+
+.search-button-style {
+  padding: 8px;
+  background-color: #3949ab;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
