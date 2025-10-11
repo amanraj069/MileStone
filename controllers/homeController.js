@@ -145,13 +145,26 @@ exports.getJobListing = async (req, res) => {
     const jobListings = await JobListing.find({ status: "open" }).lean();
     console.log("Fetched job listings:", jobListings);
 
+    // Get application counts for each job
+    const jobListingsWithApplications = await Promise.all(
+      jobListings.map(async (job) => {
+        const applicationCount = await JobApplication.countDocuments({
+          jobId: job.jobId,
+        });
+        return {
+          ...job,
+          applicationCount,
+        };
+      })
+    );
+
     res.locals.user = req.session && req.session.user ? req.session.user : null;
     res.locals.dashboardRoute = dashboardRoute;
 
     res.render("Deepak/Job_listing_public", {
       user: req.session && req.session.user ? req.session.user : null,
       dashboardRoute,
-      jobListings,
+      jobListings: jobListingsWithApplications,
     });
   } catch (error) {
     console.error("Error fetching job listings:", error);
@@ -202,11 +215,22 @@ exports.getJobDetails = async (req, res) => {
       }
     }
 
+    // Check if the current user has already applied to this job
+    let hasApplied = false;
+    if (req.session.user && req.session.user.role === "Freelancer") {
+      const existingApplication = await JobApplication.findOne({
+        freelancerId: req.session.user.roleId,
+        jobId: job.jobId,
+      });
+      hasApplied = !!existingApplication;
+    }
+
     res.render("Deepak/see_more_detail", {
       user: req.session.user || null,
       dashboardRoute,
       job,
       companyName: employer.companyName || "Not specified",
+      hasApplied,
     });
   } catch (error) {
     console.error("Error loading job details:", error);
@@ -431,20 +455,20 @@ exports.getProfile = async (req, res) => {
 exports.testComplaint = async (req, res) => {
   try {
     console.log("Testing complaint creation...");
-    
+
     const testComplaint = new Complaint({
       submittedBy: "test-user-123",
-      againstUser: "test-user-456", 
+      againstUser: "test-user-456",
       complaintType: "Test Complaint",
       issue: "This is a test complaint",
-      status: "pending"
+      status: "pending",
     });
-    
+
     console.log("Complaint object created:", testComplaint);
-    
+
     const saved = await testComplaint.save();
     console.log("Complaint saved successfully:", saved);
-    
+
     res.json({ success: true, complaint: saved });
   } catch (error) {
     console.error("Error creating test complaint:", error);
