@@ -1,138 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Profile</title>
-  <link rel="stylesheet" href="/css/adminD/sidebar.css" />
-  <link rel="stylesheet" href="/css/adminD/profile.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-<body>
-  <div class="dashboard-wrapper">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Profile - Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/adminD/sidebar.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 2rem;
+        min-height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+
+      .page-header {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        color: white;
+        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .edit-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .edit-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .profile-main {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .profile-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+        text-align: center;
+        position: relative;
+      }
+
+      .profile-image-container {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto;
+        overflow: hidden;
+        border: 4px solid #2563eb;
+        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+      }
+
+      .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .online-indicator {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        background: #10b981;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      }
+
+      .profile-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+
+      .role-badge {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-info {
+        text-align: left;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .contact-item:last-child {
+        border-bottom: none;
+      }
+
+      .contact-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3730a3;
+        font-size: 1.1rem;
+      }
+
+      .contact-details {
+        flex: 1;
+      }
+
+      .contact-label {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .contact-value {
+        font-size: 1rem;
+        color: #1f2937;
+        font-weight: 500;
+      }
+
+      .info-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+      }
+
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .section-title i {
+        color: #2563eb;
+      }
+
+      .about-content {
+        color: #6b7280;
+        line-height: 1.6;
+        font-size: 1rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #6b7280;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 0.5px;
+      }
+
+      .social-section {
+        margin-top: 2rem;
+      }
+
+      .social-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .social-link {
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+        text-decoration: none;
+        color: #374151;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        border-color: #2563eb;
+        background: #f8fafc;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+      }
+
+      .social-link i {
+        width: 20px;
+        text-align: center;
+      }
+
+      .social-link.linkedin:hover {
+        border-color: #0077b5;
+        color: #0077b5;
+      }
+      .social-link.twitter:hover {
+        border-color: #1da1f2;
+        color: #1da1f2;
+      }
+      .social-link.facebook:hover {
+        border-color: #1877f2;
+        color: #1877f2;
+      }
+      .social-link.instagram:hover {
+        border-color: #e4405f;
+        color: #e4405f;
+      }
+
+      .activity-feed {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+      }
+
+      .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .activity-item:last-child {
+        border-bottom: none;
+      }
+
+      .activity-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .activity-content {
+        flex: 1;
+      }
+
+      .activity-title {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.25rem;
+      }
+
+      .activity-time {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          margin-left: 0;
+          padding: 1rem;
+        }
+
+        .page-header {
+          flex-direction: column;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .profile-main {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .social-links {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .main-content {
+          margin-left: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
     <%- include('Partials/sidebar', { user: user, activePage: 'profile' }) %>
+
     <div class="main-content">
-      <div class="container">
-        <div class="header">
-          <h1>Admin Profile</h1>
-          <a href="/adminD/profile/edit" class="edit-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit Profile
-          </a>
-        </div>
+      <div class="page-header">
+        <h1 class="page-title">Admin Profile</h1>
+        <a href="/adminD/profile/edit" class="edit-button">
+          <i class="fas fa-edit"></i>
+          Edit Profile
+        </a>
+      </div>
 
-        <div class="profile-section">
-          <div class="profile-image">
-            <img src="<%= user.picture || 'https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg?semt=ais_hybrid&w=740' %>" alt="Profile Image" id="profileImage">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">42</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">18</div>
+          <div class="stat-label">Active Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">156</div>
+          <div class="stat-label">Completed Tasks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+      </div>
+
+      <div class="profile-main">
+        <div class="profile-card">
+          <div class="profile-image-container">
+            <div class="profile-image">
+              <img
+                src="<%= user.picture || 'https://img.freepik.com/free-vector/business-user-shield_78370-7029.jpg?semt=ais_hybrid&w=740' %>"
+                alt="Profile Image"
+                id="profileImage"
+              />
+            </div>
+            <div class="online-indicator"></div>
           </div>
 
-          <div class="profile-info">
-            <div class="profile-header">
-              <h2 id="nameDisplay"><%= user.name || 'Admin User' %></h2>
-              <div class="role-badge">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
-                  <path d="M9 21V9a3 3 0 0 1 6 0v12"></path>
-                  <circle cx="12" cy="4" r="2"></circle>
-                </svg>
-                <span id="roleDisplay"><%= user.role || 'Admin' %></span>
+          <h2 class="profile-name" id="nameDisplay">
+            <%= user.name || 'Admin User' %>
+          </h2>
+
+          <div class="role-badge">
+            <i class="fas fa-shield-alt"></i>
+            <span id="roleDisplay"
+              ><%= user.role || 'System Administrator' %></span
+            >
+          </div>
+
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-details">
+                <div class="contact-label">Email Address</div>
+                <div class="contact-value" id="emailDisplay">
+                  <%= user.email || 'admin@zerogravity.com' %>
+                </div>
               </div>
             </div>
 
-            <div class="location">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span id="locationDisplay"><%= user.location || 'Mumbai, Maharashtra' %></span>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-details">
+                <div class="contact-label">Phone Number</div>
+                <div class="contact-value" id="phoneDisplay">
+                  <%= user.phone || '+91 9876543210' %>
+                </div>
+              </div>
             </div>
 
-            <div class="contact">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <span id="emailDisplay"><%= user.email || 'admin@example.com' %></span>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <div class="contact-label">Location</div>
+                <div class="contact-value" id="locationDisplay">
+                  <%= user.location || 'Mumbai, Maharashtra' %>
+                </div>
+              </div>
             </div>
 
-            <div class="contact">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span id="phoneDisplay"><%= user.phone || '+91 9876543210' %></span>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-crown"></i>
+              </div>
+              <div class="contact-details">
+                <div class="contact-label">Subscription</div>
+                <div class="contact-value" id="subscriptionDisplay">
+                  <%= user.subscription || 'Premium Admin' %>
+                </div>
+              </div>
             </div>
 
-            <div class="subscription">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 13l4 4L19 7"></path>
-              </svg>
-              <span id="subscriptionDisplay"><%= user.subscription || 'Basic' %></span>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-calendar"></i>
+              </div>
+              <div class="contact-details">
+                <div class="contact-label">Joined Date</div>
+                <div class="contact-value">
+                  <%= new Date(user.createdAt || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="grid-container">
-          <div>
-            <div class="about-section">
-              <h3 class="section-title">About Me</h3>
-              <div class="about-content" id="aboutDisplay">
-                <p><%= user.aboutMe || 'I am an experienced administrator managing platform operations with a focus on user support and system efficiency. Passionate about ensuring a seamless experience for all users.' %></p>
-              </div>
-            </div>
+        <div class="info-card">
+          <h3 class="section-title">
+            <i class="fas fa-user"></i>
+            About Me
+          </h3>
+          <div class="about-content" id="aboutDisplay">
+            <p>
+              <%= user.aboutMe || 'I am an experienced system administrator managing the ZeroGravity platform operations with a focus on user support, system efficiency, and maintaining high-quality service standards. Passionate about ensuring a seamless experience for all users while continuously improving platform performance and security.' %>
+            </p>
+          </div>
 
-            <div class="social-section">
-              <h3 class="section-title">Social Media</h3>
-              <div class="social-links">
-                <a href="<%= user.socialMedia.linkedin || '#' %>" id="linkedinLink" class="social-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                  LinkedIn
-                </a>
-                <a href="<%= user.socialMedia.twitter || '#' %>" id="twitterLink" class="social-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                  </svg>
-                  Twitter
-                </a>
-                <a href="<%= user.socialMedia.facebook || '#' %>" id="facebookLink" class="social-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                  </svg>
-                  Facebook
-                </a>
-                <a href="<%= user.socialMedia.instagram || '#' %>" id="instagramLink" class="social-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
-                  Instagram
-                </a>
+          <div class="social-section">
+            <h3 class="section-title">
+              <i class="fas fa-share-alt"></i>
+              Social Media & Links
+            </h3>
+            <div class="social-links">
+              <a
+                href="<%= (user.socialMedia && user.socialMedia.linkedin) || '#' %>"
+                id="linkedinLink"
+                class="social-link linkedin"
+              >
+                <i class="fab fa-linkedin-in"></i>
+                LinkedIn Profile
+              </a>
+              <a
+                href="<%= (user.socialMedia && user.socialMedia.twitter) || '#' %>"
+                id="twitterLink"
+                class="social-link twitter"
+              >
+                <i class="fab fa-twitter"></i>
+                Twitter Handle
+              </a>
+              <a
+                href="<%= (user.socialMedia && user.socialMedia.facebook) || '#' %>"
+                id="facebookLink"
+                class="social-link facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+                Facebook Page
+              </a>
+              <a
+                href="<%= (user.socialMedia && user.socialMedia.instagram) || '#' %>"
+                id="instagramLink"
+                class="social-link instagram"
+              >
+                <i class="fab fa-instagram"></i>
+                Instagram Account
+              </a>
+            </div>
+          </div>
+
+          <div class="social-section">
+            <h3 class="section-title">
+              <i class="fas fa-history"></i>
+              Recent Activity
+            </h3>
+            <div class="activity-feed">
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Reviewed user complaints</div>
+                  <div class="activity-time">2 hours ago</div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Approved new job listings</div>
+                  <div class="activity-time">4 hours ago</div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <i class="fas fa-cog"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Updated system settings</div>
+                  <div class="activity-time">Yesterday</div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">Generated analytics report</div>
+                  <div class="activity-time">2 days ago</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="/js/adminD/profile.js"></script>
-</body>
+    <script src="/js/adminD/profile.js"></script>
+  </body>
 </html>

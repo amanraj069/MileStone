@@ -223,9 +223,14 @@ const employerController = {
       } = req.body;
 
       const employerId = req.session.user.roleId;
-      if (!employerId) {
-        throw new Error("Employer roleId not found in session");
+      const userId = req.session.user.id;
+      if (!employerId || !userId) {
+        throw new Error("Employer roleId or userId not found in session");
       }
+
+      // Get employer's profile image from user data
+      const user = await User.findOne({ userId });
+      const employerImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
 
       // Parse milestones array if it's not already parsed
       let parsedMilestones = [];
@@ -237,7 +242,7 @@ const employerController = {
 
       const newJob = new JobListing({
         employerId,
-        imageUrl: imageUrl || "/assets/public_jobs/C1.jpeg",
+        imageUrl: employerImageUrl,
         title,
         budget: {
           amount: Number(budget?.amount) || Number(budget) || 0,

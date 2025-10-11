@@ -3,174 +3,628 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Job Listings</title>
+    <title>Job Listings - Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="/css/adminD/sidebar.css" />
-    <link rel="stylesheet" href="/css/adminD/job_listings.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 2rem;
+        min-height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+      }
+
+      .page-header {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        color: white;
+        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .page-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 400;
+      }
+
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #6b7280;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 0.5px;
+      }
+
+      .content-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.1);
+      }
+
+      .search-filter-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .search-form {
+        display: flex;
+        align-items: center;
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 0.5rem;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .search-form:focus-within {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .search-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        outline: none;
+        color: #374151;
+      }
+
+      .search-input::placeholder {
+        color: #9ca3af;
+      }
+
+      .search-button {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .search-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      }
+
+      .clear-search {
+        background: #ef4444;
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        margin-left: 0.5rem;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .clear-search:hover {
+        background: #dc2626;
+        transform: scale(1.05);
+      }
+
+      .filter-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        background: #f1f5f9;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+        border-color: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      }
+
+      .jobs-container {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .job-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .job-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border-color: #2563eb;
+      }
+
+      .job-card.hidden {
+        display: none;
+      }
+
+      .company-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #f3f4f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .company-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .company-logo i {
+        font-size: 1.5rem;
+        color: #9ca3af;
+      }
+
+      .job-card-center {
+        flex: 1;
+      }
+
+      .job-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .job-company {
+        color: #6b7280;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+      }
+
+      .job-salary {
+        color: #059669;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .job-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .job-tag {
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        color: #3730a3;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .job-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+
+      .job-detail-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .job-detail-item i {
+        color: #9ca3af;
+      }
+
+      .job-card-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .applicants-badge {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-align: center;
+        min-width: 100px;
+      }
+
+      .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .status-badge.open {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-badge.closed {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-badge.paused {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .btn-view {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-view:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+      }
+
+      .btn-delete {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .btn-delete:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: #6b7280;
+      }
+
+      .no-results i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #d1d5db;
+      }
+
+      .no-results p {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          margin-left: 0;
+          padding: 1rem;
+        }
+
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .stats-container {
+          grid-template-columns: 1fr;
+        }
+
+        .job-card {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .job-details {
+          justify-content: center;
+        }
+
+        .search-filter-container {
+          gap: 1rem;
+        }
+
+        .filter-buttons {
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .main-content {
+          margin-left: 0;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="dashboard-wrapper">
-      <%- include('Partials/sidebar', { user: user, activePage:
-      'job_listings' }) %>
-      <div class="main-content">
-        <section id="job_listings" class="section-content active">
-          <h1>Job Listings</h1>
-          <div class="search-bar" style="margin-bottom: 20px">
-            <form
-              action="/adminD/job_listings"
-              method="GET"
-              style="display: flex; align-items: center"
-            >
-              <input
-                type="text"
-                name="q"
-                placeholder="Search..."
-                style="
-                  padding: 8px;
-                  flex: 1;
-                  border: 1px solid #ddd;
-                  border-radius: 4px 0 0 4px;
-                  background-color: #f0f0f0;
-                "
-              />
-              <button
-                type="submit"
-                style="
-                  padding: 8px;
-                  background-color: #3949ab;
-                  border: none;
-                  border-radius: 0 4px 4px 0;
-                  cursor: pointer;
-                "
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  stroke-width="2"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </button>
-            </form>
+    <%- include('Partials/sidebar', { user: user, activePage: 'job_listings' })
+    %>
+
+    <div class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Job Listings Management</h1>
+          <p class="page-subtitle">
+            Monitor and manage all job postings across the platform
+          </p>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-number"><%= jobs.length %></div>
+          <div class="stat-label">Total Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= jobs.filter(job => job.status === 'open').length %>
           </div>
+          <div class="stat-label">Active Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= jobs.reduce((sum, job) => sum + (job.applications?.length || 0),
+            0) %>
+          </div>
+          <div class="stat-label">Total Applications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">
+            <%= jobs.filter(job => job.status === 'closed').length %>
+          </div>
+          <div class="stat-label">Completed Jobs</div>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="search-filter-container">
+          <form action="/adminD/job_listings" method="GET" class="search-form">
+            <input
+              type="text"
+              name="q"
+              id="searchInput"
+              value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+              placeholder="Search by job title, company, or skills..."
+              class="search-input"
+            />
+            <button type="submit" class="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+            <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+            <a href="/adminD/job_listings" class="clear-search">
+              <i class="fas fa-times"></i> Clear
+            </a>
+            <% } %>
+          </form>
+
           <div class="filter-buttons">
-            <button class="filter-btn" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="open">Open</button>
-            <button class="filter-btn" data-filter="closed">Closed</button>
+            <button class="filter-btn active" data-filter="all">
+              <i class="fas fa-list"></i> All Jobs
+            </button>
+            <button class="filter-btn" data-filter="open">
+              <i class="fas fa-briefcase"></i> Open
+            </button>
+            <button class="filter-btn" data-filter="closed">
+              <i class="fas fa-check-circle"></i> Closed
+            </button>
+            <button class="filter-btn" data-filter="paused">
+              <i class="fas fa-pause-circle"></i> Paused
+            </button>
           </div>
-          <div class="jobs-container">
-            <% jobs.forEach(job => { %>
-            <div class="job-card" data-status="<%= job.status %>">
-              <div class="job-card-left">
-                <div class="company-logo">
-                  <img
-                    src="<%= job.imageUrl || '/assets/company_logo.jpg' %>"
-                    alt="Company Logo"
-                  />
-                </div>
-              </div>
-              <div class="job-card-center">
-                <h3 class="job-title"><%= job.title %></h3>
-                <p class="job-salary"><%= job.formattedBudget %></p>
-                <div class="job-tags">
-                  <% job.description.skills.slice(0, 3).forEach(skill => { %>
-                  <span class="job-tag"><%= skill %></span>
-                  <% }) %>
-                </div>
-                <div class="job-details">
-                  <span class="job-location">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z"
-                      />
-                      <circle cx="12" cy="9" r="2" />
-                    </svg>
-                    <%= job.location || 'Remote' %>
-                    <span class="status-dot green"></span>
-                  </span>
-                  <span class="job-type">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect x="3" y="4" width="18" height="14" rx="2" ry="2" />
-                      <line x1="3" y1="8" x2="21" y2="8" />
-                    </svg>
-                    <%= job.jobType %>
-                    <span class="status-dot green"></span>
-                  </span>
-                  <span class="job-date">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M12 6V12L16 14" />
-                    </svg>
-                    Posted <%= job.formattedDate %>
-                    <span class="status-dot green"></span>
-                  </span>
-                </div>
-              </div>
-              <div class="job-card-right">
-                <div class="applicants-badge">
-                  <%= job.applications?.length || 0 %> applicants
-                </div>
-                <a href="/jobs/<%= job.jobId %>" class="btn-see-more"
-                  >See More</a
+        </div>
+
+        <div class="jobs-container">
+          <% if (jobs.length === 0) { %>
+          <div class="no-results">
+            <i class="fas fa-briefcase"></i>
+            <p>No job listings found.</p>
+            <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+            <p>Try adjusting your search criteria.</p>
+            <% } %>
+          </div>
+          <% } else { %> <% jobs.forEach(job => { %>
+          <div class="job-card" data-status="<%= job.status || 'open' %>">
+            <div class="company-logo">
+              <% if (job.imageUrl) { %>
+              <img
+                src="<%= job.imageUrl %>"
+                alt="Company Logo"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=&quot;fas fa-building&quot;></i>'"
+              />
+              <% } else { %>
+              <i class="fas fa-building"></i>
+              <% } %>
+            </div>
+
+            <div class="job-card-center">
+              <h3 class="job-title"><%= job.title || 'Untitled Job' %></h3>
+              <% if (job.companyName) { %>
+              <p class="job-company">
+                <i class="fas fa-building"></i>
+                <%= job.companyName %>
+              </p>
+              <% } %>
+              <p class="job-salary">
+                <i class="fas fa-dollar-sign"></i>
+                <%= job.formattedBudget || job.budget || 'Budget not specified'
+                %>
+              </p>
+
+              <% if (job.description && job.description.skills &&
+              job.description.skills.length > 0) { %>
+              <div class="job-tags">
+                <% job.description.skills.slice(0, 4).forEach(skill => { %>
+                <span class="job-tag"><%= skill %></span>
+                <% }) %> <% if (job.description.skills.length > 4) { %>
+                <span class="job-tag"
+                  >+<%= job.description.skills.length - 4 %> more</span
                 >
+                <% } %>
+              </div>
+              <% } %>
+
+              <div class="job-details">
+                <div class="job-detail-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span><%= job.location || 'Remote' %></span>
+                </div>
+                <div class="job-detail-item">
+                  <i class="fas fa-briefcase"></i>
+                  <span><%= job.jobType || 'Full-time' %></span>
+                </div>
+                <div class="job-detail-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>Posted <%= job.formattedDate || 'Recently' %></span>
+                </div>
+                <div class="job-detail-item">
+                  <i class="fas fa-clock"></i>
+                  <span
+                    >Deadline: <%= job.deadline ? new
+                    Date(job.deadline).toLocaleDateString() : 'Not specified'
+                    %></span
+                  >
+                </div>
               </div>
             </div>
-            <% }) %>
+
+            <div class="job-card-right">
+              <div class="applicants-badge">
+                <i class="fas fa-users"></i>
+                <%= job.applications?.length || 0 %> applicants
+              </div>
+
+              <div class="status-badge <%= job.status || 'open' %>">
+                <% if (job.status === 'open' || !job.status) { %>
+                <i class="fas fa-circle"></i> Open <% } else if (job.status ===
+                'closed') { %> <i class="fas fa-check-circle"></i> Closed <% }
+                else if (job.status === 'paused') { %>
+                <i class="fas fa-pause-circle"></i> Paused <% } else { %>
+                <i class="fas fa-circle"></i> <%= job.status %> <% } %>
+              </div>
+
+              <div class="action-buttons">
+                <a href="/jobs/<%= job.jobId || job._id %>" class="btn-view">
+                  <i class="fas fa-eye"></i>
+                  View Details
+                </a>
+                <button
+                  class="btn-delete"
+                  onclick="deleteJob('<%= job.jobId || job._id %>')"
+                  data-tooltip="Delete Job"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
           </div>
-        </section>
+          <% }) %> <% } %>
+        </div>
       </div>
     </div>
-    <script src="/js/adminD/job_listings.js"></script>
-    <script>
-      document.querySelectorAll(".filter-btn").forEach((button) => {
-        button.addEventListener("click", () => {
-          document
-            .querySelectorAll(".filter-btn")
-            .forEach((btn) => btn.classList.remove("active"));
-          button.classList.add("active");
 
-          const filter = button.getAttribute("data-filter");
-          document.querySelectorAll(".job-card").forEach((card) => {
-            if (
-              filter === "all" ||
-              card.getAttribute("data-status") === filter
-            ) {
-              card.classList.remove("hidden");
-            } else {
-              card.classList.add("hidden");
-            }
-          });
-        });
-      });
-    </script>
+    <script src="/js/adminD/job_listings.js"></script>
   </body>
 </html>
