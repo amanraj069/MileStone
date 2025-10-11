@@ -88,9 +88,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const complaintBtn = document.getElementById('complain-btn');
-    complaintBtn.addEventListener('click', function() {
-            alert(`Complaint submitted successfully!`);
+    if (complaintBtn) {
+        complaintBtn.addEventListener('click', function() {
+            const jobId = complaintBtn.getAttribute('data-job-id');
+            if (jobId) {
+                window.location.href = `/employerD/submit-complaint/${jobId}`;
+            }
         });
+    }
 
     // Edit milestone modal control
     const closeEditMilestoneModal = document.getElementById('closeEditMilestoneModal');

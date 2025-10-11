@@ -161,6 +161,7 @@ exports.getEmployers = async (req, res) => {
 exports.getComplaints = async (req, res) => {
   try {
     const searchQuery = req.query.q ? req.query.q.trim() : "";
+    const filterType = req.query.filter || "";
 
     // Fetch all complaints from the database
     const complaints = await Complaint.find().lean();
@@ -203,21 +204,34 @@ exports.getComplaints = async (req, res) => {
         };
       })
       .filter((complaint) => {
-        if (!searchQuery) return true;
-        const nameMatch =
-          complaint.submittedByName
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          complaint.againstUserName
+        // Apply search filter
+        if (searchQuery) {
+          const nameMatch =
+            complaint.submittedByName
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            complaint.againstUserName
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase());
+          const issueMatch = complaint.issue
             .toLowerCase()
             .includes(searchQuery.toLowerCase());
-        const issueMatch = complaint.issue
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
-        const typeMatch = complaint.complaintType
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
-        return nameMatch || issueMatch || typeMatch;
+          const typeMatch = complaint.complaintType
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+          if (!(nameMatch || issueMatch || typeMatch)) {
+            return false;
+          }
+        }
+        
+        // Apply status filter
+        if (filterType) {
+          if (filterType === 'current' && complaint.status !== 'pending') return false;
+          if (filterType === 'dismissed' && complaint.status !== 'dismissed') return false;
+          if (filterType === 'past' && complaint.status !== 'resolved') return false;
+        }
+        
+        return true;
       })
       .sort((a, b) => new Date(b.submittedDate) - new Date(a.submittedDate)); // Sort by newest first
 
@@ -226,6 +240,7 @@ exports.getComplaints = async (req, res) => {
       activePage: "complaints",
       complaints: formattedComplaints,
       searchQuery,
+      filterType,
     });
   } catch (error) {
     console.error("Error fetching complaints:", error);

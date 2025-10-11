@@ -845,6 +845,39 @@ const employerController = {
     });
   },
   
+  getComplaintPage: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const { id: employerId } = req.session.user;
+
+      // Get job details
+      const job = await JobListing.findOne({ jobId: jobId }).lean();
+      
+      if (!job) {
+        return res.status(404).send("Job not found");
+      }
+
+      // Get freelancer details if assigned
+      let freelancer = null;
+      
+      if (job.assignedFreelancer && job.assignedFreelancer.freelancerId) {
+        // The assignedFreelancer.freelancerId contains the user's roleId, not userId
+        freelancer = await User.findOne({ roleId: job.assignedFreelancer.freelancerId }).lean();
+      }
+
+      res.render("Abhishek/submit_complaint", {
+        user: req.session.user,
+        job: job,
+        freelancer: freelancer,
+        jobId: jobId,
+        activePage: 'submit_complaint'
+      });
+    } catch (error) {
+      console.error("Error loading complaint page:", error);
+      res.status(500).send("Internal server error");
+    }
+  },
+
   submitComplaint: async (req, res) => {
     try {
       console.log("Employer complaint submission started");

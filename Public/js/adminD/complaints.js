@@ -1,30 +1,45 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize filter functionality
-    initializeFilters();
+    // Initialize filter functionality only if there's no active search
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSearchActive = urlParams.has('q') && urlParams.get('q').trim() !== '';
     
-    // Search functionality
-    const searchInput = document.querySelector('.search-bar input[name="q"]');
-    const searchForm = document.querySelector('.search-bar form');
+    if (!isSearchActive) {
+        initializeFilters();
+    } else {
+        // If search is active, show all cards and don't apply filters
+        const complaintsCards = document.querySelectorAll('.complaint-card');
+        complaintsCards.forEach(card => {
+            card.style.display = 'block';
+        });
+        
+        // Remove active state from all filter tabs when search is active
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        filterTabs.forEach(tab => tab.classList.remove('active'));
+    }
+    
+    // Search functionality - server-side search only
+    const searchInput = document.querySelector('#search-input');
+    const searchForm = document.querySelector('#search-form');
 
     if (searchForm) {
         searchForm.addEventListener('submit', function(event) {
-            // Allow form submission to go through for server-side search
+            const query = searchInput.value.trim();
+            console.log('Search form submitted with query:', query);
+            
+            // If empty search, redirect to clear results
+            if (query === '') {
+                event.preventDefault();
+                window.location.href = '/adminD/complaints';
+            }
         });
     }
 
+    // Allow Enter key to submit search
     if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const visibleCards = document.querySelectorAll('.complaint-card:not([style*="display: none"])');
-            
-            visibleCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                searchForm.submit();
+            }
         });
     }
 });
@@ -40,6 +55,17 @@ function initializeFilters() {
 
 // Filter complaints based on status
 function filterComplaints(filterType) {
+    // Check if search is active
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSearchActive = urlParams.has('q') && urlParams.get('q').trim() !== '';
+    
+    // If search is active, redirect with filter parameter to maintain search
+    if (isSearchActive) {
+        const searchQuery = urlParams.get('q');
+        window.location.href = `/adminD/complaints?q=${encodeURIComponent(searchQuery)}&filter=${filterType}`;
+        return;
+    }
+    
     const complaintsCards = document.querySelectorAll('.complaint-card');
     const currentTab = document.querySelector('.filter-tab[data-filter="current"]');
     const dismissedTab = document.querySelector('.filter-tab[data-filter="dismissed"]');
@@ -99,14 +125,95 @@ function toggleActions(button) {
     }
 }
 
-// Function to resolve complaint
-async function resolveComplaint(complaintId) {
-    const resolution = prompt("Please enter a resolution note (optional):");
+// Function to show notification banner
+function showNotificationBanner(message, type = 'success', duration = 4000) {
+    const banner = document.getElementById('notification-banner');
+    const bannerMessage = document.getElementById('banner-message');
+    const bannerIcon = document.getElementById('banner-icon');
     
-    if (resolution === null) {
-        return; // User cancelled
+    // Set message and type
+    bannerMessage.textContent = message;
+    banner.className = `notification-banner ${type} show`;
+    
+    // Set appropriate icon based on type
+    if (type === 'success') {
+        bannerIcon.innerHTML = '✓';
+    } else if (type === 'error') {
+        bannerIcon.innerHTML = '✕';
+    } else if (type === 'warning') {
+        bannerIcon.innerHTML = '⚠';
     }
     
+    // Auto-hide after duration
+    setTimeout(() => {
+        banner.classList.remove('show');
+    }, duration);
+}
+
+// Function to show inline confirmation
+function showInlineConfirmation(complaintId, action) {
+    const complaintCard = document.querySelector(`[data-complaint-id="${complaintId}"]`);
+    if (!complaintCard) return;
+    
+    // Create confirmation overlay
+    const confirmationOverlay = document.createElement('div');
+    confirmationOverlay.className = 'inline-confirmation';
+    confirmationOverlay.innerHTML = `
+        <div class="confirmation-content">
+            <div class="confirmation-header">
+                <span class="confirmation-icon">?</span>
+                <h4>Confirm ${action}</h4>
+            </div>
+            <p>Are you sure you want to ${action.toLowerCase()} this complaint?</p>
+            <div class="confirmation-actions">
+                <button class="btn-confirm" onclick="executeAction('${complaintId}', '${action}')">Yes, ${action}</button>
+                <button class="btn-cancel" onclick="hideInlineConfirmation('${complaintId}')">Cancel</button>
+            </div>
+        </div>
+    `;
+    
+    // Add overlay to complaint card
+    complaintCard.style.position = 'relative';
+    complaintCard.appendChild(confirmationOverlay);
+    
+    // Trigger animation
+    setTimeout(() => {
+        confirmationOverlay.classList.add('show');
+    }, 10);
+}
+
+// Function to hide inline confirmation
+function hideInlineConfirmation(complaintId) {
+    const complaintCard = document.querySelector(`[data-complaint-id="${complaintId}"]`);
+    if (!complaintCard) return;
+    
+    const confirmationOverlay = complaintCard.querySelector('.inline-confirmation');
+    if (confirmationOverlay) {
+        confirmationOverlay.classList.remove('show');
+        setTimeout(() => {
+            confirmationOverlay.remove();
+        }, 300);
+    }
+}
+
+// Function to execute the confirmed action
+async function executeAction(complaintId, action) {
+    hideInlineConfirmation(complaintId);
+    
+    if (action === 'Resolve') {
+        await performResolveComplaint(complaintId);
+    } else if (action === 'Dismiss') {
+        await performDismissComplaint(complaintId);
+    }
+}
+
+// Updated resolve complaint function without pop-ups
+async function resolveComplaint(complaintId) {
+    showInlineConfirmation(complaintId, 'Resolve');
+}
+
+// Actual resolve function that performs the API call
+async function performResolveComplaint(complaintId) {
     try {
         const response = await fetch(`/adminD/complaints/${complaintId}/resolve`, {
             method: 'POST',
@@ -114,56 +221,53 @@ async function resolveComplaint(complaintId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                resolution: resolution || 'Complaint resolved by admin'
+                resolution: 'Complaint resolved by admin'
             })
         });
         
         const data = await response.json();
         
         if (response.ok) {
-            alert('Complaint resolved successfully!');
-            location.reload(); // Refresh page to show updated status
+            showNotificationBanner('Complaint resolved successfully!', 'success');
+            setTimeout(() => location.reload(), 1500); // Refresh after showing success
         } else {
-            alert(data.error || 'Failed to resolve complaint');
+            showNotificationBanner(data.error || 'Failed to resolve complaint', 'error');
         }
     } catch (error) {
         console.error('Error resolving complaint:', error);
-        alert('An error occurred while resolving the complaint');
+        showNotificationBanner('An error occurred while resolving the complaint', 'error');
     }
 }
 
-// Function to dismiss complaint
+// Function to dismiss complaint with inline confirmation
 async function dismissComplaint(complaintId) {
-    const reason = prompt("Please enter a reason for dismissing this complaint (optional):");
-    
-    if (reason === null) {
-        return; // User cancelled
-    }
-    
-    if (confirm("Are you sure you want to dismiss this complaint? This action cannot be undone.")) {
-        try {
-            const response = await fetch(`/adminD/complaints/${complaintId}/dismiss`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    reason: reason || 'Complaint dismissed by admin'
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (response.ok) {
-                alert('Complaint dismissed successfully!');
-                location.reload(); // Refresh page to show updated status
-            } else {
-                alert(data.error || 'Failed to dismiss complaint');
-            }
-        } catch (error) {
-            console.error('Error dismissing complaint:', error);
-            alert('An error occurred while dismissing the complaint');
+    showInlineConfirmation(complaintId, 'Dismiss');
+}
+
+// Actual dismiss function that performs the API call
+async function performDismissComplaint(complaintId) {
+    try {
+        const response = await fetch(`/adminD/complaints/${complaintId}/dismiss`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                reason: 'Complaint dismissed by admin'
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            showNotificationBanner('Complaint dismissed successfully!', 'success');
+            setTimeout(() => location.reload(), 1500); // Refresh after showing success
+        } else {
+            showNotificationBanner(data.error || 'Failed to dismiss complaint', 'error');
         }
+    } catch (error) {
+        console.error('Error dismissing complaint:', error);
+        showNotificationBanner('An error occurred while dismissing the complaint', 'error');
     }
 }
 

@@ -825,6 +825,48 @@ exports.getPaymentAnimation = (req, res) => {
   });
 };
 
+exports.getComplaintPage = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const { id: freelancerId } = req.session.user;
+
+    // Get job details
+    const job = await JobListing.findOne({ jobId: jobId }).lean();
+    
+    if (!job) {
+      return res.status(404).send("Job not found");
+    }
+
+    // Get employer user details - employerId contains the user's roleId, not userId
+    const employerUser = await User.findOne({ roleId: job.employerId }).lean();
+    
+    // Get employer company details - need to find by userId
+    let employerCompany = null;
+    if (employerUser) {
+      employerCompany = await Employer.findOne({ userId: employerUser.userId }).lean();
+    }
+
+    // Prepare employer data for template
+    const employer = {
+      name: employerUser?.name || 'Unknown Employer',
+      company: employerCompany?.companyName || 'Unknown Company',
+      email: employerUser?.email || 'Unknown Email'
+    };
+
+    res.render("Vanya/submit_complaint", {
+      user: req.session.user,
+      job: job,
+      employer: employer,
+      employerCompany: employerCompany,
+      jobId: jobId,
+      activePage: 'submit_complaint'
+    });
+  } catch (error) {
+    console.error("Error loading complaint page:", error);
+    res.status(500).send("Internal server error");
+  }
+};
+
 exports.submitComplaint = async (req, res) => {
   try {
     console.log("Freelancer complaint submission started");
