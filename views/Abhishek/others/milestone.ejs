@@ -3,206 +3,316 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sidebar Dashboard</title>
-    <link rel="stylesheet" href="/css/EmployerD/sidebar.css" />
+    <title>Payments & Milestones - ZeroGravity</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="/css/EmployerD/milestone.css" />
   </head>
   <body>
     <div class="dashboard-wrapper">
-      <%- include('../partials/sidebar', { user: user, activePage: 'transaction_history' }) %>
+      <%- include('../partials/sidebar', { user: user, activePage:
+      'transaction_history' }) %>
+
       <div class="main-content">
-        <div class="container">
-          <div class="header">
-            <h1 class="title">Payments & Milestones for Job</h1>
-          </div>
-          <% if (jobs.length === 0) { %>
-            <p>No job found.</p>
-          <% } else { %>
-            <% jobs.forEach(job => { %>
-              <div class="job-section">
-                <h2 class="job-title"><%= job.title %></h2>
-                <p><strong>Freelancer:</strong> <%= job.freelancer.name %> (<%= job.freelancer.status === 'working' ? 'Currently Working' : 'Finished' %>)</p>
-                <div class="progress-card">
-                  <div class="progress-section">
-                    <div class="progress-header">
-                      <h3 class="progress-title">Project Completion</h3>
-                      <span class="progress-percentage"><%= job.progress.completionPercentage %>%</span>
-                    </div>
-                    <div class="progress-bar-container">
-                      <div class="progress-bar" style="width: <%= job.progress.completionPercentage %>%"></div>
-                    </div>
-                    <div class="progress-labels">
-                      <span>Not Started</span>
-                      <span>In Progress</span>
-                      <span>Completed</span>
-                    </div>
-                  </div>
-                  <div class="progress-section">
-                    <div class="progress-header">
-                      <h3 class="progress-title">Payment Progress</h3>
-                      <span class="progress-amount">₹<%= job.progress.payment.paid.toLocaleString() %> of ₹<%= job.progress.payment.total.toLocaleString() %> (<%= job.progress.payment.percentage %>%)</span>
-                    </div>
-                    <div class="progress-bar-container">
-                      <div class="progress-bar" style="width: <%= job.progress.payment.percentage %>%"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="milestones-container">
-                  <table class="milestone-table">
-                    <thead>
-                      <tr>
-                        <th>S.No</th>
-                        <th>Description</th>
-                        <th>Amount (₹)</th>
-                        <th>Deadline</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% job.milestones.forEach(milestone => { %>
-                        <% const isRequested = milestone.requested === true || milestone.requested === 'true'; %>
-                        <% console.log(`Rendering milestone ${milestone.milestoneId}: status=${milestone.status}, requested=${milestone.requested}, isRequested=${isRequested}, class=${milestone.status === 'paid' ? 'paid' : isRequested ? 'requested' : 'not-paid'}`); %>
-                        <tr class="milestone-row <%= milestone.status === 'paid' ? 'paid' : isRequested ? 'requested' : 'not-paid' %>">
-                          <td><%= milestone.serialNo %></td>
-                          <td><%= milestone.description %></td>
-                          <td>₹<%= milestone.amount.toLocaleString() %></td>
-                          <td><%= milestone.deadline %></td>
-                          <td>
-                            <% if (milestone.status === 'paid') { %>
-                              <button class="pay-btn" disabled>Paid</button>
-                            <% } else { %>
-                              <button class="pay-btn" 
-                                      data-job-id="<%= job.jobId %>"
-                                      data-milestone-id="<%= milestone.milestoneId %>"
-                                      data-description="<%= milestone.description %>"
-                                      data-amount="<%= milestone.amount %>">Pay</button>
-                            <% } %>
-                          </td>
-                        </tr>
-                      <% }); %>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            <% }); %>
-          <% } %>
+        <div class="page-header">
+          <h1 class="page-title">
+            <i class="fas fa-tasks"></i> Payments & Milestones
+          </h1>
+          <p class="page-subtitle">
+            Track project progress and manage milestone payments
+          </p>
         </div>
-        <div class="modal-overlay" id="paymentModal">
-          <div class="modal">
-            <div class="modal-header">
-              <h2 class="modal-title">Confirm Payment</h2>
-              <button class="close-modal" id="closePaymentModal">×</button>
-            </div>
-            <div class="modal-body">
-              <p><strong>Milestone:</strong> <span id="paymentDescription"></span></p>
-              <p><strong>Amount:</strong> ₹<span id="paymentAmount"></span></p>
-              <p><strong>Employer:</strong> <%= user.name %></p>
-              <p><strong>Email:</strong> <%= user.email %></p>
-              <div class="form-group">
-                <label for="paymentMethod">Payment Method</label>
-                <select id="paymentMethod" required>
-                  <option value="card">Credit/Debit Card</option>
-                  <option value="bank">Bank Transfer</option>
-                  <option value="upi">UPI</option>
-                </select>
+
+        <% if (jobs.length === 0) { %>
+        <div class="empty-state">
+          <i class="fas fa-briefcase"></i>
+          <h3>No Jobs Found</h3>
+          <p>You don't have any active jobs with milestones yet.</p>
+        </div>
+        <% } else { %> <% jobs.forEach(job => { %>
+        <div class="content-card">
+          <div class="job-section">
+            <h2 class="job-title"><%= job.title %></h2>
+            <p class="job-info">
+              <strong>Freelancer:</strong> <%= job.freelancer.name %> (<%=
+              job.freelancer.status === 'working' ? 'Currently Working' :
+              'Finished' %>)
+            </p>
+            <div class="progress-card">
+              <div class="progress-section">
+                <div class="progress-header">
+                  <h3 class="progress-title">Project Completion</h3>
+                  <span class="progress-percentage"
+                    ><%= job.progress.completionPercentage %>%</span
+                  >
+                </div>
+                <div class="progress-bar-container">
+                  <div
+                    class="progress-bar"
+                    style="width: <%= job.progress.completionPercentage %>%"
+                  ></div>
+                </div>
+              </div>
+              <div class="progress-section">
+                <div class="progress-header">
+                  <h3 class="progress-title">Payment Progress</h3>
+                  <span class="progress-percentage"
+                    >₹<%= job.progress.payment.paid.toLocaleString() %> of ₹<%=
+                    job.progress.payment.total.toLocaleString() %> (<%=
+                    job.progress.payment.percentage %>%)</span
+                  >
+                </div>
+                <div class="progress-bar-container">
+                  <div
+                    class="progress-bar"
+                    style="width: <%= job.progress.payment.percentage %>%"
+                  ></div>
+                </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="cancel-btn" id="cancelPaymentBtn">Cancel</button>
-              <button type="button" class="save-btn" id="confirmPaymentBtn">Verify and Pay</button>
+
+            <div class="milestones-grid">
+              <% job.milestones.forEach(milestone => { %> <% const isRequested =
+              milestone.requested === true || milestone.requested === 'true'; %>
+              <div class="milestone-card">
+                <div class="milestone-header">
+                  <h4 class="milestone-title">
+                    Milestone #<%= milestone.serialNo %>
+                  </h4>
+                  <span
+                    class="milestone-status <%= milestone.status === 'paid' ? 'completed' : isRequested ? 'in-progress' : 'pending' %>"
+                  >
+                    <%= milestone.status === 'paid' ? 'Completed' : isRequested
+                    ? 'Requested' : 'Pending' %>
+                  </span>
+                </div>
+                <p class="milestone-description">
+                  <%= milestone.description %>
+                </p>
+                <div class="milestone-details">
+                  <div class="milestone-detail">
+                    <span class="detail-label">Amount</span>
+                    <span class="detail-value"
+                      >₹<%= milestone.amount.toLocaleString() %></span
+                    >
+                  </div>
+                  <div class="milestone-detail">
+                    <span class="detail-label">Deadline</span>
+                    <span class="detail-value"><%= milestone.deadline %></span>
+                  </div>
+                </div>
+                <% if (milestone.status === 'paid') { %>
+                <button class="payment-button" disabled>
+                  <i class="fas fa-check"></i> Paid
+                </button>
+                <% } else { %>
+                <button
+                  class="payment-button"
+                  data-job-id="<%= job.jobId %>"
+                  data-milestone-id="<%= milestone.milestoneId %>"
+                  data-description="<%= milestone.description %>"
+                  data-amount="<%= milestone.amount %>"
+                >
+                  <i class="fas fa-credit-card"></i> Pay Now
+                </button>
+                <% } %>
+              </div>
+              <% }); %>
             </div>
           </div>
+        </div>
+        <% }); %> <% } %>
+      </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div
+      id="paymentModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        style="
+          background: white;
+          padding: 30px;
+          border-radius: 12px;
+          width: 90%;
+          max-width: 500px;
+        "
+      >
+        <h3 style="margin-bottom: 20px; color: #1e293b">Confirm Payment</h3>
+        <p>
+          <strong>Description:</strong> <span id="paymentDescription"></span>
+        </p>
+        <p><strong>Amount:</strong> ₹<span id="paymentAmount"></span></p>
+        <div style="margin: 20px 0">
+          <label
+            for="paymentMethod"
+            style="display: block; margin-bottom: 8px; font-weight: 500"
+            >Payment Method</label
+          >
+          <select
+            id="paymentMethod"
+            required
+            style="
+              width: 100%;
+              padding: 12px;
+              border: 2px solid #e1e5e9;
+              border-radius: 8px;
+            "
+          >
+            <option value="card">Credit/Debit Card</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="upi">UPI</option>
+          </select>
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+          "
+        >
+          <button type="button" class="btn btn-secondary" id="cancelPaymentBtn">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" id="confirmPaymentBtn">
+            Verify and Pay
+          </button>
         </div>
       </div>
     </div>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const paymentModal = document.getElementById('paymentModal');
-        const closePaymentModal = document.getElementById('closePaymentModal');
-        const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
-        const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
-        const paymentDescription = document.getElementById('paymentDescription');
-        const paymentAmount = document.getElementById('paymentAmount');
+      document.addEventListener("DOMContentLoaded", () => {
+        const paymentModal = document.getElementById("paymentModal");
+        const closePaymentModal = document.getElementById("closePaymentModal");
+        const cancelPaymentBtn = document.getElementById("cancelPaymentBtn");
+        const confirmPaymentBtn = document.getElementById("confirmPaymentBtn");
+        const paymentDescription =
+          document.getElementById("paymentDescription");
+        const paymentAmount = document.getElementById("paymentAmount");
 
-        document.querySelectorAll('.pay-btn:not(:disabled)').forEach(button => {
-          button.addEventListener('click', () => {
-            const jobId = button.dataset.jobId;
-            const milestoneId = button.dataset.milestoneId;
-            const description = button.dataset.description;
-            const amount = button.dataset.amount;
+        document
+          .querySelectorAll(".pay-btn:not(:disabled)")
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              const jobId = button.dataset.jobId;
+              const milestoneId = button.dataset.milestoneId;
+              const description = button.dataset.description;
+              const amount = button.dataset.amount;
 
-            paymentDescription.textContent = description;
-            paymentAmount.textContent = Number(amount).toLocaleString();
-            confirmPaymentBtn.dataset.jobId = jobId;
-            confirmPaymentBtn.dataset.milestoneId = milestoneId;
-            paymentModal.style.display = 'flex';
+              paymentDescription.textContent = description;
+              paymentAmount.textContent = Number(amount).toLocaleString();
+              confirmPaymentBtn.dataset.jobId = jobId;
+              confirmPaymentBtn.dataset.milestoneId = milestoneId;
+              paymentModal.style.display = "flex";
+            });
           });
-        });
 
         const closePaymentModalFn = () => {
-          paymentModal.style.display = 'none';
+          paymentModal.style.display = "none";
           delete confirmPaymentBtn.dataset.jobId;
           delete confirmPaymentBtn.dataset.milestoneId;
         };
 
-        closePaymentModal.addEventListener('click', closePaymentModalFn);
-        cancelPaymentBtn.addEventListener('click', closePaymentModalFn);
+        closePaymentModal.addEventListener("click", closePaymentModalFn);
+        cancelPaymentBtn.addEventListener("click", closePaymentModalFn);
 
-        confirmPaymentBtn.addEventListener('click', async () => {
+        confirmPaymentBtn.addEventListener("click", async () => {
           const jobId = confirmPaymentBtn.dataset.jobId;
           const milestoneId = confirmPaymentBtn.dataset.milestoneId;
 
           try {
-            const response = await fetch(`/employerD/milestone/${jobId}/${milestoneId}/pay`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
+            const response = await fetch(
+              `/employerD/milestone/${jobId}/${milestoneId}/pay`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
 
             if (!response.ok) {
-              throw new Error('Failed to update milestone status');
+              throw new Error("Failed to update milestone status");
             }
 
             const data = await response.json();
             if (data.success) {
-              const milestoneRow = document.querySelector(`.pay-btn[data-milestone-id="${milestoneId}"]`).closest('tr');
-              milestoneRow.classList.remove('not-paid');
-              milestoneRow.classList.remove('requested');
-              milestoneRow.classList.add('paid');
-              milestoneRow.querySelector('.pay-btn').textContent = 'Paid';
-              milestoneRow.querySelector('.pay-btn').disabled = true;
-              paymentModal.style.display = 'none';
+              const milestoneRow = document
+                .querySelector(`.pay-btn[data-milestone-id="${milestoneId}"]`)
+                .closest("tr");
+              milestoneRow.classList.remove("not-paid");
+              milestoneRow.classList.remove("requested");
+              milestoneRow.classList.add("paid");
+              milestoneRow.querySelector(".pay-btn").textContent = "Paid";
+              milestoneRow.querySelector(".pay-btn").disabled = true;
+              paymentModal.style.display = "none";
 
-              const progressAmountElement = milestoneRow.closest('.job-section').querySelector('.progress-amount');
-              const paidMatch = progressAmountElement.textContent.match(/₹([\d,]+)/);
-              const totalMatch = progressAmountElement.textContent.match(/of ₹([\d,]+)/);
+              const progressAmountElement = milestoneRow
+                .closest(".job-section")
+                .querySelector(".progress-amount");
+              const paidMatch =
+                progressAmountElement.textContent.match(/₹([\d,]+)/);
+              const totalMatch =
+                progressAmountElement.textContent.match(/of ₹([\d,]+)/);
               if (!paidMatch || !totalMatch) {
-                throw new Error('Could not parse payment amounts');
+                throw new Error("Could not parse payment amounts");
               }
-              const paidAmount = parseFloat(paidMatch[1].replace(/,/g, '')) + parseFloat(paymentAmount.textContent.replace(/,/g, ''));
-              const totalAmount = parseFloat(totalMatch[1].replace(/,/g, ''));
-              const percentage = totalAmount > 0 ? Math.round((paidAmount / totalAmount) * 100) : 0;
+              const paidAmount =
+                parseFloat(paidMatch[1].replace(/,/g, "")) +
+                parseFloat(paymentAmount.textContent.replace(/,/g, ""));
+              const totalAmount = parseFloat(totalMatch[1].replace(/,/g, ""));
+              const percentage =
+                totalAmount > 0
+                  ? Math.round((paidAmount / totalAmount) * 100)
+                  : 0;
               progressAmountElement.textContent = `₹${paidAmount.toLocaleString()} of ₹${totalAmount.toLocaleString()} (${percentage}%)`;
-              const paymentProgressBar = milestoneRow.closest('.job-section').querySelector('.progress-section:last-child .progress-bar');
+              const paymentProgressBar = milestoneRow
+                .closest(".job-section")
+                .querySelector(".progress-section:last-child .progress-bar");
               paymentProgressBar.style.width = `${percentage}%`;
 
-              const completedCount = milestoneRow.closest('.job-section').querySelectorAll('.milestone-row.paid').length;
-              const totalCount = milestoneRow.closest('.job-section').querySelectorAll('.milestone-row').length;
-              const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-              const completionPercentageElement = milestoneRow.closest('.job-section').querySelector('.progress-percentage');
+              const completedCount = milestoneRow
+                .closest(".job-section")
+                .querySelectorAll(".milestone-row.paid").length;
+              const totalCount = milestoneRow
+                .closest(".job-section")
+                .querySelectorAll(".milestone-row").length;
+              const completionPercentage =
+                totalCount > 0
+                  ? Math.round((completedCount / totalCount) * 100)
+                  : 0;
+              const completionPercentageElement = milestoneRow
+                .closest(".job-section")
+                .querySelector(".progress-percentage");
               completionPercentageElement.textContent = `${completionPercentage}%`;
-              const completionProgressBar = milestoneRow.closest('.job-section').querySelector('.progress-section:first-child .progress-bar');
+              const completionProgressBar = milestoneRow
+                .closest(".job-section")
+                .querySelector(".progress-section:first-child .progress-bar");
               completionProgressBar.style.width = `${completionPercentage}%`;
             }
           } catch (error) {
-            console.error('Error paying milestone:', error.message);
-            alert('Failed to process payment. Please try again.');
+            console.error("Error paying milestone:", error.message);
+            alert("Failed to process payment. Please try again.");
           }
         });
 
         // Debug classes applied to milestone rows
-        document.querySelectorAll('.milestone-row').forEach(row => {
+        document.querySelectorAll(".milestone-row").forEach((row) => {
           console.log(`Milestone row classes: ${row.className}`);
         });
       });

@@ -323,7 +323,10 @@
           </div>
 
           <div class="job-actions">
-            <span class="applications-count">0 applicants</span>
+            <span class="applications-count">
+              <%= jobApplications.filter(app => app.jobId === job.jobId).length
+              %> applicants
+            </span>
             <a href="/jobs/<%= job.jobId %>">
               <button class="see-more-btn">See More</button>
             </a>
