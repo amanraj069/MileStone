@@ -3,16 +3,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
 
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme') || 'light-mode';
-    body.classList.add(savedTheme);
+    // Initialize theme
+    function initializeTheme() {
+        // Check for saved theme preference or default to light mode
+        const savedTheme = localStorage.getItem('theme') || 'light-mode';
+        
+        // Remove any existing theme classes
+        body.classList.remove('light-mode', 'dark-mode');
+        
+        // Add the correct theme class
+        body.classList.add(savedTheme);
+        
+        console.log('Theme initialized:', savedTheme);
+    }
 
-    themeToggle.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        body.classList.toggle('dark-mode');
-        const newTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
+    // Toggle theme function
+    function toggleTheme() {
+        const currentTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
+        const newTheme = currentTheme === 'dark-mode' ? 'light-mode' : 'dark-mode';
+        
+        // Remove current theme and add new theme
+        body.classList.remove('light-mode', 'dark-mode');
+        body.classList.add(newTheme);
+        
+        // Save to localStorage
         localStorage.setItem('theme', newTheme);
-    });
+        
+        console.log('Theme switched from', currentTheme, 'to', newTheme);
+    }
+
+    // Initialize theme on page load
+    initializeTheme();
+
+    // Add click event listener
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
 
     // Mobile Menu Toggle
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -128,6 +154,45 @@ document.addEventListener('DOMContentLoaded', () => {
     nextTestimonialBtn.addEventListener('click', () => {
         testimonialsCarousel.scrollBy({ left: 350, behavior: 'smooth' });
     });
+
+    // Featured Jobs Carousel
+    const featuredJobsCarousel = document.querySelector('.featured-jobs-carousel');
+    const prevFeaturedJobBtn = document.getElementById('prev-featured-job');
+    const nextFeaturedJobBtn = document.getElementById('next-featured-job');
+
+    if (featuredJobsCarousel && prevFeaturedJobBtn && nextFeaturedJobBtn) {
+        let currentIndex = 0;
+        const jobCards = featuredJobsCarousel.querySelectorAll('.job-card');
+        const totalCards = jobCards.length;
+        const cardsToShow = 3;
+        const cardWidth = 350 + 32; // card width + gap
+
+        // Update carousel position
+        function updateCarousel() {
+            const maxIndex = Math.max(0, totalCards - cardsToShow);
+            currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+            const translateX = currentIndex * cardWidth;
+            featuredJobsCarousel.scrollTo({ left: translateX, behavior: 'smooth' });
+            
+            // Update button states
+            prevFeaturedJobBtn.disabled = currentIndex === 0;
+            nextFeaturedJobBtn.disabled = currentIndex >= maxIndex;
+        }
+
+        prevFeaturedJobBtn.addEventListener('click', () => {
+            currentIndex = Math.max(0, currentIndex - 1);
+            updateCarousel();
+        });
+
+        nextFeaturedJobBtn.addEventListener('click', () => {
+            const maxIndex = Math.max(0, totalCards - cardsToShow);
+            currentIndex = Math.min(maxIndex, currentIndex + 1);
+            updateCarousel();
+        });
+
+        // Initialize carousel
+        updateCarousel();
+    }
 
     // FAQ Accordion
     const faqQuestions = document.querySelectorAll('.faq-question');

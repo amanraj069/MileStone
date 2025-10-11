@@ -100,6 +100,21 @@ const jobListingSchema = new Schema(
       enum: ["active", "open", "in-progress", "completed", "closed"],
       default: "open",
     },
+    featured: {
+      isActive: {
+        type: Boolean,
+        default: false,
+      },
+      category: {
+        type: String,
+        enum: ["urgent", "new", "high-demand"],
+        default: null,
+      },
+      featuredAt: {
+        type: Date,
+        default: null,
+      },
+    },
   },
   {
     timestamps: true,

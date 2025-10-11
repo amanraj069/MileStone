@@ -47,6 +47,51 @@ exports.getJobListings = async (req, res) => {
   }
 };
 
+exports.featureJob = async (req, res) => {
+  try {
+    const { jobId, featureType, isActive } = req.body;
+
+    if (!jobId || !featureType) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Job ID and feature type are required" 
+      });
+    }
+
+    const updateData = {
+      "featured.isActive": isActive,
+      "featured.category": isActive ? featureType : null,
+      "featured.featuredAt": isActive ? new Date() : null,
+    };
+
+    const updatedJob = await JobListing.findOneAndUpdate(
+      { jobId: jobId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedJob) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Job not found" 
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      message: `Job ${isActive ? 'featured' : 'unfeatured'} successfully`,
+      job: updatedJob
+    });
+
+  } catch (error) {
+    console.error("Error featuring job:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Server error while updating job feature status" 
+    });
+  }
+};
+
 exports.getFreelancers = async (req, res) => {
   try {
     const searchQuery = req.query.q ? req.query.q.trim() : "";

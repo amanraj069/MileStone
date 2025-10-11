@@ -238,7 +238,13 @@ section {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.3s ease;
+  overflow: hidden;
 }
 
 .theme-toggle:hover {
@@ -248,24 +254,36 @@ section {
 .theme-icon {
   width: 24px;
   height: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.light-mode .sun-icon {
+/* Default state - show sun icon (light mode) */
+.sun-icon {
   display: block;
+  opacity: 1;
   color: #000000;
 }
 
-.light-mode .moon-icon {
-  display: none;
+.moon-icon {
+  display: block;
+  opacity: 0;
+  color: #ffffff;
+  transform: translate(-50%, -50%) scale(0.8);
 }
 
+/* Dark mode - show moon icon */
 .dark-mode .sun-icon {
-  display: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
 }
 
 .dark-mode .moon-icon {
-  display: block;
-  color: #ffffff;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .mobile-menu-toggle {
@@ -837,7 +855,9 @@ section {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: 2rem
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
 }
 
 .carousel-control {
@@ -855,10 +875,92 @@ section {
   transition: all 0.3s ease;
 }
 
-.carousel-control:hover {
+.carousel-control:hover:not(:disabled) {
   background-color: var(--primary-color);
   color: white;
   border-color: var(--primary-color)
+}
+
+.carousel-control:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+/* Center the no-featured-jobs card and featured jobs carousel */
+.no-featured-jobs-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 350px;
+}
+
+.featured-jobs-carousel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.featured-jobs-carousel {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  padding: 0 1rem;
+}
+
+/* Dynamic alignment based on number of cards */
+.featured-jobs-carousel[data-count="1"] {
+  justify-content: center;
+}
+
+.featured-jobs-carousel[data-count="2"] {
+  justify-content: space-around;
+}
+
+.featured-jobs-carousel[data-count="3"], 
+.featured-jobs-carousel[data-count="more"] {
+  justify-content: flex-start;
+}
+
+.featured-jobs-carousel .job-card {
+  flex: 0 0 350px;
+  min-width: 350px;
+  max-width: 350px;
+}
+
+/* Responsive design for featured jobs carousel */
+@media (max-width: 768px) {
+  .featured-jobs-carousel {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .featured-jobs-carousel .job-card {
+    flex: 0 0 280px;
+    min-width: 280px;
+    max-width: 280px;
+  }
+  
+  .featured-jobs-carousel[data-count="1"],
+  .featured-jobs-carousel[data-count="2"],
+  .featured-jobs-carousel[data-count="3"],
+  .featured-jobs-carousel[data-count="more"] {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .featured-jobs-carousel::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .jobs {
@@ -868,9 +970,10 @@ section {
 }
 
 .jobs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .job-card {

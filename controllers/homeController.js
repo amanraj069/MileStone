@@ -8,25 +8,72 @@ const Skill = require("../models/skill");
 const Message = require("../models/message");
 const Complaint = require("../models/complaint");
 
-exports.getHome = (req, res) => {
-  let dashboardRoute = "";
-  if (req.session && req.session.user) {
-    switch (req.session.user.role) {
-      case "Admin":
-        dashboardRoute = "/adminD/profile";
-        break;
-      case "Employer":
-        dashboardRoute = "/employerD/profile";
-        break;
-      case "Freelancer":
-        dashboardRoute = "/freelancerD/profile";
-        break;
+exports.getHome = async (req, res) => {
+  try {
+    let dashboardRoute = "";
+    if (req.session && req.session.user) {
+      switch (req.session.user.role) {
+        case "Admin":
+          dashboardRoute = "/adminD/profile";
+          break;
+        case "Employer":
+          dashboardRoute = "/employerD/profile";
+          break;
+        case "Freelancer":
+          dashboardRoute = "/freelancerD/profile";
+          break;
+      }
     }
+
+    // Fetch featured jobs
+    const featuredJobs = await JobListing.find({
+      "featured.isActive": true,
+      status: { $in: ["open", "active"] }
+    })
+    .populate('employerId')
+    .sort({ "featured.featuredAt": -1 })
+    .limit(3)
+    .lean();
+
+    // Format featured jobs for display
+    const formattedFeaturedJobs = await Promise.all(featuredJobs.map(async (job) => {
+      // Get category icon based on job category or skills
+      const categoryIcon = getCategoryIcon(job.category, job.description.skills);
+      
+      // Create budget range (30-50% variation)
+      const budgetRange = createBudgetRange(job.budget.amount);
+      
+      // Calculate time since posted
+      const timeAgo = getTimeAgo(job.postedDate);
+      
+      // Get description excerpt (15-20 words)
+      const descriptionExcerpt = getDescriptionExcerpt(job.description.text);
+      
+      return {
+        jobId: job.jobId,
+        title: job.title,
+        category: job.featured.category,
+        icon: categoryIcon,
+        budgetRange: budgetRange,
+        timeAgo: timeAgo,
+        description: descriptionExcerpt,
+        skills: job.description.skills.slice(0, 2), // Show first 2 skills
+      };
+    }));
+
+    res.render("Aman/home", {
+      user: req.session && req.session.user ? req.session.user : null,
+      dashboardRoute,
+      featuredJobs: formattedFeaturedJobs,
+    });
+  } catch (error) {
+    console.error("Error fetching featured jobs:", error);
+    res.render("Aman/home", {
+      user: req.session && req.session.user ? req.session.user : null,
+      dashboardRoute: "",
+      featuredJobs: [],
+    });
   }
-  res.render("Aman/home", {
-    user: req.session && req.session.user ? req.session.user : null,
-    dashboardRoute,
-  });
 };
 
 exports.getBlog = (req, res) => {
@@ -452,3 +499,80 @@ exports.testComplaint = async (req, res) => {
     res.json({ error: error.message, stack: error.stack });
   }
 };
+
+// Helper functions for formatting featured jobs
+function getCategoryIcon(category, skills) {
+  const skillsLower = skills.map(skill => skill.toLowerCase());
+  
+  // Check for web development
+  if (skillsLower.some(skill => 
+    ['javascript', 'react', 'angular', 'vue', 'html', 'css', 'node'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-code';
+  }
+  
+  // Check for design
+  if (skillsLower.some(skill => 
+    ['design', 'photoshop', 'figma', 'illustrator', 'ui', 'ux'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-paint-brush';
+  }
+  
+  // Check for writing
+  if (skillsLower.some(skill => 
+    ['writing', 'content', 'copywriting', 'blog'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-pen-nib';
+  }
+  
+  // Check for data science
+  if (skillsLower.some(skill => 
+    ['python', 'data', 'analytics', 'sql', 'machine learning'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-chart-line';
+  }
+  
+  // Check for marketing
+  if (skillsLower.some(skill => 
+    ['marketing', 'seo', 'social media', 'advertising'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-bullhorn';
+  }
+  
+  // Default to software development
+  return 'fas fa-laptop-code';
+}
+
+function createBudgetRange(amount) {
+  const minVariation = Math.floor(amount * 0.7); // 30% less
+  const maxVariation = Math.floor(amount * 1.3); // 30% more
+  
+  return {
+    min: minVariation,
+    max: maxVariation,
+    formatted: `₹${minVariation.toLocaleString()} - ₹${maxVariation.toLocaleString()}`
+  };
+}
+
+function getTimeAgo(postedDate) {
+  const now = new Date();
+  const posted = new Date(postedDate);
+  const diffTime = Math.abs(now - posted);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+  
+  if (diffDays === 0) {
+    return `${diffHours} hours`;
+  } else if (diffDays === 1) {
+    return '1 day';
+  } else if (diffDays <= 30) {
+    return `${diffDays} days`;
+  } else {
+    const diffMonths = Math.floor(diffDays / 30);
+    return `${diffMonths} month${diffMonths > 1 ? 's' : ''}`;
+  }
+}
+
+function getDescriptionExcerpt(description) {
+  if (!description) return 'No description available';
+  
+  const words = description.split(' ');
+  const excerpt = words.slice(0, 18).join(' '); // Take first 18 words
+  
+  return words.length > 18 ? `${excerpt}...` : excerpt;
+}
