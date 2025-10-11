@@ -88,9 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const complaintBtn = document.getElementById('complain-btn');
-    complaintBtn.addEventListener('click', function() {
-            alert(`Complaint submitted successfully!`);
+    if (complaintBtn) {
+        complaintBtn.addEventListener('click', function() {
+            // Navigate to the complaint form page
+            window.location.href = '/employerD/complaint/form';
         });
+    }
 
     // Edit milestone modal control
     const closeEditMilestoneModal = document.getElementById('closeEditMilestoneModal');

@@ -1011,9 +1011,6 @@ const employerController = {
 
       // Create complaint data
       const submittedById = req.session.user.id; // Fixed: use 'id' instead of 'userId'
-      console.log("DEBUG: req.session.user.id =", submittedById);
-      console.log("DEBUG: typeof submittedById =", typeof submittedById);
-
       const complaintData = {
         submittedBy: submittedById,
         againstUser:
@@ -1022,6 +1019,135 @@ const employerController = {
         complaintType: complaintType || "Job Related",
         jobId: jobId,
         issue: issue || "Issue with freelancer regarding job completion",
+        status: "pending",
+      };
+
+      console.log("Creating complaint with data:", complaintData);
+
+      // Create complaint
+      const complaint = new Complaint(complaintData);
+      const savedComplaint = await complaint.save();
+
+      console.log("Complaint saved successfully:", savedComplaint);
+
+      res.json({
+        success: true,
+        message: "Complaint submitted successfully",
+        complaintId: savedComplaint.complaintId,
+      });
+    } catch (error) {
+      console.error("Error submitting complaint:", error);
+      console.error("Error stack:", error.stack);
+      res
+        .status(500)
+        .json({ error: "Failed to submit complaint", details: error.message });
+    }
+  },
+
+  getComplaintForm: async (req, res) => {
+    try {
+      const userId = req.session.user.id;
+      const jobId = req.query.jobId;
+
+      if (!userId) {
+        return res.redirect('/login');
+      }
+
+      // Get user information
+      const user = await User.findOne({ userId }).lean();
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      let job = null;
+      if (jobId) {
+        // Get job information if jobId is provided
+        job = await JobListing.findOne({ 
+          jobId: jobId,
+          employerId: req.session.user.roleId 
+        }).lean();
+        
+        if (job) {
+          // Get freelancer information if assigned
+          if (job.assignedFreelancer && job.assignedFreelancer.freelancerId) {
+            const freelancer = await Freelancer.findOne({ 
+              freelancerId: job.assignedFreelancer.freelancerId 
+            }).lean();
+            if (freelancer) {
+              job.assignedFreelancer.name = freelancer.name;
+            }
+          }
+        }
+      }
+
+      res.render("Abhishek/complaint_form", {
+        user: {
+          name: user.name,
+          picture: user.picture,
+          role: user.role,
+          email: user.email
+        },
+        job: job,
+        activePage: "current_jobs",
+      });
+    } catch (error) {
+      console.error("Error loading complaint form:", error.message);
+      res.status(500).send("Error loading complaint form: " + error.message);
+    }
+  },
+
+  submitComplaintForm: async (req, res) => {
+    try {
+      const { 
+        jobId, 
+        againstUser, 
+        complaintType, 
+        priority, 
+        issue, 
+        expectedResolution,
+        contactEmail,
+        preferredContact
+      } = req.body;
+      
+      if (!req.session.user) {
+        return res.status(401).json({ error: "Unauthorized: Please log in" });
+      }
+
+      // Validate required fields
+      if (!complaintType || !issue) {
+        return res.status(400).json({ error: "Complaint type and issue description are required" });
+      }
+
+      if (issue.trim().length < 5) {
+        return res.status(400).json({ error: "Issue description must be at least 5 characters" });
+      }
+
+      // Get job details if jobId is provided
+      let job = null;
+      let finalAgainstUser = againstUser;
+      
+      if (jobId) {
+        job = await JobListing.findOne({ jobId: jobId }).lean();
+        
+        if (job && job.assignedFreelancer && !finalAgainstUser) {
+          finalAgainstUser = job.assignedFreelancer.freelancerId;
+        }
+      }
+
+      // Create complaint data
+      const submittedById = req.session.user.id;
+      console.log("DEBUG: req.session.user.id =", submittedById);
+
+      const complaintData = {
+        submittedBy: submittedById,
+        againstUser: finalAgainstUser || 'general',
+        complaintType: complaintType,
+        jobId: jobId || '',
+        issue: issue.trim(),
+        priority: priority || 'Medium',
+        expectedResolution: expectedResolution ? expectedResolution.trim() : '',
+        contactEmail: contactEmail || req.session.user.email || '',
+        preferredContact: preferredContact || 'email',
         status: "pending",
       };
 

@@ -50,6 +50,24 @@ const complaintSchema = new Schema({
   resolvedDate: { 
     type: Date,
     default: null 
+  },
+  priority: {
+    type: String,
+    enum: ['Low', 'Medium', 'High', 'Urgent'],
+    default: 'Medium'
+  },
+  expectedResolution: {
+    type: String,
+    default: ''
+  },
+  contactEmail: {
+    type: String,
+    default: ''
+  },
+  preferredContact: {
+    type: String,
+    enum: ['email', 'platform', 'phone'],
+    default: 'email'
   }
 }, { 
   timestamps: true 
