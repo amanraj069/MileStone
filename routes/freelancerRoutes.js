@@ -30,6 +30,7 @@ router.route("/milestone/:jobId").get(freelancerController.getMilestone);
 router.post("/milestone/:jobId/:milestoneId/request", freelancerController.requestMilestone);
 router.get("/complaint/form", freelancerController.getComplaintForm);
 router.post("/complaint/submit", freelancerController.submitComplaintForm);
+router.post("/subtask/:jobId/:milestoneId/:subTaskId/update", freelancerController.updateSubTaskStatus);
 router.post("/active_job/complain/:jobId", freelancerController.submitComplaint);
 
 module.exports = router;

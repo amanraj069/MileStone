@@ -9,10 +9,10 @@
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  background: #f8f9fa;
   min-height: 100vh;
   line-height: 1.6;
-  color: #1e293b;
+  color: #333;
 }
 
 /* Dashboard Layout */
@@ -24,64 +24,49 @@ body {
 .main-content {
   flex: 1;
   margin-left: 260px;
-  padding: 40px;
+  padding: 30px;
+  min-height: 100vh;
   transition: all 0.3s ease;
 }
 
 /* Page Header */
 .page-header {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  color: white;
-  padding: 40px 50px;
-  border-radius: 20px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.page-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    transparent 70%
-  );
-  border-radius: 50%;
-  transform: translate(100px, -100px);
+  border-left: 4px solid #2563eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .page-title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 .page-title i {
-  margin-right: 15px;
-  opacity: 0.9;
+  margin-right: 12px;
+  color: #2563eb;
 }
 
 .page-subtitle {
-  font-size: 18px;
-  opacity: 0.9;
+  color: #666;
+  font-size: 16px;
   font-weight: 400;
-  letter-spacing: 0.3px;
 }
 
 /* Content Card */
 .content-card {
   background: white;
-  border-radius: 20px;
-  padding: 50px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 20px;
 }
 
 /* Form Styling */
@@ -94,9 +79,9 @@ body {
 }
 
 .section-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -316,7 +301,7 @@ body {
 }
 
 .remove-milestone-btn {
-  background: linear-gradient(135deg, #ef4444, #f87171);
+  background: #ff4d4f;
   color: white;
   border: none;
   padding: 10px 16px;
@@ -333,83 +318,58 @@ body {
 }
 
 .remove-milestone-btn:hover {
-  background: linear-gradient(135deg, #dc2626, #ef4444);
+  background: #d9363e;
   transform: scale(1.1);
   box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
 }
 
 .add-milestone-btn {
-  background: linear-gradient(135deg, #10b981, #34d399);
+  background: #10b981;
   color: white;
   border: none;
-  padding: 16px 32px;
-  border-radius: 16px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+  gap: 8px;
   margin: 20px 0;
 }
 
 .add-milestone-btn:hover {
-  background: linear-gradient(135deg, #059669, #10b981);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4);
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  background: linear-gradient(45deg, #2563eb, #1e40af);
   color: white;
   border: none;
-  padding: 20px 50px;
-  border-radius: 20px;
-  font-size: 18px;
-  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
-  margin-top: 40px;
-  position: relative;
-  overflow: hidden;
-}
-
-.submit-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s;
-}
-
-.submit-btn:hover::before {
-  left: 100%;
+  gap: 8px;
+  margin-top: 20px;
 }
 
 .submit-btn:hover {
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
-  transform: translateY(-4px);
-  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 
 .form-actions {
   text-align: center;
-  padding-top: 30px;
-  border-top: 2px solid #e1e5e9;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
 }
 
 /* Error and Empty States */
@@ -622,4 +582,189 @@ body {
   .step-label {
     font-size: 13px;
   }
+}
+
+/* Sub-tasks Styling */
+.subtasks-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.subtasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.subtasks-header label {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+}
+
+.add-subtask-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.add-subtask-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.subtasks-container {
+  min-height: 60px;
+}
+
+.subtask-empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.subtask-empty-state i {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+}
+
+.subtask-item {
+  margin-bottom: 10px;
+}
+
+.subtask-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.subtask-input-group:hover {
+  border-color: #3b82f6;
+}
+
+.subtask-input-group input {
+  flex: 1;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: transparent;
+  outline: none;
+}
+
+.subtask-input-group input::placeholder {
+  color: #94a3b8;
+}
+
+.remove-subtask-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.remove-subtask-btn:hover {
+  background: #d9363e;
+  transform: scale(1.05);
+}
+
+/* Responsive sub-tasks */
+@media (max-width: 768px) {
+  .subtasks-section {
+    padding: 15px;
+  }
+  
+  .subtasks-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .add-subtask-btn {
+    align-self: flex-end;
+  }
+}
+
+/* Form enhancements */
+.form-hint {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.checkbox-group {
+  margin-top: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.checkbox-label:hover .checkmark {
+  border-color: #3b82f6;
 }

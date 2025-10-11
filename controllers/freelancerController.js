@@ -693,6 +693,8 @@ exports.getMilestone = async (req, res) => {
           : "No deadline",
         status: m.status,
         requested: m.requested === "true" || m.requested === true, // Convert string "true"/"false" to boolean
+        subTasks: m.subTasks || [],
+        completionPercentage: m.completionPercentage || 0,
       })),
       progress: {
         completionPercentage,
@@ -948,13 +950,8 @@ exports.submitComplaintForm = async (req, res) => {
       contactEmail,
       preferredContact
     } = req.body;
-    
-    console.log("Extracted values:");
-    console.log("complaintType:", complaintType);
-    console.log("issue:", issue);
 
     if (!req.session.user) {
-      console.log("Unauthorized access attempt");
       return res.status(401).json({ error: "Unauthorized: Please log in" });
     }
 
@@ -973,7 +970,6 @@ exports.submitComplaintForm = async (req, res) => {
     
     if (jobId) {
       job = await JobListing.findOne({ jobId: jobId }).lean();
-      console.log("Job found:", job);
       
       if (job && !finalAgainstUser) {
         finalAgainstUser = job.employerId;
@@ -982,7 +978,6 @@ exports.submitComplaintForm = async (req, res) => {
 
     // Create complaint data
     const submittedById = req.session.user.id;
-    console.log("DEBUG: req.session.user.id =", submittedById);
 
     const complaintData = {
       submittedBy: submittedById,
@@ -997,13 +992,9 @@ exports.submitComplaintForm = async (req, res) => {
       status: "pending",
     };
 
-    console.log("Creating complaint with data:", complaintData);
-
     // Create complaint
     const complaint = new Complaint(complaintData);
     const savedComplaint = await complaint.save();
-
-    console.log("Complaint saved successfully:", savedComplaint);
 
     res.json({
       success: true,
@@ -1016,5 +1007,68 @@ exports.submitComplaintForm = async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to submit complaint", details: error.message });
+  }
+};
+
+// Update sub-task status
+exports.updateSubTaskStatus = async (req, res) => {
+  try {
+    const { jobId, milestoneId, subTaskId } = req.params;
+    const { status, notes } = req.body;
+    const freelancerId = req.session.user.roleId;
+
+    if (!freelancerId) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    const job = await JobListing.findOne({
+      jobId,
+      "assignedFreelancer.freelancerId": freelancerId,
+    });
+
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const milestone = job.milestones.find(m => m.milestoneId === milestoneId);
+    if (!milestone) {
+      return res.status(404).json({ success: false, message: "Milestone not found" });
+    }
+
+    const subTask = milestone.subTasks.find(st => st.subTaskId === subTaskId);
+    if (!subTask) {
+      return res.status(404).json({ success: false, message: "Sub-task not found" });
+    }
+
+    // Update sub-task
+    subTask.status = status;
+    subTask.notes = notes || subTask.notes;
+    if (status === 'completed') {
+      subTask.completedDate = new Date();
+    }
+
+    // Calculate milestone completion percentage
+    const completedSubTasks = milestone.subTasks.filter(st => st.status === 'completed').length;
+    milestone.completionPercentage = milestone.subTasks.length > 0 
+      ? Math.round((completedSubTasks / milestone.subTasks.length) * 100) 
+      : 0;
+
+    // Update milestone status based on sub-task completion
+    if (milestone.completionPercentage === 100) {
+      milestone.status = 'in-progress'; // Ready for payment request
+    } else if (milestone.completionPercentage > 0) {
+      milestone.status = 'in-progress';
+    }
+
+    await job.save();
+
+    res.json({ 
+      success: true, 
+      message: "Sub-task updated successfully",
+      completionPercentage: milestone.completionPercentage
+    });
+  } catch (error) {
+    console.error("Error updating sub-task:", error);
+    res.status(500).json({ success: false, message: "Failed to update sub-task" });
   }
 };
