@@ -47,80 +47,114 @@
                 </div>
               </div>
               <div class="milestones-container">
-                <table class="milestone-table">
-                  <thead>
-                    <tr>
-                      <th>S.No</th>
-                      <th>Description</th>
-                      <th>Amount (₹)</th>
-                      <th>Deadline</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% job.milestones.forEach(milestone => { %>
-                      <tr class="milestone-row <%= milestone.status === 'paid' ? 'paid' : milestone.requested ? 'requested' : 'not-paid' %>">
-                        <td><%= milestone.serialNo %></td>
-                        <td><%= milestone.description %></td>
-                        <td>₹<%= milestone.amount.toLocaleString() %></td>
-                        <td><%= milestone.deadline %></td>
-                        <td>
-                          <% if (milestone.status === 'paid') { %>
-                            <button class="request-btn" disabled>Paid</button>
-                          <% } else if (milestone.requested) { %>
-                            <button class="request-btn" disabled>Requested</button>
+                <% job.milestones.forEach(milestone => { %>
+                <div class="milestone-card <%= milestone.status === 'paid' ? 'paid' : milestone.requested ? 'requested' : 'not-paid' %>">
+                  <div class="milestone-header">
+                    <div class="milestone-info">
+                      <h3 class="milestone-title">Milestone #<%= milestone.serialNo %></h3>
+                      <p class="milestone-description"><%= milestone.description %></p>
+                    </div>
+                    <div class="milestone-meta">
+                      <span class="milestone-amount">₹<%= milestone.amount.toLocaleString() %></span>
+                      <span class="milestone-deadline"><%= milestone.deadline %></span>
+                    </div>
+                  </div>
+
+                  <!-- Sub-tasks Section -->
+                  <% if (milestone.subTasks && milestone.subTasks.length > 0) { %>
+                  <div class="subtasks-section">
+                    <div class="subtasks-header">
+                      <span class="subtasks-title">
+                        <i class="fas fa-tasks"></i>
+                        Progress Tasks
+                      </span>
+                      <span class="subtasks-progress">
+                        <%= milestone.subTasks.filter(st => st.status === 'completed').length %>/<%= milestone.subTasks.length %> Complete
+                      </span>
+                    </div>
+                    
+                    <div class="subtasks-progress-bar">
+                      <div class="progress-fill" style="width: <%= milestone.completionPercentage || 0 %>%"></div>
+                    </div>
+
+                    <div class="subtasks-list">
+                      <% milestone.subTasks.forEach(subTask => { %>
+                      <div class="subtask-item <%= subTask.status %>" data-subtask-id="<%= subTask.subTaskId %>">
+                        <div class="subtask-checkbox" 
+                             onclick="toggleSubTask('<%= job.jobId %>', '<%= milestone.milestoneId %>', '<%= subTask.subTaskId %>', '<%= subTask.status %>')">
+                          <% if (subTask.status === 'completed') { %>
+                            <i class="fas fa-check"></i>
+                          <% } else if (subTask.status === 'in-progress') { %>
+                            <i class="fas fa-clock"></i>
                           <% } else { %>
-                            <button class="request-btn" 
-                                    data-job-id="<%= job.jobId %>"
-                                    data-milestone-id="<%= milestone.milestoneId %>"
-                                    data-description="<%= milestone.description %>"
-                                    data-amount="<%= milestone.amount %>">Request</button>
+                            <i class="far fa-circle"></i>
                           <% } %>
-                        </td>
-                      </tr>
-                    <% }) %>
-                  </tbody>
-                </table>
+                        </div>
+                        <div class="subtask-content">
+                          <span class="subtask-description"><%= subTask.description %></span>
+                          <% if (subTask.status === 'completed' && subTask.completedDate) { %>
+                            <span class="subtask-date">
+                              <i class="fas fa-calendar-check"></i>
+                              Completed on <%= new Date(subTask.completedDate).toLocaleDateString() %>
+                            </span>
+                          <% } %>
+                          <% if (subTask.notes) { %>
+                            <div class="subtask-notes">
+                              <i class="fas fa-sticky-note"></i>
+                              <%= subTask.notes %>
+                            </div>
+                          <% } %>
+                        </div>
+                        <div class="subtask-actions">
+                          <% if (subTask.status !== 'completed') { %>
+                            <button class="subtask-action-btn" 
+                                    onclick="markInProgress('<%= job.jobId %>', '<%= milestone.milestoneId %>', '<%= subTask.subTaskId %>')"
+                                    title="Mark as In Progress">
+                              <i class="fas fa-play"></i>
+                            </button>
+                            <button class="subtask-action-btn complete" 
+                                    onclick="markCompleted('<%= job.jobId %>', '<%= milestone.milestoneId %>', '<%= subTask.subTaskId %>')"
+                                    title="Mark as Completed">
+                              <i class="fas fa-check"></i>
+                            </button>
+                          <% } %>
+                        </div>
+                      </div>
+                      <% }); %>
+                    </div>
+                  </div>
+                  <% } %>
+
+                  <div class="milestone-actions">
+                    <% if (milestone.status === 'paid') { %>
+                      <button class="request-btn paid" disabled>
+                        <i class="fas fa-check-circle"></i>
+                        Paid
+                      </button>
+                    <% } else if (milestone.requested) { %>
+                      <button class="request-btn requested" disabled>
+                        <i class="fas fa-clock"></i>
+                        Payment Requested
+                      </button>
+                    <% } else { %>
+                      <button class="request-btn" 
+                              data-job-id="<%= job.jobId %>"
+                              data-milestone-id="<%= milestone.milestoneId %>"
+                              data-description="<%= milestone.description %>"
+                              data-amount="<%= milestone.amount %>"
+                              <%= milestone.completionPercentage < 100 ? 'disabled' : '' %>>
+                        <%= milestone.completionPercentage < 100 ? 'Complete Tasks First' : 'Request Payment' %>
+                      </button>
+                    <% } %>
+                  </div>
+                </div>
+                <% }) %>
               </div>
             </div>
           <% } %>
         </div>
       </div>
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.request-btn:not(:disabled)').forEach(button => {
-          button.addEventListener('click', async () => {
-            const jobId = button.dataset.jobId;
-            const milestoneId = button.dataset.milestoneId;
-
-            try {
-              const response = await fetch(`/freelancerD/milestone/${jobId}/${milestoneId}/request`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              });
-
-              if (!response.ok) {
-                throw new Error('Failed to request milestone');
-              }
-
-              const data = await response.json();
-              if (data.success) {
-                const milestoneRow = button.closest('tr');
-                milestoneRow.classList.remove('not-paid');
-                milestoneRow.classList.add('requested');
-                button.textContent = 'Requested';
-                button.disabled = true;
-              }
-            } catch (error) {
-              console.error('Error requesting milestone:', error.message);
-              alert('Failed to request milestone. Please try again.');
-            }
-          });
-        });
-      });
-    </script>
+    <script src="/js/FreelancerD/milestone.js"></script>
   </body>
 </html>
