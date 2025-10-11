@@ -133,7 +133,8 @@ body {
 .form-group label {
   font-weight: 600;
   color: #374151;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
+  margin-top: 18px;
   font-size: 15px;
   display: flex;
   align-items: center;
@@ -155,6 +156,11 @@ body {
   transition: all 0.3s ease;
   background: #fafbfc;
   font-family: inherit;
+}
+
+#responsibilities,
+#requirements {
+  height: 132px;
 }
 
 .form-group input:focus,
@@ -526,6 +532,7 @@ body {
 }
 
 .step-number {
+  margin-top: 30px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
