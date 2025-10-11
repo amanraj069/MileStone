@@ -91,40 +91,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const markFinishedButtons = document.querySelectorAll(".mark-finished-btn");
 
   complainButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      
       const jobId = button.getAttribute('data-job-id');
       const freelancerId = button.getAttribute('data-freelancer-id');
       
-      const complaintType = prompt("Please enter the type of complaint (e.g., 'Quality Issue', 'Communication Problem', 'Deadline Issue'):");
-      if (!complaintType) return;
+      // Navigate to the complaint form page with job details
+      const params = new URLSearchParams();
+      if (jobId) params.append('jobId', jobId);
+      if (freelancerId) params.append('againstUser', freelancerId);
       
-      const issue = prompt("Please describe the issue in detail:");
-      if (!issue) return;
-      
-      try {
-        const response = await fetch(`/employerD/current_jobs/complain/${jobId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            complaintType: complaintType,
-            againstUser: freelancerId,
-            issue: issue
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          alert("Complaint submitted successfully! Our team will review it shortly.");
-        } else {
-          alert(data.error || "Failed to submit complaint. Please try again.");
-        }
-      } catch (error) {
-        console.error("Error submitting complaint:", error);
-        alert("An error occurred while submitting the complaint.");
-      }
+      window.location.href = `/employerD/complaint/form?${params.toString()}`;
     });
   });
 

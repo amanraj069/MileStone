@@ -882,3 +882,139 @@ exports.submitComplaint = async (req, res) => {
     res.status(500).json({ error: "Failed to submit complaint", details: error.message });
   }
 };
+
+exports.getComplaintForm = async (req, res) => {
+  try {
+    const userId = req.session.user.id;
+    const jobId = req.query.jobId;
+
+    if (!userId) {
+      return res.redirect('/login');
+    }
+
+    // Get user information
+    const user = await User.findOne({ userId }).lean();
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    let job = null;
+    if (jobId) {
+      // Get job information if jobId is provided
+      job = await JobListing.findOne({ 
+        jobId: jobId,
+        'assignedFreelancer.freelancerId': req.session.user.roleId 
+      }).lean();
+      
+      if (job) {
+        // Get employer information
+        const employer = await Employer.findOne({ 
+          employerId: job.employerId 
+        }).lean();
+        if (employer) {
+          job.employer = {
+            employerId: employer.employerId,
+            name: employer.name
+          };
+        }
+      }
+    }
+
+    res.render("Vanya/complaint_form", {
+      user: {
+        name: user.name,
+        picture: user.picture,
+        role: user.role,
+        email: user.email
+      },
+      job: job,
+      activePage: "active_job",
+    });
+  } catch (error) {
+    console.error("Error loading complaint form:", error.message);
+    res.status(500).send("Error loading complaint form: " + error.message);
+  }
+};
+
+exports.submitComplaintForm = async (req, res) => {
+  try {
+    const { 
+      jobId, 
+      againstUser, 
+      complaintType, 
+      priority, 
+      issue, 
+      expectedResolution,
+      contactEmail,
+      preferredContact
+    } = req.body;
+    
+    console.log("Extracted values:");
+    console.log("complaintType:", complaintType);
+    console.log("issue:", issue);
+
+    if (!req.session.user) {
+      console.log("Unauthorized access attempt");
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    // Validate required fields
+    if (!complaintType || !issue) {
+      return res.status(400).json({ error: "Complaint type and issue description are required" });
+    }
+
+    if (issue.trim().length < 5) {
+      return res.status(400).json({ error: "Issue description must be at least 5 characters" });
+    }
+
+    // Get job details if jobId is provided
+    let job = null;
+    let finalAgainstUser = againstUser;
+    
+    if (jobId) {
+      job = await JobListing.findOne({ jobId: jobId }).lean();
+      console.log("Job found:", job);
+      
+      if (job && !finalAgainstUser) {
+        finalAgainstUser = job.employerId;
+      }
+    }
+
+    // Create complaint data
+    const submittedById = req.session.user.id;
+    console.log("DEBUG: req.session.user.id =", submittedById);
+
+    const complaintData = {
+      submittedBy: submittedById,
+      againstUser: finalAgainstUser || 'general',
+      complaintType: complaintType,
+      jobId: jobId || '',
+      issue: issue.trim(),
+      priority: priority || 'Medium',
+      expectedResolution: expectedResolution ? expectedResolution.trim() : '',
+      contactEmail: contactEmail || req.session.user.email || '',
+      preferredContact: preferredContact || 'email',
+      status: "pending",
+    };
+
+    console.log("Creating complaint with data:", complaintData);
+
+    // Create complaint
+    const complaint = new Complaint(complaintData);
+    const savedComplaint = await complaint.save();
+
+    console.log("Complaint saved successfully:", savedComplaint);
+
+    res.json({
+      success: true,
+      message: "Complaint submitted successfully",
+      complaintId: savedComplaint.complaintId,
+    });
+  } catch (error) {
+    console.error("Error submitting complaint:", error);
+    console.error("Error stack:", error.stack);
+    res
+      .status(500)
+      .json({ error: "Failed to submit complaint", details: error.message });
+  }
+};
