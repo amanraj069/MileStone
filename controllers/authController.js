@@ -261,7 +261,7 @@ async function getFeaturedJobsWithDetails(featuredJobs = null) {
       return {
         ...job,
         employer: employer,
-        category: job.featured?.category || 'web-development',
+        category: job.featured?.type || 'web-development',
         categoryIcon: categoryIcon,
         budgetRange: budgetRange,
         timeAgo: timeAgo,

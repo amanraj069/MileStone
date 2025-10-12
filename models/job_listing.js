@@ -131,7 +131,7 @@ const jobListingSchema = new Schema(
         type: Boolean,
         default: false,
       },
-      category: {
+      type: {
         type: String,
         enum: ["urgent", "new", "high-demand"],
         default: null,
