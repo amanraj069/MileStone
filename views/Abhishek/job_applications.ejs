@@ -275,6 +275,122 @@
         color: #ddd;
         margin-bottom: 20px;
       }
+
+      /* Notification styles */
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .notification.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background: #28a745;
+      }
+
+      .notification.error {
+        background: #dc3545;
+      }
+
+      .notification.info {
+        background: #17a2b8;
+      }
+
+      /* Loading states */
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      .loading-card {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      /* Form validation styles */
+      .form-group {
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #2563eb;
+      }
+
+      .form-input.error {
+        border-color: #dc3545;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      /* Modal styles for bulk actions */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #666;
+      }
     </style>
   </head>
   <body>
@@ -389,24 +505,12 @@
 
           <% if (application.status === 'Pending') { %>
           <div class="card-footer">
-            <form
-              action="/employerD/job_applications/<%= application.applicationId %>/accept"
-              method="POST"
-              style="display: inline"
-            >
-              <button type="submit" class="btn accept-btn">
-                <i class="fas fa-check"></i> Accept
-              </button>
-            </form>
-            <form
-              action="/employerD/job_applications/<%= application.applicationId %>/reject"
-              method="POST"
-              style="display: inline"
-            >
-              <button type="submit" class="btn reject-btn">
-                <i class="fas fa-times"></i> Reject
-              </button>
-            </form>
+            <button type="button" class="btn accept-btn" onclick="acceptApplication('<%= application.applicationId %>', this)">
+              <i class="fas fa-check"></i> Accept
+            </button>
+            <button type="button" class="btn reject-btn" onclick="rejectApplication('<%= application.applicationId %>', this)">
+              <i class="fas fa-times"></i> Reject
+            </button>
           </div>
           <% } %>
         </div>
@@ -452,6 +556,273 @@
           }
         });
         searchInput.addEventListener("input", filterApplications);
+      });
+
+      // AJAX functions for accept/reject applications
+      async function acceptApplication(applicationId, buttonElement) {
+        if (!applicationId) {
+          showNotification('Invalid application ID', 'error');
+          return;
+        }
+
+        const cardElement = buttonElement.closest('.application-card');
+        
+        try {
+          // Disable buttons and show loading state
+          const buttons = cardElement.querySelectorAll('.btn');
+          buttons.forEach(btn => {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+          });
+          cardElement.classList.add('loading-card');
+
+          showNotification('Processing application acceptance...', 'info');
+
+          const response = await fetch(`/employerD/job_applications/${applicationId}/accept`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+
+          if (response.ok) {
+            showNotification('Application accepted successfully!', 'success');
+            
+            // Update the card UI
+            const statusElement = cardElement.querySelector('.status-pending, .status-accepted, .status-rejected');
+            if (statusElement) {
+              statusElement.className = 'status status-accepted';
+              statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Accepted';
+            }
+            
+            // Remove the buttons since status is no longer pending
+            cardElement.querySelector('.card-footer').remove();
+            
+            // Update stats if they exist
+            updateApplicationStats();
+          } else {
+            const errorData = await response.json();
+            showNotification(errorData.message || 'Failed to accept application', 'error');
+            
+            // Restore button states
+            buttons.forEach((btn, index) => {
+              btn.disabled = false;
+              if (index === 0) {
+                btn.innerHTML = '<i class="fas fa-check"></i> Accept';
+              } else {
+                btn.innerHTML = '<i class="fas fa-times"></i> Reject';
+              }
+            });
+          }
+        } catch (error) {
+          console.error('Accept application error:', error);
+          showNotification('Network error while accepting application', 'error');
+          
+          // Restore button states on error
+          const buttons = cardElement.querySelectorAll('.btn');
+          buttons.forEach((btn, index) => {
+            btn.disabled = false;
+            if (index === 0) {
+              btn.innerHTML = '<i class="fas fa-check"></i> Accept';
+            } else {
+              btn.innerHTML = '<i class="fas fa-times"></i> Reject';
+            }
+          });
+        } finally {
+          cardElement.classList.remove('loading-card');
+        }
+      }
+
+      async function rejectApplication(applicationId, buttonElement) {
+        if (!applicationId) {
+          showNotification('Invalid application ID', 'error');
+          return;
+        }
+
+        const cardElement = buttonElement.closest('.application-card');
+        
+        try {
+          // Disable buttons and show loading state
+          const buttons = cardElement.querySelectorAll('.btn');
+          buttons.forEach(btn => {
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+          });
+          cardElement.classList.add('loading-card');
+
+          showNotification('Processing application rejection...', 'info');
+
+          const response = await fetch(`/employerD/job_applications/${applicationId}/reject`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+
+          if (response.ok) {
+            showNotification('Application rejected successfully!', 'success');
+            
+            // Update the card UI
+            const statusElement = cardElement.querySelector('.status-pending, .status-accepted, .status-rejected');
+            if (statusElement) {
+              statusElement.className = 'status status-rejected';
+              statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Rejected';
+            }
+            
+            // Remove the buttons since status is no longer pending
+            cardElement.querySelector('.card-footer').remove();
+            
+            // Update stats if they exist
+            updateApplicationStats();
+          } else {
+            const errorData = await response.json();
+            showNotification(errorData.message || 'Failed to reject application', 'error');
+            
+            // Restore button states
+            buttons.forEach((btn, index) => {
+              btn.disabled = false;
+              if (index === 0) {
+                btn.innerHTML = '<i class="fas fa-check"></i> Accept';
+              } else {
+                btn.innerHTML = '<i class="fas fa-times"></i> Reject';
+              }
+            });
+          }
+        } catch (error) {
+          console.error('Reject application error:', error);
+          showNotification('Network error while rejecting application', 'error');
+          
+          // Restore button states on error
+          const buttons = cardElement.querySelectorAll('.btn');
+          buttons.forEach((btn, index) => {
+            btn.disabled = false;
+            if (index === 0) {
+              btn.innerHTML = '<i class="fas fa-check"></i> Accept';
+            } else {
+              btn.innerHTML = '<i class="fas fa-times"></i> Reject';
+            }
+          });
+        } finally {
+          cardElement.classList.remove('loading-card');
+        }
+      }
+
+      // Notification system
+      function showNotification(message, type = 'info') {
+        // Remove any existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icon = type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : 'info-circle';
+        notification.innerHTML = `
+          <i class="fas fa-${icon}"></i>
+          <span>${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Update application statistics
+      function updateApplicationStats() {
+        const pendingCount = document.querySelectorAll('.status-pending').length;
+        const acceptedCount = document.querySelectorAll('.status-accepted').length;
+        const rejectedCount = document.querySelectorAll('.status-rejected').length;
+        
+        // Update stat cards if they exist
+        const statCards = document.querySelectorAll('.stat-number');
+        if (statCards.length >= 3) {
+          statCards[0].textContent = pendingCount + acceptedCount + rejectedCount; // Total
+          statCards[1].textContent = pendingCount; // Pending
+          statCards[2].textContent = acceptedCount; // Accepted
+        }
+      }
+
+      // Form validation for search
+      function validateSearchForm() {
+        const searchInput = document.getElementById('searchInput');
+        
+        if (!searchInput) return true;
+        
+        const value = searchInput.value.trim();
+        
+        // Remove previous error states
+        searchInput.classList.remove('error');
+        const errorMsg = searchInput.parentElement.querySelector('.error-message');
+        if (errorMsg) errorMsg.classList.remove('show');
+        
+        // Validate search input (optional but can add constraints)
+        if (value.length > 100) {
+          showFieldError(searchInput, 'Search term too long (max 100 characters)');
+          return false;
+        }
+        
+        // Check for potentially harmful characters
+        const dangerousPattern = /[<>'"&]/;
+        if (dangerousPattern.test(value)) {
+          showFieldError(searchInput, 'Invalid characters in search term');
+          return false;
+        }
+        
+        return true;
+      }
+
+      function showFieldError(inputElement, message) {
+        inputElement.classList.add('error');
+        
+        let errorElement = inputElement.parentElement.querySelector('.error-message');
+        if (!errorElement) {
+          errorElement = document.createElement('div');
+          errorElement.className = 'error-message';
+          inputElement.parentElement.appendChild(errorElement);
+        }
+        
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+        
+        // Remove error after user starts typing
+        inputElement.addEventListener('input', function clearError() {
+          inputElement.classList.remove('error');
+          errorElement.classList.remove('show');
+          inputElement.removeEventListener('input', clearError);
+        }, { once: true });
+      }
+
+      // Add validation to search functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        
+        if (searchBtn) {
+          searchBtn.addEventListener('click', function(e) {
+            if (!validateSearchForm()) {
+              e.preventDefault();
+              return false;
+            }
+          });
+        }
+        
+        if (searchInput) {
+          searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              if (!validateSearchForm()) {
+                e.preventDefault();
+                return false;
+              }
+            }
+          });
+        }
       });
     </script>
   </body>
