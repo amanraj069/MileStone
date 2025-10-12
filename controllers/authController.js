@@ -7,10 +7,15 @@ const JobListing = require("../models/job_listing");
 
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
+  const isAjax = req.headers['content-type'] === 'application/json';
 
   try {
     // Validate required fields
     if (!email || !password || !role) {
+      const error = "Email, password, and role are required";
+      if (isAjax) {
+        return res.status(400).json({ error });
+      }
       return res.send(
         '<script>alert("Email, password, and role are required"); window.location="/signup";</script>'
       );
@@ -19,6 +24,10 @@ exports.postSignup = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      const error = "Email already exists";
+      if (isAjax) {
+        return res.status(400).json({ error });
+      }
       return res.send(
         '<script>alert("Email already exists"); window.location="/signup";</script>'
       );
@@ -63,6 +72,10 @@ exports.postSignup = async (req, res) => {
         });
         break;
       default:
+        const error = "Invalid role";
+        if (isAjax) {
+          return res.status(400).json({ error });
+        }
         return res.send(
           '<script>alert("Invalid role"); window.location="/signup";</script>'
         );
@@ -72,9 +85,58 @@ exports.postSignup = async (req, res) => {
     await newUser.save();
     await roleEntity.save();
 
-    res.redirect("/login");
+    // Set user session immediately after signup
+    req.session.user = {
+      id: newUser.userId,
+      email: newUser.email,
+      role: newUser.role,
+      name: newUser.name,
+      roleId: newUser.roleId,
+      authenticated: true,
+    };
+
+    // Determine dashboard URL based on role
+    let dashboardUrl;
+    switch (role) {
+      case "Admin":
+        dashboardUrl = "/adminD/profile";
+        break;
+      case "Employer":
+        dashboardUrl = "/employerD/profile";
+        break;
+      case "Freelancer":
+        dashboardUrl = "/freelancerD/profile";
+        break;
+      default:
+        dashboardUrl = "/login";
+    }
+
+    // Save session before responding
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error during signup:", err);
+        const errorMessage = "Error saving session";
+        if (isAjax) {
+          return res.status(500).json({ error: errorMessage });
+        }
+        return res.redirect("/signup?error=Session error");
+      }
+
+      if (isAjax) {
+        return res.status(201).json({ 
+          success: true, 
+          message: "Account created successfully",
+          redirectUrl: dashboardUrl
+        });
+      }
+      res.redirect(dashboardUrl);
+    });
   } catch (error) {
     console.log("Signup catch error:", error);
+    const errorMessage = "Error creating account";
+    if (isAjax) {
+      return res.status(500).json({ error: errorMessage });
+    }
     res.send(
       '<script>alert("Error creating account"); window.location="/signup";</script>'
     );
@@ -83,10 +145,15 @@ exports.postSignup = async (req, res) => {
 
 exports.postLogin = async (req, res) => {
   const { email, password, role } = req.body;
+  const isAjax = req.headers['content-type'] === 'application/json';
 
   try {
     // Validate required fields
     if (!email || !password || !role) {
+      const error = "Missing email, password, or role";
+      if (isAjax) {
+        return res.status(400).json({ error });
+      }
       return res.redirect("/login?error=Missing email, password, or role");
     }
 
@@ -94,11 +161,19 @@ exports.postLogin = async (req, res) => {
     const user = await User.findOne({ email, role });
 
     if (!user) {
+      const error = "Invalid email or role";
+      if (isAjax) {
+        return res.status(401).json({ error });
+      }
       return res.redirect("/login?error=Invalid email or role");
     }
 
     // Check if user has a password
     if (!user.password) {
+      const error = "Account has no password set";
+      if (isAjax) {
+        return res.status(401).json({ error });
+      }
       return res.redirect("/login?error=Account has no password set");
     }
 
@@ -127,31 +202,61 @@ exports.postLogin = async (req, res) => {
       req.session.save((err) => {
         if (err) {
           console.error("Session save error:", err);
+          const errorMessage = "Server error during login";
+          if (isAjax) {
+            return res.status(500).json({ error: errorMessage });
+          }
           return res.status(500).send("Server error during login");
         }
 
         console.log(`Redirecting ${role} to dashboard`);
         try {
+          let redirectUrl;
           if (role === "Admin") {
-            res.redirect("/adminD/profile");
+            redirectUrl = "/adminD/profile";
           } else if (role === "Employer") {
-            res.redirect("/employerD/profile");
+            redirectUrl = "/employerD/profile";
           } else if (role === "Freelancer") {
-            res.redirect("/freelancerD/profile");
+            redirectUrl = "/freelancerD/profile";
           } else {
             console.error("Invalid role for redirect:", role);
-            res.redirect("/?error=Invalid role");
+            const error = "Invalid role";
+            if (isAjax) {
+              return res.status(400).json({ error });
+            }
+            return res.redirect("/?error=Invalid role");
           }
+
+          if (isAjax) {
+            return res.status(200).json({ 
+              success: true,
+              message: "Login successful",
+              redirectUrl
+            });
+          }
+          res.redirect(redirectUrl);
         } catch (redirectErr) {
           console.error("Redirect error:", redirectErr);
+          const errorMessage = "Error redirecting to dashboard";
+          if (isAjax) {
+            return res.status(500).json({ error: errorMessage });
+          }
           res.status(500).send("Error redirecting to dashboard");
         }
       });
     } else {
+      const error = "Incorrect password";
+      if (isAjax) {
+        return res.status(401).json({ error });
+      }
       res.redirect("/login?error=Incorrect password");
     }
   } catch (error) {
     console.error("Login error:", error);
+    const errorMessage = "Server error";
+    if (isAjax) {
+      return res.status(500).json({ error: errorMessage });
+    }
     res.redirect("/login?error=Server error");
   }
 };

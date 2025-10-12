@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
   const errorContainer = document.getElementById("error-container");
+  const submitButton = form.querySelector("button[type='submit']");
+
+  // Regular expressions for validation
+  const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
   // Clear any existing error messages initially
-  errorContainer.textContent = "";
+  errorContainer.innerHTML = "";
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault(); // Prevent form submission until validation passes
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent default form submission
 
     // Get form field values
     const name = form.querySelector("input[name='name']").value.trim();
@@ -14,73 +19,194 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = form.querySelector("input[name='password']").value.trim();
     const role = form.querySelector("select[name='role']").value;
 
-    // Reset error messages
-    errorContainer.textContent = "";
-    errorContainer.style.color = "red";
+    // Reset error messages and button state
+    clearErrors();
+    setLoadingState(true);
 
-    // Validation flags
+    // Validate form
+    if (!validateForm(name, email, password, role)) {
+      setLoadingState(false);
+      return;
+    }
+
+    try {
+      // Send AJAX request
+      const response = await fetch('/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          role: role
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Success - redirect to appropriate dashboard
+        const roleName = role.toLowerCase();
+        setTimeout(() => {
+          window.location.href = result.redirectUrl || getDashboardUrl(role);
+        }, 2000);
+      } else {
+        // Handle server errors
+        showError(result.error || 'Registration failed. Please try again.');
+        setLoadingState(false);
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      showError('Network error. Please check your connection and try again.');
+      setLoadingState(false);
+    }
+  });
+
+  // Validation function
+  function validateForm(name, email, password, role) {
     let isValid = true;
+    let errors = [];
 
-    // Name validation (simple check for non-empty)
-    if (name === "") {
-      errorContainer.textContent += "Name is required.\n";
+    // Name validation
+    if (!name) {
+      errors.push("Name is required.");
+      isValid = false;
+    } else if (name.length < 2) {
+      errors.push("Name must be at least 2 characters long.");
       isValid = false;
     }
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/; // Basic email format check
-    if (!emailRegex.test(email)) {
-      errorContainer.textContent += "Please enter a valid email address.\n";
+    if (!email) {
+      errors.push("Email is required.");
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      errors.push("Please enter a valid email address.");
       isValid = false;
     }
 
     // Password validation
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      errorContainer.textContent +=
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one digit, and one special character (e.g., !@#$%^&*).\n";
+    if (!password) {
+      errors.push("Password is required.");
+      isValid = false;
+    } else if (!passwordRegex.test(password)) {
+      errors.push("Password must be at least 8 characters long and contain at least one uppercase letter, one digit, and one special character (e.g., !@#$%^&*).");
       isValid = false;
     }
 
-    // Role validation (ensure something is selected)
+    // Role validation
     if (!role) {
-      errorContainer.textContent += "Please select a role.\n";
+      errors.push("Please select a role.");
       isValid = false;
     }
 
-    // If all validations pass, submit the form
-    if (isValid) {
-      errorContainer.style.color = "green";
-      setTimeout(() => {
-        form.submit(); // Submit the form programmatically
-      }, 1000); // Optional delay to show success message
+    if (errors.length > 0) {
+      showError(errors.join('<br>'));
     }
-  });
 
-  // Real-time feedback (optional)
+    return isValid;
+  }
+
+  // Real-time validation
+  const nameInput = form.querySelector("input[name='name']");
   const emailInput = form.querySelector("input[name='email']");
   const passwordInput = form.querySelector("input[name='password']");
 
+  nameInput.addEventListener("input", () => {
+    validateNameField(nameInput);
+  });
+
   emailInput.addEventListener("input", () => {
-    if (!emailRegex.test(emailInput.value.trim()) && emailInput.value !== "") {
-      emailInput.style.borderColor = "red";
-    } else {
-      emailInput.style.borderColor = "#ccc";
-    }
+    validateEmailField(emailInput);
+  });
+
+  emailInput.addEventListener("blur", () => {
+    validateEmailField(emailInput);
   });
 
   passwordInput.addEventListener("input", () => {
-    if (
-      !passwordRegex.test(passwordInput.value.trim()) &&
-      passwordInput.value !== ""
-    ) {
-      passwordInput.style.borderColor = "red";
-    } else {
-      passwordInput.style.borderColor = "#ccc";
-    }
+    validatePasswordField(passwordInput);
   });
-});
 
-// Regular expressions defined within the script (no need to repeat outside)
-const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/;
-const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  // Field validation functions
+  function validateNameField(nameInput) {
+    const name = nameInput.value.trim();
+    if (name && name.length >= 2) {
+      nameInput.style.borderColor = "#28a745";
+    } else if (name && name.length < 2) {
+      nameInput.style.borderColor = "#dc3545";
+      } else {
+      nameInput.style.borderColor = "#ced4da";
+    }
+  }
+
+  function validateEmailField(emailInput) {
+    const email = emailInput.value.trim();
+    if (email && emailRegex.test(email)) {
+      emailInput.style.borderColor = "#28a745";
+      } else if (email && !emailRegex.test(email)) {
+      emailInput.style.borderColor = "#dc3545";
+      } else {
+      emailInput.style.borderColor = "#ced4da";
+    }
+  }
+
+  function validatePasswordField(passwordInput) {
+    const password = passwordInput.value.trim();
+    if (password && passwordRegex.test(password)) {
+      passwordInput.style.borderColor = "#28a745";
+    } else if (password && !passwordRegex.test(password)) {
+      passwordInput.style.borderColor = "#dc3545";
+    } else {
+      passwordInput.style.borderColor = "#ced4da";
+    }
+  }
+
+  // Utility functions
+  function showError(message) {
+    errorContainer.innerHTML = `
+      <div class="error-message" style="color: #dc3545; margin: 10px 0; padding: 8px 12px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+        <i class="fas fa-exclamation-circle" style="margin-right: 8px;"></i>
+        ${message}
+      </div>
+    `;
+  }
+
+  function showSuccess(message) {
+    errorContainer.innerHTML = `
+      <div class="success-message" style="color: #155724; margin: 10px 0; padding: 8px 12px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 4px;">
+        <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+        ${message}
+      </div>
+    `;
+  }
+
+  function clearErrors() {
+    errorContainer.innerHTML = "";
+  }
+
+  function setLoadingState(isLoading) {
+    if (isLoading) {
+      submitButton.disabled = true;
+    } else {
+      submitButton.disabled = false;
+      submitButton.innerHTML = 'Sign Up';
+    }
+  }
+
+  function getDashboardUrl(role) {
+    switch (role) {
+      case 'Admin':
+        return '/adminD/profile';
+      case 'Employer':
+        return '/employerD/profile';
+      case 'Freelancer':
+        return '/freelancerD/profile';
+      default:
+        return '/login';
+    }
+  }
+});
