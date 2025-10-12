@@ -66,16 +66,36 @@
         font-size: 12px;
         margin-top: 4px;
         font-weight: 500;
+        display: none;
       }
 
-      .form-group input.error {
+      .success-message {
+        color: #10b981;
+        font-size: 12px;
+        margin-top: 4px;
+        font-weight: 500;
+        display: none;
+      }
+
+      .form-group input.error,
+      .form-group textarea.error {
         border-color: #dc2626 !important;
         box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
       }
 
-      .form-group input.valid {
+      .form-group input.valid,
+      .form-group textarea.valid {
         border-color: #10b981 !important;
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+      }
+
+      .form-group {
+        position: relative;
+      }
+
+      .validation-container {
+        min-height: 16px;
+        margin-top: 4px;
       }
 
       .portfolio-preview {
@@ -142,25 +162,33 @@
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">Name *</label>
                     <input
                       type="text"
                       id="name"
                       name="name"
                       value="<%= user.name || '' %>"
+                      placeholder="Enter your full name"
                     />
+                    <div class="validation-container">
+                      <div id="nameError" class="error-message"></div>
+                    </div>
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">Title *</label>
                     <input
                       type="text"
                       id="title"
                       name="title"
                       value="<%= user.role || '' %>"
+                      placeholder="e.g., Web Developer, Graphic Designer"
                     />
+                    <div class="validation-container">
+                      <div id="titleError" class="error-message"></div>
+                    </div>
                   </div>
                 </div>
 
@@ -172,7 +200,11 @@
                       id="location"
                       name="location"
                       value="<%= user.location || '' %>"
+                      placeholder="e.g., New York, USA"
                     />
+                    <div class="validation-container">
+                      <div id="locationError" class="error-message"></div>
+                    </div>
                   </div>
                 </div>
 
@@ -210,13 +242,17 @@
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">Email *</label>
                     <input
-                      type="email"
+                      type="text"
                       id="email"
                       name="email"
                       value="<%= user.email || '' %>"
+                      placeholder="Enter your email address"
                     />
+                    <div class="validation-container">
+                      <div id="emailError" class="error-message"></div>
+                    </div>
                   </div>
                 </div>
 
@@ -228,12 +264,12 @@
                       id="phone"
                       name="phone"
                       value="<%= user.phone || '' %>"
-                      pattern="[0-9\s\-\+\(\)]{10,15}"
-                      maxlength="15"
-                      placeholder="Enter your phone number"
-                      title="Please enter a valid phone number (10-15 digits)"
+                      pattern="[0-9\s\-\(\)]{10}"
+                      maxlength="14"
+                      placeholder="Enter your 10-digit phone number"
+                      title="Please enter a valid 10-digit phone number"
                     />
-                    <small class="field-note">Enter a valid phone number (10-15 digits)</small>
+                    <small class="field-note">Enter a valid 10-digit phone number</small>
                     <div id="phoneError" class="error-message" style="display: none;"></div>
                   </div>
                 </div>
@@ -244,11 +280,19 @@
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label for="about">About</label>
-                    <textarea id="about" name="about" rows="6"><%= user.aboutMe || '' %></textarea>
+                    <label for="about">About *</label>
+                    <textarea 
+                      id="about" 
+                      name="about" 
+                      rows="6"
+                      placeholder="Tell us about yourself, your skills, and experience..."
+                    ><%= user.aboutMe || '' %></textarea>
                     <small class="field-note"
-                      >Separate paragraphs with a blank line</small
+                      >Minimum 50 characters. Separate paragraphs with a blank line</small
                     >
+                    <div class="validation-container">
+                      <div id="aboutError" class="error-message"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -394,7 +438,7 @@
                             placeholder="Description"
                           ><%= port.description || '' %></textarea>
                           <input
-                            type="url"
+                            type="text"
                             class="portfolio-link"
                             name="portfolio[<%= index %>][link]"
                             value="<%= port.link || '' %>"
@@ -426,16 +470,19 @@
                   <div class="form-group">
                     <label for="resumeLink">Resume Link</label>
                     <input
-                      type="url"
+                      type="text"
                       id="resumeLink"
                       name="resumeLink"
                       value="<%= user.resume || '' %>"
-                      placeholder="Enter resume link"
+                      placeholder="https://example.com/resume.pdf"
                     />
                     <small class="field-note"
                       >Enter a direct link to your resume (e.g.,
                       https://example.com/resume.pdf)</small
                     >
+                    <div class="validation-container">
+                      <div id="resumeLinkError" class="error-message"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -545,57 +592,188 @@
         }
       }
 
-      // Phone Number Validation
-      function validatePhoneNumber(phoneNumber) {
-        // Remove all non-digit characters for validation
-        const digitsOnly = phoneNumber.replace(/\D/g, '');
-        
-        // Check if it's between 10-15 digits
-        if (digitsOnly.length < 10 || digitsOnly.length > 15) {
-          return false;
-        }
-        
-        // Additional pattern check for common phone formats
-        const phonePattern = /^[\+]?[1-9][\d]{0,4}?[\s\-\.]?[\(]?[\d]{1,4}[\)]?[\s\-\.]?[\d]{1,4}[\s\-\.]?[\d]{1,9}$/;
-        return phonePattern.test(phoneNumber);
+      // Validation Functions
+      function validateName(name) {
+        const trimmed = name.trim();
+        if (!trimmed) return 'Name is required';
+        if (trimmed.length < 2) return 'Name must be at least 2 characters';
+        if (trimmed.length > 50) return 'Name must be less than 50 characters';
+        if (!/^[a-zA-Z\s'-]+$/.test(trimmed)) return 'Name can only contain letters, spaces, hyphens, and apostrophes';
+        return '';
       }
 
-      function displayPhoneError(message) {
-        const errorDiv = document.getElementById('phoneError');
-        const phoneInput = document.getElementById('phone');
+      function validateTitle(title) {
+        const trimmed = title.trim();
+        if (!trimmed) return 'Title is required';
+        if (trimmed.length < 3) return 'Title must be at least 3 characters';
+        if (trimmed.length > 100) return 'Title must be less than 100 characters';
+        return '';
+      }
+
+      function validateEmail(email) {
+        const trimmed = email.trim();
+        if (!trimmed) return 'Email is required';
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(trimmed)) return 'Please enter a valid email address';
+        if (trimmed.length > 254) return 'Email address is too long';
+        return '';
+      }
+
+      function validatePhoneNumber(phoneNumber) {
+        const trimmed = phoneNumber.trim();
+        if (!trimmed) return ''; // Phone is optional
+        
+        // Remove all non-digit characters for validation
+        const digitsOnly = trimmed.replace(/\D/g, '');
+        
+        // Check if it's exactly 10 digits
+        if (digitsOnly.length !== 10) {
+          return 'Phone number must be exactly 10 digits';
+        }
+        
+        // Check if it starts with a valid digit (not 0 or 1)
+        if (digitsOnly[0] === '0' || digitsOnly[0] === '1') {
+          return 'Phone number cannot start with 0 or 1';
+        }
+        
+        return '';
+      }
+
+      function validateLocation(location) {
+        const trimmed = location.trim();
+        if (!trimmed) return ''; // Location is optional
+        if (trimmed.length < 2) return 'Location must be at least 2 characters';
+        if (trimmed.length > 100) return 'Location must be less than 100 characters';
+        return '';
+      }
+
+      function validateAbout(about) {
+        const trimmed = about.trim();
+        if (!trimmed) return 'About section is required';
+        if (trimmed.length < 50) return 'About section must be at least 50 characters';
+        if (trimmed.length > 2000) return 'About section must be less than 2000 characters';
+        return '';
+      }
+
+      function validateResumeLink(resumeLink) {
+        const trimmed = resumeLink.trim();
+        if (!trimmed) return ''; // Resume link is optional
+        
+        try {
+          const url = new URL(trimmed);
+          if (!['http:', 'https:'].includes(url.protocol)) {
+            return 'Resume link must be a valid HTTP or HTTPS URL';
+          }
+          return '';
+        } catch (e) {
+          return 'Please enter a valid URL (e.g., https://example.com/resume.pdf)';
+        }
+      }
+
+      function validatePortfolioLink(linkInput) {
+        const trimmed = linkInput.value.trim();
+        if (!trimmed) {
+          linkInput.classList.remove('error', 'valid');
+          return '';
+        }
+        
+        try {
+          const url = new URL(trimmed);
+          if (!['http:', 'https:'].includes(url.protocol)) {
+            linkInput.classList.add('error');
+            linkInput.classList.remove('valid');
+            return 'Portfolio link must be a valid HTTP or HTTPS URL';
+          } else {
+            linkInput.classList.remove('error');
+            linkInput.classList.add('valid');
+            return '';
+          }
+        } catch (e) {
+          linkInput.classList.add('error');
+          linkInput.classList.remove('valid');
+          return 'Please enter a valid URL';
+        }
+      }
+
+      // Generic error display function
+      function displayFieldError(fieldId, message) {
+        const errorDiv = document.getElementById(`${fieldId}Error`);
+        const fieldInput = document.getElementById(fieldId);
         
         if (message) {
           errorDiv.textContent = message;
           errorDiv.style.display = 'block';
-          phoneInput.classList.add('error');
-          phoneInput.classList.remove('valid');
+          fieldInput.classList.add('error');
+          fieldInput.classList.remove('valid');
         } else {
           errorDiv.style.display = 'none';
-          phoneInput.classList.remove('error');
-          phoneInput.classList.add('valid');
+          fieldInput.classList.remove('error');
+          if (fieldInput.value.trim()) {
+            fieldInput.classList.add('valid');
+          }
         }
       }
 
-      // Real-time phone validation
-      document.getElementById('phone').addEventListener('input', function(e) {
-        const phoneValue = e.target.value.trim();
-        
-        if (phoneValue === '') {
-          displayPhoneError('');
-          e.target.classList.remove('error', 'valid');
-          return;
-        }
-        
-        if (!validatePhoneNumber(phoneValue)) {
-          displayPhoneError('Please enter a valid phone number (10-15 digits)');
-        } else {
-          displayPhoneError('');
-        }
+      // Legacy function for phone validation
+      function displayPhoneError(message) {
+        displayFieldError('phone', message);
+      }
+
+      // Real-time validation for all fields
+      document.getElementById('name').addEventListener('input', function(e) {
+        const error = validateName(e.target.value);
+        displayFieldError('name', error);
       });
 
-      // Phone number formatting (optional - formats as user types)
+      document.getElementById('title').addEventListener('input', function(e) {
+        const error = validateTitle(e.target.value);
+        displayFieldError('title', error);
+      });
+
+      document.getElementById('email').addEventListener('input', function(e) {
+        const error = validateEmail(e.target.value);
+        displayFieldError('email', error);
+      });
+
+      document.getElementById('phone').addEventListener('input', function(e) {
+        const error = validatePhoneNumber(e.target.value);
+        displayFieldError('phone', error);
+      });
+
+      document.getElementById('location').addEventListener('input', function(e) {
+        const error = validateLocation(e.target.value);
+        displayFieldError('location', error);
+      });
+
+      document.getElementById('about').addEventListener('input', function(e) {
+        const error = validateAbout(e.target.value);
+        displayFieldError('about', error);
+      });
+
+      document.getElementById('resumeLink').addEventListener('input', function(e) {
+        const error = validateResumeLink(e.target.value);
+        displayFieldError('resumeLink', error);
+      });
+
+      // Initialize validation for existing portfolio links
+      document.addEventListener('DOMContentLoaded', function() {
+        const portfolioLinks = document.querySelectorAll('.portfolio-link');
+        portfolioLinks.forEach(linkInput => {
+          linkInput.addEventListener('input', function(e) {
+            validatePortfolioLink(e.target);
+          });
+        });
+      });
+
+      // Phone number formatting (formats as user types - 10 digits only)
       document.getElementById('phone').addEventListener('keyup', function(e) {
         let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+        
+        // Limit to 10 digits maximum
+        if (value.length > 10) {
+          value = value.slice(0, 10);
+        }
+        
         let formattedValue = '';
         
         if (value.length > 0) {
@@ -605,16 +783,10 @@
             formattedValue = value.slice(0, 3) + '-' + value.slice(3);
           } else if (value.length <= 10) {
             formattedValue = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6);
-          } else {
-            // For international numbers, don't format automatically
-            formattedValue = e.target.value;
           }
         }
         
-        // Only apply formatting for numbers 10 digits or less
-        if (value.length <= 10) {
-          e.target.value = formattedValue;
-        }
+        e.target.value = formattedValue;
       });
 
       // Add Experience
@@ -668,10 +840,16 @@
           </div>
           <input type="text" class="portfolio-title" name="portfolio[${index}][title]" placeholder="Title" />
           <textarea class="portfolio-description" name="portfolio[${index}][description]" rows="3" placeholder="Description"></textarea>
-          <input type="url" class="portfolio-link" name="portfolio[${index}][link]" placeholder="Project Link (Optional)" />
+          <input type="text" class="portfolio-link" name="portfolio[${index}][link]" placeholder="Project Link (Optional)" />
           <button type="button" class="remove-btn" onclick="removeItem(this, 'portfolio')">Remove</button>
         `;
         container.insertBefore(item, document.getElementById('addPortfolioBtn'));
+        
+        // Add validation to the new portfolio link field
+        const linkInput = item.querySelector('.portfolio-link');
+        linkInput.addEventListener('input', function(e) {
+          validatePortfolioLink(e.target);
+        });
       });
 
       // Remove Item
@@ -689,18 +867,90 @@
         });
       }
 
+      // Form validation function
+      function validateForm() {
+        let isValid = true;
+        const errors = [];
+
+        // Validate all fields
+        const nameError = validateName(document.getElementById('name').value);
+        if (nameError) {
+          displayFieldError('name', nameError);
+          errors.push('name');
+          isValid = false;
+        } else {
+          displayFieldError('name', '');
+        }
+
+        const titleError = validateTitle(document.getElementById('title').value);
+        if (titleError) {
+          displayFieldError('title', titleError);
+          errors.push('title');
+          isValid = false;
+        } else {
+          displayFieldError('title', '');
+        }
+
+        const emailError = validateEmail(document.getElementById('email').value);
+        if (emailError) {
+          displayFieldError('email', emailError);
+          errors.push('email');
+          isValid = false;
+        } else {
+          displayFieldError('email', '');
+        }
+
+        const phoneError = validatePhoneNumber(document.getElementById('phone').value);
+        if (phoneError) {
+          displayFieldError('phone', phoneError);
+          errors.push('phone');
+          isValid = false;
+        } else {
+          displayFieldError('phone', '');
+        }
+
+        const locationError = validateLocation(document.getElementById('location').value);
+        if (locationError) {
+          displayFieldError('location', locationError);
+          errors.push('location');
+          isValid = false;
+        } else {
+          displayFieldError('location', '');
+        }
+
+        const aboutError = validateAbout(document.getElementById('about').value);
+        if (aboutError) {
+          displayFieldError('about', aboutError);
+          errors.push('about');
+          isValid = false;
+        } else {
+          displayFieldError('about', '');
+        }
+
+        const resumeLinkError = validateResumeLink(document.getElementById('resumeLink').value);
+        if (resumeLinkError) {
+          displayFieldError('resumeLink', resumeLinkError);
+          errors.push('resumeLink');
+          isValid = false;
+        } else {
+          displayFieldError('resumeLink', '');
+        }
+
+        // Focus on first error field
+        if (!isValid && errors.length > 0) {
+          document.getElementById(errors[0]).focus();
+        }
+
+        return isValid;
+      }
+
       // Form Submission
       document.getElementById('profileEditForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const form = e.target;
         
-        // Validate phone number before submission
-        const phoneInput = document.getElementById('phone');
-        const phoneValue = phoneInput.value.trim();
-        
-        if (phoneValue && !validatePhoneNumber(phoneValue)) {
-          displayPhoneError('Please enter a valid phone number before submitting');
-          phoneInput.focus();
+        // Validate all fields before submission
+        if (!validateForm()) {
           return;
         }
         
@@ -756,6 +1006,12 @@
         formData.append('educationData', JSON.stringify(education));
         formData.append('portfolioData', JSON.stringify(portfolio));
 
+        // Show loading state
+        const submitButton = form.querySelector('.save-button');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Saving...';
+        submitButton.disabled = true;
+
         try {
           const response = await fetch(form.action, {
             method: 'POST',
@@ -764,14 +1020,34 @@
 
           const result = await response.json();
           if (response.ok) {
-            alert(result.message);
-            window.location.href = '/freelancerD/profile';
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 15px 20px; border-radius: 8px; z-index: 1000; font-weight: 500;';
+            successDiv.textContent = result.message || 'Profile updated successfully!';
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+              window.location.href = '/freelancerD/profile';
+            }, 1500);
           } else {
-            alert(result.error);
+            throw new Error(result.error || 'Failed to update profile');
           }
         } catch (error) {
           console.error('Error submitting form:', error);
-          alert('Failed to update profile');
+          
+          // Show error message
+          const errorDiv = document.createElement('div');
+          errorDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #dc2626; color: white; padding: 15px 20px; border-radius: 8px; z-index: 1000; font-weight: 500;';
+          errorDiv.textContent = error.message || 'Failed to update profile. Please try again.';
+          document.body.appendChild(errorDiv);
+          
+          setTimeout(() => {
+            document.body.removeChild(errorDiv);
+          }, 5000);
+        } finally {
+          // Reset button state
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
         }
       });
     </script>
