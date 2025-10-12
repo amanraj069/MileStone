@@ -89,7 +89,6 @@ function addMilestone() {
             type="number" 
             name="milestones[${milestoneCount}][payment]" 
             placeholder="Amount for this milestone"
-            min="100" 
             step="0.01" 
           />
         </div>
