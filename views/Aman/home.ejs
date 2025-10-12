@@ -534,78 +534,71 @@
                 <p>Discover exciting projects across various domains</p>
             </div>
             <div class="jobs-grid">
-                <div class="job-card" data-aos="fade-up">
-                    <div class="job-badge urgent">Urgent</div>
-                    <h3>Frontend Developer</h3>
-                    <div class="job-details">
+                <% if (featuredJobs && featuredJobs.length > 0) { %>
+                  <div class="featured-jobs-carousel-container">
+                    <div class="featured-jobs-carousel" data-count="<%= featuredJobs.length === 1 ? '1' : featuredJobs.length === 2 ? '2' : featuredJobs.length === 3 ? '3' : 'more' %>">
+                      <% featuredJobs.forEach((job, index) => { %>
+                        <div class="job-card" data-aos="fade-up" <%= index > 0 ? `data-aos-delay='${index * 100}'` : '' %>>
+                          <div class="job-badge <%= job.category %>">
+                            <%= job.category === 'urgent' ? 'Urgent' : job.category === 'new' ? 'New' : 'High Demand' %>
+                          </div>
+                          <h3><%= job.title %></h3>
+                          <div class="job-details">
+                            <div class="job-skills">
+                              <i class="<%= job.icon %>"></i>
+                              <span><%= job.skills.join(', ') %></span>
+                            </div>
+                            <div class="job-budget">
+                              <i class="fas fa-rupee-sign"></i>
+                              <span><%= job.budgetRange.formatted %></span>
+                            </div>
+                            <div class="job-duration">
+                              <i class="fas fa-calendar-alt"></i>
+                              <span><%= job.timeAgo %> ago</span>
+                            </div>
+                          </div>
+                          <p class="job-description">
+                            <%= job.description %>
+                          </p>
+                          <a href="/jobs/<%= job.jobId %>" class="btn btn-outline">View Details <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                      <% }); %>
+                    </div>
+                    <% if (featuredJobs.length > 3) { %>
+                      <div class="carousel-controls">
+                        <button id="prev-featured-job" class="carousel-control" aria-label="Previous job">
+                          <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button id="next-featured-job" class="carousel-control" aria-label="Next job">
+                          <i class="fas fa-chevron-right"></i>
+                        </button>
+                      </div>
+                    <% } %>
+                  </div>
+                <% } else { %>
+                  <div class="no-featured-jobs-center">
+                    <div class="job-card" data-aos="fade-up">
+                      <div class="job-badge new">Featured</div>
+                      <h3>No Featured Jobs Available</h3>
+                      <div class="job-details">
                         <div class="job-skills">
-                            <i class="fas fa-code"></i>
-                            <span>React, TypeScript, CSS</span>
+                          <i class="fas fa-briefcase"></i>
+                          <span>Various Skills</span>
                         </div>
                         <div class="job-budget">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>₹30,000 - ₹40,000</span>
+                          <i class="fas fa-rupee-sign"></i>
+                          <span>Competitive Rates</span>
                         </div>
                         <div class="job-duration">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>2 months</span>
+                          <i class="fas fa-calendar-alt"></i>
+                          <span>Flexible Duration</span>
                         </div>
+                      </div>
+                      <p>Check back soon for exciting featured job opportunities from top employers.</p>
+                      <a href="/jobs" class="btn btn-outline">Browse All Jobs <i class="fas fa-arrow-right"></i></a>
                     </div>
-                    <p class="job-description">
-                        Looking for an experienced frontend developer to build a responsive web application with modern
-                        UI/UX.
-                    </p>
-                    <a href="/jobs" class="btn btn-outline">View Details <i
-                            class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="job-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="job-badge new">New</div>
-                    <h3>Graphic Designer</h3>
-                    <div class="job-details">
-                        <div class="job-skills">
-                            <i class="fas fa-paint-brush"></i>
-                            <span>Photoshop, Illustrator</span>
-                        </div>
-                        <div class="job-budget">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>₹15,000 - ₹25,000</span>
-                        </div>
-                        <div class="job-duration">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>1 month</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Need a creative graphic designer to create branding materials including logo, business cards,
-                        and social media assets.
-                    </p>
-                    <a href="/jobs" class="btn btn-outline">View Details <i
-                            class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="job-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="job-badge high-demand">High Demand</div>
-                    <h3>Data Analyst</h3>
-                    <div class="job-details">
-                        <div class="job-skills">
-                            <i class="fas fa-database"></i>
-                            <span>Python, SQL, Excel</span>
-                        </div>
-                        <div class="job-budget">
-                            <i class="fas fa-rupee-sign"></i>
-                            <span>₹25,000 - ₹35,000</span>
-                        </div>
-                        <div class="job-duration">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>3 months</span>
-                        </div>
-                    </div>
-                    <p class="job-description">
-                        Seeking a data analyst to help analyze customer data, create dashboards, and provide actionable
-                        insights.
-                    </p>
-                    <a href="/jobs" class="btn btn-outline">View Details <i
-                            class="fas fa-arrow-right"></i></a>
-                </div>
+                  </div>
+                <% } %>
             </div>
             <div class="section-footer" data-aos="fade-up">
                 <a href="/jobs" class="btn btn-primary">

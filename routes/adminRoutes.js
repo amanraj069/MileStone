@@ -4,6 +4,7 @@ const adminController = require("../controllers/adminController");
 
 router.get("/", adminController.getAdminDashboard);
 router.get("/job_listings", adminController.getJobListings);
+router.post("/jobs/feature", adminController.featureJob);
 router.get("/freelancers", adminController.getFreelancers);
 router.get("/employers", adminController.getEmployers);
 router.get("/complaints", adminController.getComplaints);
@@ -35,5 +36,11 @@ router.post("/quizzes/add", adminController.addQuiz);
 router.delete("/quizzes/:skillId", adminController.deleteQuiz);
 router.get("/quizzes/edit/:skillId", adminController.getEditQuiz);
 router.post("/quizzes/edit/:skillId", adminController.updateQuiz);
+
+// Blog Management Routes
+router.get("/blogs", adminController.getBlogs);
+router.get("/blogs/create", adminController.getCreateBlog);
+router.post("/blogs/create", adminController.createBlog);
+router.post("/blogs/feature", adminController.featureBlog);
 
 module.exports = router;

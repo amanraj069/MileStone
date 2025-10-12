@@ -45,12 +45,14 @@
         font-weight: 700;
         margin-bottom: 0.5rem;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        color: #fff !important;
       }
 
       .page-subtitle {
         font-size: 1.1rem;
         opacity: 0.9;
         font-weight: 400;
+        color: #fff !important;
       }
 
       .stats-container {
@@ -438,6 +440,92 @@
         }
       }
     </style>
+    <style>
+      .filter-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .filter-left {
+        display: flex;
+        gap: 10px;
+      }
+
+      .filter-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .feature-select {
+        padding: 10px 16px;
+        border: 2px solid #e0e7ff;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        font-size: 14px;
+        font-weight: 500;
+        color: #334155;
+        cursor: pointer;
+        min-width: 180px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 12px center;
+        background-repeat: no-repeat;
+        background-size: 16px;
+        padding-right: 40px;
+      }
+
+      .feature-select:hover {
+        border-color: #3949ab;
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .feature-select:focus {
+        outline: none;
+        border-color: #3949ab;
+        box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.1),
+          0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .feature-dropdown::before {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+
+      .feature-checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        background: #f0f8ff;
+        border-radius: 4px;
+        border: 1px solid #3949ab;
+      }
+
+      .feature-checkbox {
+        margin: 0;
+        cursor: pointer;
+      }
+
+      .feature-checkbox-container label {
+        font-size: 12px;
+        color: #3949ab;
+        cursor: pointer;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <%- include('Partials/sidebar', { user: user, activePage: 'job_listings' })
@@ -501,18 +589,21 @@
           </form>
 
           <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">
-              <i class="fas fa-list"></i> All Jobs
-            </button>
-            <button class="filter-btn" data-filter="open">
-              <i class="fas fa-briefcase"></i> Open
-            </button>
-            <button class="filter-btn" data-filter="closed">
-              <i class="fas fa-check-circle"></i> Closed
-            </button>
-            <button class="filter-btn" data-filter="paused">
-              <i class="fas fa-pause-circle"></i> Paused
-            </button>
+            <div class="filter-left">
+              <button class="filter-btn" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="open">Open</button>
+              <button class="filter-btn" data-filter="closed">Closed</button>
+            </div>
+            <div class="filter-right">
+              <div class="feature-dropdown">
+                <select id="featureSelect" class="feature-select">
+                  <option value="">Feature Job Post</option>
+                  <option value="urgent">Urgent</option>
+                  <option value="new">New</option>
+                  <option value="high-demand">High Demand</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -595,6 +686,15 @@
                 <i class="fas fa-users"></i>
                 <%= job.applications?.length || 0 %> applicants
               </div>
+              <div
+                class="feature-checkbox-container"
+                style="display: none; margin: 10px 0"
+              >
+                <input type="checkbox" class="feature-checkbox" data-job-id="<%=
+                job.jobId %>" <%= job.featured && job.featured.isActive ?
+                'checked' : '' %> />
+                <label>Feature this job</label>
+              </div>
 
               <div class="status-badge <%= job.status || 'open' %>">
                 <% if (job.status === 'open' || !job.status) { %>
@@ -626,5 +726,127 @@
     </div>
 
     <script src="/js/adminD/job_listings.js"></script>
+    <script>
+      // Filter buttons functionality
+      document.querySelectorAll(".filter-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+
+          const filter = button.getAttribute("data-filter");
+          document.querySelectorAll(".job-card").forEach((card) => {
+            if (
+              filter === "all" ||
+              card.getAttribute("data-status") === filter
+            ) {
+              card.classList.remove("hidden");
+            } else {
+              card.classList.add("hidden");
+            }
+          });
+        });
+      });
+
+      // Feature dropdown functionality
+      const featureSelect = document.getElementById("featureSelect");
+      const checkboxContainers = document.querySelectorAll(
+        ".feature-checkbox-container"
+      );
+
+      featureSelect.addEventListener("change", function () {
+        const selectedValue = this.value;
+
+        if (selectedValue) {
+          // Show all checkboxes
+          checkboxContainers.forEach((container) => {
+            container.style.display = "block";
+          });
+
+          // Update all checkboxes data attribute
+          document.querySelectorAll(".feature-checkbox").forEach((checkbox) => {
+            checkbox.setAttribute("data-feature-type", selectedValue);
+          });
+        } else {
+          // Hide all checkboxes
+          checkboxContainers.forEach((container) => {
+            container.style.display = "none";
+          });
+        }
+      });
+
+      // Handle checkbox changes
+      document.querySelectorAll(".feature-checkbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          const jobId = this.getAttribute("data-job-id");
+          const featureType = this.getAttribute("data-feature-type");
+          const isChecked = this.checked;
+
+          // Send AJAX request to update feature status
+          fetch("/adminD/jobs/feature", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              jobId: jobId,
+              featureType: featureType,
+              isActive: isChecked,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                console.log("Job feature status updated successfully");
+                // Show correct message for feature/unfeature
+                if (isChecked) {
+                  showNotification("Job featured successfully!", "success");
+                } else {
+                  showNotification("Job unfeatured successfully!", "success");
+                }
+              } else {
+                console.error(
+                  "Error updating job feature status:",
+                  data.message
+                );
+                // Revert checkbox state
+                this.checked = !isChecked;
+                showNotification("Error updating job feature status", "error");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              // Revert checkbox state
+              this.checked = !isChecked;
+              showNotification("Network error occurred", "error");
+            });
+        });
+      });
+
+      // Notification function
+      function showNotification(message, type) {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          background: ${type === "success" ? "#4CAF50" : "#f44336"};
+          color: white;
+          border-radius: 4px;
+          z-index: 1000;
+          font-size: 14px;
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    </script>
   </body>
 </html>

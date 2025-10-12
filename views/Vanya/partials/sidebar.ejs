@@ -3,15 +3,17 @@
     <h3>Dashboard</h3>
     <div class="user-info">
       <div class="profile-img-container">
-        <% if (user.picture && user.picture !== '' && user.picture !== 'undefined' && 
-               user.picture !== 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png') { %>
+        <% if (user.picture && user.picture !== '' && user.picture !==
+        'undefined' && user.picture !==
+        'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png')
+        { %>
         <img
           src="<%= user.picture %>"
           alt="Profile picture of <%= user.name %>"
           class="profile-image"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
         />
-        <i class="fas fa-user-circle profile-icon" style="display: none;"></i>
+        <i class="fas fa-user-circle profile-icon" style="display: none"></i>
         <% } else { %>
         <i class="fas fa-user-circle profile-icon"></i>
         <% } %>
@@ -89,8 +91,20 @@
     left: 0;
     top: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+  }
+
+  /* Hide scrollbars for webkit browsers */
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbars for IE and Edge */
+  .sidebar {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
   }
 
   .sidebar-header {

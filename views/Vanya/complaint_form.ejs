@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Complaint - Freelancer Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding: 20px;
+        min-height: 100vh;
+        max-width: calc(100vw - 280px);
+        overflow-x: hidden;
+      }
+
+      .page-header {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #dc3545;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .page-subtitle {
+        font-size: 14px;
+        color: #666;
+        font-weight: 400;
+      }
+
+      .back-btn {
+        background: linear-gradient(45deg, #6c757d, #495057);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+      }
+
+      .complaint-container {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .form-section {
+        margin-bottom: 25px;
+      }
+
+      .form-section h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #f1f3f4;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .required {
+        color: #dc3545;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: inherit;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: #dc3545;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+      }
+
+      select.form-control {
+        cursor: pointer;
+      }
+
+      textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+        line-height: 1.5;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 15px;
+      }
+
+      .input-group .form-group {
+        flex: 1;
+        margin-bottom: 0;
+      }
+
+      .job-info {
+        background: #f8f9fa;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .job-info h4 {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .job-details {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+      }
+
+      .job-details strong {
+        color: #333;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #f1f3f4;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(45deg, #dc3545, #c82333);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+      }
+
+      .btn-primary:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .btn-secondary {
+        background: #f1f3f4;
+        color: #6c757d;
+      }
+
+      .btn-secondary:hover {
+        background: #e2e6ea;
+        color: #495057;
+      }
+
+      .help-text {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 5px;
+        font-style: italic;
+      }
+
+      .alert {
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+      }
+
+      .alert-info {
+        background: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+      }
+
+      .alert-warning {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+
+      .loading {
+        display: none;
+      }
+
+      .loading.show {
+        display: inline-flex;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-content {
+          margin-left: 0;
+          max-width: 100vw;
+          padding: 15px;
+        }
+
+        .page-header {
+          flex-direction: column;
+          gap: 15px;
+          align-items: flex-start;
+        }
+
+        .complaint-container {
+          padding: 20px;
+        }
+
+        .input-group {
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .input-group .form-group {
+          margin-bottom: 20px;
+        }
+
+        .form-actions {
+          flex-direction: column-reverse;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <%- include('./partials/sidebar', {activePage: 'active_job', user: user}) %>
+
+    <div class="main-content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">
+            <i class="fas fa-exclamation-triangle"></i>
+            Submit Complaint
+          </h1>
+          <p class="page-subtitle">Report an issue with your current job or employer</p>
+        </div>
+        <a href="/freelancerD/active_job" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+          Back to Jobs
+        </a>
+      </div>
+
+      <!-- Complaint Form -->
+      <div class="complaint-container">
+        <!-- Job Information -->
+        <% if (job) { %>
+        <div class="form-section">
+          <h3><i class="fas fa-briefcase"></i> Job Information</h3>
+          <div class="job-info">
+            <h4><i class="fas fa-file-alt"></i> Job Details</h4>
+            <div class="job-details">
+              <p><strong>Title:</strong> <%= job.title %></p>
+              <% if (job.employer && job.employer.name) { %>
+              <p><strong>Employer:</strong> <%= job.employer.name %></p>
+              <% } %>
+              <p><strong>Budget:</strong> ₹<%= 
+                typeof job.budget === 'object' && job.budget.amount ? 
+                  Number(job.budget.amount).toLocaleString('en-IN') : 
+                  (Number(job.budget) || 0).toLocaleString('en-IN') 
+              %></p>
+              <p><strong>Status:</strong> <%= job.status || 'Active' %></p>
+            </div>
+            <div class="help-text" style="margin-top: 10px; font-size: 12px; color: #666;">
+              <i class="fas fa-info-circle"></i> Job reference details are automatically included for admin review
+            </div>
+          </div>
+        </div>
+        <% } %>
+
+        <!-- Information Alert -->
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle"></i>
+          Please provide detailed information about your complaint. Our admin team will review it and take appropriate action within 24-48 hours.
+        </div>
+
+        <!-- Complaint Form -->
+        <form id="complaintForm" action="/freelancerD/complaint/submit" method="POST">
+          <input type="hidden" name="jobId" value="<%= job ? job.jobId : '' %>" />
+          <input type="hidden" name="againstUser" value="<%= job && job.employer ? job.employer.employerId : '' %>" />
+
+          <div class="form-section">
+            <h3><i class="fas fa-clipboard-list"></i> Complaint Details</h3>
+
+            <div class="input-group">
+              <div class="form-group">
+                <label for="complaintType">
+                  Complaint Type <span class="required">*</span>
+                </label>
+                <select id="complaintType" name="complaintType" class="form-control" required>
+                  <option value="">Select complaint type</option>
+                  <option value="Payment Issue">Payment Issue</option>
+                  <option value="Communication Problem">Communication Problem</option>
+                  <option value="Scope Change">Scope Change</option>
+                  <option value="Unprofessional Behavior">Unprofessional Behavior</option>
+                  <option value="Unfair Rating">Unfair Rating</option>
+                  <option value="Contract Violation">Contract Violation</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="help-text">Choose the category that best describes your complaint</div>
+              </div>
+
+              <div class="form-group">
+                <label for="priority">Priority Level</label>
+                <select id="priority" name="priority" class="form-control">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+                <div class="help-text">How urgent is this matter?</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="issue">
+                Detailed Description <span class="required">*</span>
+              </label>
+              <textarea
+                id="issue"
+                name="issue"
+                class="form-control"
+                placeholder="Please provide a detailed description of the issue you're experiencing. Include specific examples, dates, and any relevant context that will help us understand the situation better."
+                required
+              ></textarea>
+              <div class="help-text">Minimum 5 characters required. Be as specific as possible.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="expectedResolution">Expected Resolution</label>
+              <textarea
+                id="expectedResolution"
+                name="expectedResolution"
+                class="form-control"
+                placeholder="What outcome are you hoping for? (e.g., payment resolution, contract modification, mediation, etc.)"
+              ></textarea>
+              <div class="help-text">Optional: Let us know what you consider a fair resolution</div>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="form-section">
+            <h3><i class="fas fa-phone"></i> Contact Information</h3>
+            <div class="alert alert-warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              Our admin team may need to contact you for additional information about this complaint.
+            </div>
+
+            <div class="input-group">
+              <div class="form-group">
+                <label for="contactEmail">Contact Email</label>
+                <input
+                  type="email"
+                  id="contactEmail"
+                  name="contactEmail"
+                  class="form-control"
+                  value="<%= user.email || '' %>"
+                  placeholder="your.email@example.com"
+                />
+                <div class="help-text">We'll use this email for updates about your complaint</div>
+              </div>
+
+              <div class="form-group">
+                <label for="preferredContact">Preferred Contact Method</label>
+                <select id="preferredContact" name="preferredContact" class="form-control">
+                  <option value="email">Email</option>
+                  <option value="platform">Platform Messages</option>
+                  <option value="phone">Phone Call</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <a href="/freelancerD/active_job" class="btn btn-secondary">
+              <i class="fas fa-times"></i>
+              Cancel
+            </a>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <i class="fas fa-paper-plane"></i>
+              <span class="btn-text">Submit Complaint</span>
+              <span class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                Submitting...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Form submission handling
+      document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const loading = submitBtn.querySelector('.loading');
+        
+        // Validate required fields
+        const complaintType = document.getElementById('complaintType').value;
+        const issue = document.getElementById('issue').value;
+        
+        if (!complaintType) {
+          alert('Please select a complaint type.');
+          document.getElementById('complaintType').focus();
+          return;
+        }
+        
+        if (!issue || issue.trim().length < 5) {
+          alert('Please provide a detailed description (at least 5 characters).');
+          document.getElementById('issue').focus();
+          return;
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        loading.classList.add('show');
+        
+        try {
+          // Convert form data to JSON object
+          const formData = new FormData(this);
+          const data = {};
+          
+          for (let [key, value] of formData.entries()) {
+            data[key] = value;
+            console.log(key, value);
+          }
+          
+          console.log('Sending data:', data);
+          
+          const response = await fetch(this.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+          
+          if (response.ok) {
+            // Success - show professional notification and redirect
+            showNotification('Complaint submitted successfully! Our admin team will review it shortly.', 'success');
+            setTimeout(() => {
+              window.location.href = '/freelancerD/active_job';
+            }, 2000);
+          } else {
+            const data = await response.json();
+            throw new Error(data.error || 'Failed to submit complaint');
+          }
+        } catch (error) {
+          console.error('Error submitting complaint:', error);
+          showNotification('Error: ' + error.message, 'error');
+          
+          // Reset button state
+          submitBtn.disabled = false;
+          btnText.style.display = 'inline';
+          loading.classList.remove('show');
+        }
+      });
+
+      // Character counter for description
+      document.getElementById('issue').addEventListener('input', function() {
+        const minLength = 5;
+        const currentLength = this.value.length;
+        const helpText = this.nextElementSibling;
+        
+        if (currentLength < minLength) {
+          helpText.textContent = `Minimum 5 characters required (${minLength - currentLength} more needed). Be as specific as possible.`;
+          helpText.style.color = '#dc3545';
+        } else {
+          helpText.textContent = `${currentLength} characters. Be as specific as possible.`;
+          helpText.style.color = '#6c757d';
+        }
+      });
+
+      // Auto-resize textarea
+      document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+          this.style.height = 'auto';
+          this.style.height = (this.scrollHeight) + 'px';
+        });
+      });
+
+      // Professional notification system
+      function showNotification(message, type = 'info') {
+        // Remove any existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notification => notification.remove());
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+          <div class="notification-content">
+            <i class="fas fa-${getNotificationIcon(type)}"></i>
+            <span>${message}</span>
+          </div>
+          <button class="notification-close" onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+
+        // Add notification styles if not already added
+        if (!document.getElementById('notification-styles')) {
+          const styles = document.createElement('style');
+          styles.id = 'notification-styles';
+          styles.textContent = `
+            .notification {
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              background: white;
+              padding: 1rem;
+              border-radius: 8px;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+              opacity: 0;
+              transform: translateX(100%);
+              transition: all 0.3s ease;
+              z-index: 10000;
+              max-width: 400px;
+              min-width: 300px;
+            }
+            
+            .notification.show {
+              opacity: 1;
+              transform: translateX(0);
+            }
+            
+            .notification.notification-success { 
+              border-left: 4px solid #10b981;
+            }
+            .notification.notification-error { 
+              border-left: 4px solid #ef4444; 
+            }
+            .notification.notification-info { 
+              border-left: 4px solid #2563eb; 
+            }
+            
+            .notification-content {
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              color: #374151;
+              font-weight: 500;
+            }
+            
+            .notification-content i {
+              font-size: 1.1rem;
+            }
+            
+            .notification-success .notification-content i {
+              color: #10b981;
+            }
+            
+            .notification-error .notification-content i {
+              color: #ef4444;
+            }
+            
+            .notification-info .notification-content i {
+              color: #2563eb;
+            }
+            
+            .notification-close {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              background: none;
+              border: none;
+              cursor: pointer;
+              color: #6b7280;
+              font-size: 0.8rem;
+              padding: 2px;
+            }
+            
+            .notification-close:hover {
+              color: #374151;
+            }
+          `;
+          document.head.appendChild(styles);
+        }
+
+        document.body.appendChild(notification);
+
+        // Show notification with animation
+        requestAnimationFrame(() => {
+          notification.classList.add('show');
+        });
+
+        // Auto remove after 4 seconds (for success) or 6 seconds (for error)
+        const autoRemoveTime = type === 'error' ? 6000 : 4000;
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => {
+            if (notification.parentElement) {
+              notification.remove();
+            }
+          }, 300);
+        }, autoRemoveTime);
+      }
+
+      function getNotificationIcon(type) {
+        const icons = {
+          success: 'check-circle',
+          error: 'exclamation-circle',
+          warning: 'exclamation-triangle',
+          info: 'info-circle'
+        };
+        return icons[type] || 'info-circle';
+      }
+    </script>
+  </body>
+</html>
