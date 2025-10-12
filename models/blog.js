@@ -125,13 +125,6 @@ blogSchema.statics.getFeaturedBlog = function() {
   }).sort({ 'featured.featuredAt': -1 });
 };
 
-// Static method to get recent blogs
-/**
- * Get recent blogs helper
- * @param {number} limit - number of posts to return
- * @param {boolean} includeFeatured - whether to include featured posts
- * @param {Array<string>} excludeIds - list of blogId values to exclude
- */
 blogSchema.statics.getRecentBlogs = function(limit = 6, includeFeatured = true, excludeIds = []) {
   const query = { status: 'published' };
   if (!includeFeatured) query['featured.isFeatured'] = false;
