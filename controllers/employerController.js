@@ -230,17 +230,52 @@ const employerController = {
         milestones,
       } = req.body;
 
+      console.log("imageUrl from form:", imageUrl);
+
+      console.log("Raw description received:", description);
+      console.log("Type of description:", typeof description);
+      console.log("Raw budget received:", budget);
+      console.log("Type of budget:", typeof budget);
+      console.log("Raw milestones received:", milestones);
+      console.log("Type of milestones:", typeof milestones);
+
       const employerId = req.session.user.roleId;
       const userId = req.session.user.id;
       if (!employerId || !userId) {
         throw new Error("Employer roleId or userId not found in session");
       }
 
-      // Get employer's profile image from user data
+      // Get employer's user data
       const user = await User.findOne({ userId });
-      const employerImageUrl =
-        user?.picture ||
-        "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png";
+      
+      console.log("Original imageUrl from form:", imageUrl);
+      console.log("imageUrl type:", typeof imageUrl);
+      console.log("imageUrl length:", imageUrl ? imageUrl.length : 'undefined');
+      console.log("imageUrl includes special chars:", imageUrl ? /[^\x00-\x7F]/.test(imageUrl) : false);
+      
+      // Validate URL format
+      let jobImageUrl;
+      try {
+        if (imageUrl && imageUrl.trim() !== '') {
+          const trimmedUrl = imageUrl.trim();
+          console.log("Trimmed URL:", trimmedUrl);
+          
+          // Test if it's a valid URL
+          new URL(trimmedUrl);
+          jobImageUrl = trimmedUrl;
+          console.log("Valid URL confirmed:", jobImageUrl);
+        } else {
+          jobImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
+          console.log("Using fallback URL:", jobImageUrl);
+        }
+      } catch (urlError) {
+        console.log("Invalid URL format:", imageUrl);
+        console.log("URL Error:", urlError.message);
+        jobImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
+        console.log("Using fallback URL due to invalid format:", jobImageUrl);
+      }
+      
+      console.log("Final job image URL being used:", jobImageUrl);
 
       // Parse milestones array if it's not already parsed
       let parsedMilestones = [];
@@ -250,52 +285,66 @@ const employerController = {
         parsedMilestones = milestones;
       }
 
-      const newJob = new JobListing({
-        employerId,
-        imageUrl: employerImageUrl,
-        title,
-        budget: {
-          amount: Number(budget?.amount) || Number(budget) || 0,
-          period: budget?.period || "fixed",
-        },
-        location: location || "Remote",
-        jobType: jobType || "contract",
-        experienceLevel: experienceLevel || "Mid",
-        remote: remote === "true" || remote === true,
-        applicationDeadline: new Date(applicationDeadline),
-        description: {
-          text: description?.text || description || "",
-          responsibilities: responsibilities
-            ? responsibilities.split("\n").filter((r) => r.trim())
-            : [],
-          requirements: [], // No longer using separate requirements field
-          skills: skills
-            ? skills
-                .split(/[,\n]/)
-                .map((s) => s.trim())
-                .filter((s) => s)
-            : [],
-        },
-        milestones: parsedMilestones.map((m) => ({
-          description: m.description || "",
-          deadline: m.deadline || "",
-          payment: m.payment || "0",
-          status: "not-paid",
-          requested: false,
-          subTasks: m.subTasks
-            ? Object.values(m.subTasks).map((st) => ({
-                description: st.description || "",
-                status: "pending",
-                completedDate: null,
-                notes: "",
-              }))
-            : [],
-          completionPercentage: 0,
-        })),
-      });
+      let newJob;
+      
+      try {
+        console.log("Creating JobListing object...");
+        
+        // Final URL validation before creating JobListing
+        try {
+          new URL(jobImageUrl);
+          console.log("Final URL validation passed:", jobImageUrl);
+        } catch (finalUrlError) {
+          console.error("Final URL validation failed:", finalUrlError.message);
+          throw new Error(`Invalid image URL: ${jobImageUrl}`);
+        }
+        
+        newJob = new JobListing({
+          employerId,
+          imageUrl: jobImageUrl,
+          title,
+          budget: {
+            amount: Number(budget?.amount) || Number(budget) || 0,
+            period: budget?.period || "fixed",
+          },
+          location: location || "Remote",
+          jobType: jobType || "contract",
+          experienceLevel: experienceLevel || "Mid",
+          remote: remote === "true" || remote === true,
+          applicationDeadline: new Date(applicationDeadline),
+          description: {
+            text: description?.text || description || "",
+            responsibilities: responsibilities ? responsibilities.split("\n").filter((r) => r.trim()) : [],
+            requirements: [], // No longer using separate requirements field
+            skills: skills ? skills.split(/[,\n]/).map(s => s.trim()).filter((s) => s) : [],
+          },
+          milestones: parsedMilestones.map((m) => ({
+            description: m.description || "",
+            deadline: m.deadline || "",
+            payment: m.payment || "0",
+            status: "not-paid",
+            requested: false,
+            subTasks: m.subTasks ? Object.values(m.subTasks).map((st) => ({
+              description: st.description || "",
+              status: "pending",
+              completedDate: null,
+              notes: "",
+            })) : [],
+            completionPercentage: 0,
+          })),
+        });
 
-      await newJob.save();
-
+        console.log("JobListing object created successfully");
+        console.log("Attempting to save...");
+        
+        await newJob.save();
+        console.log("JobListing saved successfully");
+        
+      } catch (validationError) {
+        console.error("Validation/Save error:", validationError);
+        throw validationError;
+      }
+      
       // Check if it's an AJAX request
       const isAjax =
         req.headers.accept && req.headers.accept.includes("application/json");
