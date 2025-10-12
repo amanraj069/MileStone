@@ -134,7 +134,9 @@ function filterComplaints(filterType) {
 
 // Enhanced toggle actions with better UX
 function toggleActions(button) {
-  const actions = button.nextElementSibling; // .additional-actions div
+  // Find the additional-actions div within the same complaint-actions container
+  const complaintActions = button.closest('.complaint-actions');
+  const actions = complaintActions.querySelector('.additional-actions');
   const icon = button.querySelector("i");
 
   if (actions.style.display === "block") {
