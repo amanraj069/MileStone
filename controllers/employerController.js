@@ -866,7 +866,7 @@ const employerController = {
         const milestonesWithDebug = job.milestones.map((m, index) => {
           const isRequested = m.requested === true || m.requested === "true";
           console.log(
-            Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}
+            `Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}`
           );
           return {
             serialNo: index + 1,
