@@ -269,7 +269,7 @@
               <div class="job-actions">
                 <button
                   class="chat-btn"
-                  onclick="window.location.href='/chat/<%= job.employerUserId || job.id %>'"
+                  onclick="window.location.href='/chat/<%= job.employerUserId %>'"
                   title="Chat with Employer"
                 >
                   <i class="fas fa-comment"></i>
@@ -369,8 +369,8 @@
       function raiseComplaint(jobId) {
         // Navigate to the complaint form page with job details
         const params = new URLSearchParams();
-        if (jobId) params.append('jobId', jobId);
-        
+        if (jobId) params.append("jobId", jobId);
+
         window.location.href = `/freelancerD/complaint/form?${params.toString()}`;
       }
     </script>

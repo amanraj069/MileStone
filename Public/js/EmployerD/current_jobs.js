@@ -93,25 +93,38 @@ document.addEventListener("DOMContentLoaded", function () {
   complainButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
-      
-      const jobId = button.getAttribute('data-job-id');
-      const freelancerId = button.getAttribute('data-freelancer-id');
-      
+
+      const jobId = button.getAttribute("data-job-id");
+      const freelancerId = button.getAttribute("data-freelancer-id");
+
       // Navigate to the complaint form page with job details
       const params = new URLSearchParams();
-      if (jobId) params.append('jobId', jobId);
-      if (freelancerId) params.append('againstUser', freelancerId);
-      
+      if (jobId) params.append("jobId", jobId);
+      if (freelancerId) params.append("againstUser", freelancerId);
+
       window.location.href = `/employerD/complaint/form?${params.toString()}`;
     });
   });
 
   chatButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const jobTitle = button
-        .closest(".job-card")
-        .querySelector(".job-title").textContent;
-      alert(`Opening chat for "${jobTitle}".`);
+    button.addEventListener("click", (e) => {
+      // If the button is an anchor tag with href, let it navigate naturally
+      if (button.tagName === "A" && button.href) {
+        return; // Let the browser handle the navigation
+      }
+
+      // For buttons without href, prevent default and get userId from data attributes
+      e.preventDefault();
+      const userId =
+        button.getAttribute("data-user-id") ||
+        button.getAttribute("data-freelancer-id");
+
+      if (userId) {
+        window.location.href = `/chat/${userId}`;
+      } else {
+        console.error("No user ID found for chat button");
+        alert("Unable to start chat: User ID not found");
+      }
     });
   });
 
