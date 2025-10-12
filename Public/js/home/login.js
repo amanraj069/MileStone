@@ -4,17 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitButton = form.querySelector("button[type='submit']");
 
   // Regular expressions for validation
-  const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]*\.[^\s@]+$/;
 
-  // Clear any existing error messages initially
   errorContainer.innerHTML = "";
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault(); // Prevent default form submission
 
     // Get form field values
-    const name = form.querySelector("input[name='name']").value.trim();
     const email = form.querySelector("input[name='email']").value.trim();
     const password = form.querySelector("input[name='password']").value.trim();
     const role = form.querySelector("select[name='role']").value;
@@ -24,21 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoadingState(true);
 
     // Validate form
-    if (!validateForm(name, email, password, role)) {
+    if (!validateForm(email, password, role)) {
       setLoadingState(false);
       return;
     }
 
     try {
       // Send AJAX request
-      const response = await fetch('/signup', {
+      const response = await fetch('/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          name: name,
           email: email,
           password: password,
           role: role
@@ -48,76 +44,24 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok) {
-        // Success - redirect to appropriate dashboard
-        const roleName = role.toLowerCase();
         setTimeout(() => {
           window.location.href = result.redirectUrl || getDashboardUrl(role);
-        }, 2000);
+        }, 1500);
       } else {
         // Handle server errors
-        showError(result.error || 'Registration failed. Please try again.');
+        showError(result.error || 'Login failed. Please try again.');
         setLoadingState(false);
       }
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error('Login error:', error);
       showError('Network error. Please check your connection and try again.');
       setLoadingState(false);
     }
   });
 
-  // Validation function
-  function validateForm(name, email, password, role) {
-    let isValid = true;
-    let errors = [];
-
-    // Name validation
-    if (!name) {
-      errors.push("Name is required.");
-      isValid = false;
-    } else if (name.length < 2) {
-      errors.push("Name must be at least 2 characters long.");
-      isValid = false;
-    }
-
-    // Email validation
-    if (!email) {
-      errors.push("Email is required.");
-      isValid = false;
-    } else if (!emailRegex.test(email)) {
-      errors.push("Please enter a valid email address.");
-      isValid = false;
-    }
-
-    // Password validation
-    if (!password) {
-      errors.push("Password is required.");
-      isValid = false;
-    } else if (!passwordRegex.test(password)) {
-      errors.push("Password must be at least 8 characters long and contain at least one uppercase letter, one digit, and one special character (e.g., !@#$%^&*).");
-      isValid = false;
-    }
-
-    // Role validation
-    if (!role) {
-      errors.push("Please select a role.");
-      isValid = false;
-    }
-
-    if (errors.length > 0) {
-      showError(errors.join('<br>'));
-    }
-
-    return isValid;
-  }
-
   // Real-time validation
-  const nameInput = form.querySelector("input[name='name']");
   const emailInput = form.querySelector("input[name='email']");
   const passwordInput = form.querySelector("input[name='password']");
-
-  nameInput.addEventListener("input", () => {
-    validateNameField(nameInput);
-  });
 
   emailInput.addEventListener("input", () => {
     validateEmailField(emailInput);
@@ -131,34 +75,51 @@ document.addEventListener("DOMContentLoaded", () => {
     validatePasswordField(passwordInput);
   });
 
-  // Field validation functions
-  function validateNameField(nameInput) {
-    const name = nameInput.value.trim();
-    if (name && name.length >= 2) {
-      nameInput.style.borderColor = "#28a745";
-    } else if (name && name.length < 2) {
-      nameInput.style.borderColor = "#dc3545";
-      } else {
-      nameInput.style.borderColor = "#ced4da";
+  // Validation functions
+  function validateForm(email, password, role) {
+    let isValid = true;
+
+    // Email validation
+    if (!email) {
+      showError("Email is required.");
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      showError("Please enter a valid email address.");
+      isValid = false;
     }
+
+    // Password validation
+    if (!password) {
+      showError("Password is required.");
+      isValid = false;
+    } else if (password.length < 6) {
+      showError("Password must be at least 6 characters long.");
+      isValid = false;
+    }
+
+    // Role validation
+    if (!role) {
+      showError("Please select a role.");
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   function validateEmailField(emailInput) {
     const email = emailInput.value.trim();
-    if (email && emailRegex.test(email)) {
-      emailInput.style.borderColor = "#28a745";
-      } else if (email && !emailRegex.test(email)) {
+    if (email && !emailRegex.test(email)) {
       emailInput.style.borderColor = "#dc3545";
-      } else {
-      emailInput.style.borderColor = "#ced4da";
+    } else {
+      emailInput.style.borderColor = "#28a745";
     }
   }
 
   function validatePasswordField(passwordInput) {
     const password = passwordInput.value.trim();
-    if (password && passwordRegex.test(password)) {
+    if (password && password.length >= 6) {
       passwordInput.style.borderColor = "#28a745";
-    } else if (password && !passwordRegex.test(password)) {
+    } else if (password && password.length < 6) {
       passwordInput.style.borderColor = "#dc3545";
     } else {
       passwordInput.style.borderColor = "#ced4da";
@@ -175,15 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  function showSuccess(message) {
-    errorContainer.innerHTML = `
-      <div class="success-message" style="color: #155724; margin: 10px 0; padding: 8px 12px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 4px;">
-        <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
-        ${message}
-      </div>
-    `;
-  }
-
   function clearErrors() {
     errorContainer.innerHTML = "";
   }
@@ -193,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitButton.disabled = true;
     } else {
       submitButton.disabled = false;
-      submitButton.innerHTML = 'Sign Up';
+      submitButton.innerHTML = 'Log In';
     }
   }
 
@@ -206,7 +158,15 @@ document.addEventListener("DOMContentLoaded", () => {
       case 'Freelancer':
         return '/freelancerD/profile';
       default:
-        return '/login';
+        return '/';
     }
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const error = urlParams.get("error");
+  if (error) {
+    showError(decodeURIComponent(error));
+    // Clear URL parameters
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
 });
