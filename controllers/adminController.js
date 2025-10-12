@@ -211,32 +211,60 @@ exports.getComplaints = async (req, res) => {
     // Fetch all complaints from the database
     const complaints = await Complaint.find().lean();
 
-    // Get user details for complainants and complained against users
-    const userIds = [
-      ...new Set([
-        ...complaints.map((c) => c.submittedBy),
-        ...complaints.map((c) => c.againstUser),
-      ]),
-    ];
-
-    const users = await User.find({ userId: { $in: userIds } }).lean();
-    const userMap = users.reduce((map, user) => {
+    // Get user details for complainants (these are already userId values)
+    const submittedByIds = [...new Set(complaints.map((c) => c.submittedBy))];
+    const submittedByUsers = await User.find({ userId: { $in: submittedByIds } }).lean();
+    const submittedByMap = submittedByUsers.reduce((map, user) => {
       map[user.userId] = user;
       return map;
     }, {});
 
+    // Get user details for complained against users (these might be employerId/freelancerId)
+    const againstUserIds = [...new Set(complaints.map((c) => c.againstUser).filter(id => id && id !== 'general'))];
+    
+    // Try to find them as userIds first
+    const againstUsers = await User.find({ userId: { $in: againstUserIds } }).lean();
+    const againstUserMap = againstUsers.reduce((map, user) => {
+      map[user.userId] = user;
+      return map;
+    }, {});
+    
+    // For IDs not found as userIds, check if they are employerIds or freelancerIds
+    for (let id of againstUserIds) {
+      if (!againstUserMap[id]) {
+        // Check if it's an employerId
+        const employer = await Employer.findOne({ employerId: id }).lean();
+        if (employer) {
+          const employerUser = await User.findOne({ userId: employer.userId }).lean();
+          if (employerUser) {
+            againstUserMap[id] = employerUser;
+          }
+        } else {
+          // Check if it's a freelancerId
+          const freelancer = await Freelancer.findOne({ freelancerId: id }).lean();
+          if (freelancer) {
+            const freelancerUser = await User.findOne({ userId: freelancer.userId }).lean();
+            if (freelancerUser) {
+              againstUserMap[id] = freelancerUser;
+            }
+          }
+        }
+      }
+    }
+
     // Format complaints data
     const formattedComplaints = complaints
       .map((complaint) => {
-        const submittedByUser = userMap[complaint.submittedBy];
-        const againstUserData = userMap[complaint.againstUser];
+        const submittedByUser = submittedByMap[complaint.submittedBy];
+        const againstUserData = complaint.againstUser === 'general' ? null : againstUserMap[complaint.againstUser];
 
         return {
           ...complaint,
           submittedByName: submittedByUser?.name || "Unknown User",
           submittedByRole: submittedByUser?.role || "Unknown",
-          againstUserName: againstUserData?.name || "Unknown User",
-          againstUserRole: againstUserData?.role || "Unknown",
+          againstUserName: complaint.againstUser === 'general' ? "System/Platform" : (againstUserData?.name || "User Not Found"),
+          againstUserRole: complaint.againstUser === 'general' ? "General" : (againstUserData?.role || "Unknown"),
+          againstUserId: againstUserData?.userId || null, // Add the actual userId for chat
           formattedDate: new Date(complaint.submittedDate).toLocaleDateString(
             "en-US",
             {

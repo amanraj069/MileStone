@@ -972,7 +972,14 @@ exports.submitComplaintForm = async (req, res) => {
       job = await JobListing.findOne({ jobId: jobId }).lean();
       
       if (job && !finalAgainstUser) {
-        finalAgainstUser = job.employerId;
+        // Get the employer's user ID from the employer collection
+        const employer = await Employer.findOne({ 
+          employerId: job.employerId 
+        }).lean();
+        
+        if (employer) {
+          finalAgainstUser = employer.userId;
+        }
       }
     }
 
