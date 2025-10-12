@@ -62,10 +62,25 @@ exports.getHome = async (req, res) => {
       };
     }));
 
+    // Fetch latest blogs (published) to show on homepage - newest first, limit 3
+    let recentBlogs = [];
+    try {
+      recentBlogs = await Blog.getRecentBlogs(3, true); // include featured
+    } catch (err) {
+      console.error('Error fetching latest blogs for homepage:', err);
+    }
+
+    const formattedLatestBlogs = recentBlogs.map(b => ({
+      ...b.toObject(),
+      formattedCreatedAt: b.formattedCreatedAt,
+      readTimeDisplay: b.readTimeDisplay
+    }));
+
     res.render("Aman/home", {
       user: req.session && req.session.user ? req.session.user : null,
       dashboardRoute,
       featuredJobs: formattedFeaturedJobs,
+      latestBlogs: formattedLatestBlogs || []
     });
   } catch (error) {
     console.error("Error fetching featured jobs:", error);
@@ -73,6 +88,7 @@ exports.getHome = async (req, res) => {
       user: req.session && req.session.user ? req.session.user : null,
       dashboardRoute: "",
       featuredJobs: [],
+      latestBlogs: []
     });
   }
 };
@@ -608,8 +624,8 @@ exports.getBlogPage = async (req, res) => {
     // Get featured blog
     const featuredBlog = await Blog.getFeaturedBlog();
     
-    // Get recent blogs (excluding featured)
-    const recentBlogs = await Blog.getRecentBlogs(6);
+  // Get recent blogs (include featured so admin posts appear in latest list)
+  const recentBlogs = await Blog.getRecentBlogs(6, true);
     
     // Format blogs for display
     const formattedRecentBlogs = recentBlogs.map(blog => ({
@@ -656,12 +672,14 @@ exports.getBlogPost = async (req, res) => {
       });
     }
 
-    // Get related blogs (same category, excluding current)
-    const relatedBlogs = await Blog.find({
-      category: blog.category,
-      blogId: { $ne: blogId },
-      status: 'published'
-    }).limit(3).sort({ createdAt: -1 });
+    // Get featured blog (selected by admin)
+    const featuredBlog = await Blog.getFeaturedBlog();
+
+    // Build exclusion list to avoid showing the current blog in the recent list
+    const excludeIds = [blogId];
+
+    // Latest posts (newest first), exclude only the current blog so featured admin posts also appear
+    const recentBlogs = await Blog.getRecentBlogs(6, true, excludeIds);
 
     const formattedBlog = {
       ...blog.toObject(),
@@ -669,16 +687,23 @@ exports.getBlogPost = async (req, res) => {
       readTimeDisplay: blog.readTimeDisplay
     };
 
-    const formattedRelatedBlogs = relatedBlogs.map(relatedBlog => ({
-      ...relatedBlog.toObject(),
-      formattedCreatedAt: relatedBlog.formattedCreatedAt,
-      readTimeDisplay: relatedBlog.readTimeDisplay
+    const formattedFeaturedBlog = featuredBlog ? {
+      ...featuredBlog.toObject(),
+      formattedCreatedAt: featuredBlog.formattedCreatedAt,
+      readTimeDisplay: featuredBlog.readTimeDisplay
+    } : null;
+
+    const formattedRecentBlogs = recentBlogs.map(rb => ({
+      ...rb.toObject(),
+      formattedCreatedAt: rb.formattedCreatedAt,
+      readTimeDisplay: rb.readTimeDisplay
     }));
 
     res.render("Aman/blog-post", {
       user: req.session.user || null,
       blog: formattedBlog,
-      relatedBlogs: formattedRelatedBlogs
+      featuredBlog: formattedFeaturedBlog,
+      recentBlogs: formattedRecentBlogs
     });
   } catch (error) {
     console.error("Error fetching blog post:", error);

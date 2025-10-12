@@ -1,7 +1,25 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^a-z0-9\-]/g, '')    // Remove non-alphanumeric
+    .replace(/-+/g, '-')             // Collapse dashes
+    .replace(/^-+|-+$/g, '');        // Trim dashes
+}
+
 const blogSchema = new mongoose.Schema({
+  slug: {
+    type: String,
+    default: function() {
+      // Use title + uuid for uniqueness
+      return this.title ? `${slugify(this.title)}-${uuidv4().slice(0,8)}` : uuidv4();
+    },
+    index: { unique: true, sparse: true }
+  },
   blogId: {
     type: String,
     default: uuidv4,
@@ -75,6 +93,7 @@ const blogSchema = new mongoose.Schema({
 
 // Index for search functionality
 blogSchema.index({ title: 'text', tagline: 'text' });
+// ensure unique sparse index on slug via field definition rather than schema.index to avoid duplicates
 
 // Virtual for formatted creation date
 blogSchema.virtual('formattedCreatedAt').get(function() {
@@ -107,11 +126,18 @@ blogSchema.statics.getFeaturedBlog = function() {
 };
 
 // Static method to get recent blogs
-blogSchema.statics.getRecentBlogs = function(limit = 6) {
-  return this.find({ 
-    status: 'published',
-    'featured.isFeatured': false
-  }).sort({ createdAt: -1 }).limit(limit);
+/**
+ * Get recent blogs helper
+ * @param {number} limit - number of posts to return
+ * @param {boolean} includeFeatured - whether to include featured posts
+ * @param {Array<string>} excludeIds - list of blogId values to exclude
+ */
+blogSchema.statics.getRecentBlogs = function(limit = 6, includeFeatured = true, excludeIds = []) {
+  const query = { status: 'published' };
+  if (!includeFeatured) query['featured.isFeatured'] = false;
+  if (excludeIds && excludeIds.length) query.blogId = { $nin: excludeIds };
+
+  return this.find(query).sort({ createdAt: -1 }).limit(limit);
 };
 
 module.exports = mongoose.model('Blog', blogSchema);
