@@ -10,90 +10,64 @@ const Complaint = require("../models/complaint");
 const Blog = require("../models/blog");
 
 exports.getHome = async (req, res) => {
-  try {
-    let dashboardRoute = "";
-    if (req.session && req.session.user) {
-      switch (req.session.user.role) {
-        case "Admin":
-          dashboardRoute = "/adminD/profile";
-          break;
-        case "Employer":
-          dashboardRoute = "/employerD/profile";
-          break;
-        case "Freelancer":
-          dashboardRoute = "/freelancerD/profile";
-          break;
-      }
+  let dashboardRoute = "";
+  if (req.session && req.session.user) {
+    switch (req.session.user.role) {
+      case "Admin":
+        dashboardRoute = "/adminD/profile";
+        break;
+      case "Employer":
+        dashboardRoute = "/employerD/profile";
+        break;
+      case "Freelancer":
+        dashboardRoute = "/freelancerD/profile";
+        break;
     }
+  }
 
+  try {
     // Fetch featured jobs
     const featuredJobs = await JobListing.find({
       "featured.isActive": true,
       status: { $in: ["open", "active"] },
     })
-      .populate("employerId")
       .sort({ "featured.featuredAt": -1 })
       .limit(3)
       .lean();
 
-    // Format featured jobs for display
-    const formattedFeaturedJobs = await Promise.all(
-      featuredJobs.map(async (job) => {
-        // Get category icon based on job category or skills
-        const categoryIcon = getCategoryIcon(
-          job.category,
-          job.description.skills
-        );
+    // Get employer details for featured jobs
+    const formattedFeaturedJobs = await getFeaturedJobsWithDetails(featuredJobs);
 
-        // Create budget range (30-50% variation)
-        const budgetRange = createBudgetRange(job.budget.amount);
-
-        // Calculate time since posted
-        const timeAgo = getTimeAgo(job.postedDate);
-
-        // Get description excerpt (15-20 words)
-        const descriptionExcerpt = getDescriptionExcerpt(job.description.text);
-
-        return {
-          jobId: job.jobId,
-          title: job.title,
-          category: job.featured.type,
-          icon: categoryIcon,
-          budgetRange: budgetRange,
-          timeAgo: timeAgo,
-          description: descriptionExcerpt,
-          skills: job.description.skills.slice(0, 2), // Show first 2 skills
-        };
-      })
-    );
-
-    // Fetch latest blogs (published) to show on homepage - newest first, limit 3
+    // Fetch latest blogs for homepage (newest first)
     let recentBlogs = [];
     try {
-      recentBlogs = await Blog.getRecentBlogs(3, true); // include featured
+      recentBlogs = await Blog.find({ status: "published" })
+        .sort({ createdAt: -1 })
+        .limit(3)
+        .lean();
     } catch (err) {
-      console.error('Error fetching latest blogs for homepage:', err);
+      console.error("Error fetching latest blogs for homepage:", err);
     }
 
-    const formattedLatestBlogs = recentBlogs.map(b => ({
-      ...b.toObject(),
+    const formattedLatestBlogs = recentBlogs.map((b) => ({
+      ...b,
       formattedCreatedAt: b.formattedCreatedAt,
-      readTimeDisplay: b.readTimeDisplay
+      readTimeDisplay: b.readTimeDisplay,
     }));
 
     res.render("Aman/home", {
       user: req.session && req.session.user ? req.session.user : null,
-      dashboardRoute,
+      dashboardRoute: dashboardRoute,
       featuredJobs: formattedFeaturedJobs,
-      latestBlogs: formattedLatestBlogs || []
+      latestBlogs: formattedLatestBlogs,
     });
   } catch (error) {
-    console.error("Error fetching featured jobs:", error);
+    console.error("Error fetching featured jobs for home page:", error);
     res.render("Aman/home", {
       user: req.session && req.session.user ? req.session.user : null,
-      dashboardRoute: "",
+      dashboardRoute: dashboardRoute,
       featuredJobs: [],
-      latestBlogs: []
+      latestBlogs: [],
     });
   }
 };
@@ -888,17 +862,10 @@ exports.getBlogPage = async (req, res) => {
   try {
     // Get featured blog
     const featuredBlog = await Blog.getFeaturedBlog();
-<<<<<<< HEAD
     
   // Get recent blogs (include featured so admin posts appear in latest list)
   const recentBlogs = await Blog.getRecentBlogs(6, true);
     
-=======
-
-    // Get recent blogs (excluding featured)
-    const recentBlogs = await Blog.getRecentBlogs(6);
-
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
     // Format blogs for display
     const formattedRecentBlogs = recentBlogs.map((blog) => ({
       ...blog.toObject(),
@@ -945,8 +912,6 @@ exports.getBlogPost = async (req, res) => {
         message: "Blog post not found",
       });
     }
-
-<<<<<<< HEAD
     // Get featured blog (selected by admin)
     const featuredBlog = await Blog.getFeaturedBlog();
 
@@ -955,51 +920,31 @@ exports.getBlogPost = async (req, res) => {
 
     // Latest posts (newest first), exclude only the current blog so featured admin posts also appear
     const recentBlogs = await Blog.getRecentBlogs(6, true, excludeIds);
-=======
-    // Get related blogs (same category, excluding current)
-    const relatedBlogs = await Blog.find({
-      category: blog.category,
-      blogId: { $ne: blogId },
-      status: "published",
-    })
-      .limit(3)
-      .sort({ createdAt: -1 });
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
 
     const formattedBlog = {
       ...blog.toObject(),
       formattedCreatedAt: blog.formattedCreatedAt,
       readTimeDisplay: blog.readTimeDisplay,
     };
+    const formattedFeaturedBlog = featuredBlog
+      ? {
+          ...featuredBlog.toObject(),
+          formattedCreatedAt: featuredBlog.formattedCreatedAt,
+          readTimeDisplay: featuredBlog.readTimeDisplay,
+        }
+      : null;
 
-<<<<<<< HEAD
-    const formattedFeaturedBlog = featuredBlog ? {
-      ...featuredBlog.toObject(),
-      formattedCreatedAt: featuredBlog.formattedCreatedAt,
-      readTimeDisplay: featuredBlog.readTimeDisplay
-    } : null;
-
-    const formattedRecentBlogs = recentBlogs.map(rb => ({
+    const formattedRecentBlogs = recentBlogs.map((rb) => ({
       ...rb.toObject(),
       formattedCreatedAt: rb.formattedCreatedAt,
-      readTimeDisplay: rb.readTimeDisplay
-=======
-    const formattedRelatedBlogs = relatedBlogs.map((relatedBlog) => ({
-      ...relatedBlog.toObject(),
-      formattedCreatedAt: relatedBlog.formattedCreatedAt,
-      readTimeDisplay: relatedBlog.readTimeDisplay,
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
+      readTimeDisplay: rb.readTimeDisplay,
     }));
 
     res.render("Aman/blog-post", {
       user: req.session.user || null,
       blog: formattedBlog,
-<<<<<<< HEAD
       featuredBlog: formattedFeaturedBlog,
-      recentBlogs: formattedRecentBlogs
-=======
-      relatedBlogs: formattedRelatedBlogs,
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
+      recentBlogs: formattedRecentBlogs,
     });
   } catch (error) {
     console.error("Error fetching blog post:", error);

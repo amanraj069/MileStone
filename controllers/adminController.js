@@ -758,7 +758,6 @@ exports.getCreateBlog = (req, res) => {
 
 exports.createBlog = async (req, res) => {
   try {
-<<<<<<< HEAD
     const { title, tagline, category, imageUrl, minReadTime, content } = req.body;
 
     console.log('createBlog received body:', JSON.stringify(req.body));
@@ -786,16 +785,6 @@ exports.createBlog = async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid content format. Please ensure content is valid JSON.' });
       }
     } else if (Array.isArray(content)) {
-=======
-    const { title, tagline, category, imageUrl, minReadTime, content } =
-      req.body;
-
-    // Parse content if it's a string
-    let parsedContent = [];
-    if (typeof content === "string") {
-      parsedContent = JSON.parse(content);
-    } else {
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
       parsedContent = content;
     } else {
       return res.status(400).json({ success: false, message: 'Invalid content format.' });
@@ -825,13 +814,9 @@ exports.createBlog = async (req, res) => {
     await newBlog.save();
 
     res.json({
-      success: true,
-<<<<<<< HEAD
-      message: 'Blog created successfully',
-=======
-      message: "Blog created successfully",
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
-      blogId: newBlog.blogId,
+  success: true,
+  message: 'Blog created successfully',
+  blogId: newBlog.blogId,
     });
   } catch (error) {
     console.error('Error creating blog:', error);
@@ -842,12 +827,8 @@ exports.createBlog = async (req, res) => {
     }
 
     res.status(500).json({
-      success: false,
-<<<<<<< HEAD
-      message: error.message || 'Error creating blog'
-=======
-      message: "Error creating blog",
->>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
+  success: false,
+  message: error.message || 'Error creating blog',
     });
   }
 };
