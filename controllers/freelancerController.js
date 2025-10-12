@@ -250,17 +250,31 @@ exports.updateFreelancerProfile = async (req, res) => {
       }
     }
 
+    // Get current freelancer data to preserve existing portfolio images
+    const currentFreelancer = await Freelancer.findOne({ freelancerId }).lean();
+    const existingPortfolio = currentFreelancer?.portfolio || [];
+
     // Handle portfolio images upload
     let updatedPortfolio = [...parsedPortfolio]; // Create a copy to modify
+    
+    // Preserve existing images for portfolio items that don't have new uploads
+    updatedPortfolio.forEach((item, index) => {
+      if (existingPortfolio[index] && existingPortfolio[index].image && !item.image) {
+        item.image = existingPortfolio[index].image;
+      }
+    });
+
     if (req.files && req.files.portfolioImages && req.files.portfolioImages.length > 0) {
       try {
         for (let i = 0; i < req.files.portfolioImages.length; i++) {
           const file = req.files.portfolioImages[i];
-          const uploadResult = await uploadToCloudinary(file.buffer, 'freelancer-portfolio', 'image');
-          
-          // Find the corresponding portfolio item and update its image
-          if (updatedPortfolio[i]) {
-            updatedPortfolio[i].image = uploadResult.secure_url;
+          if (file && file.size > 0) { // Only process non-empty files
+            const uploadResult = await uploadToCloudinary(file.buffer, 'freelancer-portfolio', 'image');
+            
+            // Find the corresponding portfolio item and update its image
+            if (updatedPortfolio[i]) {
+              updatedPortfolio[i].image = uploadResult.secure_url;
+            }
           }
         }
       } catch (uploadError) {
