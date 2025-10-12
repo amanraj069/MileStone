@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const { User, Employer, Freelancer, Admin } = require("../models");
 const JobListing = require("../models/job_listing");
+const Blog = require("../models/blog");
 
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -299,10 +300,25 @@ exports.getHome = async (req, res) => {
     // Get employer details for featured jobs
     const formattedFeaturedJobs = await getFeaturedJobsWithDetails(featuredJobs);
 
+    // Fetch latest blogs for homepage (newest first)
+    let recentBlogs = [];
+    try {
+      recentBlogs = await Blog.find({ status: 'published' }).sort({ createdAt: -1 }).limit(3);
+    } catch (err) {
+      console.error('Error fetching latest blogs for auth home:', err);
+    }
+
+    const formattedLatestBlogs = recentBlogs.map(b => ({
+      ...b.toObject(),
+      formattedCreatedAt: b.formattedCreatedAt,
+      readTimeDisplay: b.readTimeDisplay
+    }));
+
     res.render("Aman/home", {
       user: req.session.user || null,
       dashboardRoute: dashboardRoute,
       featuredJobs: formattedFeaturedJobs,
+      latestBlogs: formattedLatestBlogs
     });
   } catch (error) {
     console.error('Error fetching featured jobs for home page:', error);

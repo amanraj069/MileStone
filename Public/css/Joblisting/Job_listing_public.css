@@ -525,6 +525,12 @@ img {
   gap: 0.25rem;
 }
 
+.job-meta span i {
+  margin-right: 0.4rem;
+  color: var(--primary-color);
+  font-size: 0.95rem;
+}
+
 .location,
 .work,
 .clock {
