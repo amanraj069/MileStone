@@ -14,114 +14,6 @@ body {
   color: #2d3748;
 }
 
-/* Navbar */
-.navbar {
-  background: linear-gradient(135deg, #022245, #092c51);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 25px;
-  box-shadow: 0 4px 12px rgba(71, 20, 16, 0.3);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-  height: 80px;
-}
-
-.logo {
-  color: white;
-  font-size: 28px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.logo:hover {
-  color: #d4af37;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 5px 12px;
-  width: 45%;
-  height: 50px;
-  transition: background-color 0.3s ease;
-}
-
-.search-container:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-}
-
-.search-container input {
-  border: none;
-  outline: none;
-  width: 100%;
-  padding: 5px;
-  font-size: 16px;
-  background: transparent;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
-.search-container input:focus {
-  transform: scale(1.01);
-}
-
-.search-container input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.search-container button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.search-container button:hover {
-  color: #d4af37;
-}
-
-.svg {
-  height: 20px;
-  width: 20px;
-  margin-bottom: 15px;
-  margin-right: 20px;
-  transition: transform 0.3s ease;
-}
-
-.svg:hover {
-  transform: scale(1.1);
-}
-
-.nav-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.nav-buttons button {
-  background-color: #005e78;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.nav-buttons button:hover {
-  background-color: #013746;
-  transform: translateY(-2px);
-}
-
 /* Main Content */
 .container {
   width: 100%;
@@ -252,7 +144,8 @@ body {
   border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-start; 
+  margin-bottom: 28px; /* ensure spacing from footer */
 }
 
 .form-group {
@@ -316,104 +209,7 @@ body {
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
 }
 
-/* Footer */
-.footer {
-  background: linear-gradient(135deg, #022245, #092c51);
-  color: white;
-  padding: 40px 5%;
-  text-align: center;
-  margin-top: auto;
-}
 
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px 0;
-}
-
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-  text-align: left;
-  padding: 0 20px;
-}
-
-.footer-logo {
-  text-align: center;
-}
-
-.footer-logo h3 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.footer-logo p {
-  font-size: 14px;
-  opacity: 0.8;
-  line-height: 1.5;
-}
-
-.footer-links h3 {
-  font-size: 24px;
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-.footer-title,
-.footer-logo h3 {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.quick-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-}
-
-.quick-links a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
-  padding: 5px;
-}
-
-.quick-links a:hover {
-  color: #d4af37;
-  transform: translateY(-2px);
-}
-
-ul,
-ol {
-  list-style: none;
-  /* text-align: center; */
-}
-
-.footer-bottom {
-  margin-top: 20px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  text-align: center;
-  font-size: 14px;
-}
-
-/* Animation Keyframes */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
@@ -480,6 +276,11 @@ ol {
   .footer-container {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* Ensure footer has top padding so content doesn't touch it on small screens */
+  .footer {
+    padding-top: 10px;
   }
 
   .footer-section {
