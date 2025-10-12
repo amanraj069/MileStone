@@ -102,13 +102,12 @@
                       id="title"
                       name="title"
                       placeholder="e.g., Full Stack Web Developer"
-                      required
                     />
                   </div>
 
                   <div class="form-group">
                     <label for="category" class="required">Category</label>
-                    <select id="category" name="category" required>
+                    <select id="category" name="category">
                       <option value="">Select a category</option>
                       <option value="web-development">Web Development</option>
                       <option value="design">Design & Creative</option>
@@ -127,7 +126,6 @@
                     type="url"
                     id="imageUrl"
                     name="imageUrl"
-                    required
                   />
                   <small class="form-hint">Enter the URL path for the company logo</small>
                 </div>
@@ -140,7 +138,6 @@
                     id="description"
                     name="description[text]"
                     placeholder="Describe your project in detail, including objectives, scope, and expected outcomes..."
-                    required
                   ></textarea>
                 </div>
 
@@ -151,8 +148,6 @@
                     id="budget"
                     name="budget[amount]"
                     placeholder="Enter total project budget"
-                    min="1000"
-                    required
                   />
                 </div>
 
@@ -169,7 +164,7 @@
 
                   <div class="form-group">
                     <label for="jobType" class="required">Job Type</label>
-                    <select id="jobType" name="jobType" required>
+                    <select id="jobType" name="jobType">
                       <option value="">Select job type</option>
                       <option value="full-time">Full-time</option>
                       <option value="part-time">Part-time</option>
@@ -181,7 +176,7 @@
                 <div class="form-grid two-col">
                   <div class="form-group">
                     <label for="experienceLevel" class="required">Experience Level</label>
-                    <select id="experienceLevel" name="experienceLevel" required>
+                    <select id="experienceLevel" name="experienceLevel">
                       <option value="">Select experience level</option>
                       <option value="Entry">Entry Level</option>
                       <option value="Mid">Mid Level</option>
@@ -191,7 +186,7 @@
 
                   <div class="form-group">
                     <label for="deadline" class="required">Application Deadline</label>
-                    <input type="date" id="deadline" name="applicationDeadline" required />
+                    <input type="date" id="deadline" name="applicationDeadline" />
                   </div>
                 </div>
 
@@ -220,7 +215,6 @@
                   <textarea
                     id="responsibilities"
                     name="responsibilities"
-                    required
                   ></textarea>
                 </div>
 
@@ -229,7 +223,6 @@
                   <textarea
                     id="skills"
                     name="skills"
-                    required
                   ></textarea>
                 </div>
               </div>
@@ -268,7 +261,7 @@
               <div class="form-actions">
                 <div class="error-message" id="errorMessage"></div>
                 <button type="submit" class="submit-btn">
-                  Create Job Listing
+                  Create Job
                 </button>
               </div>
             </form>
