@@ -206,6 +206,13 @@ const employerController = {
 
   createJobListing: async (req, res) => {
     try {
+      // Debug: Log the entire request body
+      console.log("=== CREATE JOB LISTING DEBUG ===");
+      console.log("Request body:", JSON.stringify(req.body, null, 2));
+      console.log("Request body keys:", Object.keys(req.body));
+      console.log("Headers:", req.headers);
+      console.log("=====================================");
+
       const {
         title,
         category,
@@ -276,14 +283,35 @@ const employerController = {
       });
 
       await newJob.save();
+      
+      // Check if it's an AJAX request
+      const isAjax = req.headers.accept && req.headers.accept.includes('application/json');
+      
+      if (isAjax) {
+        return res.status(201).json({
+          success: true,
+          message: "Job created successfully!",
+          redirectUrl: "/employerD/job_listings",
+          jobId: newJob.jobId
+        });
+      }
+      
       res.redirect("/employerD/job_listings");
     } catch (error) {
       console.error("Error creating job listing:", error.message);
       console.error("Full error:", error);
       console.error("Request body:", JSON.stringify(req.body, null, 2));
-      console.error("Description value:", description);
-      console.error("Experience Level value:", experienceLevel);
-      res.status(500).send("Error creating job listing: " + error.message);
+      
+      // Check if it's an AJAX request
+      const isAjax = req.headers.accept && req.headers.accept.includes('application/json');
+      
+      if (isAjax) {
+        return res.status(500).json({
+          error: "Error creating job listing"
+        });
+      }
+      
+      res.status(500).send("Error creating job listing"  );
     }
   },
 
@@ -838,7 +866,7 @@ const employerController = {
         const milestonesWithDebug = job.milestones.map((m, index) => {
           const isRequested = m.requested === true || m.requested === "true";
           console.log(
-            `Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}`
+            Job ${job.jobId}, Milestone ${m.milestoneId}: status=${m.status}, requested=${m.requested}, isRequested=${isRequested}
           );
           return {
             serialNo: index + 1,
