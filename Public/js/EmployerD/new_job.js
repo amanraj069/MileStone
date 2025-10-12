@@ -71,7 +71,6 @@ function addMilestone() {
           <textarea 
             name="milestones[${milestoneCount}][description]" 
             placeholder="Describe what should be delivered to achieve this milestone"
-            required
           ></textarea>
         </div>
       </div>
@@ -82,7 +81,6 @@ function addMilestone() {
           <input 
             type="date" 
             name="milestones[${milestoneCount}][deadline]" 
-            required 
           />
         </div>
         <div class="form-group">
@@ -93,7 +91,6 @@ function addMilestone() {
             placeholder="Amount for this milestone"
             min="100" 
             step="0.01" 
-            required 
           />
         </div>
       </div>
@@ -156,7 +153,6 @@ function addSubTask(milestoneId) {
           type="text" 
           name="milestones[${milestoneId}][subTasks][${subtaskCounts[milestoneId]}][description]" 
           placeholder="e.g., Create responsive design"
-          required 
         />
         <button type="button" class="remove-subtask-btn" onclick="removeSubTask(${milestoneId}, ${subtaskCounts[milestoneId]})">
           <i class="fas fa-times"></i>
@@ -240,32 +236,176 @@ function removeMilestone(id) {
   }, 300);
 }
 
-// Form validation and submission
+// DOM-based Form Validation
 function validateForm() {
-  const form = document.getElementById("jobForm");
-  const errorMessage = document.getElementById("errorMessage");
+  let isValid = true;
+  
+  // Clear all previous errors
+  clearAllFieldErrors();
 
-  // Check if total milestone payments match budget
-  const budget = parseFloat(document.getElementById("budget").value) || 0;
+  // Validate required fields with DOM
+  const title = document.getElementById("title");
+  const category = document.getElementById("category");
+  const imageUrl = document.getElementById("imageUrl");
+  const description = document.getElementById("description");
+  const budget = document.getElementById("budget");
+  const jobType = document.getElementById("jobType");
+  const experienceLevel = document.getElementById("experienceLevel");
+  const applicationDeadline = document.getElementById("deadline");
+  const responsibilities = document.getElementById("responsibilities");
+  const skills = document.getElementById("skills");
+
+  // Validate each field and show error below it
+  if (!title.value.trim()) {
+    showFieldError(title, "Job title is required");
+    isValid = false;
+  }
+
+  if (!category.value) {
+    showFieldError(category, "Please select a category");
+    isValid = false;
+  }
+
+  if (!imageUrl.value.trim()) {
+    showFieldError(imageUrl, "Company logo URL is required");
+    isValid = false;
+  }
+
+  if (!description.value.trim()) {
+    showFieldError(description, "Job description is required");
+    isValid = false;
+  }
+
+  const budgetValue = parseFloat(budget.value) || 0;
+  if (budgetValue < 500) {
+    showFieldError(budget, "Budget must be at least ₹500");
+    isValid = false;
+  }
+
+  if (!jobType.value) {
+    showFieldError(jobType, "Please select job type");
+    isValid = false;
+  }
+
+  if (!experienceLevel.value) {
+    showFieldError(experienceLevel, "Please select experience level");
+    isValid = false;
+  }
+
+  if (!applicationDeadline.value) {
+    showFieldError(applicationDeadline, "Application deadline is required");
+    isValid = false;
+  }
+
+  if (!responsibilities.value.trim()) {
+    showFieldError(responsibilities, "Job responsibilities are required");
+    isValid = false;
+  }
+
+  if (!skills.value.trim()) {
+    showFieldError(skills, "Required skills are required");
+    isValid = false;
+  }
+
+  // Check milestones
+  if (milestoneCount === 0) {
+    const milestonesSection = document.getElementById("milestones");
+    showFieldError(milestonesSection, "Please add at least one milestone");
+    isValid = false;
+  }
+
+  // Check milestone vs budget
   const milestonePayments = Array.from(
     document.querySelectorAll('input[name$="[payment]"]')
   ).reduce((sum, input) => sum + (parseFloat(input.value) || 0), 0);
 
-  if (milestoneCount === 0) {
-    errorMessage.textContent =
-      "Please add at least one milestone to your project.";
-    errorMessage.style.display = "block";
-    return false;
+  if (milestoneCount > 0 && Math.abs(budgetValue - milestonePayments) > 1) {
+    const milestonesSection = document.getElementById("milestones");
+    showFieldError(milestonesSection, `Milestone payments (₹${milestonePayments.toLocaleString()}) should match budget (₹${budgetValue.toLocaleString()})`);
+    isValid = false;
   }
 
-  if (Math.abs(budget - milestonePayments) > 1) {
-    errorMessage.textContent = `Total milestone payments (₹${milestonePayments.toLocaleString()}) should equal the project budget (₹${budget.toLocaleString()}).`;
-    errorMessage.style.display = "block";
-    return false;
-  }
+  return isValid;
+}
 
-  errorMessage.style.display = "none";
-  return true;
+// Clear all field errors
+function clearAllFieldErrors() {
+  const allErrorMessages = document.querySelectorAll('.field-validation-message');
+  allErrorMessages.forEach(msg => msg.remove());
+  
+  // Reset border colors
+  const allInputs = document.querySelectorAll('input, select, textarea');
+  allInputs.forEach(input => {
+    input.style.borderColor = '';
+  });
+}
+
+// Loading state management
+function setLoadingState(button, isLoading) {
+  if (isLoading) {
+    button.disabled = true;
+  } else {
+    button.disabled = false;
+    button.innerHTML = 'Create Job';
+    button.classList.remove('loading');
+  }
+}
+
+// Success message (without scrolling)
+function showSuccess(message) {
+  // Create success message at top of form without scrolling
+  const form = document.getElementById('jobForm');
+  const existingSuccess = form.querySelector('.success-message-container');
+  
+  if (existingSuccess) {
+    existingSuccess.remove();
+  }
+  
+  const successContainer = document.createElement('div');
+  successContainer.className = 'success-message-container';
+  successContainer.innerHTML = `
+    <div class="alert alert-success">
+      <i class="fas fa-check-circle"></i>
+      ${message}
+    </div>
+  `;
+  
+  form.insertBefore(successContainer, form.firstChild);
+}
+
+// Server error message (without scrolling)
+function showServerError(message) {
+  const form = document.getElementById('jobForm');
+  const existingError = form.querySelector('.server-error-container');
+  
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  const errorContainer = document.createElement('div');
+  errorContainer.className = 'server-error-container';
+  errorContainer.innerHTML = `
+    <div class="alert alert-error">
+      <i class="fas fa-exclamation-triangle"></i>
+      ${message}
+    </div>
+  `;
+  
+  form.insertBefore(errorContainer, form.firstChild);
+}
+
+// Clear existing success/error messages
+function clearExistingMessages() {
+  const form = document.getElementById('jobForm');
+  const existingSuccess = form.querySelector('.success-message-container');
+  const existingError = form.querySelector('.server-error-container');
+  
+  if (existingSuccess) {
+    existingSuccess.remove();
+  }
+  if (existingError) {
+    existingError.remove();
+  }
 }
 
 // Event listeners
@@ -275,11 +415,65 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("addMilestoneBtn")
     .addEventListener("click", addMilestone);
 
-  // Form submission
-  document.getElementById("jobForm").addEventListener("submit", (e) => {
+  // Form submission with AJAX
+  document.getElementById("jobForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
     if (!validateForm()) {
-      e.preventDefault();
       return false;
+    }
+
+    const form = e.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const formData = new FormData(form);
+
+    // Convert FormData to URLSearchParams for proper form encoding
+    const urlEncodedData = new URLSearchParams();
+    for (let [key, value] of formData.entries()) {
+      urlEncodedData.append(key, value);
+    }
+
+    // Debug: Log form data to see what's being sent
+    console.log('Form data being sent:');
+    for (let [key, value] of urlEncodedData.entries()) {
+      console.log(key, value);
+    }
+
+    try {
+      // Show loading state
+      setLoadingState(submitButton, true);
+      
+      // Clear any existing error messages
+      clearExistingMessages();
+
+      // Send AJAX request with URL-encoded data
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: urlEncodedData
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Success
+        showSuccess("Job created successfully! Redirecting...");
+        setTimeout(() => {
+          window.location.href = result.redirectUrl || '/employerD/job_listings';
+        }, 1500);
+      } else {
+        // Server error - show as general message
+        showServerError(result.error || 'Failed to create job. Please try again.');
+        setLoadingState(submitButton, false);
+      }
+    } catch (error) {
+      console.error('Job creation error:', error);
+      showServerError('Network error. Please check your connection and try again.');
+      setLoadingState(submitButton, false);
     }
   });
 
@@ -303,4 +497,79 @@ document.addEventListener("DOMContentLoaded", () => {
   dateInputs.forEach((input) => {
     input.min = today;
   });
+
+  // Add basic real-time validation
+  addRealTimeValidation();
 });
+
+// Real-time validation for better UX
+function addRealTimeValidation() {
+  const titleInput = document.getElementById('title');
+  const budgetInput = document.getElementById('budget');
+  const descriptionInput = document.getElementById('description');
+
+  // Title validation
+  if (titleInput) {
+    titleInput.addEventListener('blur', () => {
+      const value = titleInput.value.trim();
+      if (value && value.length < 3) {
+        showFieldError(titleInput, 'Title must be at least 3 characters long');
+      } else {
+        clearFieldValidation(titleInput);
+      }
+    });
+  }
+
+  // Budget validation
+  if (budgetInput) {
+    budgetInput.addEventListener('blur', () => {
+      const value = parseFloat(budgetInput.value);
+      if (value && value < 500) {
+        showFieldError(budgetInput, 'Budget must be at least ₹500');
+      } else {
+        clearFieldValidation(budgetInput);
+      }
+    });
+  }
+
+  // Description validation
+  if (descriptionInput) {
+    descriptionInput.addEventListener('blur', () => {
+      const value = descriptionInput.value.trim();
+      if (value && value.length < 10) {
+        showFieldError(descriptionInput, 'Description must be at least 10 characters long');
+      } else {
+        clearFieldValidation(descriptionInput);
+      }
+    });
+  }
+}
+
+// Field-level validation helpers
+function showFieldError(field, message) {
+  field.style.borderColor = '#dc2626';
+  
+  // Remove existing validation message for this field
+  const existingMessage = field.parentNode.querySelector('.field-validation-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  
+  // Add error message directly below the field
+  const errorMessage = document.createElement('div');
+  errorMessage.className = 'field-validation-message error-message';
+  errorMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+  
+  // Insert after the field
+  field.parentNode.appendChild(errorMessage);
+}
+
+function clearFieldValidation(field) {
+  field.style.borderColor = '';
+  
+  // Remove existing validation message
+  const existingMessage = field.parentNode.querySelector('.field-validation-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+}
