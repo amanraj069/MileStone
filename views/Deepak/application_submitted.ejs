@@ -4,324 +4,262 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Application Submitted - Milestone</title>
+    <link rel="stylesheet" href="/css/home/home.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
     <style>
-      /* Reset and Base Styles */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      /* Custom Green Theme for Application Submitted Page */
+      :root {
+        --success-primary: #22c55e;
+        --success-hover: #16a34a;
+        --success-light: #dcfce7;
+        --success-lighter: #f0fdf4;
+        --success-dark: #166534;
+        --text-dark: #1f2937;
+        --text-muted: #6b7280;
+        --border-light: #e5e7eb;
+        --background-gradient: linear-gradient(
+          135deg,
+          #f0fdf4 0%,
+          #dcfce7 100%
+        );
       }
 
       body {
-        font-family: "Inter", sans-serif;
-        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        background: var(--background-gradient);
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        color: white;
+        font-family: "Inter", sans-serif;
+        margin-top: 80px; /* Add margin to account for fixed header */
       }
 
-      /* Navbar */
-      .navbar {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+      /* Success Page Specific Styles */
+      .success-main {
+        min-height: calc(100vh - 80px);
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 15px 25px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        width: 100%;
-        height: 80px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .logo {
-        color: white;
-        font-size: 28px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .logo:hover {
-        transform: scale(1.05);
-      }
-
-      .search-container {
-        display: flex;
-        align-items: center;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 25px;
-        padding: 5px 12px;
-        width: 45%;
-        height: 50px;
-        transition: background-color 0.3s ease;
-      }
-
-      .search-container:hover {
-        background-color: rgba(255, 255, 255, 0.25);
-      }
-
-      .search-container input {
-        border: none;
-        outline: none;
-        width: 100%;
-        padding: 5px;
-        font-size: 16px;
-        background: transparent;
-        color: white;
-        transition: transform 0.3s ease;
-      }
-
-      .search-container input:focus {
-        transform: scale(1.01);
-      }
-
-      .search-container input::placeholder {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      .search-container button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 18px;
-        color: white;
-        transition: color 0.3s ease;
-      }
-
-      .search-container button:hover {
-        color: #ffffff;
-      }
-
-      .svg {
-        height: 20px;
-        width: 20px;
-        margin-bottom: 15px;
-        margin-right: 20px;
-        transition: transform 0.3s ease;
-      }
-
-      .svg:hover {
-        transform: scale(1.1);
-      }
-
-      .nav-buttons {
-        display: flex;
-        gap: 10px;
-      }
-
-      .nav-buttons button {
-        background-color: rgb(0, 94, 120);
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-      }
-
-      .nav-buttons button:hover {
-        background-color: rgb(1, 55, 70);
-        transform: translateY(-2px);
-      }
-
-      /* Success Section */
-      .success-section {
-        flex-grow: 1;
-        display: flex;
         justify-content: center;
-        align-items: center;
-        padding: 60px 20px;
-        background: linear-gradient(135deg, #f0f7fd, #ffffff);
+        padding: 2rem;
+        background: var(--background-gradient);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .success-main::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(34, 197, 94, 0.1) 0%,
+          transparent 70%
+        );
+        animation: float 20s ease-in-out infinite;
       }
 
       .success-container {
-        max-width: 600px;
-        text-align: center;
         background: white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        animation: subtleFadeUp 0.6s ease-out forwards;
-      }
-
-      .success-container h1 {
-        font-size: 36px;
-        color: #03065d;
-        margin-bottom: 20px;
-        font-weight: 700;
-      }
-
-      .success-container p {
-        font-size: 18px;
-        color: #555;
-        margin-bottom: 30px;
-        line-height: 1.6;
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+          0 0 0 1px rgba(34, 197, 94, 0.1);
+        position: relative;
+        /* z-index: 10; */
+        animation: slideUp 0.8s ease-out;
+        border: 2px solid var(--success-light);
       }
 
       .success-icon {
-        font-size: 60px;
-        color: #28a745;
-        margin-bottom: 20px;
+        width: 120px;
+        height: 120px;
+        background: var(--success-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        animation: pulse 2s infinite;
+        box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
       }
 
-      .success-container .btn-primary {
-        background-color: #03065d;
+      .success-icon i {
+        font-size: 3rem;
         color: white;
-        padding: 12px 20px;
-        font-size: 18px;
-        font-weight: bold;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0 4px 12px rgba(71, 20, 16, 0.2);
+        animation: checkmark 0.8s ease-out 0.3s both;
       }
 
-      .success-container .btn-primary:hover {
-        background-color: #00058e;
-        transform: translateY(-2px);
-      }
-
-      /* Error Section */
-      .error-container {
-        max-width: 600px;
-        text-align: center;
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        animation: subtleFadeUp 0.6s ease-out forwards;
-      }
-
-      .error-container h1 {
-        font-size: 36px;
-        color: #dc3545;
-        margin-bottom: 20px;
+      .success-container h1 {
+        font-size: 2.5rem;
         font-weight: 700;
+        color: var(--success-dark);
+        margin-bottom: 1rem;
+        line-height: 1.2;
       }
 
-      .error-container p {
-        font-size: 18px;
-        color: #555;
-        margin-bottom: 30px;
+      .success-container .success-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+      }
+
+      .job-info {
+        background: var(--success-lighter);
+        border: 2px solid var(--success-light);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: left;
+      }
+
+      .job-info h3 {
+        color: var(--success-dark);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .job-info p {
+        color: var(--text-dark);
+        font-size: 1rem;
         line-height: 1.6;
       }
 
-      .error-icon {
-        font-size: 60px;
-        color: #dc3545;
-        margin-bottom: 20px;
-      }
-
-      /* Footer */
-      .footer {
-        background: linear-gradient(135deg, #022245, #092c51);
-        color: white;
-        padding: 40px 5%;
-        text-align: center;
-        margin-top: auto;
-      }
-
-      .footer-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px 0;
-      }
-
-      .footer-section {
-        flex: 1;
-        min-width: 250px;
+      .success-message {
+        background: linear-gradient(
+          135deg,
+          var(--success-lighter),
+          var(--success-light)
+        );
+        border-left: 4px solid var(--success-primary);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
         text-align: left;
-        padding: 0 20px;
       }
 
-      .footer-logo {
-        text-align: center;
+      .success-message p {
+        color: var(--text-dark);
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
       }
 
-      .footer-logo h3 {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-
-      .footer-logo p {
-        font-size: 14px;
-        opacity: 0.8;
-        line-height: 1.5;
-      }
-
-      .footer-links h3 {
-        font-size: 24px;
-        margin-bottom: 12px;
-        text-align: center;
-      }
-
-      .footer-title,
-      .footer-logo h3 {
-        font-size: 24px;
-        font-weight: bold;
-      }
-
-      .quick-links {
+      .action-buttons {
         display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
       }
 
-      .quick-links a {
+      .btn-success {
+        background: var(--success-primary);
         color: white;
+        border: none;
+        padding: 0.875rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         text-decoration: none;
-        transition: color 0.3s ease, transform 0.3s ease;
-        padding: 5px;
+        box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
       }
 
-      .quick-links a:hover {
-        color: #d4af37;
+      .btn-success:hover {
+        background: var(--success-hover);
+        color: white;
         transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
       }
 
-      ul,
-      ol {
-        list-style: none;
+      .btn-outline-success {
+        background: transparent;
+        color: var(--success-primary);
+        border: 2px solid var(--success-primary);
+        padding: 0.875rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      .btn-outline-success:hover {
+        background: var(--success-primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+      }
+
+      /* Error Container (if needed) */
+      .error-container {
+        background: white;
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        max-width: 600px;
+        width: 100%;
         text-align: center;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        position: relative;
+        z-index: 10;
+        animation: slideUp 0.8s ease-out;
+        border: 2px solid #fecaca;
       }
 
-      .footer-bottom {
-        margin-top: 20px;
-        padding-top: 10px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        text-align: center;
-        font-size: 14px;
+      .error-icon {
+        width: 120px;
+        height: 120px;
+        background: #ef4444;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        box-shadow: 0 20px 40px rgba(239, 68, 68, 0.3);
       }
 
-      /* Animation Keyframes */
-      @keyframes subtleFadeUp {
+      .error-icon i {
+        font-size: 3rem;
+        color: white;
+      }
+
+      .error-container h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #dc2626;
+        margin-bottom: 1rem;
+      }
+
+      /* Animations */
+      @keyframes slideUp {
         from {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(40px);
         }
         to {
           opacity: 1;
@@ -329,174 +267,292 @@
         }
       }
 
-      /* Responsive Adjustments */
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes checkmark {
+        0% {
+          transform: scale(0) rotate(45deg);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.2) rotate(45deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+      }
+
+      /* Responsive Design */
       @media (max-width: 768px) {
-        .navbar {
-          flex-direction: column;
-          height: auto;
-          padding: 10px;
-        }
-
-        .search-container {
-          width: 90%;
-          margin: 10px 0;
-        }
-
-        .nav-buttons {
-          padding: 5px 0;
-          flex-direction: row;
-          justify-content: center;
-          width: 50%;
-          gap: 10px;
+        .success-main {
+          padding: 1rem;
         }
 
         .success-container,
         .error-container {
-          padding: 20px;
+          margin: 1rem;
+          padding: 2rem 1.5rem;
         }
 
         .success-container h1,
         .error-container h1 {
-          font-size: 28px;
+          font-size: 2rem;
         }
 
-        .success-container p,
-        .error-container p {
-          font-size: 16px;
-        }
-
-        .footer-container {
+        .action-buttons {
           flex-direction: column;
-          text-align: center;
-        }
-
-        .footer-section {
-          text-align: center;
-          padding: 20px 0;
-          width: 100%;
-        }
-
-        .quick-links {
           align-items: center;
+        }
+
+        .btn-success,
+        .btn-outline-success {
+          width: 100%;
+          justify-content: center;
         }
       }
     </style>
   </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-      <div class="logo">Milestone</div>
-      <div class="search-container">
-        <input
-          type="text"
-          placeholder="Search for jobs or freelancers..."
-          onclick="window.location.href='/jobs'"
-          onfocus="this.blur()"
-        />
-        <button
-          class="svg"
-          onclick="window.location.href='/jobs'; event.preventDefault()"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="100"
-            height="100"
-            viewBox="0,0,255.98958,255.98958"
-          >
-            <g
-              fill="#ffffff"
-              fill-rule="nonzero"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="butt"
-              stroke-linejoin="miter"
-              stroke-miterlimit="10"
-              stroke-dasharray=""
-              stroke-dashoffset="0"
-              font-family="none"
-              font-weight="none"
-              font-size="none"
-              text-anchor="none"
-              style="mix-blend-mode: normal"
-            >
-              <g transform="scale(2,2)">
-                <path
-                  d="M21,3c-9.39844,0 -17,7.60156 -17,17c0,9.39844 7.60156,17 17,17c3.35547,0 6.46094,-0.98437 9.09375,-2.65625l12.28125,12.28125l4.25,-4.25l-12.125,-12.09375c2.17969,-2.85937 3.5,-6.40234 3.5,-10.28125c0,-9.39844 -7.60156,-17 -17,-17zM21,7c7.19922,0 13,5.80078 13,13c0,7.19922 -5.80078,13 -13,13c-7.19922,0 -13,-5.80078 -13,-13c0,-7.19922 5.80078,-13 13,-13z"
-                ></path>
-              </g>
-            </g>
-          </svg>
-        </button>
-      </div>
-      <div class="nav-buttons">
-        <% if (user) { %>
-        <button onclick="window.location.href='<%= dashboardRoute %>'">
-          Dashboard
-        </button>
-        <% } else { %>
-        <button onclick="window.location.href='/login'">Sign In</button>
-        <% } %>
-      </div>
-    </nav>
 
-    <!-- Success/Error Section -->
-    <section class="success-section">
+  <body class="light-mode">
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="/" style="font-size: 40px">Mile<span>stone</span></a>
+          </div>
+          <div class="search-container">
+            <form action="#" class="search-form">
+              <input
+                type="text"
+                placeholder="Search for jobs or freelancers..."
+                class="search-input"
+              />
+              <button
+                type="submit"
+                class="search-button"
+                onclick="window.location.href='/jobs'; event.preventDefault()"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
+          <div class="header-actions">
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              aria-label="Toggle dark mode"
+            >
+              <svg
+                class="theme-icon sun-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              <svg
+                class="theme-icon moon-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                ></path>
+              </svg>
+            </button>
+
+            <% if (user) { %>
+            <a href="<%= dashboardRoute %>" class="btn btn-primary">
+              <i class="fas fa-tv" id="icon_spacing"></i>Dashboard
+            </a>
+            <% } else { %>
+            <a href="/login" class="btn btn-primary">
+              <i class="fas fa-sign-in-alt" id="icon_spacing"></i>Sign In
+            </a>
+            <% } %>
+
+            <button
+              class="mobile-menu-toggle"
+              id="mobile-menu-toggle"
+              aria-label="Toggle menu"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="success-main">
       <% if (success) { %>
       <div class="success-container">
-        <div class="success-icon">✔</div>
+        <div class="success-icon">
+          <i class="fas fa-check"></i>
+        </div>
+
         <h1>Application Submitted Successfully!</h1>
-        <p>
-          Thank you for applying to <strong><%= job.title %></strong>! Your
-          application has been received and is under review. You'll hear from us
-          soon regarding the next steps.
+        <p class="success-subtitle">
+          Your application is on its way to making great things happen!
         </p>
-        <button class="btn-primary" onclick="window.location.href='/jobs'">
-          Browse More Jobs
-        </button>
+
+        <div class="success-message">
+          <p>
+            <strong>What happens next?</strong><br />
+            Your application has been received and is under review. The employer
+            will review your profile and proposal. You'll receive notifications
+            about any updates or responses. Keep checking your dashboard for
+            updates!
+          </p>
+        </div>
+
+        <div class="action-buttons">
+          <a href="/jobs" class="btn-success">
+            <i class="fas fa-search"></i>
+            Browse More Jobs
+          </a>
+          <a href="<%= dashboardRoute %>" class="btn-outline-success">
+            <i class="fas fa-tachometer-alt"></i>
+            Go to Dashboard
+          </a>
+        </div>
       </div>
       <% } else { %>
       <div class="error-container">
-        <div class="error-icon">✖</div>
+        <div class="error-icon">
+          <i class="fas fa-times"></i>
+        </div>
         <h1>Application Submission Failed</h1>
         <p>
           There was an issue submitting your application. Please try again or
           contact support if the problem persists.
         </p>
-        <button class="btn-primary" onclick="window.location.href='/jobs'">
-          Back to Job Listings
-        </button>
+        <div class="action-buttons">
+          <a href="/jobs" class="btn-success">
+            <i class="fas fa-arrow-left"></i>
+            Back to Job Listings
+          </a>
+          <a href="/contact" class="btn-outline-success">
+            <i class="fas fa-envelope"></i>
+            Contact Support
+          </a>
+        </div>
       </div>
       <% } %>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-section footer-logo">
-          <h3 class="footer-title">Milestone</h3>
-          <p class="centered">
-            Your go-to platform for hiring top freelancers. We'll fill some more
-            content here according to our need or we can remove this section if
-            not required.
-          </p>
+    <footer class="footer" id="footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-about">
+            <div class="logo">
+              <a href="/" style="font-size: 32px">Mile<span>stone</span></a>
+            </div>
+            <p>
+              Your go-to platform for hiring top freelancers and finding
+              exciting projects. Connect, collaborate, and create with the best
+              talent worldwide.
+            </p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a href="#" aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <div class="footer-links-column">
+              <h3>Platform</h3>
+              <ul>
+                <li><a href="/jobs">Find Jobs</a></li>
+                <li><a href="/freelancers">Find Freelancers</a></li>
+                <li><a href="/post-job">Post a Job</a></li>
+                <li><a href="/how-it-works">How It Works</a></li>
+              </ul>
+            </div>
+            <div class="footer-links-column">
+              <h3>Resources</h3>
+              <ul>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/help">Help Center</a></li>
+                <li><a href="/guides">Guides</a></li>
+                <li><a href="/api">API</a></li>
+              </ul>
+            </div>
+            <div class="footer-links-column">
+              <h3>Company</h3>
+              <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/careers">Careers</a></li>
+                <li><a href="/press">Press</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+            <div class="footer-links-column">
+              <h3>Legal</h3>
+              <ul>
+                <li><a href="/terms">Terms of Service</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/cookies">Cookie Policy</a></li>
+                <li><a href="/compliance">Compliance</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="footer-section footer-links">
-          <h3 class="footer-title">Quick Links</h3>
-          <div class="quick-links">
-            <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/login">Sign in</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
+        <div class="footer-bottom">
+          <p>© 2023 Milestone. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="/terms">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/cookies">Cookie Policy</a>
           </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 Milestone. All rights reserved.</p>
-      </div>
     </footer>
+
+    <script src="/js/home/home.js"></script>
   </body>
 </html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= blog ? blog.title : 'Blog Post' %> - FreelancerHub Blog</title>
+    <link rel="stylesheet" href="/css/home/blog.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <main>
+      <section class="blog-post">
+        <div class="section-container">
+          <% if (blog) { %>
+          <div class="blog-post-card">
+            <header class="blog-post-header">
+              <span class="post-tag"><%= blog.category %></span>
+              <h1 class="blog-post-title"><%= blog.title %></h1>
+              <div class="post-meta">
+                <span class="post-date"
+                  ><%= blog.formattedCreatedAt %> • <%= blog.readTimeDisplay
+                  %></span
+                >
+                <span class="post-author"
+                  >By <%= blog.author || 'FreelancerHub Team' %></span
+                >
+              </div>
+            </header>
+            <div class="blog-post-image-wrap">
+              <img
+                src="<%= blog.imageUrl %>"
+                alt="<%= blog.title %>"
+                class="blog-post-image"
+              />
+            </div>
+            <article class="blog-post-content">
+              <% if (blog.content && blog.content.length) { %> <%
+              blog.content.forEach(function(section){ %>
+              <h2 class="blog-section-heading"><%= section.heading %></h2>
+              <p class="blog-section-text"><%= section.description %></p>
+              <% }); %> <% } else { %>
+              <p class="blog-section-text"><%= blog.tagline %></p>
+              <% } %>
+            </article>
+          </div>
+          <% } else { %>
+          <p>Blog post not found.</p>
+          <% } %>
+        </div>
+      </section>
+
+      <!-- Featured Post -->
+      <section id="featured" class="featured">
+        <div class="section-container">
+          <h2 class="section-title">Featured Post</h2>
+          <% if (typeof featuredBlog !== 'undefined' && featuredBlog) { %>
+          <div class="featured-card">
+            <img
+              src="<%= featuredBlog.imageUrl %>"
+              alt="<%= featuredBlog.title %>"
+              class="featured-image"
+            />
+            <div class="featured-content">
+              <span class="post-tag"><%= featuredBlog.category %></span>
+              <h3 class="post-title"><%= featuredBlog.title %></h3>
+              <p class="post-text"><%= featuredBlog.tagline %></p>
+              <div class="post-meta">
+                <span class="post-date"
+                  ><%= featuredBlog.formattedCreatedAt %> • <%=
+                  featuredBlog.readTimeDisplay %></span
+                >
+                <a href="/blog/<%= featuredBlog.blogId %>" class="post-link"
+                  >Read More <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+          <% } else { %>
+          <p>No featured blog available.</p>
+          <% } %>
+        </div>
+      </section>
+
+      <!-- Latest Posts -->
+      <section id="blog-posts" class="blog-posts">
+        <div class="section-container">
+          <h2 class="section-title">Latest Posts</h2>
+          <div class="blog-grid">
+            <% if (typeof recentBlogs !== 'undefined' && recentBlogs &&
+            recentBlogs.length) { %> <% recentBlogs.forEach(function(rb){ %>
+            <div class="blog-card" data-aos="fade-up">
+              <div class="blog-image">
+                <img
+                  src="<%= rb.imageUrl %>"
+                  alt="<%= rb.title %>"
+                  loading="lazy"
+                />
+                <div class="blog-date">
+                  <span><%= new Date(rb.createdAt).getDate() %></span>
+                  <span
+                    ><%= new Date(rb.createdAt).toLocaleString('en-US', { month:
+                    'short' }).toUpperCase() %></span
+                  >
+                </div>
+              </div>
+              <div class="blog-content">
+                <div class="blog-category"><%= rb.category %></div>
+                <h3><%= rb.title %></h3>
+                <p><%= rb.tagline %></p>
+                <a href="/blog/<%= rb.blogId %>" class="blog-link"
+                  >Read More <i class="fas fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+            <% }); %> <% } else { %>
+            <div class="blog-card" data-aos="fade-up">
+              <div class="blog-content">
+                <h3>No recent posts</h3>
+                <p>There are no recent posts to display.</p>
+              </div>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Comments Section (static) -->
+    <section class="comments">
+      <div class="section-container">
+        <h2 class="section-title">What Our Readers Say</h2>
+        <div class="comments-grid">
+          <div class="comment-card">
+            <p class="comment-text">
+              "The time management article transformed my workday. The
+              recommended tools are fantastic!"
+            </p>
+            <div class="comment-author">
+              <img
+                src="/assets/user_female.png"
+                alt="Sarah J. avatar"
+                class="author-avatar"
+              />
+              <div>
+                <p class="author-name">Sarah J.</p>
+                <p class="author-role">Graphic Designer</p>
+              </div>
+            </div>
+          </div>
+          <div class="comment-card">
+            <p class="comment-text">
+              "I landed my first client using tips from the '10 Ways to Land
+              Your First Freelance Gig' post!"
+            </p>
+            <div class="comment-author">
+              <img
+                src="/assets/user_image.jpg"
+                alt="Michael T. avatar"
+                class="author-avatar"
+              />
+              <div>
+                <p class="author-name">Michael T.</p>
+                <p class="author-role">Web Developer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="section-container">
+        <h2 class="newsletter-title">Stay Updated</h2>
+        <p class="newsletter-text">
+          Subscribe to get the latest freelance tips and insights delivered to
+          your inbox.
+        </p>
+        <form class="newsletter-form">
+          <div class="form-group">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              class="form-input"
+              required
+            />
+            <button type="submit" class="form-button">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="section-container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <h3 class="footer-title">FreelancerHub</h3>
+            <p class="footer-text">
+              Empowering freelancers to connect with global opportunities.
+            </p>
+          </div>
+          <div>
+            <h3 class="footer-title">Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="/about" class="footer-link">About Us</a></li>
+              <li><a href="/contact" class="footer-link">Contact</a></li>
+              <li><a href="/blog" class="footer-link">Blog</a></li>
+              <li><a href="/faq" class="footer-link">FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer-title">Resources</h3>
+            <ul class="footer-links">
+              <li>
+                <a href="/guides" class="footer-link">Freelance Guides</a>
+              </li>
+              <li><a href="/tools" class="footer-link">Tools & Apps</a></li>
+              <li><a href="/community" class="footer-link">Community</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="footer-title">Follow Us</h3>
+            <div class="social-links">
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+              <a href="#" class="social-link"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 FreelancerHub. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="scrollToTop" class="scroll-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+  </body>
+</html>

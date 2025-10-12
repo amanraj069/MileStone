@@ -758,23 +758,55 @@ exports.getCreateBlog = (req, res) => {
 
 exports.createBlog = async (req, res) => {
   try {
-    const { title, tagline, category, imageUrl, minReadTime, content } =
-      req.body;
+    const { title, tagline, category, imageUrl, minReadTime, content } = req.body;
 
-    // Parse content if it's a string
+    console.log('createBlog received body:', JSON.stringify(req.body));
+
+    // Basic validation
+    if (!req.session || !req.session.user || !req.session.user.id) {
+      return res.status(401).json({ success: false, message: 'Unauthorized: admin not logged in' });
+    }
+
+    if (!title || !tagline || !category || !imageUrl || !minReadTime) {
+      return res.status(400).json({ success: false, message: 'Missing required fields. Please fill all required inputs.' });
+    }
+
+    // Parse content safely
     let parsedContent = [];
-    if (typeof content === "string") {
-      parsedContent = JSON.parse(content);
-    } else {
+    if (!content) {
+      return res.status(400).json({ success: false, message: 'Please provide blog content sections.' });
+    }
+
+    if (typeof content === 'string') {
+      try {
+        parsedContent = JSON.parse(content);
+      } catch (parseErr) {
+        console.error('Error parsing content JSON:', parseErr);
+        return res.status(400).json({ success: false, message: 'Invalid content format. Please ensure content is valid JSON.' });
+      }
+    } else if (Array.isArray(content)) {
       parsedContent = content;
+    } else {
+      return res.status(400).json({ success: false, message: 'Invalid content format.' });
+    }
+
+    if (!Array.isArray(parsedContent) || parsedContent.length === 0) {
+      return res.status(400).json({ success: false, message: 'Please add at least one content section.' });
+    }
+
+    // Ensure each section has heading and description
+    for (const [i, section] of parsedContent.entries()) {
+      if (!section || !section.heading || !section.description) {
+        return res.status(400).json({ success: false, message: `Content section ${i + 1} is missing heading or description.` });
+      }
     }
 
     const newBlog = new Blog({
-      title,
-      tagline,
-      category,
-      imageUrl,
-      minReadTime: parseInt(minReadTime),
+      title: String(title).trim(),
+      tagline: String(tagline).trim(),
+      category: String(category).trim(),
+      imageUrl: String(imageUrl).trim(),
+      minReadTime: parseInt(minReadTime, 10),
       content: parsedContent,
       createdBy: req.session.user.id,
     });
@@ -782,15 +814,21 @@ exports.createBlog = async (req, res) => {
     await newBlog.save();
 
     res.json({
-      success: true,
-      message: "Blog created successfully",
-      blogId: newBlog.blogId,
+  success: true,
+  message: 'Blog created successfully',
+  blogId: newBlog.blogId,
     });
   } catch (error) {
-    console.error("Error creating blog:", error);
+    console.error('Error creating blog:', error);
+    // If Mongoose validation error, return message
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(e => e.message).join('; ');
+      return res.status(400).json({ success: false, message: `Validation error: ${messages}` });
+    }
+
     res.status(500).json({
-      success: false,
-      message: "Error creating blog",
+  success: false,
+  message: error.message || 'Error creating blog',
     });
   }
 };

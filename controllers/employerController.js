@@ -114,7 +114,7 @@ const employerController = {
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
-        .select("roleId name picture")
+        .select("roleId userId name picture")
         .lean();
 
       const freelancersWithDetails = jobs.map((job) => {
@@ -130,6 +130,7 @@ const employerController = {
           projectName: job.title,
           skills: freelancer?.skills || job.description.skills || [],
           completionDate,
+          userId: user?.userId || "", // Add userId for chat navigation
           freelancer: {
             id: job.assignedFreelancer.freelancerId,
             name: user?.name || "Unknown Freelancer",
@@ -278,7 +279,7 @@ const employerController = {
 
       // Parse milestones array if it's not already parsed
       let parsedMilestones = [];
-      if (milestones && typeof milestones === 'object') {
+      if (milestones && typeof milestones === "object") {
         parsedMilestones = Object.values(milestones);
       } else if (Array.isArray(milestones)) {
         parsedMilestones = milestones;
@@ -345,33 +346,35 @@ const employerController = {
       }
       
       // Check if it's an AJAX request
-      const isAjax = req.headers.accept && req.headers.accept.includes('application/json');
-      
+      const isAjax =
+        req.headers.accept && req.headers.accept.includes("application/json");
+
       if (isAjax) {
         return res.status(201).json({
           success: true,
           message: "Job created successfully!",
           redirectUrl: "/employerD/job_listings",
-          jobId: newJob.jobId
+          jobId: newJob.jobId,
         });
       }
-      
+
       res.redirect("/employerD/job_listings");
     } catch (error) {
       console.error("Error creating job listing:", error.message);
       console.error("Full error:", error);
       console.error("Request body:", JSON.stringify(req.body, null, 2));
-      
+
       // Check if it's an AJAX request
-      const isAjax = req.headers.accept && req.headers.accept.includes('application/json');
-      
+      const isAjax =
+        req.headers.accept && req.headers.accept.includes("application/json");
+
       if (isAjax) {
         return res.status(500).json({
-          error: "Error creating job listing"
+          error: "Error creating job listing",
         });
       }
-      
-      res.status(500).send("Error creating job listing"  );
+
+      res.status(500).send("Error creating job listing");
     }
   },
 
@@ -448,13 +451,15 @@ const employerController = {
           payment: m.payment,
           status: m.status || "not-paid",
           requested: m.requested === "true" || m.requested === true,
-          subTasks: m.subTasks ? m.subTasks.map((st) => ({
-            subTaskId: st.subTaskId || require('uuid').v4(),
-            description: st.description,
-            status: st.status || "pending",
-            completedDate: st.completedDate || null,
-            notes: st.notes || "",
-          })) : [],
+          subTasks: m.subTasks
+            ? m.subTasks.map((st) => ({
+                subTaskId: st.subTaskId || require("uuid").v4(),
+                description: st.description,
+                status: st.status || "pending",
+                completedDate: st.completedDate || null,
+                notes: st.notes || "",
+              }))
+            : [],
           completionPercentage: m.completionPercentage || 0,
         })),
       };
@@ -774,11 +779,15 @@ const employerController = {
       const userId = req.session.user.id;
 
       if (!userId) {
-        return res.status(400).json({ success: false, message: "User ID not found in session" });
+        return res
+          .status(400)
+          .json({ success: false, message: "User ID not found in session" });
       }
 
       if (!req.file) {
-        return res.status(400).json({ success: false, message: "No image file provided" });
+        return res
+          .status(400)
+          .json({ success: false, message: "No image file provided" });
       }
 
       // Upload image to Cloudinary
@@ -793,23 +802,24 @@ const employerController = {
       );
 
       if (!user) {
-        return res.status(404).json({ success: false, message: "User not found" });
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
       }
 
       // Update session
       req.session.user.picture = user.picture;
 
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: "Profile image updated successfully",
-        imageUrl: pictureUrl 
+        imageUrl: pictureUrl,
       });
-
     } catch (error) {
       console.error("Error uploading profile image:", error.message);
-      res.status(500).json({ 
-        success: false, 
-        message: "Failed to upload image: " + error.message 
+      res.status(500).json({
+        success: false,
+        message: "Failed to upload image: " + error.message,
       });
     }
   },
@@ -937,7 +947,11 @@ const employerController = {
             status: m.status,
             requested: isRequested,
             subTasks: m.subTasks || [],
-            completionPercentage: m.completionPercentage || 0,
+            // If no subtasks, consider milestone as 100% complete for display purposes
+            completionPercentage:
+              m.subTasks && m.subTasks.length > 0
+                ? m.completionPercentage || 0
+                : 100,
           };
         });
 
@@ -1138,7 +1152,7 @@ const employerController = {
       const jobId = req.query.jobId;
 
       if (!userId) {
-        return res.redirect('/login');
+        return res.redirect("/login");
       }
 
       // Get user information
@@ -1150,16 +1164,16 @@ const employerController = {
       let job = null;
       if (jobId) {
         // Get job information if jobId is provided
-        job = await JobListing.findOne({ 
+        job = await JobListing.findOne({
           jobId: jobId,
-          employerId: req.session.user.roleId 
+          employerId: req.session.user.roleId,
         }).lean();
-        
+
         if (job) {
           // Get freelancer information if assigned
           if (job.assignedFreelancer && job.assignedFreelancer.freelancerId) {
-            const freelancer = await Freelancer.findOne({ 
-              freelancerId: job.assignedFreelancer.freelancerId 
+            const freelancer = await Freelancer.findOne({
+              freelancerId: job.assignedFreelancer.freelancerId,
             }).lean();
             if (freelancer) {
               job.assignedFreelancer.name = freelancer.name;
@@ -1173,7 +1187,7 @@ const employerController = {
           name: user.name,
           picture: user.picture,
           role: user.role,
-          email: user.email
+          email: user.email,
         },
         job: job,
         activePage: "current_jobs",
@@ -1186,44 +1200,48 @@ const employerController = {
 
   submitComplaintForm: async (req, res) => {
     try {
-      const { 
-        jobId, 
-        againstUser, 
-        complaintType, 
-        priority, 
-        issue, 
+      const {
+        jobId,
+        againstUser,
+        complaintType,
+        priority,
+        issue,
         expectedResolution,
         contactEmail,
-        preferredContact
+        preferredContact,
       } = req.body;
-      
+
       if (!req.session.user) {
         return res.status(401).json({ error: "Unauthorized: Please log in" });
       }
 
       // Validate required fields
       if (!complaintType || !issue) {
-        return res.status(400).json({ error: "Complaint type and issue description are required" });
+        return res
+          .status(400)
+          .json({ error: "Complaint type and issue description are required" });
       }
 
       if (issue.trim().length < 5) {
-        return res.status(400).json({ error: "Issue description must be at least 5 characters" });
+        return res
+          .status(400)
+          .json({ error: "Issue description must be at least 5 characters" });
       }
 
       // Get job details if jobId is provided
       let job = null;
       let finalAgainstUser = againstUser;
-      
+
       if (jobId) {
         job = await JobListing.findOne({ jobId: jobId }).lean();
-        
+
         if (job && job.assignedFreelancer && !finalAgainstUser) {
           // Get the freelancer's user ID from the freelancer collection
           const Freelancer = require("../models/freelancer");
-          const freelancer = await Freelancer.findOne({ 
-            freelancerId: job.assignedFreelancer.freelancerId 
+          const freelancer = await Freelancer.findOne({
+            freelancerId: job.assignedFreelancer.freelancerId,
           }).lean();
-          
+
           if (freelancer) {
             finalAgainstUser = freelancer.userId;
           }
@@ -1236,18 +1254,16 @@ const employerController = {
 
       const complaintData = {
         submittedBy: submittedById,
-        againstUser: finalAgainstUser || 'general',
+        againstUser: finalAgainstUser || "general",
         complaintType: complaintType,
-        jobId: jobId || '',
+        jobId: jobId || "",
         issue: issue.trim(),
-        priority: priority || 'Medium',
-        expectedResolution: expectedResolution ? expectedResolution.trim() : '',
-        contactEmail: contactEmail || req.session.user.email || '',
-        preferredContact: preferredContact || 'email',
+        priority: priority || "Medium",
+        expectedResolution: expectedResolution ? expectedResolution.trim() : "",
+        contactEmail: contactEmail || req.session.user.email || "",
+        preferredContact: preferredContact || "email",
         status: "pending",
       };
-
-
 
       // Create complaint
       const complaint = new Complaint(complaintData);
@@ -1266,6 +1282,243 @@ const employerController = {
       res
         .status(500)
         .json({ error: "Failed to submit complaint", details: error.message });
+    }
+  },
+
+  purchaseSubscription: async (req, res) => {
+    try {
+      const { planType, amount } = req.body;
+      const userId = req.session.user.id;
+
+      if (!planType) {
+        return res.status(400).json({
+          success: false,
+          message: "Plan type is required",
+        });
+      }
+
+      // Validate plan type
+      const validPlans = ["Basic", "Premium", "Free"];
+      if (!validPlans.includes(planType)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid plan type",
+        });
+      }
+
+      // For Premium plans, redirect to payment
+      if (planType === "Premium") {
+        return res.json({
+          success: true,
+          requiresPayment: true,
+          amount: amount || 868,
+          redirectUrl: `/employerD/payment?plan=${planType}&amount=${
+            amount || 868
+          }`,
+        });
+      }
+
+      // For Basic/Free plans, update immediately
+      const Employer = require("../models/employer");
+      await Employer.findByIdAndUpdate(userId, {
+        subscription: planType,
+      });
+
+      // Update session
+      req.session.user.subscription = planType;
+
+      res.json({
+        success: true,
+        message: `Successfully switched to ${planType} plan`,
+        requiresPayment: false,
+      });
+    } catch (error) {
+      console.error("Error purchasing subscription:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error during subscription purchase",
+        error: error.message,
+      });
+    }
+  },
+
+  deleteJobListing: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const employerId = req.session.user.roleId;
+
+      if (!jobId) {
+        return res.status(400).json({
+          success: false,
+          message: "Job ID is required",
+        });
+      }
+
+      if (!employerId) {
+        return res.status(401).json({
+          success: false,
+          message: "Employer not authenticated",
+        });
+      }
+
+      // Find and verify job ownership
+      const job = await JobListing.findOne({ jobId, employerId });
+      if (!job) {
+        return res.status(404).json({
+          success: false,
+          message: "Job not found or you are not authorized to delete it",
+        });
+      }
+
+      // Check if job has active applications that need to be handled
+      const JobApplication = require("../models/job_application");
+      const activeApplications = await JobApplication.find({
+        jobId,
+        status: { $in: ["pending", "accepted"] },
+      });
+
+      if (activeApplications.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Cannot delete job with ${activeApplications.length} active application(s). Please handle applications first.`,
+        });
+      }
+
+      // Delete related applications first
+      await JobApplication.deleteMany({ jobId });
+
+      // Delete the job listing
+      await JobListing.findOneAndDelete({ jobId, employerId });
+
+      res.json({
+        success: true,
+        message: "Job listing deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting job listing:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error while deleting job",
+        error: error.message,
+      });
+    }
+  },
+
+  getTransactionDetails: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const employerId = req.session.user.roleId;
+
+      if (!jobId) {
+        return res.status(400).json({
+          success: false,
+          message: "Job ID is required",
+        });
+      }
+
+      if (!employerId) {
+        return res.status(401).json({
+          success: false,
+          message: "Employer not authenticated",
+        });
+      }
+
+      // Find the job and populate freelancer information
+      const job = await JobListing.findOne({ jobId, employerId })
+        .populate("assignedFreelancer.freelancerId", "name email picture")
+        .lean();
+
+      if (!job) {
+        return res.status(404).json({
+          success: false,
+          message: "Transaction not found or you are not authorized to view it",
+        });
+      }
+
+      // Create transaction details object
+      const transactionDetails = {
+        projectTitle: job.title,
+        amount: job.budget.amount,
+        status: job.assignedFreelancer
+          ? job.assignedFreelancer.status === "finished"
+            ? "completed"
+            : "in-progress"
+          : "pending",
+        startDate: job.assignedFreelancer
+          ? job.assignedFreelancer.assignedDate
+          : job.postedDate,
+        freelancer: job.assignedFreelancer
+          ? {
+              name: job.assignedFreelancer.freelancerId.name,
+              email: job.assignedFreelancer.freelancerId.email,
+              picture: job.assignedFreelancer.freelancerId.picture,
+            }
+          : null,
+        milestones: job.milestones || [],
+        jobId: jobId,
+      };
+
+      res.json(transactionDetails);
+    } catch (error) {
+      console.error("Error fetching transaction details:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error while fetching transaction details",
+        error: error.message,
+      });
+    }
+  },
+
+  getTransactionDetails: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const employerId = req.session.user.roleId;
+
+      if (!jobId || !employerId) {
+        return res.status(400).json({
+          success: false,
+          message: "Missing required parameters",
+        });
+      }
+
+      // Find the job
+      const job = await JobListing.findOne({ jobId, employerId })
+        .populate("assignedFreelancer.freelancerId", "name email picture")
+        .lean();
+
+      if (!job) {
+        return res.status(404).json({
+          success: false,
+          message: "Transaction not found",
+        });
+      }
+
+      // Format the response data
+      const transactionData = {
+        projectTitle: job.title,
+        amount: job.budget.amount,
+        status: job.assignedFreelancer?.status || "in-progress",
+        startDate: job.assignedFreelancer?.assignedDate || job.postedDate,
+        freelancer: {
+          name: job.assignedFreelancer?.freelancerId?.name || "Unknown",
+          email: job.assignedFreelancer?.freelancerId?.email || "",
+          picture:
+            job.assignedFreelancer?.freelancerId?.picture ||
+            "/assets/default-avatar.png",
+        },
+        milestones: job.milestones || [],
+        jobType: job.jobType,
+        location: job.location,
+      };
+
+      res.json(transactionData);
+    } catch (error) {
+      console.error("Error getting transaction details:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error while fetching transaction details",
+        error: error.message,
+      });
     }
   },
 };
