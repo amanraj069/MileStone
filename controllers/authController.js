@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const { User, Employer, Freelancer, Admin } = require("../models");
+const JobListing = require("../models/job_listing");
 
 exports.postSignup = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -164,9 +165,9 @@ exports.getLogout = (req, res) => {
   });
 };
 
-exports.getHome = (req, res) => {
+exports.getHome = async (req, res) => {
   let dashboardRoute = "";
-  if (req.session.user) {
+  if (req.session && req.session.user) {
     switch (req.session.user.role) {
       case "Admin":
         dashboardRoute = "/adminD/profile";
@@ -179,8 +180,176 @@ exports.getHome = (req, res) => {
         break;
     }
   }
-  res.render("Aman/home", {
-    user: req.session.user || null,
-    dashboardRoute: dashboardRoute,
-  });
+
+  try {
+    // Fetch featured jobs
+    const featuredJobs = await JobListing.find({
+      "featured.isActive": true,
+      status: { $in: ["open", "active"] }
+    })
+    .sort({ "featured.featuredAt": -1 })
+    .limit(3)
+    .lean();
+
+    // Get employer details for featured jobs
+    const formattedFeaturedJobs = await getFeaturedJobsWithDetails(featuredJobs);
+
+    res.render("Aman/home", {
+      user: req.session.user || null,
+      dashboardRoute: dashboardRoute,
+      featuredJobs: formattedFeaturedJobs,
+    });
+  } catch (error) {
+    console.error('Error fetching featured jobs for home page:', error);
+    res.render("Aman/home", {
+      user: req.session.user || null,
+      dashboardRoute: dashboardRoute,
+      featuredJobs: [],
+    });
+  }
 };
+
+// Helper function to get featured jobs with employer details
+async function getFeaturedJobsWithDetails(featuredJobs = null) {
+  try {
+    // If no jobs passed, fetch them
+    let jobs = featuredJobs;
+    if (!jobs) {
+      jobs = await JobListing.find({
+        'featured.isFeatured': true,
+        status: { $in: ["open", "active"] }
+      })
+      .sort({ "featured.featuredAt": -1 })
+      .limit(3)
+      .lean();
+    }
+
+    if (!jobs.length) {
+      return [];
+    }
+
+    // Get unique employer IDs
+    const employerIds = [...new Set(jobs.map(job => job.employerId))];
+    
+    // Get employer details using employerId field (not _id)
+    const employers = await Employer.find({
+      employerId: { $in: employerIds }
+    }).lean();
+
+    // Create employer lookup map using employerId
+    const employerMap = employers.reduce((map, employer) => {
+      map[employer.employerId] = employer;
+      return map;
+    }, {});
+
+    // Format jobs with employer details
+    const formattedJobs = jobs.map(job => {
+      const employer = employerMap[job.employerId];
+      
+      // Get category icon based on job skills
+      const categoryIcon = getCategoryIcon(job.category, job.description?.skills || []);
+      
+      // Create budget range
+      const budgetRange = createBudgetRange(job.budget.amount);
+      
+      // Calculate time since posted
+      const timeAgo = getTimeAgo(job.postedDate);
+      
+      // Get description excerpt
+      const descriptionExcerpt = getDescriptionExcerpt(job.description?.text || '');
+      
+      return {
+        ...job,
+        employer: employer,
+        category: job.featured?.category || 'web-development',
+        categoryIcon: categoryIcon,
+        budgetRange: budgetRange,
+        timeAgo: timeAgo,
+        descriptionExcerpt: descriptionExcerpt,
+        skills: (job.description?.skills || []).slice(0, 3) // Show only first 3 skills
+      };
+    });
+
+    return formattedJobs;
+  } catch (error) {
+    console.error('Error fetching featured jobs with details:', error);
+    return [];
+  }
+}
+
+// Helper functions for formatting featured jobs
+function getCategoryIcon(category, skills) {
+  const skillsLower = skills.map(skill => skill.toLowerCase());
+  
+  // Check for web development
+  if (skillsLower.some(skill => 
+    ['javascript', 'react', 'angular', 'vue', 'html', 'css', 'node'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-code';
+  }
+  
+  // Check for design
+  if (skillsLower.some(skill => 
+    ['design', 'photoshop', 'figma', 'illustrator', 'ui', 'ux'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-paint-brush';
+  }
+  
+  // Check for writing
+  if (skillsLower.some(skill => 
+    ['writing', 'content', 'copywriting', 'blog'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-pen-nib';
+  }
+  
+  // Check for data science
+  if (skillsLower.some(skill => 
+    ['python', 'data', 'analytics', 'sql', 'machine learning'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-chart-line';
+  }
+  
+  // Check for marketing
+  if (skillsLower.some(skill => 
+    ['marketing', 'seo', 'social media', 'advertising'].some(tech => skill.includes(tech)))) {
+    return 'fas fa-bullhorn';
+  }
+  
+  // Default to software development
+  return 'fas fa-laptop-code';
+}
+
+function createBudgetRange(amount) {
+  const minVariation = Math.floor(amount * 0.7); // 30% less
+  const maxVariation = Math.floor(amount * 1.3); // 30% more
+  
+  return {
+    min: minVariation,
+    max: maxVariation,
+    formatted: `₹${minVariation.toLocaleString()} - ₹${maxVariation.toLocaleString()}`
+  };
+}
+
+function getTimeAgo(postedDate) {
+  const now = new Date();
+  const posted = new Date(postedDate);
+  const diffTime = Math.abs(now - posted);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+  
+  if (diffDays === 0) {
+    return `${diffHours} hours`;
+  } else if (diffDays === 1) {
+    return '1 day';
+  } else if (diffDays <= 30) {
+    return `${diffDays} days`;
+  } else {
+    const diffMonths = Math.floor(diffDays / 30);
+    return `${diffMonths} month${diffMonths > 1 ? 's' : ''}`;
+  }
+}
+
+function getDescriptionExcerpt(description) {
+  if (!description) return 'No description available';
+  
+  const words = description.split(' ');
+  const excerpt = words.slice(0, 18).join(' '); // Take first 18 words
+  
+  return words.length > 18 ? `${excerpt}...` : excerpt;
+}

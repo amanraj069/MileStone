@@ -8,6 +8,7 @@ const Complaint = require("./complaint");
 const Subscription = require("./subscription");
 const Skill = require("./skill");
 const Message = require("./message");
+const Blog = require("./blog");
 
 module.exports = {
   User,
@@ -20,4 +21,5 @@ module.exports = {
   Subscription,
   Skill,
   Message,
+  Blog,
 };

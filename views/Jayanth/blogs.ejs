@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Management</title>
+    <link rel="stylesheet" href="/css/adminD/sidebar.css" />
+    <link rel="stylesheet" href="/css/adminD/job_listings.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      .filter-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .filter-left {
+        display: flex;
+        gap: 10px;
+      }
+      
+      .filter-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .feature-btn {
+        padding: 10px 16px;
+        border: 2px solid #e0e7ff;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        font-size: 14px;
+        font-weight: 500;
+        color: #334155;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .feature-btn:hover {
+        border-color: #3949ab;
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+      }
+      
+      .create-blog-btn {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #3949ab 0%, #5c6bc0 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 2px 4px rgba(57, 73, 171, 0.3);
+      }
+      
+      .create-blog-btn:hover {
+        background: linear-gradient(135deg, #2c387e 0%, #4a5bb8 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(57, 73, 171, 0.4);
+      }
+      
+      .feature-checkbox-container {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        background: #f0f8ff;
+        border-radius: 4px;
+        border: 1px solid #3949ab;
+        margin: 10px 0;
+      }
+      
+      .feature-checkbox {
+        margin: 0;
+        cursor: pointer;
+      }
+      
+      .feature-checkbox-container label {
+        font-size: 12px;
+        color: #3949ab;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      .blog-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .blog-card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+      }
+
+      .blog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+
+      .blog-title {
+        color: #1e293b;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        line-height: 1.3;
+      }
+
+      .blog-category {
+        display: inline-block;
+        padding: 4px 12px;
+        background: #e0f2fe;
+        color: #0369a1;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      .blog-meta {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .blog-meta i {
+        margin-right: 5px;
+        color: #3949ab;
+      }
+
+      .blog-tagline {
+        color: #475569;
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+      }
+
+      .blog-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .btn-view {
+        padding: 8px 16px;
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-view:hover {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      .featured-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        background: #10b981;
+        color: white;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 500;
+        margin-left: 10px;
+      }
+
+      .no-blogs {
+        text-align: center;
+        padding: 60px 20px;
+        color: #64748b;
+      }
+
+      .no-blogs i {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #cbd5e1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <%- include('Partials/sidebar', { user: user, activePage: 'blogs' }) %>
+      <div class="main-content">
+        <section id="blogs" class="section-content active">
+          <h1>Blog Management</h1>
+          
+          <div class="search-bar" style="margin-bottom: 20px">
+            <form
+              action="/adminD/blogs"
+              method="GET"
+              style="display: flex; align-items: center"
+            >
+              <input
+                type="text"
+                name="q"
+                value="<%= searchQuery %>"
+                placeholder="Search blogs by title, tagline or category..."
+                style="
+                  padding: 8px;
+                  flex: 1;
+                  border: 1px solid #ddd;
+                  border-radius: 4px 0 0 4px;
+                  background-color: #f0f0f0;
+                "
+              />
+              <button
+                type="submit"
+                style="
+                  padding: 8px;
+                  background-color: #3949ab;
+                  border: none;
+                  border-radius: 0 4px 4px 0;
+                  cursor: pointer;
+                "
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <div class="filter-buttons">
+            <div class="filter-left">
+              <!-- Could add filter buttons here for blog status, category etc -->
+            </div>
+            <div class="filter-right">
+              <button id="featureBlogBtn" class="feature-btn">
+                <i class="fas fa-star"></i>
+                Feature Blog
+              </button>
+              <a href="/adminD/blogs/create" class="create-blog-btn">
+                <i class="fas fa-plus"></i>
+                Create Blog
+              </a>
+            </div>
+          </div>
+
+          <div class="blogs-container">
+            <% if (blogs && blogs.length > 0) { %>
+              <% blogs.forEach(blog => { %>
+                <div class="blog-card" data-blog-id="<%= blog.blogId %>">
+                  <div class="blog-header">
+                    <div style="flex: 1;">
+                      <div class="blog-category"><%= blog.category %></div>
+                      <h3 class="blog-title">
+                        <%= blog.title %>
+                        <% if (blog.featured && blog.featured.isFeatured) { %>
+                          <span class="featured-badge">
+                            <i class="fas fa-star"></i> Featured
+                          </span>
+                        <% } %>
+                      </h3>
+                      <div class="blog-meta">
+                        <span>
+                          <i class="fas fa-calendar"></i>
+                          <%= blog.formattedCreatedAt %>
+                        </span>
+                        <span>
+                          <i class="fas fa-clock"></i>
+                          <%= blog.readTimeDisplay %>
+                        </span>
+                        <span>
+                          <i class="fas fa-eye"></i>
+                          <%= blog.views || 0 %> views
+                        </span>
+                      </div>
+                      <p class="blog-tagline"><%= blog.tagline %></p>
+                    </div>
+                  </div>
+                  
+                  <div class="feature-checkbox-container" style="display: none;">
+                    <input 
+                      type="checkbox" 
+                      class="feature-checkbox" 
+                      data-blog-id="<%= blog.blogId %>" 
+                      <%= blog.featured && blog.featured.isFeatured ? 'checked' : '' %>
+                    />
+                    <label>Feature this blog</label>
+                  </div>
+
+                  <div class="blog-actions">
+                    <a href="/blog/<%= blog.blogId %>" class="btn-view">
+                      <i class="fas fa-eye"></i> View Blog
+                    </a>
+                  </div>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <div class="no-blogs">
+                <i class="fas fa-blog"></i>
+                <h3>No Blogs Found</h3>
+                <p>
+                  <% if (searchQuery) { %>
+                    No blogs match your search criteria.
+                  <% } else { %>
+                    No blogs have been created yet. Create your first blog to get started!
+                  <% } %>
+                </p>
+              </div>
+            <% } %>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      // Feature blog functionality
+      const featureBlogBtn = document.getElementById('featureBlogBtn');
+      const checkboxContainers = document.querySelectorAll('.feature-checkbox-container');
+      let featureModeActive = false;
+
+      featureBlogBtn.addEventListener('click', function() {
+        featureModeActive = !featureModeActive;
+        
+        if (featureModeActive) {
+          this.innerHTML = '<i class="fas fa-times"></i> Cancel';
+          this.style.background = 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)';
+          
+          // Show all checkboxes
+          checkboxContainers.forEach(container => {
+            container.style.display = 'flex';
+          });
+        } else {
+          this.innerHTML = '<i class="fas fa-star"></i> Feature Blog';
+          this.style.background = 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)';
+          this.style.color = '#334155';
+          
+          // Hide all checkboxes
+          checkboxContainers.forEach(container => {
+            container.style.display = 'none';
+          });
+        }
+      });
+
+      // Handle checkbox changes
+      document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const blogId = this.getAttribute('data-blog-id');
+          const isChecked = this.checked;
+          
+          // If checking this blog, uncheck all others (only one can be featured)
+          if (isChecked) {
+            document.querySelectorAll('.feature-checkbox').forEach(cb => {
+              if (cb !== this) {
+                cb.checked = false;
+              }
+            });
+          }
+          
+          // Send AJAX request to update feature status
+          fetch('/adminD/blogs/feature', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              blogId: blogId,
+              isFeatured: isChecked
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              console.log('Blog feature status updated successfully');
+              if (isChecked) {
+                showNotification('Blog featured successfully!', 'success');
+              } else {
+                showNotification('Blog unfeatured successfully!', 'success');
+              }
+              
+              // Refresh page to update featured badges
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            } else {
+              console.error('Error updating blog feature status:', data.message);
+              // Revert checkbox state
+              this.checked = !isChecked;
+              showNotification('Error updating blog feature status', 'error');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            // Revert checkbox state
+            this.checked = !isChecked;
+            showNotification('Network error occurred', 'error');
+          });
+        });
+      });
+
+      // Notification function
+      function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          background: ${type === 'success' ? '#10b981' : '#ef4444'};
+          color: white;
+          border-radius: 8px;
+          z-index: 1000;
+          font-size: 14px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+
+      // Search functionality
+      const searchInput = document.querySelector('input[name="q"]');
+      const blogCards = document.querySelectorAll('.blog-card');
+      
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          blogCards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

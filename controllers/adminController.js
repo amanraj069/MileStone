@@ -6,6 +6,7 @@ const Freelancer = require("../models/freelancer");
 const JobListing = require("../models/job_listing");
 const Skill = require("../models/skill");
 const Complaint = require("../models/complaint");
+const Blog = require("../models/blog");
 
 exports.getAdminDashboard = (req, res) => {
   res.redirect("/adminD/profile");
@@ -44,6 +45,51 @@ exports.getJobListings = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
+  }
+};
+
+exports.featureJob = async (req, res) => {
+  try {
+    const { jobId, featureType, isActive } = req.body;
+
+    if (!jobId || !featureType) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "Job ID and feature type are required" 
+      });
+    }
+
+    const updateData = {
+      "featured.isActive": isActive,
+      "featured.category": isActive ? featureType : null,
+      "featured.featuredAt": isActive ? new Date() : null,
+    };
+
+    const updatedJob = await JobListing.findOneAndUpdate(
+      { jobId: jobId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedJob) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "Job not found" 
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      message: `Job ${isActive ? 'featured' : 'unfeatured'} successfully`,
+      job: updatedJob
+    });
+
+  } catch (error) {
+    console.error("Error featuring job:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Server error while updating job feature status" 
+    });
   }
 };
 
@@ -610,5 +656,147 @@ exports.updateEmployerRating = async (req, res) => {
   } catch (error) {
     console.error("Error updating employer rating:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Blog Management Functions
+exports.getBlogs = async (req, res) => {
+  try {
+    const { q } = req.query;
+    let query = {};
+    
+    if (q) {
+      query = {
+        $or: [
+          { title: { $regex: q, $options: 'i' } },
+          { tagline: { $regex: q, $options: 'i' } },
+          { category: { $regex: q, $options: 'i' } }
+        ]
+      };
+    }
+
+    const blogs = await Blog.find(query)
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const blogsData = blogs.map(blog => ({
+      ...blog,
+      formattedCreatedAt: new Date(blog.createdAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }),
+      readTimeDisplay: `${blog.minReadTime} min read`
+    }));
+
+    res.render("Jayanth/blogs", {
+      user: req.session.user,
+      blogs: blogsData,
+      searchQuery: q || ""
+    });
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.getCreateBlog = (req, res) => {
+  res.render("Jayanth/others/create-blog", {
+    user: req.session.user
+  });
+};
+
+exports.createBlog = async (req, res) => {
+  try {
+    const { title, tagline, category, imageUrl, minReadTime, content } = req.body;
+    
+    // Parse content if it's a string
+    let parsedContent = [];
+    if (typeof content === 'string') {
+      parsedContent = JSON.parse(content);
+    } else {
+      parsedContent = content;
+    }
+
+    const newBlog = new Blog({
+      title,
+      tagline,
+      category,
+      imageUrl,
+      minReadTime: parseInt(minReadTime),
+      content: parsedContent,
+      createdBy: req.session.user.id,
+    });
+
+    await newBlog.save();
+
+    res.json({
+      success: true,
+      message: "Blog created successfully",
+      blogId: newBlog.blogId
+    });
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error creating blog"
+    });
+  }
+};
+
+exports.featureBlog = async (req, res) => {
+  try {
+    const { blogId, isFeatured } = req.body;
+
+    if (!blogId) {
+      return res.status(400).json({
+        success: false,
+        message: "Blog ID is required"
+      });
+    }
+
+    // If featuring this blog, unfeature all other blogs first
+    if (isFeatured) {
+      await Blog.updateMany(
+        { 'featured.isFeatured': true },
+        { 
+          $set: { 
+            'featured.isFeatured': false,
+            'featured.featuredAt': null
+          }
+        }
+      );
+    }
+
+    const updateData = {
+      'featured.isFeatured': isFeatured,
+      'featured.featuredAt': isFeatured ? new Date() : null,
+    };
+
+    const updatedBlog = await Blog.findOneAndUpdate(
+      { blogId: blogId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedBlog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found"
+      });
+    }
+
+    res.json({
+      success: true,
+      message: `Blog ${isFeatured ? 'featured' : 'unfeatured'} successfully`,
+      blog: updatedBlog
+    });
+
+  } catch (error) {
+    console.error("Error featuring blog:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error while updating blog feature status"
+    });
   }
 };
