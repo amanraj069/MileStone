@@ -156,7 +156,7 @@
           </div>
 
           <div class="edit-form-container">
-            <form id="profileEditForm" action="/freelancerD/profile/update" method="POST" enctype="multipart/form-data">
+            <form id="profileEditForm" action="/freelancerD/profile/update" method="POST" enctype="multipart/form-data" novalidate>
               <div class="form-section">
                 <h3 class="form-section-title">Basic Information</h3>
 
@@ -264,12 +264,9 @@
                       id="phone"
                       name="phone"
                       value="<%= user.phone || '' %>"
-                      pattern="[0-9\s\-\(\)]{10}"
                       maxlength="14"
                       placeholder="Enter your 10-digit phone number"
-                      title="Please enter a valid 10-digit phone number"
                     />
-                    <small class="field-note">Enter a valid 10-digit phone number</small>
                     <div id="phoneError" class="error-message" style="display: none;"></div>
                   </div>
                 </div>
@@ -623,12 +620,21 @@
         const trimmed = phoneNumber.trim();
         if (!trimmed) return ''; // Phone is optional
         
+        // Phone regex patterns for validation
+        const phonePattern = /^[2-9]\d{2}[-.]?\d{3}[-.]?\d{4}$/; // US format: (2-9)XX-XXX-XXXX
+        const digitsOnlyPattern = /^\d{10}$/; // Exactly 10 digits
+        
         // Remove all non-digit characters for validation
         const digitsOnly = trimmed.replace(/\D/g, '');
         
         // Check if it's exactly 10 digits
-        if (digitsOnly.length !== 10) {
+        if (!digitsOnlyPattern.test(digitsOnly)) {
           return 'Phone number must be exactly 10 digits';
+        }
+        
+        // Check if the original input matches acceptable format
+        if (!phonePattern.test(trimmed) && !digitsOnlyPattern.test(trimmed)) {
+          return 'Please enter a valid phone number format (e.g., 123-456-7890 or 1234567890)';
         }
         
         // Check if it starts with a valid digit (not 0 or 1)
@@ -695,21 +701,48 @@
         }
       }
 
-      // Generic error display function
+      // Generic error display function with DOM manipulation
       function displayFieldError(fieldId, message) {
         const errorDiv = document.getElementById(`${fieldId}Error`);
         const fieldInput = document.getElementById(fieldId);
         
+        console.log(`displayFieldError called - Field: ${fieldId}, Message: ${message}, ErrorDiv found: ${!!errorDiv}, FieldInput found: ${!!fieldInput}`); // Debug log
+        
+        if (!errorDiv || !fieldInput) {
+          console.error(`Missing elements for field ${fieldId}:`, { errorDiv: !!errorDiv, fieldInput: !!fieldInput });
+          return;
+        }
+        
         if (message) {
+          // Show error using DOM manipulation
           errorDiv.textContent = message;
           errorDiv.style.display = 'block';
+          errorDiv.style.color = '#dc2626';
+          errorDiv.style.fontSize = '12px';
+          errorDiv.style.marginTop = '4px';
+          errorDiv.style.fontWeight = '500';
+          
+          // Add error styling to input
           fieldInput.classList.add('error');
           fieldInput.classList.remove('valid');
+          fieldInput.style.borderColor = '#dc2626';
+          fieldInput.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
         } else {
+          // Hide error using DOM manipulation
           errorDiv.style.display = 'none';
+          errorDiv.textContent = '';
+          
+          // Remove error styling and add valid styling if field has value
           fieldInput.classList.remove('error');
+          fieldInput.style.borderColor = '';
+          fieldInput.style.boxShadow = '';
+          
           if (fieldInput.value.trim()) {
             fieldInput.classList.add('valid');
+            fieldInput.style.borderColor = '#10b981';
+            fieldInput.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+          } else {
+            fieldInput.classList.remove('valid');
           }
         }
       }
@@ -738,6 +771,14 @@
       document.getElementById('phone').addEventListener('input', function(e) {
         const error = validatePhoneNumber(e.target.value);
         displayFieldError('phone', error);
+        console.log('Phone validation - Input:', e.target.value, 'Error:', error); // Debug log
+      });
+
+      // Also validate on blur (when user leaves the field)
+      document.getElementById('phone').addEventListener('blur', function(e) {
+        const error = validatePhoneNumber(e.target.value);
+        displayFieldError('phone', error);
+        console.log('Phone validation - Blur:', e.target.value, 'Error:', error); // Debug log
       });
 
       document.getElementById('location').addEventListener('input', function(e) {
@@ -765,7 +806,7 @@
         });
       });
 
-      // Phone number formatting (formats as user types - 10 digits only)
+      // Phone number formatting and validation (formats as user types - 10 digits only)
       document.getElementById('phone').addEventListener('keyup', function(e) {
         let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
         
@@ -787,6 +828,11 @@
         }
         
         e.target.value = formattedValue;
+        
+        // Trigger validation after formatting
+        const error = validatePhoneNumber(e.target.value);
+        displayFieldError('phone', error);
+        console.log('Phone formatting and validation - Formatted:', formattedValue, 'Error:', error); // Debug log
       });
 
       // Add Experience
