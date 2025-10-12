@@ -110,44 +110,113 @@
       .available-skills {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 15px;
+        max-width: 100%;
+        gap: 20px;
+      }
+
+      @media (min-width: 1200px) {
+        .available-skills {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
 
       .skill-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 15px;
         background: white;
-        border-radius: 8px;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
         border: 2px solid #e1e5e9;
         transition: all 0.3s ease;
+        position: relative;
       }
 
       .skill-item:hover {
         border-color: #2563eb;
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       }
 
-      .skill-item .skill-tag.acquired {
-        background: #10b981;
+      .skill-item.acquired {
+        border-color: #10b981;
+        background: #f0fdf4;
+      }
+
+      .skill-item.acquired:hover {
+        border-color: #10b981;
+      }
+
+      .skill-badge-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
         position: relative;
+        box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
       }
 
-      .acquired-check {
-        margin-left: 8px;
-        font-weight: bold;
+      .skill-badge-icon::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(135deg, #1e40af, #3b82f6, #1e40af);
+        border-radius: 50%;
+        z-index: -1;
+      }
+
+      .skill-item.acquired .skill-badge-icon {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+      }
+
+      .skill-item.acquired .skill-badge-icon::before {
+        background: linear-gradient(135deg, #059669, #10b981, #059669);
+      }
+
+      .skill-name {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .skill-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      .acquired-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #10b981;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
       }
 
       .take-quiz-btn {
         background: #f59e0b;
         color: white;
-        padding: 6px 12px;
+        padding: 8px 16px;
         border: none;
-        border-radius: 6px;
-        font-size: 12px;
+        border-radius: 8px;
+        font-size: 14px;
         text-decoration: none;
         transition: all 0.3s ease;
+        font-weight: 500;
       }
 
       .take-quiz-btn:hover {
@@ -157,8 +226,14 @@
 
       .badges-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
+      }
+
+      @media (min-width: 1200px) {
+        .badges-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
 
       .badge-item {
@@ -227,46 +302,55 @@
         </div>
 
         <div class="content-card">
-          <!-- Skills Section -->
+          <!-- Available Skills Section -->
           <section class="skills-section">
             <h4 class="section-title">
-              <i class="fas fa-code"></i>
-              Your Skills
+              <i class="fas fa-plus-circle"></i>
+              Available Skills
             </h4>
-            <div class="skills-list">
-              <% if (freelancerSkills && freelancerSkills.length > 0) { %> <%
-              freelancerSkills.forEach(skill => { %>
-              <span class="skill-tag"><%= skill %></span>
-              <% }) %> <% } else { %>
-              <div class="no-content">
-                No skills acquired yet. Take a quiz to add skills!
-              </div>
-              <% } %>
-            </div>
-
-            <div class="add-skill">
-              <h5>Available Skills</h5>
-              <div class="skills-list available-skills">
-                <% skills.forEach(skill => { %>
-                <div class="skill-item">
-                  <span
-                    class="skill-tag <%= skill.isAcquired ? 'acquired' : '' %>"
-                  >
-                    <%= skill.name %> <% if (skill.isAcquired) { %>
-                    <span class="acquired-check">✔</span>
-                    <% } %>
-                  </span>
-                  <% if (skill.hasQuiz && !skill.isAcquired) { %>
-                  <a
-                    href="skills_badges/quiz/<%= skill.skillId %>"
-                    class="take-quiz-btn"
-                  >
-                    Take Quiz
-                  </a>
+            <div class="available-skills">
+              <% skills.filter(skill => !skill.isAcquired).forEach(skill => { %>
+              <div class="skill-item">
+                <div class="skill-badge-icon">
+                  <% if (skill.name.toLowerCase().includes('javascript')) { %>
+                  <i class="fab fa-js-square"></i>
+                  <% } else if (skill.name.toLowerCase().includes('python')) {
+                  %>
+                  <i class="fab fa-python"></i>
+                  <% } else if (skill.name.toLowerCase().includes('react')) { %>
+                  <i class="fab fa-react"></i>
+                  <% } else if (skill.name.toLowerCase().includes('html')) { %>
+                  <i class="fab fa-html5"></i>
+                  <% } else if (skill.name.toLowerCase().includes('css')) { %>
+                  <i class="fab fa-css3-alt"></i>
+                  <% } else if (skill.name.toLowerCase().includes('node')) { %>
+                  <i class="fab fa-node-js"></i>
+                  <% } else if (skill.name.toLowerCase().includes('design')) {
+                  %>
+                  <i class="fas fa-palette"></i>
+                  <% } else { %>
+                  <i class="fas fa-code"></i>
                   <% } %>
                 </div>
-                <% }) %>
+                <h5 class="skill-name"><%= skill.name %></h5>
+                <p class="skill-description">
+                  <% if (skill.name.includes('Beginner')) { %> Master the
+                  fundamentals of <%= skill.name.replace(' Beginner', '') %>
+                  programming <% } else if (skill.name.includes('Advanced')) {
+                  %> Advanced concepts and techniques in <%=
+                  skill.name.replace(' Advanced', '') %> <% } else { %>
+                  Essential skills in <%= skill.name %> development <% } %>
+                </p>
+                <% if (skill.hasQuiz) { %>
+                <a
+                  href="skills_badges/quiz/<%= skill.skillId %>"
+                  class="take-quiz-btn"
+                >
+                  Take Quiz
+                </a>
+                <% } %>
               </div>
+              <% }) %>
             </div>
           </section>
 
@@ -277,33 +361,48 @@
               Your Badges
             </h4>
             <div class="badges-grid">
+              <!-- Acquired Skills as Badges -->
+              <% skills.filter(skill => skill.isAcquired).forEach(skill => { %>
               <div class="badge-item">
-                <img
-                  src="/assets/portfolio/topfreelancer_badge.png"
-                  alt="Top Freelancer"
-                />
-                <h5>Top Freelancer</h5>
-                <p>Earned for completing 50+ projects with a 4.5+ rating</p>
-                <span class="badge-date">Earned: Jan 2025</span>
+                <div
+                  class="skill-badge-icon"
+                  style="width: 80px; height: 80px; margin: 0 auto 15px"
+                >
+                  <% if (skill.name.toLowerCase().includes('javascript')) { %>
+                  <i class="fab fa-js-square"></i>
+                  <% } else if (skill.name.toLowerCase().includes('python')) {
+                  %>
+                  <i class="fab fa-python"></i>
+                  <% } else if (skill.name.toLowerCase().includes('react')) { %>
+                  <i class="fab fa-react"></i>
+                  <% } else if (skill.name.toLowerCase().includes('html')) { %>
+                  <i class="fab fa-html5"></i>
+                  <% } else if (skill.name.toLowerCase().includes('css')) { %>
+                  <i class="fab fa-css3-alt"></i>
+                  <% } else if (skill.name.toLowerCase().includes('node')) { %>
+                  <i class="fab fa-node-js"></i>
+                  <% } else if (skill.name.toLowerCase().includes('design')) {
+                  %>
+                  <i class="fas fa-palette"></i>
+                  <% } else { %>
+                  <i class="fas fa-code"></i>
+                  <% } %>
+                </div>
+                <h5><%= skill.name %></h5>
+                <p>
+                  <% if (skill.name.includes('Beginner')) { %> Mastered the
+                  fundamentals of <%= skill.name.replace(' Beginner', '') %>
+                  programming <% } else if (skill.name.includes('Advanced')) {
+                  %> Advanced expertise in <%= skill.name.replace(' Advanced',
+                  '') %> <% } else { %> Certified skills in <%= skill.name %>
+                  development <% } %>
+                </p>
+                <span class="badge-date"
+                  >Earned: <%= new Date().toLocaleDateString('en-US', { month:
+                  'short', year: 'numeric' }) %></span
+                >
               </div>
-              <div class="badge-item">
-                <img
-                  src="/assets/portfolio/risingstar_badge.png"
-                  alt="Rising Star"
-                />
-                <h5>Rising Star</h5>
-                <p>Earned for completing 10 projects within first 3 months</p>
-                <span class="badge-date">Earned: Aug 2024</span>
-              </div>
-              <div class="badge-item">
-                <img
-                  src="/assets/portfolio/codemaster_badge.png"
-                  alt="Code Master"
-                />
-                <h5>Code Master</h5>
-                <p>Earned for expertise in 5+ programming languages</p>
-                <span class="badge-date">Earned: Nov 2024</span>
-              </div>
+              <% }) %>
             </div>
           </section>
         </div>
