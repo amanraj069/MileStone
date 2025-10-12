@@ -178,7 +178,7 @@
 
       .user-header {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 15px;
         margin-bottom: 15px;
       }
@@ -211,21 +211,22 @@
       }
 
       .user-info {
-        flex: 1;
+        display: flex;
+        flex-direction: column;
       }
 
       .user-name {
         font-size: 18px;
         font-weight: 600;
         color: #333;
-        margin-bottom: 5px;
+        margin: 0;
       }
 
-      .user-title {
-        color: #10b981;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 8px;
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-right: 10px;
       }
 
       .user-location {
@@ -234,13 +235,7 @@
         display: flex;
         align-items: center;
         gap: 5px;
-      }
-
-      .rating {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        margin-bottom: 8px;
+        margin-left: 20px;
       }
 
       .rating-stars {
@@ -305,26 +300,6 @@
       .meta-value {
         color: #333;
         font-weight: 500;
-      }
-
-      .availability-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 11px;
-        font-weight: 500;
-      }
-
-      .availability-badge.available {
-        background: #d1fae5;
-        color: #065f46;
-      }
-
-      .availability-badge.busy {
-        background: #fed7d7;
-        color: #c53030;
       }
 
       .user-actions {
@@ -549,11 +524,6 @@
                 <h3 class="user-name">
                   <%= freelancer.name || 'Unnamed Freelancer' %>
                 </h3>
-                <p class="user-title">
-                  <i class="fas fa-user-graduate"></i>
-                  <%= freelancer.experience?.[0]?.title || freelancer.role ||
-                  'Freelancer' %>
-                </p>
                 <div class="rating">
                   <div class="rating-stars">
                     <% const rating = freelancer.rating || 4.5; %> <% for(let i
@@ -568,10 +538,10 @@
                   </div>
                   <span class="rating-value"><%= rating %></span>
                 </div>
-                <p class="user-location">
+                <div class="user-location">
                   <i class="fas fa-map-marker-alt"></i>
                   <%= freelancer.location || 'Location not specified' %>
-                </p>
+                </div>
               </div>
             </div>
 
@@ -607,19 +577,6 @@
                 <span class="meta-value"
                   ><%= freelancer.completedJobs || 0 %></span
                 >
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">
-                  <i class="fas fa-clock"></i> Availability
-                </span>
-                <span class="meta-value">
-                  <span
-                    class="availability-badge <%= freelancer.isAvailable ? 'available' : 'busy' %>"
-                  >
-                    <i class="fas fa-circle"></i>
-                    <%= freelancer.isAvailable ? 'Available' : 'Busy' %>
-                  </span>
-                </span>
               </div>
               <div class="meta-item">
                 <span class="meta-label">

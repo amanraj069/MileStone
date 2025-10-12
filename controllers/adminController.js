@@ -61,7 +61,7 @@ exports.featureJob = async (req, res) => {
 
     const updateData = {
       "featured.isActive": isActive,
-      "featured.category": isActive ? featureType : null,
+      "featured.type": isActive ? featureType : null,
       "featured.featuredAt": isActive ? new Date() : null,
     };
 

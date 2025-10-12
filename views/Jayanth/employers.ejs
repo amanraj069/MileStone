@@ -176,14 +176,13 @@
 
       .user-header {
         display: flex;
-        align-items: center;
         gap: 15px;
         margin-bottom: 15px;
       }
 
       .user-avatar {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         border-radius: 12px;
         overflow: hidden;
         border: 3px solid #e1e5e9;
@@ -198,41 +197,56 @@
 
       .user-info {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .name-and-contact {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 8px;
+        gap: 10px;
       }
 
       .user-name {
         font-size: 18px;
         font-weight: 600;
         color: #333;
-        margin-bottom: 5px;
+        margin: 0;
+        margin-right: 40px;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .user-title {
         color: #2563eb;
         font-size: 14px;
         font-weight: 500;
-        margin-bottom: 8px;
+        margin: 0;
+        flex-shrink: 0;
+        white-space: nowrap;
       }
 
-      .user-location {
-        color: #666;
-        font-size: 13px;
+      .rating-and-location {
         display: flex;
-        align-items: center;
+        flex-direction: column;
         gap: 5px;
       }
 
       .rating {
         display: flex;
         align-items: center;
-        gap: 5px;
-        margin-bottom: 8px;
+        gap: 6px;
       }
 
       .rating-stars {
         color: #fbbf24;
         display: flex;
-        gap: 2px;
+        gap: 1px;
       }
 
       .rating-value {
@@ -241,9 +255,18 @@
         font-weight: 500;
       }
 
+      .user-location {
+        color: #666;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+      }
+
       .user-meta {
         background: #f8f9fa;
-        padding: 12px;
+        padding: 16px;
         border-radius: 8px;
         margin: 15px 0;
       }
@@ -252,8 +275,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
         font-size: 13px;
+        min-height: 20px;
       }
 
       .meta-item:last-child {
@@ -264,34 +288,39 @@
         color: #666;
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 8px;
+        flex-shrink: 0;
       }
 
       .meta-value {
         color: #333;
         font-weight: 500;
+        text-align: right;
+        word-wrap: break-word;
+        margin-left: 10px;
       }
 
       .user-actions {
         display: flex;
-        gap: 8px;
+        gap: 10px;
         margin-top: 15px;
       }
 
       .action-btn {
         flex: 1;
-        padding: 8px 12px;
+        padding: 10px 14px;
         border: none;
         border-radius: 6px;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 5px;
+        gap: 6px;
         text-decoration: none;
+        min-height: 40px;
       }
 
       .btn-primary {
@@ -390,8 +419,36 @@
           grid-template-columns: 1fr;
         }
 
+        .user-header {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 15px;
+        }
+
+        .name-and-contact {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 8px;
+        }
+
+        .user-name {
+          text-align: center;
+          white-space: normal;
+        }
+
+        .user-title {
+          text-align: center;
+        }
+
         .user-actions {
           flex-direction: column;
+          gap: 12px;
+        }
+
+        .action-btn {
+          width: 100%;
         }
 
         .stats-container {
@@ -480,31 +537,35 @@
                 />
               </div>
               <div class="user-info">
-                <h3 class="user-name">
-                  <%= employer.companyName || 'Unnamed Company' %>
-                </h3>
-                <p class="user-title">
-                  <i class="fas fa-user-tie"></i>
-                  <%= employer.name || 'No contact name' %>
-                </p>
-                <div class="rating">
-                  <div class="rating-stars">
-                    <% const rating = employer.rating || 4.5; %> <% for(let i =
-                    1; i <= 5; i++) { %> <% if (i <= Math.floor(rating)) { %>
-                    <i class="fas fa-star"></i>
-                    <% } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
-                    %>
-                    <i class="fas fa-star-half-alt"></i>
-                    <% } else { %>
-                    <i class="far fa-star"></i>
-                    <% } %> <% } %>
-                  </div>
-                  <span class="rating-value"><%= rating %></span>
+                <div class="name-and-contact">
+                  <h3 class="user-name">
+                    <%= employer.companyName || 'Unnamed Company' %>
+                  </h3>
+                  <p class="user-title">
+                    <i class="fas fa-user-tie"></i>
+                    <%= employer.name || 'No contact name' %>
+                  </p>
                 </div>
-                <p class="user-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <%= employer.location || 'Location not specified' %>
-                </p>
+                <div class="rating-and-location">
+                  <div class="rating">
+                    <div class="rating-stars">
+                      <% const rating = employer.rating || 4.5; %> <% for(let i =
+                      1; i <= 5; i++) { %> <% if (i <= Math.floor(rating)) { %>
+                      <i class="fas fa-star"></i>
+                      <% } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+                      %>
+                      <i class="fas fa-star-half-alt"></i>
+                      <% } else { %>
+                      <i class="far fa-star"></i>
+                      <% } %> <% } %>
+                    </div>
+                    <span class="rating-value"><%= rating %></span>
+                  </div>
+                  <div class="user-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <%= employer.location || 'Location not specified' %>
+                  </div>
+                </div>
               </div>
             </div>
 
