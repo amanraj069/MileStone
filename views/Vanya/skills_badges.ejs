@@ -301,16 +301,199 @@
           </p>
         </div>
 
+        <!-- Statistics Cards -->
+        <div class="stats-section" style="margin-bottom: 30px">
+          <div
+            class="stats-grid"
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 20px;
+            "
+          >
+            <div
+              class="stat-card"
+              style="
+                background: white;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                border-left: 4px solid #2563eb;
+              "
+            >
+              <h3
+                id="totalSkills"
+                style="font-size: 24px; color: #2563eb; margin-bottom: 5px"
+              >
+                0
+              </h3>
+              <p style="color: #666; font-size: 14px">Available Skills</p>
+            </div>
+            <div
+              class="stat-card"
+              style="
+                background: white;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                border-left: 4px solid #10b981;
+              "
+            >
+              <h3
+                id="acquiredSkills"
+                style="font-size: 24px; color: #10b981; margin-bottom: 5px"
+              >
+                0
+              </h3>
+              <p style="color: #666; font-size: 14px">Acquired Skills</p>
+            </div>
+            <div
+              class="stat-card"
+              style="
+                background: white;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                border-left: 4px solid #f59e0b;
+              "
+            >
+              <h3
+                id="progressPercentage"
+                style="font-size: 24px; color: #f59e0b; margin-bottom: 5px"
+              >
+                0%
+              </h3>
+              <p style="color: #666; font-size: 14px">Progress</p>
+            </div>
+          </div>
+        </div>
+
         <div class="content-card">
+          <!-- Search and Filter Section -->
+          <div
+            class="search-filter-section"
+            style="
+              margin-bottom: 25px;
+              padding: 20px;
+              background: #f8f9fa;
+              border-radius: 8px;
+              border-left: 4px solid #2563eb;
+            "
+          >
+            <h4 style="margin-bottom: 15px; color: #333">
+              Search & Filter Skills
+            </h4>
+            <div
+              style="
+                display: flex;
+                gap: 15px;
+                flex-wrap: wrap;
+                align-items: center;
+              "
+            >
+              <div>
+                <input
+                  type="text"
+                  id="skillSearch"
+                  placeholder="Search skills..."
+                  style="
+                    padding: 8px 12px;
+                    border: 1px solid #e1e5e9;
+                    border-radius: 6px;
+                    width: 200px;
+                  "
+                />
+                <div
+                  id="searchError"
+                  style="
+                    color: #ef4444;
+                    font-size: 12px;
+                    margin-top: 5px;
+                    display: none;
+                  "
+                ></div>
+              </div>
+              <div>
+                <select
+                  id="skillCategory"
+                  style="
+                    padding: 8px 12px;
+                    border: 1px solid #e1e5e9;
+                    border-radius: 6px;
+                  "
+                >
+                  <option value="">All Categories</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="python">Python</option>
+                  <option value="react">React</option>
+                  <option value="design">Design</option>
+                  <option value="html">HTML</option>
+                  <option value="css">CSS</option>
+                  <option value="node">Node.js</option>
+                </select>
+              </div>
+              <div>
+                <select
+                  id="skillStatus"
+                  style="
+                    padding: 8px 12px;
+                    border: 1px solid #e1e5e9;
+                    border-radius: 6px;
+                  "
+                >
+                  <option value="">All Skills</option>
+                  <option value="available">Available</option>
+                  <option value="acquired">Acquired</option>
+                </select>
+              </div>
+              <button
+                id="clearFilters"
+                style="
+                  padding: 8px 16px;
+                  background: #6b7280;
+                  color: white;
+                  border: none;
+                  border-radius: 6px;
+                  cursor: pointer;
+                "
+              >
+                Clear Filters
+              </button>
+            </div>
+          </div>
+
           <!-- Available Skills Section -->
           <section class="skills-section">
             <h4 class="section-title">
               <i class="fas fa-plus-circle"></i>
               Available Skills
+              <button
+                id="toggleAvailableSkills"
+                style="
+                  margin-left: auto;
+                  padding: 5px 10px;
+                  background: #2563eb;
+                  color: white;
+                  border: none;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-size: 12px;
+                "
+              >
+                Hide
+              </button>
             </h4>
-            <div class="available-skills">
+            <div class="available-skills" id="availableSkillsContainer">
               <% skills.filter(skill => !skill.isAcquired).forEach(skill => { %>
-              <div class="skill-item">
+              <div
+                class="skill-item"
+                data-skill-name="<%= skill.name.toLowerCase() %>"
+                data-skill-category="<%= skill.name.toLowerCase().includes('javascript') ? 'javascript' : skill.name.toLowerCase().includes('python') ? 'python' : skill.name.toLowerCase().includes('react') ? 'react' : skill.name.toLowerCase().includes('html') ? 'html' : skill.name.toLowerCase().includes('css') ? 'css' : skill.name.toLowerCase().includes('node') ? 'node' : skill.name.toLowerCase().includes('design') ? 'design' : 'other' %>"
+                data-skill-status="available"
+              >
                 <div class="skill-badge-icon">
                   <% if (skill.name.toLowerCase().includes('javascript')) { %>
                   <i class="fab fa-js-square"></i>
@@ -342,12 +525,12 @@
                   Essential skills in <%= skill.name %> development <% } %>
                 </p>
                 <% if (skill.hasQuiz) { %>
-                <a
-                  href="skills_badges/quiz/<%= skill.skillId %>"
+                <button
                   class="take-quiz-btn"
+                  onclick="startQuiz('<%= skill.skillId %>', '<%= skill.name %>')"
                 >
                   Take Quiz
-                </a>
+                </button>
                 <% } %>
               </div>
               <% }) %>
@@ -359,11 +542,31 @@
             <h4 class="section-title">
               <i class="fas fa-medal"></i>
               Your Badges
+              <button
+                id="toggleBadges"
+                style="
+                  margin-left: auto;
+                  padding: 5px 10px;
+                  background: #10b981;
+                  color: white;
+                  border: none;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-size: 12px;
+                "
+              >
+                Hide
+              </button>
             </h4>
-            <div class="badges-grid">
+            <div class="badges-grid" id="badgesContainer">
               <!-- Acquired Skills as Badges -->
               <% skills.filter(skill => skill.isAcquired).forEach(skill => { %>
-              <div class="badge-item">
+              <div
+                class="badge-item"
+                data-skill-name="<%= skill.name.toLowerCase() %>"
+                data-skill-category="<%= skill.name.toLowerCase().includes('javascript') ? 'javascript' : skill.name.toLowerCase().includes('python') ? 'python' : skill.name.toLowerCase().includes('react') ? 'react' : skill.name.toLowerCase().includes('html') ? 'html' : skill.name.toLowerCase().includes('css') ? 'css' : skill.name.toLowerCase().includes('node') ? 'node' : skill.name.toLowerCase().includes('design') ? 'design' : 'other' %>"
+                data-skill-status="acquired"
+              >
                 <div
                   class="skill-badge-icon"
                   style="width: 80px; height: 80px; margin: 0 auto 15px"
@@ -405,8 +608,521 @@
               <% }) %>
             </div>
           </section>
+
+          <!-- Quick Actions Section -->
+          <section
+            class="quick-actions"
+            style="
+              margin-top: 40px;
+              padding: 25px;
+              background: #f8f9fa;
+              border-radius: 12px;
+              border-left: 4px solid #f59e0b;
+            "
+          >
+            <h4 style="margin-bottom: 20px; color: #333">Quick Actions</h4>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap">
+              <button
+                id="refreshSkills"
+                style="
+                  padding: 10px 20px;
+                  background: #2563eb;
+                  color: white;
+                  border: none;
+                  border-radius: 6px;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <i class="fas fa-sync-alt"></i> Refresh Skills
+              </button>
+              <button
+                id="downloadProgress"
+                style="
+                  padding: 10px 20px;
+                  background: #10b981;
+                  color: white;
+                  border: none;
+                  border-radius: 6px;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <i class="fas fa-download"></i> Download Progress
+              </button>
+              <button
+                id="shareProgress"
+                style="
+                  padding: 10px 20px;
+                  background: #f59e0b;
+                  color: white;
+                  border: none;
+                  border-radius: 6px;
+                  cursor: pointer;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <i class="fas fa-share"></i> Share Progress
+              </button>
+            </div>
+          </section>
         </div>
       </div>
     </div>
+
+    <script>
+      // Enhanced form validation using DOM manipulation
+      function initializeFormValidation() {
+        const searchInput = document.getElementById("skillSearch");
+        const searchError = document.getElementById("searchError");
+
+        // Real-time search validation
+        searchInput.addEventListener("input", function (e) {
+          const value = e.target.value.trim();
+
+          // Reset styling
+          searchInput.style.borderColor = "";
+          searchError.style.display = "none";
+
+          if (value.length > 0 && value.length < 2) {
+            searchInput.style.borderColor = "#ef4444";
+            searchError.textContent =
+              "Search term must be at least 2 characters";
+            searchError.style.display = "block";
+            return false;
+          }
+
+          if (value.length > 50) {
+            searchInput.style.borderColor = "#ef4444";
+            searchError.textContent = "Search term cannot exceed 50 characters";
+            searchError.style.display = "block";
+            return false;
+          }
+
+          // Special characters validation
+          const specialCharPattern = /[<>{}]/;
+          if (specialCharPattern.test(value)) {
+            searchInput.style.borderColor = "#ef4444";
+            searchError.textContent =
+              "Special characters < > { } are not allowed";
+            searchError.style.display = "block";
+            return false;
+          }
+
+          // Valid input
+          if (value.length >= 2) {
+            searchInput.style.borderColor = "#10b981";
+          }
+
+          // Apply search filter
+          applyFilters();
+          return true;
+        });
+
+        // Category and status filter validation
+        document
+          .getElementById("skillCategory")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("skillStatus")
+          .addEventListener("change", applyFilters);
+      }
+
+      // Dynamic HTML implementation for filtering and interactions
+      function applyFilters() {
+        const searchTerm = document
+          .getElementById("skillSearch")
+          .value.toLowerCase()
+          .trim();
+        const category = document.getElementById("skillCategory").value;
+        const status = document.getElementById("skillStatus").value;
+
+        const allSkills = document.querySelectorAll(".skill-item, .badge-item");
+        let visibleCount = 0;
+
+        allSkills.forEach((skill) => {
+          const skillName = skill.getAttribute("data-skill-name");
+          const skillCategory = skill.getAttribute("data-skill-category");
+          const skillStatus = skill.getAttribute("data-skill-status");
+
+          let shouldShow = true;
+
+          // Apply search filter
+          if (searchTerm && !skillName.includes(searchTerm)) {
+            shouldShow = false;
+          }
+
+          // Apply category filter
+          if (category && skillCategory !== category) {
+            shouldShow = false;
+          }
+
+          // Apply status filter
+          if (status && skillStatus !== status) {
+            shouldShow = false;
+          }
+
+          if (shouldShow) {
+            skill.style.display = "block";
+            skill.style.animation = "fadeIn 0.3s ease-in";
+            visibleCount++;
+          } else {
+            skill.style.display = "none";
+          }
+        });
+
+        updateStatistics();
+        updateNoResultsMessage(visibleCount);
+      }
+
+      function clearFilters() {
+        document.getElementById("skillSearch").value = "";
+        document.getElementById("skillCategory").value = "";
+        document.getElementById("skillStatus").value = "";
+        document.getElementById("searchError").style.display = "none";
+        document.getElementById("skillSearch").style.borderColor = "";
+
+        const allSkills = document.querySelectorAll(".skill-item, .badge-item");
+        allSkills.forEach((skill) => {
+          skill.style.display = "block";
+          skill.style.animation = "fadeIn 0.3s ease-in";
+        });
+
+        updateStatistics();
+        updateNoResultsMessage(allSkills.length);
+      }
+
+      function updateNoResultsMessage(visibleCount) {
+        let noResultsMsg = document.querySelector(".filter-no-results");
+
+        if (visibleCount === 0) {
+          if (!noResultsMsg) {
+            noResultsMsg = document.createElement("div");
+            noResultsMsg.className = "filter-no-results";
+            noResultsMsg.style.cssText =
+              "text-align: center; padding: 40px; background: white; border-radius: 12px; margin: 20px 0; border: 2px dashed #e1e5e9;";
+            noResultsMsg.innerHTML = `
+              <i class="fas fa-search" style="font-size: 48px; color: #e1e5e9; margin-bottom: 15px;"></i>
+              <h3 style="color: #666; margin-bottom: 10px;">No skills found</h3>
+              <p style="color: #999;">Try adjusting your search or filter criteria</p>
+              <button onclick="clearFilters()" style="margin-top: 15px; padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">Clear All Filters</button>
+            `;
+            document.querySelector(".content-card").appendChild(noResultsMsg);
+          }
+          noResultsMsg.style.display = "block";
+        } else if (noResultsMsg) {
+          noResultsMsg.style.display = "none";
+        }
+      }
+
+      // AJAX functionality for skill operations
+      async function refreshSkills() {
+        try {
+          showNotification("Refreshing skills data...", "info");
+
+          const response = await fetch(
+            "/freelancerD/skills_badges/api/refresh",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) throw new Error("Failed to refresh skills");
+
+          const data = await response.json();
+          updateSkillsDisplay(data.skills);
+          updateStatistics();
+
+          showNotification("Skills refreshed successfully!", "success");
+        } catch (error) {
+          console.error("Error refreshing skills:", error);
+          showNotification(
+            "Failed to refresh skills. Please try again.",
+            "error"
+          );
+        }
+      }
+
+      async function startQuiz(skillId, skillName) {
+        try {
+          showNotification(`Starting quiz for ${skillName}...`, "info");
+
+          const response = await fetch(
+            `/freelancerD/skills_badges/quiz/${skillId}/start`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) throw new Error("Failed to start quiz");
+
+          const data = await response.json();
+
+          if (data.quizUrl) {
+            window.location.href = data.quizUrl;
+          } else {
+            throw new Error("Quiz URL not provided");
+          }
+        } catch (error) {
+          console.error("Error starting quiz:", error);
+          showNotification("Failed to start quiz. Please try again.", "error");
+        }
+      }
+
+      async function downloadProgress() {
+        try {
+          showNotification("Generating progress report...", "info");
+
+          const response = await fetch(
+            "/freelancerD/skills_badges/api/progress-report",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) throw new Error("Failed to generate report");
+
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = "skills-progress-report.pdf";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+
+          showNotification(
+            "Progress report downloaded successfully!",
+            "success"
+          );
+        } catch (error) {
+          console.error("Error downloading progress:", error);
+          showNotification("Failed to download progress report.", "error");
+        }
+      }
+
+      function shareProgress() {
+        const totalSkills = document.querySelectorAll(".skill-item").length;
+        const acquiredSkills = document.querySelectorAll(".badge-item").length;
+        const progressPercentage =
+          totalSkills > 0
+            ? Math.round((acquiredSkills / totalSkills) * 100)
+            : 0;
+
+        const shareText = `I've acquired ${acquiredSkills} out of ${totalSkills} skills (${progressPercentage}% progress) on ZeroGravity! 🚀`;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "My Skill Progress",
+              text: shareText,
+              url: window.location.href,
+            })
+            .then(() => {
+              showNotification("Progress shared successfully!", "success");
+            })
+            .catch((error) => {
+              fallbackShare(shareText);
+            });
+        } else {
+          fallbackShare(shareText);
+        }
+      }
+
+      function fallbackShare(text) {
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              showNotification("Progress text copied to clipboard!", "success");
+            })
+            .catch(() => {
+              showNotification("Unable to copy to clipboard.", "error");
+            });
+        } else {
+          // Fallback for older browsers
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand("copy");
+            showNotification("Progress text copied to clipboard!", "success");
+          } catch (err) {
+            showNotification("Unable to copy to clipboard.", "error");
+          }
+          document.body.removeChild(textArea);
+        }
+      }
+
+      function updateStatistics() {
+        const totalSkills = document.querySelectorAll(".skill-item").length;
+        const acquiredSkills = document.querySelectorAll(".badge-item").length;
+        const progressPercentage =
+          totalSkills > 0
+            ? Math.round((acquiredSkills / totalSkills) * 100)
+            : 0;
+
+        // Animate the numbers
+        animateNumber("totalSkills", totalSkills);
+        animateNumber("acquiredSkills", acquiredSkills);
+        animateNumber("progressPercentage", progressPercentage, "%");
+      }
+
+      function animateNumber(elementId, targetValue, suffix = "") {
+        const element = document.getElementById(elementId);
+        const currentValue = parseInt(element.textContent) || 0;
+        const increment = targetValue > currentValue ? 1 : -1;
+        const duration = 1000; // 1 second
+        const steps = Math.abs(targetValue - currentValue);
+        const stepDuration = steps > 0 ? duration / steps : 0;
+
+        if (steps === 0) return;
+
+        let current = currentValue;
+        const timer = setInterval(() => {
+          current += increment;
+          element.textContent = current + suffix;
+
+          if (current === targetValue) {
+            clearInterval(timer);
+          }
+        }, stepDuration);
+      }
+
+      function showNotification(message, type = "info") {
+        const existingNotification = document.querySelector(".notification");
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement("div");
+        notification.className = "notification";
+        notification.style.cssText = `
+          position: fixed; top: 20px; right: 20px; z-index: 1000;
+          padding: 15px 20px; border-radius: 8px; color: white; font-weight: 500;
+          background: ${
+            type === "success"
+              ? "#10b981"
+              : type === "error"
+              ? "#ef4444"
+              : "#2563eb"
+          };
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          animation: slideIn 0.3s ease-out; max-width: 300px;
+        `;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.animation = "slideOut 0.3s ease-in";
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Dynamic section toggling
+      function initializeSectionToggling() {
+        document
+          .getElementById("toggleAvailableSkills")
+          .addEventListener("click", function () {
+            const container = document.getElementById(
+              "availableSkillsContainer"
+            );
+            const button = this;
+
+            if (container.style.display === "none") {
+              container.style.display = "grid";
+              container.style.animation = "fadeIn 0.3s ease-in";
+              button.textContent = "Hide";
+            } else {
+              container.style.display = "none";
+              button.textContent = "Show";
+            }
+          });
+
+        document
+          .getElementById("toggleBadges")
+          .addEventListener("click", function () {
+            const container = document.getElementById("badgesContainer");
+            const button = this;
+
+            if (container.style.display === "none") {
+              container.style.display = "grid";
+              container.style.animation = "fadeIn 0.3s ease-in";
+              button.textContent = "Hide";
+            } else {
+              container.style.display = "none";
+              button.textContent = "Show";
+            }
+          });
+      }
+
+      // Add CSS animations and styles
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+        .skill-item:hover, .badge-item:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .take-quiz-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Initialize all functionality when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeFormValidation();
+        initializeSectionToggling();
+        updateStatistics();
+
+        // Event listeners for quick actions
+        document
+          .getElementById("clearFilters")
+          .addEventListener("click", clearFilters);
+        document
+          .getElementById("refreshSkills")
+          .addEventListener("click", refreshSkills);
+        document
+          .getElementById("downloadProgress")
+          .addEventListener("click", downloadProgress);
+        document
+          .getElementById("shareProgress")
+          .addEventListener("click", shareProgress);
+
+        // Initial filter application
+        applyFilters();
+      });
+    </script>
   </body>
 </html>

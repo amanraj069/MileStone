@@ -37,6 +37,9 @@ router.delete("/quizzes/:skillId", adminController.deleteQuiz);
 router.get("/quizzes/edit/:skillId", adminController.getEditQuiz);
 router.post("/quizzes/edit/:skillId", adminController.updateQuiz);
 
+// API endpoints for AJAX functionality
+router.get("/quizzes/api/skills", adminController.getSkillsAPI);
+
 // Blog Management Routes
 router.get("/blogs", adminController.getBlogs);
 router.get("/blogs/create", adminController.getCreateBlog);

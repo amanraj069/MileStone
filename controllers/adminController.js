@@ -53,9 +53,9 @@ exports.featureJob = async (req, res) => {
     const { jobId, featureType, isActive } = req.body;
 
     if (!jobId || !featureType) {
-      return res.status(400).json({ 
-        success: false, 
-        message: "Job ID and feature type are required" 
+      return res.status(400).json({
+        success: false,
+        message: "Job ID and feature type are required",
       });
     }
 
@@ -72,23 +72,22 @@ exports.featureJob = async (req, res) => {
     );
 
     if (!updatedJob) {
-      return res.status(404).json({ 
-        success: false, 
-        message: "Job not found" 
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
       });
     }
 
-    res.json({ 
-      success: true, 
-      message: `Job ${isActive ? 'featured' : 'unfeatured'} successfully`,
-      job: updatedJob
+    res.json({
+      success: true,
+      message: `Job ${isActive ? "featured" : "unfeatured"} successfully`,
+      job: updatedJob,
     });
-
   } catch (error) {
     console.error("Error featuring job:", error);
-    res.status(500).json({ 
-      success: false, 
-      message: "Server error while updating job feature status" 
+    res.status(500).json({
+      success: false,
+      message: "Server error while updating job feature status",
     });
   }
 };
@@ -213,37 +212,53 @@ exports.getComplaints = async (req, res) => {
 
     // Get user details for complainants (these are already userId values)
     const submittedByIds = [...new Set(complaints.map((c) => c.submittedBy))];
-    const submittedByUsers = await User.find({ userId: { $in: submittedByIds } }).lean();
+    const submittedByUsers = await User.find({
+      userId: { $in: submittedByIds },
+    }).lean();
     const submittedByMap = submittedByUsers.reduce((map, user) => {
       map[user.userId] = user;
       return map;
     }, {});
 
     // Get user details for complained against users (these might be employerId/freelancerId)
-    const againstUserIds = [...new Set(complaints.map((c) => c.againstUser).filter(id => id && id !== 'general'))];
-    
+    const againstUserIds = [
+      ...new Set(
+        complaints
+          .map((c) => c.againstUser)
+          .filter((id) => id && id !== "general")
+      ),
+    ];
+
     // Try to find them as userIds first
-    const againstUsers = await User.find({ userId: { $in: againstUserIds } }).lean();
+    const againstUsers = await User.find({
+      userId: { $in: againstUserIds },
+    }).lean();
     const againstUserMap = againstUsers.reduce((map, user) => {
       map[user.userId] = user;
       return map;
     }, {});
-    
+
     // For IDs not found as userIds, check if they are employerIds or freelancerIds
     for (let id of againstUserIds) {
       if (!againstUserMap[id]) {
         // Check if it's an employerId
         const employer = await Employer.findOne({ employerId: id }).lean();
         if (employer) {
-          const employerUser = await User.findOne({ userId: employer.userId }).lean();
+          const employerUser = await User.findOne({
+            userId: employer.userId,
+          }).lean();
           if (employerUser) {
             againstUserMap[id] = employerUser;
           }
         } else {
           // Check if it's a freelancerId
-          const freelancer = await Freelancer.findOne({ freelancerId: id }).lean();
+          const freelancer = await Freelancer.findOne({
+            freelancerId: id,
+          }).lean();
           if (freelancer) {
-            const freelancerUser = await User.findOne({ userId: freelancer.userId }).lean();
+            const freelancerUser = await User.findOne({
+              userId: freelancer.userId,
+            }).lean();
             if (freelancerUser) {
               againstUserMap[id] = freelancerUser;
             }
@@ -256,14 +271,23 @@ exports.getComplaints = async (req, res) => {
     const formattedComplaints = complaints
       .map((complaint) => {
         const submittedByUser = submittedByMap[complaint.submittedBy];
-        const againstUserData = complaint.againstUser === 'general' ? null : againstUserMap[complaint.againstUser];
+        const againstUserData =
+          complaint.againstUser === "general"
+            ? null
+            : againstUserMap[complaint.againstUser];
 
         return {
           ...complaint,
           submittedByName: submittedByUser?.name || "Unknown User",
           submittedByRole: submittedByUser?.role || "Unknown",
-          againstUserName: complaint.againstUser === 'general' ? "System/Platform" : (againstUserData?.name || "User Not Found"),
-          againstUserRole: complaint.againstUser === 'general' ? "General" : (againstUserData?.role || "Unknown"),
+          againstUserName:
+            complaint.againstUser === "general"
+              ? "System/Platform"
+              : againstUserData?.name || "User Not Found",
+          againstUserRole:
+            complaint.againstUser === "general"
+              ? "General"
+              : againstUserData?.role || "Unknown",
           againstUserId: againstUserData?.userId || null, // Add the actual userId for chat
           formattedDate: new Date(complaint.submittedDate).toLocaleDateString(
             "en-US",
@@ -692,35 +716,33 @@ exports.getBlogs = async (req, res) => {
   try {
     const { q } = req.query;
     let query = {};
-    
+
     if (q) {
       query = {
         $or: [
-          { title: { $regex: q, $options: 'i' } },
-          { tagline: { $regex: q, $options: 'i' } },
-          { category: { $regex: q, $options: 'i' } }
-        ]
+          { title: { $regex: q, $options: "i" } },
+          { tagline: { $regex: q, $options: "i" } },
+          { category: { $regex: q, $options: "i" } },
+        ],
       };
     }
 
-    const blogs = await Blog.find(query)
-      .sort({ createdAt: -1 })
-      .lean();
+    const blogs = await Blog.find(query).sort({ createdAt: -1 }).lean();
 
-    const blogsData = blogs.map(blog => ({
+    const blogsData = blogs.map((blog) => ({
       ...blog,
-      formattedCreatedAt: new Date(blog.createdAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
+      formattedCreatedAt: new Date(blog.createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
       }),
-      readTimeDisplay: `${blog.minReadTime} min read`
+      readTimeDisplay: `${blog.minReadTime} min read`,
     }));
 
     res.render("Jayanth/blogs", {
       user: req.session.user,
       blogs: blogsData,
-      searchQuery: q || ""
+      searchQuery: q || "",
     });
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -730,17 +752,18 @@ exports.getBlogs = async (req, res) => {
 
 exports.getCreateBlog = (req, res) => {
   res.render("Jayanth/others/create-blog", {
-    user: req.session.user
+    user: req.session.user,
   });
 };
 
 exports.createBlog = async (req, res) => {
   try {
-    const { title, tagline, category, imageUrl, minReadTime, content } = req.body;
-    
+    const { title, tagline, category, imageUrl, minReadTime, content } =
+      req.body;
+
     // Parse content if it's a string
     let parsedContent = [];
-    if (typeof content === 'string') {
+    if (typeof content === "string") {
       parsedContent = JSON.parse(content);
     } else {
       parsedContent = content;
@@ -761,13 +784,13 @@ exports.createBlog = async (req, res) => {
     res.json({
       success: true,
       message: "Blog created successfully",
-      blogId: newBlog.blogId
+      blogId: newBlog.blogId,
     });
   } catch (error) {
     console.error("Error creating blog:", error);
     res.status(500).json({
       success: false,
-      message: "Error creating blog"
+      message: "Error creating blog",
     });
   }
 };
@@ -779,26 +802,26 @@ exports.featureBlog = async (req, res) => {
     if (!blogId) {
       return res.status(400).json({
         success: false,
-        message: "Blog ID is required"
+        message: "Blog ID is required",
       });
     }
 
     // If featuring this blog, unfeature all other blogs first
     if (isFeatured) {
       await Blog.updateMany(
-        { 'featured.isFeatured': true },
-        { 
-          $set: { 
-            'featured.isFeatured': false,
-            'featured.featuredAt': null
-          }
+        { "featured.isFeatured": true },
+        {
+          $set: {
+            "featured.isFeatured": false,
+            "featured.featuredAt": null,
+          },
         }
       );
     }
 
     const updateData = {
-      'featured.isFeatured': isFeatured,
-      'featured.featuredAt': isFeatured ? new Date() : null,
+      "featured.isFeatured": isFeatured,
+      "featured.featuredAt": isFeatured ? new Date() : null,
     };
 
     const updatedBlog = await Blog.findOneAndUpdate(
@@ -810,21 +833,52 @@ exports.featureBlog = async (req, res) => {
     if (!updatedBlog) {
       return res.status(404).json({
         success: false,
-        message: "Blog not found"
+        message: "Blog not found",
       });
     }
 
     res.json({
       success: true,
-      message: `Blog ${isFeatured ? 'featured' : 'unfeatured'} successfully`,
-      blog: updatedBlog
+      message: `Blog ${isFeatured ? "featured" : "unfeatured"} successfully`,
+      blog: updatedBlog,
     });
-
   } catch (error) {
     console.error("Error featuring blog:", error);
     res.status(500).json({
       success: false,
-      message: "Server error while updating blog feature status"
+      message: "Server error while updating blog feature status",
+    });
+  }
+};
+
+// API endpoint for refreshing skills data (AJAX support)
+exports.getSkillsAPI = async (req, res) => {
+  try {
+    const searchQuery = req.query.q ? req.query.q.trim() : "";
+
+    let query = {};
+    if (searchQuery) {
+      query.name = { $regex: searchQuery, $options: "i" };
+    }
+
+    const skills = await Skill.find(query).lean();
+
+    const skillData = skills.map((skill) => ({
+      ...skill,
+      questionCount: skill.questions.length,
+      totalMarks: skill.questions.reduce((sum, q) => sum + q.marks, 0),
+    }));
+
+    res.json({
+      success: true,
+      skills: skillData,
+      total: skillData.length,
+    });
+  } catch (error) {
+    console.error("Error in getSkillsAPI:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch skills data",
     });
   }
 };

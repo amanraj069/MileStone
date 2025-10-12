@@ -439,31 +439,486 @@
     </div>
 
     <script>
-      function confirmDelete(skillId, skillName) {
-        if (
-          confirm(
-            `Are you sure you want to delete the skill "${skillName}" and its quiz?`
-          )
-        ) {
-          fetch(`/adminD/quizzes/${skillId}`, {
+      // Enhanced form validation using DOM manipulation
+      function validateSearchForm() {
+        const searchInput = document.querySelector(".search-input");
+        const searchForm = document.querySelector(".search-form");
+
+        // Create error message element if it doesn't exist
+        let errorMessage = document.querySelector(".search-error");
+        if (!errorMessage) {
+          errorMessage = document.createElement("div");
+          errorMessage.className = "search-error";
+          errorMessage.style.cssText =
+            "color: #ef4444; font-size: 12px; margin-top: 5px; display: none;";
+          searchForm.appendChild(errorMessage);
+        }
+
+        // Real-time validation on input
+        searchInput.addEventListener("input", function (e) {
+          const value = e.target.value.trim();
+
+          // Clear previous styling
+          searchInput.style.borderColor = "";
+          errorMessage.style.display = "none";
+
+          if (value.length > 0 && value.length < 2) {
+            searchInput.style.borderColor = "#ef4444";
+            errorMessage.textContent =
+              "Search term must be at least 2 characters";
+            errorMessage.style.display = "block";
+            return false;
+          }
+
+          if (value.length > 50) {
+            searchInput.style.borderColor = "#ef4444";
+            errorMessage.textContent =
+              "Search term must be less than 50 characters";
+            errorMessage.style.display = "block";
+            return false;
+          }
+
+          // Valid input
+          if (value.length >= 2) {
+            searchInput.style.borderColor = "#10b981";
+            errorMessage.style.display = "none";
+          }
+
+          return true;
+        });
+
+        // Form submission validation
+        searchForm.addEventListener("submit", function (e) {
+          const value = searchInput.value.trim();
+
+          if (value.length > 0 && value.length < 2) {
+            e.preventDefault();
+            searchInput.style.borderColor = "#ef4444";
+            errorMessage.textContent =
+              "Search term must be at least 2 characters";
+            errorMessage.style.display = "block";
+            searchInput.focus();
+            return false;
+          }
+
+          if (value.length > 50) {
+            e.preventDefault();
+            searchInput.style.borderColor = "#ef4444";
+            errorMessage.textContent =
+              "Search term must be less than 50 characters";
+            errorMessage.style.display = "block";
+            searchInput.focus();
+            return false;
+          }
+
+          return true;
+        });
+      }
+
+      // Dynamic HTML implementation - Add filter functionality
+      function initializeDynamicFilters() {
+        const contentCard = document.querySelector(".content-card");
+
+        // Create filter section dynamically
+        const filterSection = document.createElement("div");
+        filterSection.className = "filter-section";
+        filterSection.style.cssText =
+          "margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #10b981;";
+
+        const filterTitle = document.createElement("h4");
+        filterTitle.textContent = "Filter Skills";
+        filterTitle.style.cssText =
+          "margin-bottom: 15px; color: #333; font-size: 16px;";
+
+        const filterControls = document.createElement("div");
+        filterControls.className = "filter-controls";
+        filterControls.style.cssText =
+          "display: flex; gap: 15px; flex-wrap: wrap; align-items: center;";
+
+        // Question count filter
+        const questionFilter = document.createElement("div");
+        questionFilter.innerHTML = `
+          <label style="margin-right: 8px; font-weight: 500; color: #666;">Min Questions:</label>
+          <input type="number" id="minQuestions" min="0" max="100" value="0" 
+                 style="padding: 5px 8px; border: 1px solid #e1e5e9; border-radius: 4px; width: 80px;">
+        `;
+
+        // Date filter
+        const dateFilter = document.createElement("div");
+        dateFilter.innerHTML = `
+          <label style="margin-right: 8px; font-weight: 500; color: #666;">Created After:</label>
+          <input type="date" id="createdAfter" 
+                 style="padding: 5px 8px; border: 1px solid #e1e5e9; border-radius: 4px;">
+        `;
+
+        // Clear filter button
+        const clearButton = document.createElement("button");
+        clearButton.textContent = "Clear Filters";
+        clearButton.type = "button";
+        clearButton.style.cssText =
+          "padding: 6px 12px; background: #6b7280; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;";
+        clearButton.onclick = clearFilters;
+
+        filterControls.appendChild(questionFilter);
+        filterControls.appendChild(dateFilter);
+        filterControls.appendChild(clearButton);
+        filterSection.appendChild(filterTitle);
+        filterSection.appendChild(filterControls);
+
+        // Insert filter section after search bar
+        const searchBar = document.querySelector(".search-bar");
+        searchBar.parentNode.insertBefore(filterSection, searchBar.nextSibling);
+
+        // Add event listeners for dynamic filtering
+        document
+          .getElementById("minQuestions")
+          .addEventListener("input", applyFilters);
+        document
+          .getElementById("createdAfter")
+          .addEventListener("change", applyFilters);
+      }
+
+      function applyFilters() {
+        const minQuestions =
+          parseInt(document.getElementById("minQuestions").value) || 0;
+        const createdAfter = document.getElementById("createdAfter").value;
+        const skillCards = document.querySelectorAll(".skill-card");
+
+        let visibleCount = 0;
+
+        skillCards.forEach((card) => {
+          const questionText = card.querySelector(".skill-stat").textContent;
+          const questionCount = parseInt(questionText.match(/\d+/)[0]) || 0;
+
+          const dateText = card.querySelectorAll(".skill-stat")[1].textContent;
+          const createdDate = new Date(dateText.replace("Created: ", ""));
+
+          let shouldShow = true;
+
+          // Apply question count filter
+          if (questionCount < minQuestions) {
+            shouldShow = false;
+          }
+
+          // Apply date filter
+          if (createdAfter && createdDate < new Date(createdAfter)) {
+            shouldShow = false;
+          }
+
+          if (shouldShow) {
+            card.style.display = "block";
+            card.style.animation = "fadeIn 0.3s ease-in";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        // Show/hide no results message
+        updateNoResultsMessage(visibleCount);
+      }
+
+      function clearFilters() {
+        document.getElementById("minQuestions").value = "0";
+        document.getElementById("createdAfter").value = "";
+
+        const skillCards = document.querySelectorAll(".skill-card");
+        skillCards.forEach((card) => {
+          card.style.display = "block";
+          card.style.animation = "fadeIn 0.3s ease-in";
+        });
+
+        updateNoResultsMessage(skillCards.length);
+      }
+
+      function updateNoResultsMessage(visibleCount) {
+        let noResultsMsg = document.querySelector(".filter-no-results");
+
+        if (visibleCount === 0) {
+          if (!noResultsMsg) {
+            noResultsMsg = document.createElement("div");
+            noResultsMsg.className = "filter-no-results";
+            noResultsMsg.style.cssText =
+              "text-align: center; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); color: #666; margin-top: 20px;";
+            noResultsMsg.innerHTML =
+              '<h3>No skills match the current filters</h3><p>Try adjusting your filter criteria or <a href="javascript:clearFilters()" style="color: #2563eb; text-decoration: none;">clear all filters</a>.</p>';
+            document
+              .querySelector(".skills-container")
+              .parentNode.appendChild(noResultsMsg);
+          }
+          noResultsMsg.style.display = "block";
+        } else if (noResultsMsg) {
+          noResultsMsg.style.display = "none";
+        }
+      }
+
+      // AJAX functionality for skill operations
+      async function refreshSkillData() {
+        try {
+          const response = await fetch("/adminD/quizzes/api/skills", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) throw new Error("Failed to fetch skills");
+
+          const data = await response.json();
+          updateSkillsDisplay(data.skills);
+
+          // Show success message
+          showNotification("Skills data refreshed successfully", "success");
+        } catch (error) {
+          console.error("Error refreshing skills:", error);
+          showNotification("Failed to refresh skills data", "error");
+        }
+      }
+
+      function updateSkillsDisplay(skills) {
+        const skillsContainer = document.querySelector(".skills-container");
+        skillsContainer.innerHTML = "";
+
+        if (skills.length === 0) {
+          skillsContainer.innerHTML = `
+            <div class="no-results">
+              <h3>No skills found</h3>
+              <p>Get started by <a href="/adminD/quizzes/add">creating your first skill</a>.</p>
+            </div>
+          `;
+          return;
+        }
+
+        skills.forEach((skill) => {
+          const skillCard = createSkillCard(skill);
+          skillsContainer.appendChild(skillCard);
+        });
+      }
+
+      function createSkillCard(skill) {
+        const card = document.createElement("div");
+        card.className = "skill-card";
+        card.innerHTML = `
+          <div class="skill-header">
+            <h3 class="skill-name">${skill.name}</h3>
+          </div>
+          <div class="skill-body">
+            <div class="skill-info">
+              <div class="skill-stat">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                Questions: ${skill.questionCount}
+              </div>
+              <div class="skill-stat">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Created: ${new Date(skill.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+            <div class="skill-actions">
+              <a href="/adminD/quizzes/edit/${skill.skillId}" class="btn-edit">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34" />
+                  <polygon points="18 2 22 6 12 16 8 16 8 12 18 2" />
+                </svg>
+                Edit Quiz
+              </a>
+              <button class="btn-delete" onclick="confirmDelete('${
+                skill.skillId
+              }', '${skill.name}')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  <line x1="10" y1="11" x2="10" y2="17" />
+                  <line x1="14" y1="11" x2="14" y2="17" />
+                </svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        `;
+        return card;
+      }
+
+      function showNotification(message, type = "info") {
+        // Remove existing notification
+        const existingNotification = document.querySelector(".notification");
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement("div");
+        notification.className = "notification";
+        notification.style.cssText = `
+          position: fixed; top: 20px; right: 20px; z-index: 1000;
+          padding: 15px 20px; border-radius: 8px; color: white; font-weight: 500;
+          background: ${
+            type === "success"
+              ? "#10b981"
+              : type === "error"
+              ? "#ef4444"
+              : "#2563eb"
+          };
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          animation: slideIn 0.3s ease-out;
+        `;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+          notification.style.animation = "slideOut 0.3s ease-in";
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Enhanced delete function with better UX
+      async function confirmDelete(skillId, skillName) {
+        // Create custom modal instead of basic confirm
+        const modal = document.createElement("div");
+        modal.className = "delete-modal";
+        modal.style.cssText = `
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0,0,0,0.5); z-index: 1000; display: flex;
+          align-items: center; justify-content: center;
+        `;
+
+        modal.innerHTML = `
+          <div style="background: white; padding: 30px; border-radius: 12px; max-width: 400px; text-align: center;">
+            <h3 style="color: #ef4444; margin-bottom: 15px;">Confirm Deletion</h3>
+            <p style="margin-bottom: 20px; color: #666;">
+              Are you sure you want to delete the skill "<strong>${skillName}</strong>" and its quiz?
+              This action cannot be undone.
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <button onclick="document.querySelector('.delete-modal').remove()" 
+                      style="padding: 10px 20px; border: 1px solid #e1e5e9; background: white; border-radius: 6px; cursor: pointer;">
+                Cancel
+              </button>
+              <button onclick="executeDelete('${skillId}')" 
+                      style="padding: 10px 20px; background: #ef4444; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                Delete
+              </button>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(modal);
+      }
+
+      async function executeDelete(skillId) {
+        try {
+          document.querySelector(".delete-modal").remove();
+
+          // Show loading state
+          showNotification("Deleting skill...", "info");
+
+          const response = await fetch(`/adminD/quizzes/${skillId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
             },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.message) {
-                alert(data.message);
-                window.location.reload();
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("An error occurred while deleting the skill.");
-            });
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showNotification(
+              data.message || "Skill deleted successfully",
+              "success"
+            );
+
+            // Remove the skill card with animation
+            const skillCard = document
+              .querySelector(`[onclick*="${skillId}"]`)
+              .closest(".skill-card");
+            if (skillCard) {
+              skillCard.style.animation = "fadeOut 0.3s ease-out";
+              setTimeout(() => {
+                skillCard.remove();
+
+                // Check if no skills remain
+                const remainingCards = document.querySelectorAll(".skill-card");
+                if (remainingCards.length === 0) {
+                  location.reload();
+                }
+              }, 300);
+            }
+          } else {
+            throw new Error(data.message || "Failed to delete skill");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          showNotification(
+            error.message || "An error occurred while deleting the skill.",
+            "error"
+          );
         }
       }
+
+      // Add CSS animations
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(-10px); }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Initialize all functionality when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        validateSearchForm();
+        initializeDynamicFilters();
+
+        // Add refresh button
+        const pageHeader = document.querySelector(".page-header");
+        const refreshButton = document.createElement("button");
+        refreshButton.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M20.49 9A9 9 0 0 0 5.64 5.64l-.02.02"></path>
+            <path d="M3.51 15a9 9 0 0 0 14.85 4.34l.02-.02"></path>
+          </svg>
+          Refresh
+        `;
+        refreshButton.style.cssText = `
+          background: #10b981; color: white; border: none; padding: 12px 20px;
+          border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;
+          transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;
+          margin-left: 10px;
+        `;
+        refreshButton.onmouseover = () =>
+          (refreshButton.style.background = "#059669");
+        refreshButton.onmouseout = () =>
+          (refreshButton.style.background = "#10b981");
+        refreshButton.onclick = refreshSkillData;
+
+        const headerActions =
+          pageHeader.querySelector(".btn-add-quiz").parentNode;
+        headerActions.appendChild(refreshButton);
+      });
     </script>
   </body>
 </html>
