@@ -733,9 +733,21 @@
           const title = item.querySelector('.portfolio-title').value;
           const description = item.querySelector('.portfolio-description').value;
           const link = item.querySelector('.portfolio-link').value;
-          // Note: Portfolio images will be handled separately as files
-          if (title || description || link) {
-            portfolio.push({ title, description, link, index });
+          
+          // Get existing image URL from the preview img element
+          const existingImageElement = item.querySelector(`#portfolioPreviewImg${index}`);
+          const existingImage = existingImageElement ? existingImageElement.src : '';
+          
+          // Always include portfolio items (even if only image exists)
+          // This ensures existing images are preserved
+          if (title || description || link || existingImage) {
+            portfolio.push({ 
+              title: title || '', 
+              description: description || '', 
+              link: link || '', 
+              image: existingImage || '', 
+              index 
+            });
           }
         });
 
