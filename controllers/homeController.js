@@ -475,6 +475,10 @@ exports.getProfile = async (req, res) => {
       }
     }
 
+    // Debug logging
+    console.log("User data:", user);
+    console.log("User picture URL:", user.picture);
+    
     // Render the profile with the fetched data
     res.render("Aman/common_profile", {
       user: req.session && req.session.user ? req.session.user : null,
@@ -485,7 +489,7 @@ exports.getProfile = async (req, res) => {
         location: user.location || "N/A",
         email: user.email || "N/A",
         phone: user.phone || "N/A",
-        picture: user.picture || "/assets/user_female.png",
+        picture: user.picture || "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png",
         aboutMe: user.aboutMe || "No description provided.",
         skills: skillNames || [],
         experience: freelancer.experience || [],
