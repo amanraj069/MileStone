@@ -267,7 +267,6 @@ function validateForm() {
 
   if (!imageUrl.value.trim()) {
     showFieldError(imageUrl, "Company logo URL is required");
-    isValid = false;
   }
 
   if (!description.value.trim()) {
@@ -539,6 +538,24 @@ function addRealTimeValidation() {
         showFieldError(descriptionInput, 'Description must be at least 10 characters long');
       } else {
         clearFieldValidation(descriptionInput);
+      }
+    });
+  }
+
+  // Image URL validation
+  const imageUrlInput = document.getElementById('imageUrl');
+  if (imageUrlInput) {
+    imageUrlInput.addEventListener('blur', () => {
+      const value = imageUrlInput.value.trim();
+      if (value) {
+        try {
+          new URL(value);
+          clearFieldValidation(imageUrlInput);
+        } catch (e) {
+          showFieldError(imageUrlInput, 'Please enter a valid URL (e.g., https://example.com/logo.png)');
+        }
+      } else {
+        clearFieldValidation(imageUrlInput);
       }
     });
   }
