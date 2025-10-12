@@ -4,7 +4,8 @@ const homeController = require("../controllers/homeController");
 const router = express.Router();
 
 router.get("/", homeController.getHome);
-router.get("/blog", homeController.getBlog);
+router.get("/blog", homeController.getBlogPage);
+router.get("/blog/:blogId", homeController.getBlogPost);
 router.get("/chat/:userId", homeController.getChat);
 router.post("/chat/:userId", homeController.sendMessage);
 router.get("/jobs", homeController.getJobListing);

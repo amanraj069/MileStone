@@ -37,4 +37,10 @@ router.delete("/quizzes/:skillId", adminController.deleteQuiz);
 router.get("/quizzes/edit/:skillId", adminController.getEditQuiz);
 router.post("/quizzes/edit/:skillId", adminController.updateQuiz);
 
+// Blog Management Routes
+router.get("/blogs", adminController.getBlogs);
+router.get("/blogs/create", adminController.getCreateBlog);
+router.post("/blogs/create", adminController.createBlog);
+router.post("/blogs/feature", adminController.featureBlog);
+
 module.exports = router;

@@ -7,6 +7,7 @@ const Freelancer = require("../models/freelancer");
 const Skill = require("../models/skill");
 const Message = require("../models/message");
 const Complaint = require("../models/complaint");
+const Blog = require("../models/blog");
 
 exports.getHome = async (req, res) => {
   try {
@@ -600,3 +601,89 @@ function getDescriptionExcerpt(description) {
   
   return words.length > 18 ? `${excerpt}...` : excerpt;
 }
+
+// Blog-related functions
+exports.getBlogPage = async (req, res) => {
+  try {
+    // Get featured blog
+    const featuredBlog = await Blog.getFeaturedBlog();
+    
+    // Get recent blogs (excluding featured)
+    const recentBlogs = await Blog.getRecentBlogs(6);
+    
+    // Format blogs for display
+    const formattedRecentBlogs = recentBlogs.map(blog => ({
+      ...blog.toObject(),
+      formattedCreatedAt: blog.formattedCreatedAt,
+      readTimeDisplay: blog.readTimeDisplay
+    }));
+
+    const formattedFeaturedBlog = featuredBlog ? {
+      ...featuredBlog.toObject(),
+      formattedCreatedAt: featuredBlog.formattedCreatedAt,
+      readTimeDisplay: featuredBlog.readTimeDisplay
+    } : null;
+
+    res.render("Aman/blog", {
+      user: req.session.user || null,
+      featuredBlog: formattedFeaturedBlog,
+      recentBlogs: formattedRecentBlogs
+    });
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    res.render("Aman/blog", {
+      user: req.session.user || null,
+      featuredBlog: null,
+      recentBlogs: []
+    });
+  }
+};
+
+exports.getBlogPost = async (req, res) => {
+  try {
+    const { blogId } = req.params;
+    
+    // Find blog and increment view count
+    const blog = await Blog.findOneAndUpdate(
+      { blogId: blogId },
+      { $inc: { views: 1 } },
+      { new: true }
+    );
+
+    if (!blog) {
+      return res.status(404).render("errors/404", {
+        message: "Blog post not found"
+      });
+    }
+
+    // Get related blogs (same category, excluding current)
+    const relatedBlogs = await Blog.find({
+      category: blog.category,
+      blogId: { $ne: blogId },
+      status: 'published'
+    }).limit(3).sort({ createdAt: -1 });
+
+    const formattedBlog = {
+      ...blog.toObject(),
+      formattedCreatedAt: blog.formattedCreatedAt,
+      readTimeDisplay: blog.readTimeDisplay
+    };
+
+    const formattedRelatedBlogs = relatedBlogs.map(relatedBlog => ({
+      ...relatedBlog.toObject(),
+      formattedCreatedAt: relatedBlog.formattedCreatedAt,
+      readTimeDisplay: relatedBlog.readTimeDisplay
+    }));
+
+    res.render("Aman/blog-post", {
+      user: req.session.user || null,
+      blog: formattedBlog,
+      relatedBlogs: formattedRelatedBlogs
+    });
+  } catch (error) {
+    console.error("Error fetching blog post:", error);
+    res.status(500).render("errors/500", {
+      message: "Error loading blog post"
+    });
+  }
+};

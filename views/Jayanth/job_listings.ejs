@@ -586,9 +586,21 @@
           </form>
 
           <div class="filter-buttons">
-            <button class="filter-btn" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="open">Open</button>
-            <button class="filter-btn" data-filter="closed">Closed</button>
+            <div class="filter-left">
+              <button class="filter-btn" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="open">Open</button>
+              <button class="filter-btn" data-filter="closed">Closed</button>
+            </div>
+            <div class="filter-right">
+              <div class="feature-dropdown">
+                <select id="featureSelect" class="feature-select">
+                  <option value="">Feature Job Post</option>
+                  <option value="urgent">Urgent</option>
+                  <option value="new">New</option>
+                  <option value="high-demand">High Demand</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -664,13 +676,44 @@
                   >
                 </div>
               </div>
-              <div class="job-card-right">
-                <div class="applicants-badge">
-                  <%= job.applications?.length || 0 %> applicants
+            </div>
+
+            <div class="job-card-right">
+              <div class="applicants-badge">
+                <i class="fas fa-users"></i>
+                <%= job.applications?.length || 0 %> applicants
+              </div>
+                <div class="feature-checkbox-container" style="display: none; margin: 10px 0;">
+                  <input 
+                    type="checkbox" 
+                    class="feature-checkbox" 
+                    data-job-id="<%= job.jobId %>" 
+                    <%= job.featured && job.featured.isActive ? 'checked' : '' %>
+                  />
+                  <label>Feature this job</label>
                 </div>
-                <a href="/jobs/<%= job.jobId %>" class="btn-see-more"
-                  >See More</a
+
+              <div class="status-badge <%= job.status || 'open' %>">
+                <% if (job.status === 'open' || !job.status) { %>
+                <i class="fas fa-circle"></i> Open <% } else if (job.status ===
+                'closed') { %> <i class="fas fa-check-circle"></i> Closed <% }
+                else if (job.status === 'paused') { %>
+                <i class="fas fa-pause-circle"></i> Paused <% } else { %>
+                <i class="fas fa-circle"></i> <%= job.status %> <% } %>
+              </div>
+
+              <div class="action-buttons">
+                <a href="/jobs/<%= job.jobId || job._id %>" class="btn-view">
+                  <i class="fas fa-eye"></i>
+                  View Details
+                </a>
+                <button
+                  class="btn-delete"
+                  onclick="deleteJob('<%= job.jobId || job._id %>')"
+                  data-tooltip="Delete Job"
                 >
+                  <i class="fas fa-trash"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -681,6 +724,7 @@
 
     <script src="/js/adminD/job_listings.js"></script>
     <script>
+      // Filter buttons functionality
       document.querySelectorAll(".filter-btn").forEach((button) => {
         button.addEventListener("click", () => {
           document
@@ -701,6 +745,100 @@
           });
         });
       });
+
+      // Feature dropdown functionality
+      const featureSelect = document.getElementById('featureSelect');
+      const checkboxContainers = document.querySelectorAll('.feature-checkbox-container');
+      
+      featureSelect.addEventListener('change', function() {
+        const selectedValue = this.value;
+        
+        if (selectedValue) {
+          // Show all checkboxes
+          checkboxContainers.forEach(container => {
+            container.style.display = 'block';
+          });
+          
+          // Update all checkboxes data attribute
+          document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
+            checkbox.setAttribute('data-feature-type', selectedValue);
+          });
+        } else {
+          // Hide all checkboxes
+          checkboxContainers.forEach(container => {
+            container.style.display = 'none';
+          });
+        }
+      });
+
+      // Handle checkbox changes
+      document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const jobId = this.getAttribute('data-job-id');
+          const featureType = this.getAttribute('data-feature-type');
+          const isChecked = this.checked;
+          
+          // Send AJAX request to update feature status
+          fetch('/adminD/jobs/feature', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              jobId: jobId,
+              featureType: featureType,
+              isActive: isChecked
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+                console.log('Job feature status updated successfully');
+                // Show correct message for feature/unfeature
+                if (isChecked) {
+                  showNotification('Job featured successfully!', 'success');
+                } else {
+                  showNotification('Job unfeatured successfully!', 'success');
+                }
+            } else {
+              console.error('Error updating job feature status:', data.message);
+              // Revert checkbox state
+              this.checked = !isChecked;
+              showNotification('Error updating job feature status', 'error');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            // Revert checkbox state
+            this.checked = !isChecked;
+            showNotification('Network error occurred', 'error');
+          });
+        });
+      });
+
+      // Notification function
+      function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+          color: white;
+          border-radius: 4px;
+          z-index: 1000;
+          font-size: 14px;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
     </script>
   </body>
 </html>
