@@ -1180,6 +1180,237 @@ const employerController = {
         .json({ error: "Failed to submit complaint", details: error.message });
     }
   },
+
+  purchaseSubscription: async (req, res) => {
+    try {
+      const { planType, amount } = req.body;
+      const userId = req.session.user.id;
+
+      if (!planType) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Plan type is required' 
+        });
+      }
+
+      // Validate plan type
+      const validPlans = ['Basic', 'Premium', 'Free'];
+      if (!validPlans.includes(planType)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: 'Invalid plan type' 
+        });
+      }
+
+      // For Premium plans, redirect to payment
+      if (planType === 'Premium') {
+        return res.json({
+          success: true,
+          requiresPayment: true,
+          amount: amount || 868,
+          redirectUrl: `/employerD/payment?plan=${planType}&amount=${amount || 868}`
+        });
+      }
+
+      // For Basic/Free plans, update immediately
+      const Employer = require('../models/employer');
+      await Employer.findByIdAndUpdate(userId, { 
+        subscription: planType 
+      });
+
+      // Update session
+      req.session.user.subscription = planType;
+
+      res.json({ 
+        success: true, 
+        message: `Successfully switched to ${planType} plan`,
+        requiresPayment: false
+      });
+
+    } catch (error) {
+      console.error('Error purchasing subscription:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Internal server error during subscription purchase',
+        error: error.message
+      });
+    }
+  },
+
+  deleteJobListing: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const employerId = req.session.user.roleId;
+
+      if (!jobId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Job ID is required'
+        });
+      }
+
+      if (!employerId) {
+        return res.status(401).json({
+          success: false,
+          message: 'Employer not authenticated'
+        });
+      }
+
+      // Find and verify job ownership
+      const job = await JobListing.findOne({ jobId, employerId });
+      if (!job) {
+        return res.status(404).json({
+          success: false,
+          message: 'Job not found or you are not authorized to delete it'
+        });
+      }
+
+      // Check if job has active applications that need to be handled
+      const JobApplication = require('../models/job_application');
+      const activeApplications = await JobApplication.find({ 
+        jobId, 
+        status: { $in: ['pending', 'accepted'] }
+      });
+
+      if (activeApplications.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Cannot delete job with ${activeApplications.length} active application(s). Please handle applications first.`
+        });
+      }
+
+      // Delete related applications first
+      await JobApplication.deleteMany({ jobId });
+
+      // Delete the job listing
+      await JobListing.findOneAndDelete({ jobId, employerId });
+
+      res.json({
+        success: true,
+        message: 'Job listing deleted successfully'
+      });
+
+    } catch (error) {
+      console.error('Error deleting job listing:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error while deleting job',
+        error: error.message
+      });
+    }
+  },
+
+  getTransactionDetails: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const employerId = req.session.user.roleId;
+
+      if (!jobId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Job ID is required'
+        });
+      }
+
+      if (!employerId) {
+        return res.status(401).json({
+          success: false,
+          message: 'Employer not authenticated'
+        });
+      }
+
+      // Find the job and populate freelancer information
+      const job = await JobListing.findOne({ jobId, employerId })
+        .populate('assignedFreelancer.freelancerId', 'name email picture')
+        .lean();
+
+      if (!job) {
+        return res.status(404).json({
+          success: false,
+          message: 'Transaction not found or you are not authorized to view it'
+        });
+      }
+
+      // Create transaction details object
+      const transactionDetails = {
+        projectTitle: job.title,
+        amount: job.budget.amount,
+        status: job.assignedFreelancer ? 
+          (job.assignedFreelancer.status === 'finished' ? 'completed' : 'in-progress') : 
+          'pending',
+        startDate: job.assignedFreelancer ? job.assignedFreelancer.assignedDate : job.postedDate,
+        freelancer: job.assignedFreelancer ? {
+          name: job.assignedFreelancer.freelancerId.name,
+          email: job.assignedFreelancer.freelancerId.email,
+          picture: job.assignedFreelancer.freelancerId.picture
+        } : null,
+        milestones: job.milestones || [],
+        jobId: jobId
+      };
+
+      res.json(transactionDetails);
+
+    } catch (error) {
+      console.error('Error fetching transaction details:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error while fetching transaction details',
+        error: error.message
+      });
+    }
+  },
+
+  getTransactionDetails: async (req, res) => {
+    try {
+      const { jobId } = req.params;
+      const employerId = req.session.user.roleId;
+
+      if (!jobId || !employerId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Missing required parameters'
+        });
+      }
+
+      // Find the job
+      const job = await JobListing.findOne({ jobId, employerId })
+        .populate('assignedFreelancer.freelancerId', 'name email picture')
+        .lean();
+
+      if (!job) {
+        return res.status(404).json({
+          success: false,
+          message: 'Transaction not found'
+        });
+      }
+
+      // Format the response data
+      const transactionData = {
+        projectTitle: job.title,
+        amount: job.budget.amount,
+        status: job.assignedFreelancer?.status || 'in-progress',
+        startDate: job.assignedFreelancer?.assignedDate || job.postedDate,
+        freelancer: {
+          name: job.assignedFreelancer?.freelancerId?.name || 'Unknown',
+          email: job.assignedFreelancer?.freelancerId?.email || '',
+          picture: job.assignedFreelancer?.freelancerId?.picture || '/assets/default-avatar.png'
+        },
+        milestones: job.milestones || [],
+        jobType: job.jobType,
+        location: job.location
+      };
+
+      res.json(transactionData);
+
+    } catch (error) {
+      console.error('Error getting transaction details:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error while fetching transaction details',
+        error: error.message
+      });
+    }
+  },
 };
 
 module.exports = employerController;
