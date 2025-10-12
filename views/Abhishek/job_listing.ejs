@@ -245,6 +245,129 @@
         color: #ddd;
         margin-bottom: 20px;
       }
+
+      /* Action buttons container */
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      /* Delete button styles */
+      .delete-job-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .delete-job-btn:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+      }
+
+      .delete-job-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+
+      /* Notification styles */
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .notification.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background: #28a745;
+      }
+
+      .notification.error {
+        background: #dc3545;
+      }
+
+      .notification.info {
+        background: #17a2b8;
+      }
+
+      /* Loading states */
+      .job-card.loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      /* Confirmation modal */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 400px;
+        width: 90%;
+        text-align: center;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .modal-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modal-btn-danger {
+        background: #dc3545;
+        color: white;
+      }
+
+      .modal-btn-cancel {
+        background: #6c757d;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -327,9 +450,14 @@
               <%= jobApplications.filter(app => app.jobId === job.jobId).length
               %> applicants
             </span>
-            <a href="/jobs/<%= job.jobId %>">
-              <button class="see-more-btn">See More</button>
-            </a>
+            <div class="action-buttons">
+              <a href="/jobs/<%= job.jobId %>">
+                <button class="see-more-btn">See More</button>
+              </a>
+              <button class="delete-job-btn" onclick="deleteJob('<%= job.jobId %>', this)" title="Delete Job">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
           </div>
         </div>
         <% }) %> <% } else { %>
@@ -483,6 +611,9 @@
         searchInput.removeEventListener('input', filterJobs);
         searchInput.addEventListener('input', debouncedFilter);
         
+        // Add search form validation
+        validateSearchForm();
+        
         // Add search placeholder animation
         const placeholders = [
           'Search jobs, companies...',
@@ -557,6 +688,227 @@
           updateResultsCounter();
         };
       });
+
+      // AJAX job deletion functionality
+      async function deleteJob(jobId, buttonElement) {
+        if (!jobId) {
+          showNotification('Invalid job ID', 'error');
+          return;
+        }
+
+        // Show confirmation modal
+        const confirmed = await showConfirmationModal(
+          'Delete Job',
+          'Are you sure you want to delete this job listing? This action cannot be undone.'
+        );
+
+        if (!confirmed) {
+          return;
+        }
+
+        const jobCard = buttonElement.closest('.job-card');
+        
+        try {
+          // Show loading state
+          jobCard.classList.add('loading');
+          buttonElement.disabled = true;
+          buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+          showNotification('Deleting job listing...', 'info');
+
+          const response = await fetch(`/employerD/job_listings/delete/${jobId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            showNotification('Job listing deleted successfully!', 'success');
+            
+            // Remove the job card from DOM
+            jobCard.style.transition = 'all 0.5s ease';
+            jobCard.style.transform = 'translateX(-100%)';
+            jobCard.style.opacity = '0';
+            
+            setTimeout(() => {
+              jobCard.remove();
+              updateResultsCounter();
+              
+              // Check if no jobs left
+              const remainingJobs = document.querySelectorAll('.job-card');
+              if (remainingJobs.length === 0) {
+                showNoJobsMessage();
+              }
+            }, 500);
+            
+          } else {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to delete job');
+          }
+        } catch (error) {
+          console.error('Delete job error:', error);
+          showNotification(`Failed to delete job: ${error.message}`, 'error');
+          
+          // Reset loading state
+          jobCard.classList.remove('loading');
+          buttonElement.disabled = false;
+          buttonElement.innerHTML = '<i class="fas fa-trash"></i>';
+        }
+      }
+
+      // Show confirmation modal
+      function showConfirmationModal(title, message) {
+        return new Promise((resolve) => {
+          const modal = document.createElement('div');
+          modal.className = 'modal-overlay';
+          modal.innerHTML = `
+            <div class="modal-content">
+              <h3>${title}</h3>
+              <p>${message}</p>
+              <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal(false)">Cancel</button>
+                <button class="modal-btn modal-btn-danger" onclick="closeModal(true)">Delete</button>
+              </div>
+            </div>
+          `;
+          
+          document.body.appendChild(modal);
+          modal.style.display = 'flex';
+          
+          // Store resolve function globally for button handlers
+          window.modalResolve = resolve;
+          
+          window.closeModal = function(confirmed) {
+            modal.remove();
+            delete window.modalResolve;
+            delete window.closeModal;
+            resolve(confirmed);
+          };
+          
+          // Close on overlay click
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              window.closeModal(false);
+            }
+          });
+        });
+      }
+
+      // Show no jobs message
+      function showNoJobsMessage() {
+        const container = document.querySelector('.content-card');
+        const noJobsHtml = `
+          <div class="no-jobs" style="margin-top: 50px;">
+            <i class="fas fa-briefcase"></i>
+            <h3>No job listings found</h3>
+            <p>Start by posting your first job opportunity!</p>
+          </div>
+        `;
+        container.innerHTML = container.innerHTML.split('<div class="no-jobs">')[0] + noJobsHtml;
+      }
+
+      // Notification system
+      function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icon = type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : 'info-circle';
+        notification.innerHTML = `
+          <i class="fas fa-${icon}"></i>
+          <span>${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Form validation for search input
+      function validateSearchForm() {
+        const searchInput = document.querySelector('.search-input');
+        
+        if (!searchInput) return;
+        
+        searchInput.addEventListener('input', function() {
+          validateSearchInput(this);
+        });
+        
+        searchInput.addEventListener('blur', function() {
+          validateSearchInput(this);
+        });
+      }
+
+      function validateSearchInput(inputElement) {
+        const value = inputElement.value.trim();
+        
+        // Remove previous error states
+        inputElement.classList.remove('error');
+        removeFieldError(inputElement);
+        
+        // Validate search input constraints
+        if (value.length > 100) {
+          showFieldError(inputElement, 'Search term too long (max 100 characters)');
+          return false;
+        }
+        
+        // Check for potentially harmful characters
+        const dangerousPattern = /[<>'"&]/;
+        if (dangerousPattern.test(value)) {
+          showFieldError(inputElement, 'Invalid characters in search term');
+          return false;
+        }
+        
+        // Check for SQL injection patterns
+        const sqlPattern = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER)\b)/i;
+        if (sqlPattern.test(value)) {
+          showFieldError(inputElement, 'Invalid search pattern detected');
+          return false;
+        }
+        
+        return true;
+      }
+
+      function showFieldError(inputElement, message) {
+        inputElement.classList.add('error');
+        inputElement.style.borderColor = '#dc3545';
+        
+        let errorElement = inputElement.parentElement.querySelector('.error-message');
+        if (!errorElement) {
+          errorElement = document.createElement('div');
+          errorElement.className = 'error-message';
+          errorElement.style.cssText = `
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+          `;
+          inputElement.parentElement.appendChild(errorElement);
+        }
+        
+        errorElement.textContent = message;
+      }
+
+      function removeFieldError(inputElement) {
+        inputElement.style.borderColor = '';
+        const errorElement = inputElement.parentElement.querySelector('.error-message');
+        if (errorElement) {
+          errorElement.remove();
+        }
+      }
     </script>
   </body>
 </html>
