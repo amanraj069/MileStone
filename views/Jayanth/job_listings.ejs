@@ -18,202 +18,231 @@
 
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
+        background: #f8f9fa;
         color: #333;
       }
 
       .main-content {
         margin-left: 260px;
-        padding: 2rem;
+        padding: 20px;
         min-height: 100vh;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
+        max-width: calc(100vw - 280px);
+        overflow-x: hidden;
       }
 
       .page-header {
-        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        background: white;
+        padding: 25px;
         border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        color: white;
-        box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 4px solid #2563eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .page-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
       }
 
       .page-subtitle {
-        font-size: 1.1rem;
-        opacity: 0.9;
-        font-weight: 400;
+        color: #666;
+        font-size: 16px;
       }
 
       .stats-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
+        gap: 20px;
+        margin-bottom: 30px;
       }
 
       .stat-card {
         background: white;
-        padding: 1.5rem;
+        padding: 20px;
         border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         text-align: center;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(37, 99, 235, 0.1);
-        transition: all 0.3s ease;
-      }
-
-      .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        border-left: 4px solid #2563eb;
       }
 
       .stat-number {
-        font-size: 2rem;
+        font-size: 32px;
         font-weight: 700;
         color: #2563eb;
-        margin-bottom: 0.5rem;
+        margin-bottom: 5px;
       }
 
       .stat-label {
-        color: #6b7280;
-        font-weight: 500;
-        text-transform: uppercase;
-        font-size: 0.875rem;
-        letter-spacing: 0.5px;
+        color: #666;
+        font-size: 14px;
       }
 
       .content-card {
         background: white;
         border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(37, 99, 235, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        margin-bottom: 20px;
       }
 
-      .search-filter-container {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
+      .search-container {
+        margin-bottom: 25px;
       }
 
       .search-form {
         display: flex;
         align-items: center;
-        background: #f8fafc;
-        border-radius: 12px;
-        padding: 0.5rem;
-        border: 2px solid #e2e8f0;
-        transition: all 0.3s ease;
-      }
-
-      .search-form:focus-within {
-        border-color: #2563eb;
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        max-width: 600px;
+        position: relative;
+        gap: 10px;
       }
 
       .search-input {
         flex: 1;
-        border: none;
-        background: transparent;
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        outline: none;
-        color: #374151;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
       }
 
-      .search-input::placeholder {
-        color: #9ca3af;
+      .search-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        background: white;
       }
 
       .search-button {
-        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-        border: none;
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
+        background: linear-gradient(45deg, #2563eb, #1e40af);
         color: white;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
-        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .search-button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
       }
 
       .clear-search {
-        background: #ef4444;
+        background: linear-gradient(45deg, #ef4444, #dc2626);
         color: white;
-        text-decoration: none;
-        padding: 0.75rem 1rem;
+        padding: 12px 16px;
         border-radius: 8px;
-        margin-left: 0.5rem;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
         transition: all 0.3s ease;
-        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
       .clear-search:hover {
-        background: #dc2626;
-        transform: scale(1.05);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+
+      .filter-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
       }
 
       .filter-buttons {
         display: flex;
-        gap: 1rem;
+        gap: 10px;
         flex-wrap: wrap;
       }
 
       .filter-btn {
-        background: #f1f5f9;
-        border: 2px solid #e2e8f0;
+        background: #f8f9fa;
+        border: 2px solid #e1e5e9;
         border-radius: 8px;
-        padding: 0.75rem 1.5rem;
-        color: #64748b;
+        padding: 10px 20px;
+        color: #666;
         cursor: pointer;
         transition: all 0.3s ease;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 14px;
       }
 
       .filter-btn:hover,
       .filter-btn.active {
-        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        background: linear-gradient(45deg, #2563eb, #1e40af);
         color: white;
         border-color: #2563eb;
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
       }
 
+      .feature-dropdown {
+        position: relative;
+      }
+
+      .feature-select {
+        background: white;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        min-width: 180px;
+      }
+
+      .feature-select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+      }
+
+      .feature-select:hover {
+        border-color: #2563eb;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+      }
+
       .jobs-container {
         display: grid;
-        gap: 1.5rem;
+        gap: 20px;
       }
 
       .job-card {
         background: white;
         border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        border: 1px solid #e5e7eb;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e1e5e9;
         transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
         display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 1.5rem;
-        align-items: center;
+        grid-template-columns: auto 1fr;
+        gap: 20px;
+        align-items: flex-start;
       }
 
       .job-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         border-color: #2563eb;
       }
 
@@ -230,6 +259,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
       }
 
       .company-logo img {
@@ -239,148 +269,211 @@
       }
 
       .company-logo i {
-        font-size: 1.5rem;
+        font-size: 24px;
         color: #9ca3af;
       }
 
-      .job-card-center {
+      .job-card-content {
         flex: 1;
+        position: relative;
+      }
+
+      .job-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
       }
 
       .job-title {
-        font-size: 1.25rem;
+        font-size: 20px;
         font-weight: 600;
-        color: #1f2937;
-        margin-bottom: 0.5rem;
+        color: #333;
+        margin-bottom: 8px;
         line-height: 1.4;
       }
 
-      .job-company {
-        color: #6b7280;
+      .job-status {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
         font-weight: 500;
-        margin-bottom: 0.75rem;
+      }
+
+      .status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      .status-text.open {
+        color: #10b981;
+      }
+
+      .status-text.closed {
+        color: #ef4444;
+      }
+
+      .status-indicator.open {
+        background: #10b981;
+      }
+
+      .status-indicator.closed {
+        background: #ef4444;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      .job-company {
+        color: #666;
+        font-weight: 500;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
       .job-salary {
-        color: #059669;
+        color: #10b981;
         font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 0.75rem;
+        font-size: 18px;
+        margin-bottom: 12px;
       }
 
       .job-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
+        gap: 6px;
+        margin-bottom: 15px;
       }
 
       .job-tag {
-        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        background: linear-gradient(45deg, #e0e7ff, #c7d2fe);
         color: #3730a3;
-        padding: 0.25rem 0.75rem;
-        border-radius: 6px;
-        font-size: 0.8rem;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
         font-weight: 500;
       }
 
       .job-details {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
-        color: #6b7280;
-        font-size: 0.9rem;
+        gap: 20px;
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
       }
 
       .job-detail-item {
         display: flex;
         align-items: center;
-        gap: 0.25rem;
+        gap: 6px;
       }
 
       .job-detail-item i {
-        color: #9ca3af;
+        color: #999;
+        width: 16px;
       }
 
-      .job-card-right {
+      .job-actions {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
-        gap: 1rem;
       }
 
       .applicants-badge {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        background: linear-gradient(45deg, #2563eb, #1e40af);
         color: white;
-        padding: 0.5rem 1rem;
+        padding: 8px 16px;
         border-radius: 20px;
-        font-size: 0.8rem;
+        font-size: 12px;
         font-weight: 600;
-        text-align: center;
-        min-width: 100px;
-      }
-
-      .status-badge {
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .status-badge.open {
-        background: #d1fae5;
-        color: #065f46;
-      }
-
-      .status-badge.closed {
-        background: #fee2e2;
-        color: #991b1b;
-      }
-
-      .status-badge.paused {
-        background: #fef3c7;
-        color: #92400e;
-      }
-
-      .action-buttons {
         display: flex;
-        gap: 0.5rem;
-      }
-
-      .btn-view {
-        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-        color: white;
-        text-decoration: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 500;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-      }
-
-      .btn-view:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+        align-items: center;
+        gap: 6px;
       }
 
       .btn-delete {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        background: linear-gradient(45deg, #ef4444, #dc2626);
         color: white;
-        padding: 0.75rem;
+        padding: 8px 12px;
         border-radius: 8px;
         border: none;
         cursor: pointer;
         transition: all 0.3s ease;
-        font-size: 0.9rem;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .btn-delete:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      }
+
+      .feature-checkbox-container {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 20px;
+        border: 2px solid #e1e5e9;
+        background: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        margin-right: 8px;
+        min-width: auto;
+        white-space: nowrap;
+      }
+
+      .feature-checkbox-container.new {
+        border-color: #10b981;
+        background: #f0fdf4;
+        color: #10b981;
+      }
+
+      .feature-checkbox-container.urgent {
+        border-color: #ef4444;
+        background: #fef2f2;
+        color: #ef4444;
+      }
+
+      .feature-checkbox-container.high-demand {
+        border-color: #f59e0b;
+        background: #fffbeb;
+        color: #f59e0b;
+      }
+
+      .feature-checkbox {
+        display: none;
+      }
+
+      .feature-label {
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      .feature-checkbox-container:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-checkbox:checked + .feature-label::before {
+        content: "✓ ";
+        font-weight: bold;
       }
 
       .no-results {
@@ -400,129 +493,68 @@
         margin-bottom: 0.5rem;
       }
 
+      /* Responsive design */
+      @media (max-width: 1200px) {
+        .main-content {
+          margin-left: 260px;
+          padding: 15px;
+          max-width: calc(100vw - 280px);
+        }
+      }
+
       @media (max-width: 768px) {
         .main-content {
           margin-left: 0;
-          padding: 1rem;
+          padding: 10px;
+          max-width: 100vw;
         }
 
-        .page-title {
-          font-size: 2rem;
+        .page-header {
+          padding: 15px;
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
         }
 
-        .stats-container {
-          grid-template-columns: 1fr;
+        .content-card {
+          padding: 15px;
+        }
+
+        .search-form {
+          flex-direction: column;
+          max-width: 100%;
+        }
+
+        .search-input {
+          border-radius: 8px;
         }
 
         .job-card {
           grid-template-columns: 1fr;
-          text-align: center;
+          text-align: left;
         }
 
-        .job-details {
-          justify-content: center;
+        .job-actions {
+          flex-direction: column;
+          gap: 10px;
         }
 
-        .search-filter-container {
-          gap: 1rem;
+        .stats-container {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+        .filter-container {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 15px;
         }
 
         .filter-buttons {
           justify-content: center;
         }
       }
+    </style>
 
-      @media (max-width: 1200px) {
-        .main-content {
-          margin-left: 0;
-        }
-      }
-    </style>
-    <style>
-      .filter-buttons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      
-      .filter-left {
-        display: flex;
-        gap: 10px;
-      }
-      
-      .filter-right {
-        display: flex;
-        align-items: center;
-      }
-      
-      .feature-select {
-        padding: 10px 16px;
-        border: 2px solid #e0e7ff;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        font-size: 14px;
-        font-weight: 500;
-        color: #334155;
-        cursor: pointer;
-        min-width: 180px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        transition: all 0.3s ease;
-        position: relative;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-        background-position: right 12px center;
-        background-repeat: no-repeat;
-        background-size: 16px;
-        padding-right: 40px;
-      }
-      
-      .feature-select:hover {
-        border-color: #3949ab;
-        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transform: translateY(-1px);
-      }
-      
-      .feature-select:focus {
-        outline: none;
-        border-color: #3949ab;
-        box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-      
-      .feature-dropdown {
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-      
-      .feature-dropdown::before {
-        margin-right: 8px;
-        font-size: 16px;
-      }
-      
-      .feature-checkbox-container {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px;
-        background: #f0f8ff;
-        border-radius: 4px;
-        border: 1px solid #3949ab;
-      }
-      
-      .feature-checkbox {
-        margin: 0;
-        cursor: pointer;
-      }
-      
-      .feature-checkbox-container label {
-        font-size: 12px;
-        color: #3949ab;
-        cursor: pointer;
-        margin: 0;
-      }
-    </style>
   </head>
   <body>
     <%- include('Partials/sidebar', { user: user, activePage: 'job_listings' })
@@ -565,7 +597,7 @@
       </div>
 
       <div class="content-card">
-        <div class="search-filter-container">
+        <div class="search-container">
           <form action="/adminD/job_listings" method="GET" class="search-form">
             <input
               type="text"
@@ -584,23 +616,21 @@
             </a>
             <% } %>
           </form>
+        </div>
 
+        <div class="filter-container">
           <div class="filter-buttons">
-            <div class="filter-left">
-              <button class="filter-btn" data-filter="all">All</button>
-              <button class="filter-btn" data-filter="open">Open</button>
-              <button class="filter-btn" data-filter="closed">Closed</button>
-            </div>
-            <div class="filter-right">
-              <div class="feature-dropdown">
-                <select id="featureSelect" class="feature-select">
-                  <option value="">Feature Job Post</option>
-                  <option value="urgent">Urgent</option>
-                  <option value="new">New</option>
-                  <option value="high-demand">High Demand</option>
-                </select>
-              </div>
-            </div>
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="open">Open</button>
+            <button class="filter-btn" data-filter="closed">Closed</button>
+          </div>
+          <div class="feature-dropdown">
+            <select id="featureSelect" class="feature-select">
+              <option value="">Feature Job Post</option>
+              <option value="urgent">Urgent</option>
+              <option value="new">New</option>
+              <option value="high-demand">High Demand</option>
+            </select>
           </div>
         </div>
 
@@ -614,7 +644,7 @@
             <% } %>
           </div>
           <% } else { %> <% jobs.forEach(job => { %>
-          <div class="job-card" data-status="<%= job.status || 'open' %>">
+          <div class="job-card" data-status="<%= job.status || 'open' %>" onclick="window.location.href='/jobs/<%= job.jobId || job._id %>'" title="View Details">
             <div class="company-logo">
               <% if (job.imageUrl) { %>
               <img
@@ -627,29 +657,34 @@
               <% } %>
             </div>
 
-            <div class="job-card-center">
+            <div class="job-card-content">
+              <div class="job-status">
+                <div class="status-indicator <%= job.status || 'open' %>"></div>
+                <span class="status-text <%= job.status || 'open' %>">
+                  <%= (job.status || 'open').charAt(0).toUpperCase() + (job.status || 'open').slice(1) %>
+                </span>
+              </div>
+
               <h3 class="job-title"><%= job.title || 'Untitled Job' %></h3>
+              
               <% if (job.companyName) { %>
               <p class="job-company">
                 <i class="fas fa-building"></i>
                 <%= job.companyName %>
               </p>
               <% } %>
+              
               <p class="job-salary">
-                <i class="fas fa-dollar-sign"></i>
-                <%= job.formattedBudget || job.budget || 'Budget not specified'
-                %>
+                <%= job.formattedBudget || job.budget || 'Budget not specified' %>
               </p>
 
-              <% if (job.description && job.description.skills &&
-              job.description.skills.length > 0) { %>
+              <% if (job.description && job.description.skills && job.description.skills.length > 0) { %>
               <div class="job-tags">
                 <% job.description.skills.slice(0, 4).forEach(skill => { %>
                 <span class="job-tag"><%= skill %></span>
-                <% }) %> <% if (job.description.skills.length > 4) { %>
-                <span class="job-tag"
-                  >+<%= job.description.skills.length - 4 %> more</span
-                >
+                <% }) %> 
+                <% if (job.description.skills.length > 4) { %>
+                <span class="job-tag">+<%= job.description.skills.length - 4 %> more</span>
                 <% } %>
               </div>
               <% } %>
@@ -667,53 +702,40 @@
                   <i class="fas fa-calendar"></i>
                   <span>Posted <%= job.formattedDate || 'Recently' %></span>
                 </div>
-                <div class="job-detail-item">
-                  <i class="fas fa-clock"></i>
-                  <span
-                    >Deadline: <%= job.deadline ? new
-                    Date(job.deadline).toLocaleDateString() : 'Not specified'
-                    %></span
+              </div>
+
+              <div class="job-actions">
+                <div class="applicants-badge">
+                  <i class="fas fa-users"></i>
+                  <%= job.applications?.length || 0 %> applicants
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="feature-checkbox-container" style="display: none;" data-feature-type="" onclick="event.stopPropagation()">
+                    <input 
+                      type="checkbox" 
+                      class="feature-checkbox" 
+                      data-job-id="<%= job.jobId %>" 
+                      <%= job.featured && job.featured.isActive ? 'checked' : '' %>
+                      <% if (job.featured && job.featured.isActive && job.featured.type) { %>
+                        data-original-feature-type="<%= job.featured.type %>"
+                      <% } %>
+                    />
+                    <label class="feature-label">
+                      <% if (job.featured && job.featured.isActive && job.featured.type) { %>
+                        Featured as <%= job.featured.type.charAt(0).toUpperCase() + job.featured.type.slice(1).replace('-', ' ') %>
+                      <% } else { %>
+                        Feature this job
+                      <% } %>
+                    </label>
+                  </div>
+                  <button
+                    class="btn-delete"
+                    onclick="event.stopPropagation(); deleteJob('<%= job.jobId || job._id %>')"
+                    title="Delete Job"
                   >
+                    <i class="fas fa-trash"></i>
+                  </button>
                 </div>
-              </div>
-            </div>
-
-            <div class="job-card-right">
-              <div class="applicants-badge">
-                <i class="fas fa-users"></i>
-                <%= job.applications?.length || 0 %> applicants
-              </div>
-                <div class="feature-checkbox-container" style="display: none; margin: 10px 0;">
-                  <input 
-                    type="checkbox" 
-                    class="feature-checkbox" 
-                    data-job-id="<%= job.jobId %>" 
-                    <%= job.featured && job.featured.isActive ? 'checked' : '' %>
-                  />
-                  <label>Feature this job</label>
-                </div>
-
-              <div class="status-badge <%= job.status || 'open' %>">
-                <% if (job.status === 'open' || !job.status) { %>
-                <i class="fas fa-circle"></i> Open <% } else if (job.status ===
-                'closed') { %> <i class="fas fa-check-circle"></i> Closed <% }
-                else if (job.status === 'paused') { %>
-                <i class="fas fa-pause-circle"></i> Paused <% } else { %>
-                <i class="fas fa-circle"></i> <%= job.status %> <% } %>
-              </div>
-
-              <div class="action-buttons">
-                <a href="/jobs/<%= job.jobId || job._id %>" class="btn-view">
-                  <i class="fas fa-eye"></i>
-                  View Details
-                </a>
-                <button
-                  class="btn-delete"
-                  onclick="deleteJob('<%= job.jobId || job._id %>')"
-                  data-tooltip="Delete Job"
-                >
-                  <i class="fas fa-trash"></i>
-                </button>
               </div>
             </div>
           </div>
@@ -724,6 +746,21 @@
 
     <script src="/js/adminD/job_listings.js"></script>
     <script>
+      // Initialize featured jobs styling on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
+          if (checkbox.checked && checkbox.hasAttribute('data-original-feature-type')) {
+            const originalFeatureType = checkbox.getAttribute('data-original-feature-type');
+            const container = checkbox.closest('.feature-checkbox-container');
+            const label = container.querySelector('.feature-label');
+            
+            // Apply the original feature type styling
+            container.className = `feature-checkbox-container ${originalFeatureType}`;
+            label.className = `feature-label ${originalFeatureType}`;
+          }
+        });
+      });
+
       // Filter buttons functionality
       document.querySelectorAll(".filter-btn").forEach((button) => {
         button.addEventListener("click", () => {
@@ -754,14 +791,29 @@
         const selectedValue = this.value;
         
         if (selectedValue) {
-          // Show all checkboxes
+          // Show all checkboxes with proper styling
           checkboxContainers.forEach(container => {
-            container.style.display = 'block';
-          });
-          
-          // Update all checkboxes data attribute
-          document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
-            checkbox.setAttribute('data-feature-type', selectedValue);
+            container.style.display = 'inline-flex';
+            
+            const label = container.querySelector('.feature-label');
+            const checkbox = container.querySelector('.feature-checkbox');
+            
+            // Check if this checkbox is already checked (already featured)
+            if (checkbox.checked) {
+              // If already featured, preserve its original feature type and styling
+              const originalFeatureType = checkbox.getAttribute('data-original-feature-type');
+              if (originalFeatureType) {
+                // Keep the original styling and label
+                container.className = `feature-checkbox-container ${originalFeatureType}`;
+                label.textContent = `Featured as ${originalFeatureType.charAt(0).toUpperCase() + originalFeatureType.slice(1).replace('-', ' ')}`;
+              }
+            } else {
+              // If not featured, update to current selection
+              container.className = `feature-checkbox-container ${selectedValue}`;
+              container.setAttribute('data-feature-type', selectedValue);
+              label.textContent = `Feature as ${selectedValue.charAt(0).toUpperCase() + selectedValue.slice(1).replace('-', ' ')}`;
+              checkbox.setAttribute('data-feature-type', selectedValue);
+            }
           });
         } else {
           // Hide all checkboxes
@@ -771,12 +823,46 @@
         }
       });
 
+      // Handle feature container clicks
+      document.querySelectorAll('.feature-checkbox-container').forEach(container => {
+        container.addEventListener('click', function(event) {
+          event.stopPropagation();
+          const checkbox = this.querySelector('.feature-checkbox');
+          if (checkbox) {
+            checkbox.checked = !checkbox.checked;
+            checkbox.dispatchEvent(new Event('change'));
+          }
+        });
+      });
+
       // Handle checkbox changes
       document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           const jobId = this.getAttribute('data-job-id');
           const featureType = this.getAttribute('data-feature-type');
           const isChecked = this.checked;
+          const container = this.closest('.feature-checkbox-container');
+          const label = container.querySelector('.feature-label');
+          
+          // Update label text based on checked status and store/remove original feature type
+          if (isChecked) {
+            // Store the original feature type for future reference
+            this.setAttribute('data-original-feature-type', featureType);
+            label.textContent = `Featured as ${featureType.charAt(0).toUpperCase() + featureType.slice(1).replace('-', ' ')}`;
+            // Update container styling to match the feature type
+            container.className = `feature-checkbox-container ${featureType}`;
+          } else {
+            // Remove the original feature type when unfeatured
+            this.removeAttribute('data-original-feature-type');
+            label.textContent = `Feature as ${featureType.charAt(0).toUpperCase() + featureType.slice(1).replace('-', ' ')}`;
+            // Reset to default styling when unchecked
+            const currentSelection = featureSelect.value;
+            if (currentSelection) {
+              container.className = `feature-checkbox-container ${currentSelection}`;
+            } else {
+              container.className = 'feature-checkbox-container';
+            }
+          }
           
           // Send AJAX request to update feature status
           fetch('/adminD/jobs/feature', {
@@ -796,21 +882,49 @@
                 console.log('Job feature status updated successfully');
                 // Show correct message for feature/unfeature
                 if (isChecked) {
-                  showNotification('Job featured successfully!', 'success');
+                  showNotification(`Job featured as ${featureType} successfully!`, 'success');
                 } else {
                   showNotification('Job unfeatured successfully!', 'success');
                 }
             } else {
               console.error('Error updating job feature status:', data.message);
-              // Revert checkbox state
+              // Revert checkbox state and label
               this.checked = !isChecked;
+              if (!isChecked) {
+                this.setAttribute('data-original-feature-type', featureType);
+                label.textContent = `Featured as ${featureType.charAt(0).toUpperCase() + featureType.slice(1).replace('-', ' ')}`;
+                container.className = `feature-checkbox-container ${featureType}`;
+              } else {
+                this.removeAttribute('data-original-feature-type');
+                label.textContent = `Feature as ${featureType.charAt(0).toUpperCase() + featureType.slice(1).replace('-', ' ')}`;
+                const currentSelection = featureSelect.value;
+                if (currentSelection) {
+                  container.className = `feature-checkbox-container ${currentSelection}`;
+                } else {
+                  container.className = 'feature-checkbox-container';
+                }
+              }
               showNotification('Error updating job feature status', 'error');
             }
           })
           .catch(error => {
             console.error('Error:', error);
-            // Revert checkbox state
+            // Revert checkbox state and label
             this.checked = !isChecked;
+            if (!isChecked) {
+              this.setAttribute('data-original-feature-type', featureType);
+              label.textContent = `Featured as ${featureType.charAt(0).toUpperCase() + featureType.slice(1).replace('-', ' ')}`;
+              container.className = `feature-checkbox-container ${featureType}`;
+            } else {
+              this.removeAttribute('data-original-feature-type');
+              label.textContent = `Feature as ${featureType.charAt(0).toUpperCase() + featureType.slice(1).replace('-', ' ')}`;
+              const currentSelection = featureSelect.value;
+              if (currentSelection) {
+                container.className = `feature-checkbox-container ${currentSelection}`;
+              } else {
+                container.className = 'feature-checkbox-container';
+              }
+            }
             showNotification('Network error occurred', 'error');
           });
         });

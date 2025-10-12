@@ -53,7 +53,7 @@ exports.getHome = async (req, res) => {
       return {
         jobId: job.jobId,
         title: job.title,
-        category: job.featured.category,
+        category: job.featured.type,
         icon: categoryIcon,
         budgetRange: budgetRange,
         timeAgo: timeAgo,
