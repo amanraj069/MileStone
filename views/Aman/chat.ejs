@@ -301,6 +301,218 @@
         opacity: 0.7;
       }
 
+      /* Enhanced Chat Features Styles */
+      .chat-controls {
+        padding: 15px 24px;
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+      }
+
+      .search-container {
+        position: relative;
+        flex: 1;
+        max-width: 300px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 8px 35px 8px 12px;
+        border: 2px solid #e2e8f0;
+        border-radius: 20px;
+        font-size: 14px;
+        background: #f8fafc;
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        cursor: pointer;
+      }
+
+      .chat-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .action-btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .action-btn.primary {
+        background: #667eea;
+        color: white;
+      }
+
+      .action-btn.secondary {
+        background: #f1f5f9;
+        color: #475569;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .typing-indicator {
+        display: none;
+        padding: 10px 24px;
+        font-style: italic;
+        color: #64748b;
+        font-size: 14px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      .typing-indicator.show {
+        display: block;
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      .emoji-picker {
+        position: absolute;
+        bottom: 120px;
+        left: 50%;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        display: none;
+        z-index: 1000;
+        width: 280px;
+      }
+
+      .emoji-picker.show {
+        display: block;
+        animation: fadeInUp 0.3s ease-out;
+      }
+
+      .emoji-grid {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 5px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .emoji {
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 6px;
+        font-size: 18px;
+        transition: background-color 0.2s ease;
+      }
+
+      .emoji:hover {
+        background: #f1f5f9;
+      }
+
+      .message-status {
+        font-size: 10px;
+        color: #94a3b8;
+        margin-top: 2px;
+        text-align: right;
+      }
+
+      .message.sent .message-status {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .error-message {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+        padding: 8px 12px;
+        background: #fef2f2;
+        border-radius: 6px;
+        border-left: 3px solid #ef4444;
+      }
+
+      .char-counter {
+        font-size: 12px;
+        color: #64748b;
+        margin-left: 10px;
+        min-width: 60px;
+        text-align: right;
+      }
+
+      .char-counter.warning {
+        color: #f59e0b;
+      }
+
+      .char-counter.danger {
+        color: #ef4444;
+      }
+
+      /*
+      .message-actions {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: none;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 6px;
+        padding: 4px;
+      }
+
+      .message:hover .message-actions {
+        display: flex;
+      }
+
+      .message-action {
+        background: none;
+        border: none;
+        color: white;
+        padding: 4px 6px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .message-action:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      */
+
+      .chat-stats {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        display: none;
+      }
+
       /* Mobile responsiveness */
       @media (max-width: 768px) {
         body {
@@ -339,6 +551,19 @@
         .input-area {
           padding: 16px 20px;
         }
+
+        .chat-controls {
+          padding: 10px 16px;
+          flex-wrap: wrap;
+        }
+
+        .search-container {
+          max-width: 200px;
+        }
+
+        .emoji-picker {
+          width: 240px;
+        }
       }
     </style>
   </head>
@@ -359,7 +584,85 @@
       <% if (error) { %>
       <div class="error"><%= error %></div>
       <% } %>
-      <div class="chat-area">
+
+      <!-- Enhanced Chat Controls -->
+      <div class="chat-controls">
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            id="messageSearch"
+            placeholder="Search messages..."
+          />
+          <svg
+            class="search-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <div class="chat-actions">
+          <button
+            class="action-btn secondary"
+            id="toggleStats"
+            title="Show Chat Statistics"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M9 11H5a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"
+              ></path>
+              <path
+                d="M21 11h-4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2z"
+              ></path>
+              <path
+                d="M15 3h-4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"
+              ></path>
+            </svg>
+            Stats
+          </button>
+          <button
+            class="action-btn primary"
+            id="refreshChat"
+            title="Refresh Messages"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64l-.02.02"></path>
+              <path d="M3.51 15a9 9 0 0 0 14.85 4.34l.02-.02"></path>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Statistics (Hidden by default) -->
+      <div class="chat-stats" id="chatStats">
+        <div>Messages: <span id="messageCount">0</span></div>
+        <div>Last activity: <span id="lastActivity">Now</span></div>
+      </div>
+
+      <div class="chat-area" id="chatArea">
         <% if (messages.length === 0) { %>
         <div class="empty-chat">
           <div class="icon">💬</div>
@@ -393,45 +696,838 @@
         </div>
         <% }) %> <% } %>
       </div>
+
+      <!-- Typing Indicator -->
+      <div class="typing-indicator" id="typingIndicator">
+        <span id="typingUser">Someone</span> is typing...
+      </div>
+
+      <!-- Enhanced Input Area -->
       <div class="input-area">
-        <form action="/chat/<%= recipient.userId || '' %>" method="POST">
-          <input
-            type="text"
-            name="messageData"
-            placeholder="Type your message..."
-            required
-          />
-          <button type="submit">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M22 2L11 13"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+        <form
+          id="messageForm"
+          action="/chat/<%= recipient.userId || '' %>"
+          method="POST"
+        >
+          <div style="display: flex; flex-direction: column; flex: 1">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <input
+                type="text"
+                name="messageData"
+                id="messageInput"
+                placeholder="Type your message..."
+                required
+                maxlength="1000"
+                autocomplete="off"
               />
-              <path
-                d="M22 2L15 22L11 13L2 9L22 2Z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
+              <button
+                type="button"
+                id="emojiBtn"
+                title="Add Emoji"
+                style="
+                  background: none;
+                  border: none;
+                  font-size: 20px;
+                  cursor: pointer;
+                  padding: 10px;
+                "
+              >
+                😊
+              </button>
+              <div class="char-counter" id="charCounter">0/1000</div>
+              <button type="submit" id="sendBtn">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M22 2L11 13"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M22 2L15 22L11 13L2 9L22 2Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+          </div>
         </form>
+      </div>
+
+      <!-- Emoji Picker -->
+      <div class="emoji-picker" id="emojiPicker">
+        <div class="emoji-grid" id="emojiGrid">
+          <!-- Emojis will be populated by JavaScript -->
+        </div>
       </div>
     </div>
 
     <script>
-      // Auto-scroll to the bottom of the chat area when the page loads
+      // Enhanced Chat Application with Form Validation, Dynamic HTML, and AJAX
       document.addEventListener("DOMContentLoaded", function () {
+        // Initialize all chat features
+        initializeChatFeatures();
+      });
+
+      function initializeChatFeatures() {
+        initializeFormValidation();
+        initializeDynamicElements();
+        initializeAJAXFunctionality();
+        initializeMessageDisplay();
+        setupEventListeners();
+      }
+
+      function initializeFormValidation() {
+        const messageInput = document.getElementById("messageInput");
+        const charCounter = document.getElementById("charCounter");
+        const errorMessage = document.getElementById("errorMessage");
+        const sendBtn = document.getElementById("sendBtn");
+
+        // Real-time input validation
+        messageInput.addEventListener("input", function (e) {
+          validateMessageInput(e.target, charCounter, errorMessage, sendBtn);
+        });
+
+        // Form submission validation
+        document
+          .getElementById("messageForm")
+          .addEventListener("submit", function (e) {
+            if (!validateCompleteMessage(messageInput, errorMessage)) {
+              e.preventDefault();
+              return false;
+            }
+
+            // If validation passes, handle with AJAX instead of traditional form submission
+            e.preventDefault();
+            sendMessageAJAX(messageInput.value.trim());
+          });
+
+        // Prevent empty message submission
+        messageInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            if (validateCompleteMessage(messageInput, errorMessage)) {
+              sendMessageAJAX(messageInput.value.trim());
+            }
+          }
+        });
+      }
+
+      function validateMessageInput(input, charCounter, errorMessage, sendBtn) {
+        const value = input.value;
+        const charCount = value.length;
+        const maxLength = 1000;
+
+        // Update character counter
+        charCounter.textContent = `${charCount}/${maxLength}`;
+
+        // Reset styling
+        input.style.borderColor = "";
+        errorMessage.style.display = "none";
+        sendBtn.disabled = false;
+
+        // Character limit validation
+        if (charCount > maxLength * 0.9) {
+          charCounter.className = "char-counter warning";
+        } else if (charCount > maxLength * 0.95) {
+          charCounter.className = "char-counter danger";
+        } else {
+          charCounter.className = "char-counter";
+        }
+
+        // Length validation
+        if (charCount === 0) {
+          sendBtn.disabled = true;
+          return false;
+        }
+
+        if (charCount < 1) {
+          showFieldError(input, errorMessage, "Message cannot be empty");
+          sendBtn.disabled = true;
+          return false;
+        }
+
+        if (charCount > maxLength) {
+          showFieldError(
+            input,
+            errorMessage,
+            `Message too long (${charCount}/${maxLength} characters)`
+          );
+          sendBtn.disabled = true;
+          return false;
+        }
+
+        // Content validation
+        const trimmedValue = value.trim();
+        if (trimmedValue.length === 0) {
+          showFieldError(
+            input,
+            errorMessage,
+            "Message cannot contain only whitespace"
+          );
+          sendBtn.disabled = true;
+          return false;
+        }
+
+        // Special characters validation (basic spam prevention)
+        const specialCharPattern = /[<>{}]/g;
+        if (specialCharPattern.test(value)) {
+          showFieldError(
+            input,
+            errorMessage,
+            "Special characters < > { } are not allowed"
+          );
+          sendBtn.disabled = true;
+          return false;
+        }
+
+        // Excessive repetition validation
+        const repetitionPattern = /(.)\1{4,}/;
+        if (repetitionPattern.test(value)) {
+          showFieldError(
+            input,
+            errorMessage,
+            "Excessive character repetition detected"
+          );
+          sendBtn.disabled = true;
+          return false;
+        }
+
+        // Valid message
+        input.style.borderColor = "#10b981";
+        return true;
+      }
+
+      function validateCompleteMessage(input, errorMessage) {
+        const value = input.value.trim();
+
+        if (!value) {
+          showFieldError(input, errorMessage, "Please enter a message");
+          input.focus();
+          return false;
+        }
+
+        if (value.length > 1000) {
+          showFieldError(input, errorMessage, "Message is too long");
+          input.focus();
+          return false;
+        }
+
+        if (value.length < 1) {
+          showFieldError(input, errorMessage, "Message is too short");
+          input.focus();
+          return false;
+        }
+
+        return true;
+      }
+
+      function showFieldError(field, errorElement, message) {
+        field.style.borderColor = "#ef4444";
+        errorElement.textContent = message;
+        errorElement.style.display = "block";
+
+        setTimeout(() => {
+          errorElement.style.display = "none";
+          field.style.borderColor = "";
+        }, 3000);
+      }
+
+      function initializeDynamicElements() {
+        createEmojiPicker();
+        initializeTypingIndicator();
+        setupChatStats();
+        initializeSearchFunctionality();
+      }
+
+      function createEmojiPicker() {
+        const emojiBtn = document.getElementById("emojiBtn");
+        const emojiPicker = document.getElementById("emojiPicker");
+        const emojiGrid = document.getElementById("emojiGrid");
+
+        const emojis = [
+          "😀",
+          "😃",
+          "😄",
+          "😁",
+          "😅",
+          "😂",
+          "🤣",
+          "😊",
+          "😇",
+          "🙂",
+          "😉",
+          "😌",
+          "😍",
+          "🥰",
+          "😘",
+          "😗",
+          "😙",
+          "😚",
+          "😋",
+          "😛",
+          "😝",
+          "😜",
+          "🤪",
+          "🤨",
+          "🧐",
+          "🤓",
+          "😎",
+          "🤩",
+          "🥳",
+          "😏",
+          "😒",
+          "😞",
+          "😔",
+          "😟",
+          "😕",
+          "🙁",
+          "☹️",
+          "😣",
+          "😖",
+          "😫",
+          "😩",
+          "🥺",
+          "😢",
+          "😭",
+          "😤",
+          "😠",
+          "😡",
+          "🤬",
+          "🤯",
+          "😳",
+          "🥵",
+          "🥶",
+          "😱",
+          "😨",
+          "😰",
+          "😥",
+          "😓",
+          "🤗",
+          "🤔",
+          "🤭",
+          "🤫",
+          "🤥",
+          "😶",
+          "😐",
+          "👍",
+          "👎",
+          "👌",
+          "🤝",
+          "🙏",
+          "💪",
+          "❤️",
+          "💙",
+          "💚",
+          "💛",
+          "🧡",
+          "💜",
+          "🖤",
+          "🤍",
+          "🤎",
+          "💯",
+        ];
+
+        // Populate emoji grid
+        emojis.forEach((emoji) => {
+          const emojiElement = document.createElement("div");
+          emojiElement.className = "emoji";
+          emojiElement.textContent = emoji;
+          emojiElement.onclick = () => insertEmoji(emoji);
+          emojiGrid.appendChild(emojiElement);
+        });
+
+        // Toggle emoji picker
+        emojiBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          emojiPicker.classList.toggle("show");
+        });
+
+        // Close emoji picker when clicking outside
+        document.addEventListener("click", function (e) {
+          if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+            emojiPicker.classList.remove("show");
+          }
+        });
+      }
+
+      function insertEmoji(emoji) {
+        const messageInput = document.getElementById("messageInput");
+        const currentValue = messageInput.value;
+        const cursorPos = messageInput.selectionStart;
+
+        const newValue =
+          currentValue.slice(0, cursorPos) +
+          emoji +
+          currentValue.slice(cursorPos);
+        messageInput.value = newValue;
+
+        // Update cursor position
+        messageInput.setSelectionRange(
+          cursorPos + emoji.length,
+          cursorPos + emoji.length
+        );
+        messageInput.focus();
+
+        // Trigger validation
+        const event = new Event("input", { bubbles: true });
+        messageInput.dispatchEvent(event);
+
+        // Hide emoji picker
+        document.getElementById("emojiPicker").classList.remove("show");
+      }
+
+      function initializeTypingIndicator() {
+        const messageInput = document.getElementById("messageInput");
+        const typingIndicator = document.getElementById("typingIndicator");
+        let typingTimer;
+
+        messageInput.addEventListener("input", function () {
+          // Show typing indicator simulation
+          clearTimeout(typingTimer);
+
+          if (this.value.length > 0) {
+            typingIndicator.classList.add("show");
+            document.getElementById("typingUser").textContent = "You";
+
+            typingTimer = setTimeout(() => {
+              typingIndicator.classList.remove("show");
+            }, 2000);
+          } else {
+            typingIndicator.classList.remove("show");
+          }
+        });
+      }
+
+      function setupChatStats() {
+        const toggleStatsBtn = document.getElementById("toggleStats");
+        const chatStats = document.getElementById("chatStats");
+
+        toggleStatsBtn.addEventListener("click", function () {
+          chatStats.style.display =
+            chatStats.style.display === "block" ? "none" : "block";
+          updateChatStatistics();
+        });
+      }
+
+      function updateChatStatistics() {
+        const messages = document.querySelectorAll(".message");
+        const messageCount = messages.length;
+
+        document.getElementById("messageCount").textContent = messageCount;
+
+        if (messageCount > 0) {
+          const lastMessage = messages[messages.length - 1];
+          const timeElement = lastMessage.querySelector(".time");
+          document.getElementById("lastActivity").textContent = timeElement
+            ? timeElement.textContent
+            : "Unknown";
+        }
+      }
+
+      /*
+      function createMessageActions() {
+        // Add action buttons to existing messages
+        const messages = document.querySelectorAll(".message");
+        messages.forEach((message) => {
+          addMessageActions(message);
+        });
+      }
+
+      function addMessageActions(messageElement) {
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "message-actions";
+
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "message-action";
+        copyBtn.innerHTML = "📋";
+        copyBtn.title = "Copy message";
+        copyBtn.onclick = () => copyMessage(messageElement);
+
+        const timeBtn = document.createElement("button");
+        timeBtn.className = "message-action";
+        timeBtn.innerHTML = "🕒";
+        timeBtn.title = "Show full timestamp";
+        timeBtn.onclick = () => showFullTimestamp(messageElement);
+
+        actionsDiv.appendChild(copyBtn);
+        actionsDiv.appendChild(timeBtn);
+        messageElement.appendChild(actionsDiv);
+      }
+      */
+
+      /*
+      function copyMessage(messageElement) {
+        const bubble = messageElement.querySelector(".bubble");
+        if (bubble) {
+          navigator.clipboard
+            .writeText(bubble.textContent)
+            .then(() => {
+              showNotification("Message copied to clipboard", "success");
+            })
+            .catch(() => {
+              showNotification("Failed to copy message", "error");
+            });
+        }
+      }
+
+      function showFullTimestamp(messageElement) {
+        const timeElement = messageElement.querySelector(".time");
+        if (timeElement) {
+          const originalText = timeElement.textContent;
+          timeElement.textContent = new Date().toLocaleString();
+
+          setTimeout(() => {
+            timeElement.textContent = originalText;
+          }, 3000);
+        }
+      }
+      */
+
+      function initializeSearchFunctionality() {
+        const searchInput = document.getElementById("messageSearch");
+        let searchTimeout;
+
+        searchInput.addEventListener("input", function () {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            filterMessages(this.value.toLowerCase());
+          }, 300);
+        });
+      }
+
+      function filterMessages(searchTerm) {
+        const messages = document.querySelectorAll(".message");
+        let visibleCount = 0;
+
+        messages.forEach((message) => {
+          const bubble = message.querySelector(".bubble");
+          if (bubble) {
+            const messageText = bubble.textContent.toLowerCase();
+
+            if (searchTerm === "" || messageText.includes(searchTerm)) {
+              message.style.display = "flex";
+              message.style.animation = "fadeIn 0.3s ease-in";
+              visibleCount++;
+            } else {
+              message.style.display = "none";
+            }
+          }
+        });
+
+        // Show search results indicator
+        updateSearchResults(searchTerm, visibleCount, messages.length);
+      }
+
+      function updateSearchResults(searchTerm, visibleCount, totalCount) {
+        let searchIndicator = document.querySelector(".search-results");
+
+        if (searchTerm && visibleCount !== totalCount) {
+          if (!searchIndicator) {
+            searchIndicator = document.createElement("div");
+            searchIndicator.className = "search-results";
+            searchIndicator.style.cssText =
+              "padding: 10px 24px; background: #fef3c7; border-left: 3px solid #f59e0b; font-size: 14px; color: #92400e;";
+            document
+              .querySelector(".chat-area")
+              .parentNode.insertBefore(
+                searchIndicator,
+                document.querySelector(".chat-area")
+              );
+          }
+
+          searchIndicator.textContent = `Showing ${visibleCount} of ${totalCount} messages matching "${searchTerm}"`;
+          searchIndicator.style.display = "block";
+        } else if (searchIndicator) {
+          searchIndicator.style.display = "none";
+        }
+      }
+
+      function initializeAJAXFunctionality() {
+        setupRefreshButton();
+        initializeAutoRefresh();
+        setupMessagePolling();
+      }
+
+      // Real-time message sending with AJAX
+      async function sendMessageAJAX(messageText) {
+        const recipientId = "<%= recipient.userId %>";
+        const sendBtn = document.getElementById("sendBtn");
+        const messageInput = document.getElementById("messageInput");
+
+        try {
+          // Show loading state
+          sendBtn.disabled = true;
+          sendBtn.innerHTML =
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>';
+
+          const response = await fetch(`/chat/${recipientId}/api/send`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messageData: messageText,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+
+          if (result.success) {
+            // Add message to UI immediately (optimistic update)
+            addMessageToUI({
+              messageData: messageText,
+              from: "<%= user.id %>",
+              createdAt: new Date().toISOString(),
+            });
+
+            // Clear input
+            messageInput.value = "";
+            document.getElementById("charCounter").textContent = "0/1000";
+
+            // Show success
+            showNotification("Message sent", "success");
+
+            // Refresh messages to ensure consistency
+            setTimeout(() => {
+              refreshMessages();
+            }, 1000);
+          } else {
+            throw new Error(result.message || "Failed to send message");
+          }
+        } catch (error) {
+          console.error("Error sending message:", error);
+          showNotification("Failed to send message: " + error.message, "error");
+
+          // Fallback to traditional form submission
+          const form = document.getElementById("messageForm");
+          const actionUrl = form.getAttribute("action");
+
+          const formData = new FormData();
+          formData.append("messageData", messageText);
+
+          try {
+            const fallbackResponse = await fetch(actionUrl, {
+              method: "POST",
+              body: formData,
+            });
+
+            if (fallbackResponse.ok) {
+              window.location.reload();
+            }
+          } catch (fallbackError) {
+            showNotification("Message sending failed completely", "error");
+          }
+        } finally {
+          // Restore send button
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          `;
+        }
+      }
+
+      // Message refresh functionality
+      async function refreshMessages() {
+        const recipientId = "<%= recipient.userId %>";
+
+        try {
+          showNotification("Refreshing messages...", "info");
+
+          const response = await fetch(`/chat/${recipientId}/api/messages`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch messages");
+          }
+
+          const data = await response.json();
+
+          if (data.success) {
+            updateMessageDisplay(data.messages);
+            showNotification("Messages refreshed", "success");
+            updateChatStatistics();
+          } else {
+            throw new Error(data.message || "Failed to refresh messages");
+          }
+        } catch (error) {
+          console.error("Error refreshing messages:", error);
+          showNotification("Failed to refresh messages", "error");
+        }
+      }
+
+      // User status checking
+      async function checkUserStatus() {
+        const recipientId = "<%= recipient.userId %>";
+
+        try {
+          const response = await fetch(`/chat/${recipientId}/api/status`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            updateUserStatus(data.status, data.lastSeen);
+          }
+        } catch (error) {
+          console.error("Error checking user status:", error);
+        }
+      }
+
+      function updateUserStatus(status, lastSeen) {
+        const statusElement = document.querySelector(".status");
+        const userInfo = document.querySelector(".user-info");
+
+        if (statusElement) {
+          statusElement.style.backgroundColor =
+            status === "online" ? "#4ade80" : "#94a3b8";
+        }
+
+        // Add last seen info if user is offline
+        if (status === "offline" && lastSeen) {
+          let lastSeenElement = userInfo.querySelector(".last-seen");
+          if (!lastSeenElement) {
+            lastSeenElement = document.createElement("div");
+            lastSeenElement.className = "last-seen";
+            lastSeenElement.style.cssText =
+              "font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px;";
+            userInfo.appendChild(lastSeenElement);
+          }
+          lastSeenElement.textContent = `Last seen ${new Date(
+            lastSeen
+          ).toLocaleTimeString()}`;
+        }
+      }
+
+      // Helper functions for AJAX functionality
+      function addMessageToUI(message) {
+        const chatArea = document.getElementById("chatArea");
+        const messageElement = createMessageElement(message);
+        chatArea.appendChild(messageElement);
+
+        // Scroll to bottom
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        // Add message actions - Removed to hide icons
+        // addMessageActions(messageElement);
+      }
+
+      function createMessageElement(message) {
+        const messageDiv = document.createElement("div");
+        const isSent = message.from === "<%= user.id %>";
+        messageDiv.className = `message ${isSent ? "sent" : "received"}`;
+
+        const time = new Date(message.createdAt).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        if (isSent) {
+          messageDiv.innerHTML = `
+            <div class="time">${time}</div>
+            <div class="bubble">
+              ${escapeHtml(message.messageData)}
+              <div class="message-status">Sent</div>
+            </div>
+            <img src="<%= user.picture || '/assets/user_female.png' %>" alt="Profile Picture" />
+          `;
+        } else {
+          messageDiv.innerHTML = `
+            <img src="<%= recipient.picture %>" alt="Profile Picture" />
+            <div class="bubble">${escapeHtml(message.messageData)}</div>
+            <div class="time">${time}</div>
+          `;
+        }
+
+        return messageDiv;
+      }
+
+      function updateMessageDisplay(messages) {
+        const chatArea = document.getElementById("chatArea");
+        chatArea.innerHTML = "";
+
+        if (messages.length === 0) {
+          chatArea.innerHTML = `
+            <div class="empty-chat">
+              <div class="icon">💬</div>
+              <div class="text">No messages yet</div>
+              <div class="subtext">Start a conversation with <%= recipient.name %></div>
+            </div>
+          `;
+        } else {
+          messages.forEach((message) => {
+            const messageElement = createMessageElement(message);
+            chatArea.appendChild(messageElement);
+          });
+
+          // Scroll to bottom
+          setTimeout(() => {
+            chatArea.scrollTop = chatArea.scrollHeight;
+          }, 100);
+        }
+      }
+
+      function setupRefreshButton() {
+        const refreshBtn = document.getElementById("refreshChat");
+        refreshBtn.addEventListener("click", refreshMessages);
+      }
+
+      function initializeAutoRefresh() {
+        // Check for new messages every 30 seconds
+        setInterval(() => {
+          refreshMessages();
+          checkUserStatus();
+        }, 30000);
+      }
+
+      function setupMessagePolling() {
+        // Initial status check
+        checkUserStatus();
+
+        // Poll for new messages every 10 seconds when tab is active
+        let pollInterval;
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) {
+            clearInterval(pollInterval);
+          } else {
+            pollInterval = setInterval(refreshMessages, 10000);
+          }
+        });
+
+        // Start polling if page is visible
+        if (!document.hidden) {
+          pollInterval = setInterval(refreshMessages, 10000);
+        }
+      }
+
+      // =================== UTILITY FUNCTIONS ===================
+      function initializeMessageDisplay() {
         const chatArea = document.querySelector(".chat-area");
         chatArea.scrollTop = chatArea.scrollHeight;
 
@@ -445,25 +1541,86 @@
         });
 
         observer.observe(chatArea, { childList: true });
+      }
 
-        // Add auto-resize to input field
-        const messageInput = document.querySelector(
-          'input[name="messageData"]'
-        );
-        messageInput.addEventListener("keypress", function (e) {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            this.closest("form").submit();
+      function setupEventListeners() {
+        // Handle window resize
+        window.addEventListener("resize", function () {
+          const chatArea = document.querySelector(".chat-area");
+          if (chatArea) {
+            chatArea.scrollTop = chatArea.scrollHeight;
           }
         });
 
-        // Add typing indicator simulation (optional)
-        let typingTimer;
-        messageInput.addEventListener("keyup", function () {
-          clearTimeout(typingTimer);
-          // You can add typing indicator logic here if needed
+        // Handle page visibility changes
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) {
+            // Page became visible, refresh messages
+            refreshMessages();
+          }
         });
-      });
+      }
+
+      function showNotification(message, type = "info") {
+        // Remove existing notification
+        const existingNotification = document.querySelector(".notification");
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement("div");
+        notification.className = "notification";
+        notification.style.cssText = `
+          position: fixed; top: 20px; right: 20px; z-index: 1000;
+          padding: 12px 20px; border-radius: 8px; color: white; font-weight: 500;
+          background: ${
+            type === "success"
+              ? "#10b981"
+              : type === "error"
+              ? "#ef4444"
+              : "#2563eb"
+          };
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          animation: slideIn 0.3s ease-out; max-width: 300px; font-size: 14px;
+        `;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+          notification.style.animation = "slideOut 0.3s ease-in";
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Add CSS animations
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+          from { transform: translateX(0); opacity: 1; }
+          to { transform: translateX(100%); opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>

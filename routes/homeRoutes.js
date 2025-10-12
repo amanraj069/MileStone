@@ -8,6 +8,13 @@ router.get("/blog", homeController.getBlogPage);
 router.get("/blog/:blogId", homeController.getBlogPost);
 router.get("/chat/:userId", homeController.getChat);
 router.post("/chat/:userId", homeController.sendMessage);
+
+// Chat API Routes
+router.post("/chat/:userId/api/send", homeController.sendMessageAPI);
+router.get("/chat/:userId/api/messages", homeController.getMessagesAPI);
+router.get("/chat/:userId/api/status", homeController.getUserStatusAPI);
+router.get("/chat/:userId/api/stats", homeController.getChatStatsAPI);
+
 router.get("/jobs", homeController.getJobListing);
 router.get("/jobs/:jobId", homeController.getJobDetails);
 router.get("/jobs/apply/:jobId", homeController.getJobApplication);
