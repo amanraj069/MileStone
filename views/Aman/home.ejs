@@ -699,60 +699,32 @@
                 <p>Insights and tips to excel in the freelancing world</p>
             </div>
             <div class="blog-grid">
-                <div class="blog-card" data-aos="fade-up">
-                    <div class="blog-image">
-                        <img src="/assets/home/portfolio_1.avif"
-                            alt="Top 10 Skills for Freelancers in 2023" loading="lazy">
-                        <div class="blog-date">
-                            <span>22</span>
-                            <span>APR</span>
+                                <% if (typeof latestBlogs !== 'undefined' && latestBlogs && latestBlogs.length) { %>
+                                    <% latestBlogs.forEach(function(blog){ %>
+                    <div class="blog-card" data-aos="fade-up">
+                        <div class="blog-image">
+                            <img src="<%= blog.imageUrl %>" alt="<%= blog.title %>" loading="lazy">
+                            <div class="blog-date">
+                                <span><%= new Date(blog.createdAt).getDate() %></span>
+                                <span><%= new Date(blog.createdAt).toLocaleString('en-US', { month: 'short' }).toUpperCase() %></span>
+                            </div>
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-category"><%= blog.category %></div>
+                            <h3><%= blog.title %></h3>
+                            <p><%= blog.tagline %></p>
+                            <a href="/blog/<%= blog.blogId %>" class="blog-link">Read More <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
+                  <% }); %>
+                <% } else { %>
+                  <div class="blog-card" data-aos="fade-up">
                     <div class="blog-content">
-                        <div class="blog-category">Career</div>
-                        <h3>Top 10 Skills for Freelancers in 2025</h3>
-                        <p>Discover the most in-demand skills that will help you stand out in the competitive
-                            freelancing market.</p>
-                        <a href="/blog" class="blog-link">Read More <i
-                                class="fas fa-arrow-right"></i></a>
+                      <h3>No blog posts yet</h3>
+                      <p>Admin hasn't created any blog posts yet. Check back later.</p>
                     </div>
-                </div>
-                <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="blog-image">
-                        <img src="/assets/home/portfolio_2.avif"
-                            alt="How to Price Your Freelance Services" loading="lazy">
-                        <div class="blog-date">
-                            <span>15</span>
-                            <span>APR</span>
-                        </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-category">Finance</div>
-                        <h3>How to Price Your Freelance Services</h3>
-                        <p>Learn effective strategies to price your services competitively while ensuring you're fairly
-                            compensated for your expertise.</p>
-                        <a href="/blog" class="blog-link">Read More <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="blog-image">
-                        <img src="/assets/home/portfolio_3.avif"
-                            alt="Building a Strong Freelancer Portfolio" loading="lazy">
-                        <div class="blog-date">
-                            <span>08</span>
-                            <span>APR</span>
-                        </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-category">Portfolio</div>
-                        <h3>Building a Strong Freelancer Portfolio</h3>
-                        <p>Tips and best practices for creating a portfolio that showcases your skills and attracts
-                            high-quality clients.</p>
-                        <a href="/blog" class="blog-link">Read More <i
-                                class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
+                  </div>
+                <% } %>
             </div>
         </div>
     </section>

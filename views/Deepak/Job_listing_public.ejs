@@ -255,18 +255,11 @@
                 <% }); %>
               </div>
               <div class="job-meta">
-                <span class="location"
-                  ><%= job.location || 'Not specified' %></span
-                ><span class="location"
-                  ><%= job.experienceLevel || 'Not specified' %></span
-                >
-                <span><%= job.remote ? '(Remote)' : '' %></span>
-                <span class="work"><%= job.jobType %></span>
-                <span class="clock">
-                  Posted <%= new
-                  Date(job.postedDate).toLocaleDateString('en-US', { month:
-                  'short', day: 'numeric', year: 'numeric' }) %>
-                </span>
+                <span class="location"><i class="fas fa-map-marker-alt"></i> <%= job.location || 'Not specified' %></span>
+                <span class="location"><i class="fas fa-user-tie"></i> <%= job.experienceLevel || 'Not specified' %></span>
+                <span><i class="fas fa-home"></i> <%= job.remote ? 'Remote' : '' %></span>
+                <span class="work"><i class="fas fa-briefcase"></i> <%= job.jobType %></span>
+                <span class="clock"><i class="fas fa-clock"></i> Posted <%= new Date(job.postedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
               </div>
             </div>
             <div class="job-actions">

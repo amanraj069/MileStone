@@ -114,7 +114,7 @@ const employerController = {
         .select("freelancerId skills")
         .lean();
       const users = await User.find({ roleId: { $in: freelancerIds } })
-        .select("roleId name picture")
+        .select("roleId userId name picture")
         .lean();
 
       const freelancersWithDetails = jobs.map((job) => {
@@ -130,6 +130,7 @@ const employerController = {
           projectName: job.title,
           skills: freelancer?.skills || job.description.skills || [],
           completionDate,
+          userId: user?.userId || "", // Add userId for chat navigation
           freelancer: {
             id: job.assignedFreelancer.freelancerId,
             name: user?.name || "Unknown Freelancer",
@@ -230,11 +231,13 @@ const employerController = {
 
       // Get employer's profile image from user data
       const user = await User.findOne({ userId });
-      const employerImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
+      const employerImageUrl =
+        user?.picture ||
+        "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png";
 
       // Parse milestones array if it's not already parsed
       let parsedMilestones = [];
-      if (milestones && typeof milestones === 'object') {
+      if (milestones && typeof milestones === "object") {
         parsedMilestones = Object.values(milestones);
       } else if (Array.isArray(milestones)) {
         parsedMilestones = milestones;
@@ -255,9 +258,16 @@ const employerController = {
         applicationDeadline: new Date(applicationDeadline),
         description: {
           text: description?.text || description || "",
-          responsibilities: responsibilities ? responsibilities.split("\n").filter((r) => r.trim()) : [],
+          responsibilities: responsibilities
+            ? responsibilities.split("\n").filter((r) => r.trim())
+            : [],
           requirements: [], // No longer using separate requirements field
-          skills: skills ? skills.split(/[,\n]/).map(s => s.trim()).filter((s) => s) : [],
+          skills: skills
+            ? skills
+                .split(/[,\n]/)
+                .map((s) => s.trim())
+                .filter((s) => s)
+            : [],
         },
         milestones: parsedMilestones.map((m) => ({
           description: m.description || "",
@@ -265,12 +275,14 @@ const employerController = {
           payment: m.payment || "0",
           status: "not-paid",
           requested: false,
-          subTasks: m.subTasks ? Object.values(m.subTasks).map((st) => ({
-            description: st.description || "",
-            status: "pending",
-            completedDate: null,
-            notes: "",
-          })) : [],
+          subTasks: m.subTasks
+            ? Object.values(m.subTasks).map((st) => ({
+                description: st.description || "",
+                status: "pending",
+                completedDate: null,
+                notes: "",
+              }))
+            : [],
           completionPercentage: 0,
         })),
       });
@@ -360,13 +372,15 @@ const employerController = {
           payment: m.payment,
           status: m.status || "not-paid",
           requested: m.requested === "true" || m.requested === true,
-          subTasks: m.subTasks ? m.subTasks.map((st) => ({
-            subTaskId: st.subTaskId || require('uuid').v4(),
-            description: st.description,
-            status: st.status || "pending",
-            completedDate: st.completedDate || null,
-            notes: st.notes || "",
-          })) : [],
+          subTasks: m.subTasks
+            ? m.subTasks.map((st) => ({
+                subTaskId: st.subTaskId || require("uuid").v4(),
+                description: st.description,
+                status: st.status || "pending",
+                completedDate: st.completedDate || null,
+                notes: st.notes || "",
+              }))
+            : [],
           completionPercentage: m.completionPercentage || 0,
         })),
       };
@@ -686,11 +700,15 @@ const employerController = {
       const userId = req.session.user.id;
 
       if (!userId) {
-        return res.status(400).json({ success: false, message: "User ID not found in session" });
+        return res
+          .status(400)
+          .json({ success: false, message: "User ID not found in session" });
       }
 
       if (!req.file) {
-        return res.status(400).json({ success: false, message: "No image file provided" });
+        return res
+          .status(400)
+          .json({ success: false, message: "No image file provided" });
       }
 
       // Upload image to Cloudinary
@@ -705,23 +723,24 @@ const employerController = {
       );
 
       if (!user) {
-        return res.status(404).json({ success: false, message: "User not found" });
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
       }
 
       // Update session
       req.session.user.picture = user.picture;
 
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: "Profile image updated successfully",
-        imageUrl: pictureUrl 
+        imageUrl: pictureUrl,
       });
-
     } catch (error) {
       console.error("Error uploading profile image:", error.message);
-      res.status(500).json({ 
-        success: false, 
-        message: "Failed to upload image: " + error.message 
+      res.status(500).json({
+        success: false,
+        message: "Failed to upload image: " + error.message,
       });
     }
   },
@@ -1050,7 +1069,7 @@ const employerController = {
       const jobId = req.query.jobId;
 
       if (!userId) {
-        return res.redirect('/login');
+        return res.redirect("/login");
       }
 
       // Get user information
@@ -1062,16 +1081,16 @@ const employerController = {
       let job = null;
       if (jobId) {
         // Get job information if jobId is provided
-        job = await JobListing.findOne({ 
+        job = await JobListing.findOne({
           jobId: jobId,
-          employerId: req.session.user.roleId 
+          employerId: req.session.user.roleId,
         }).lean();
-        
+
         if (job) {
           // Get freelancer information if assigned
           if (job.assignedFreelancer && job.assignedFreelancer.freelancerId) {
-            const freelancer = await Freelancer.findOne({ 
-              freelancerId: job.assignedFreelancer.freelancerId 
+            const freelancer = await Freelancer.findOne({
+              freelancerId: job.assignedFreelancer.freelancerId,
             }).lean();
             if (freelancer) {
               job.assignedFreelancer.name = freelancer.name;
@@ -1085,7 +1104,7 @@ const employerController = {
           name: user.name,
           picture: user.picture,
           role: user.role,
-          email: user.email
+          email: user.email,
         },
         job: job,
         activePage: "current_jobs",
@@ -1098,44 +1117,48 @@ const employerController = {
 
   submitComplaintForm: async (req, res) => {
     try {
-      const { 
-        jobId, 
-        againstUser, 
-        complaintType, 
-        priority, 
-        issue, 
+      const {
+        jobId,
+        againstUser,
+        complaintType,
+        priority,
+        issue,
         expectedResolution,
         contactEmail,
-        preferredContact
+        preferredContact,
       } = req.body;
-      
+
       if (!req.session.user) {
         return res.status(401).json({ error: "Unauthorized: Please log in" });
       }
 
       // Validate required fields
       if (!complaintType || !issue) {
-        return res.status(400).json({ error: "Complaint type and issue description are required" });
+        return res
+          .status(400)
+          .json({ error: "Complaint type and issue description are required" });
       }
 
       if (issue.trim().length < 5) {
-        return res.status(400).json({ error: "Issue description must be at least 5 characters" });
+        return res
+          .status(400)
+          .json({ error: "Issue description must be at least 5 characters" });
       }
 
       // Get job details if jobId is provided
       let job = null;
       let finalAgainstUser = againstUser;
-      
+
       if (jobId) {
         job = await JobListing.findOne({ jobId: jobId }).lean();
-        
+
         if (job && job.assignedFreelancer && !finalAgainstUser) {
           // Get the freelancer's user ID from the freelancer collection
           const Freelancer = require("../models/freelancer");
-          const freelancer = await Freelancer.findOne({ 
-            freelancerId: job.assignedFreelancer.freelancerId 
+          const freelancer = await Freelancer.findOne({
+            freelancerId: job.assignedFreelancer.freelancerId,
           }).lean();
-          
+
           if (freelancer) {
             finalAgainstUser = freelancer.userId;
           }
@@ -1148,18 +1171,16 @@ const employerController = {
 
       const complaintData = {
         submittedBy: submittedById,
-        againstUser: finalAgainstUser || 'general',
+        againstUser: finalAgainstUser || "general",
         complaintType: complaintType,
-        jobId: jobId || '',
+        jobId: jobId || "",
         issue: issue.trim(),
-        priority: priority || 'Medium',
-        expectedResolution: expectedResolution ? expectedResolution.trim() : '',
-        contactEmail: contactEmail || req.session.user.email || '',
-        preferredContact: preferredContact || 'email',
+        priority: priority || "Medium",
+        expectedResolution: expectedResolution ? expectedResolution.trim() : "",
+        contactEmail: contactEmail || req.session.user.email || "",
+        preferredContact: preferredContact || "email",
         status: "pending",
       };
-
-
 
       // Create complaint
       const complaint = new Complaint(complaintData);
