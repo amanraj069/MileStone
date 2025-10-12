@@ -53,15 +53,15 @@ exports.featureJob = async (req, res) => {
     const { jobId, featureType, isActive } = req.body;
 
     if (!jobId || !featureType) {
-      return res.status(400).json({ 
-        success: false, 
-        message: "Job ID and feature type are required" 
+      return res.status(400).json({
+        success: false,
+        message: "Job ID and feature type are required",
       });
     }
 
     const updateData = {
       "featured.isActive": isActive,
-      "featured.category": isActive ? featureType : null,
+      "featured.type": isActive ? featureType : null,
       "featured.featuredAt": isActive ? new Date() : null,
     };
 
@@ -72,23 +72,22 @@ exports.featureJob = async (req, res) => {
     );
 
     if (!updatedJob) {
-      return res.status(404).json({ 
-        success: false, 
-        message: "Job not found" 
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
       });
     }
 
-    res.json({ 
-      success: true, 
-      message: `Job ${isActive ? 'featured' : 'unfeatured'} successfully`,
-      job: updatedJob
+    res.json({
+      success: true,
+      message: `Job ${isActive ? "featured" : "unfeatured"} successfully`,
+      job: updatedJob,
     });
-
   } catch (error) {
     console.error("Error featuring job:", error);
-    res.status(500).json({ 
-      success: false, 
-      message: "Server error while updating job feature status" 
+    res.status(500).json({
+      success: false,
+      message: "Server error while updating job feature status",
     });
   }
 };
@@ -211,32 +210,85 @@ exports.getComplaints = async (req, res) => {
     // Fetch all complaints from the database
     const complaints = await Complaint.find().lean();
 
-    // Get user details for complainants and complained against users
-    const userIds = [
-      ...new Set([
-        ...complaints.map((c) => c.submittedBy),
-        ...complaints.map((c) => c.againstUser),
-      ]),
-    ];
-
-    const users = await User.find({ userId: { $in: userIds } }).lean();
-    const userMap = users.reduce((map, user) => {
+    // Get user details for complainants (these are already userId values)
+    const submittedByIds = [...new Set(complaints.map((c) => c.submittedBy))];
+    const submittedByUsers = await User.find({
+      userId: { $in: submittedByIds },
+    }).lean();
+    const submittedByMap = submittedByUsers.reduce((map, user) => {
       map[user.userId] = user;
       return map;
     }, {});
 
+    // Get user details for complained against users (these might be employerId/freelancerId)
+    const againstUserIds = [
+      ...new Set(
+        complaints
+          .map((c) => c.againstUser)
+          .filter((id) => id && id !== "general")
+      ),
+    ];
+
+    // Try to find them as userIds first
+    const againstUsers = await User.find({
+      userId: { $in: againstUserIds },
+    }).lean();
+    const againstUserMap = againstUsers.reduce((map, user) => {
+      map[user.userId] = user;
+      return map;
+    }, {});
+
+    // For IDs not found as userIds, check if they are employerIds or freelancerIds
+    for (let id of againstUserIds) {
+      if (!againstUserMap[id]) {
+        // Check if it's an employerId
+        const employer = await Employer.findOne({ employerId: id }).lean();
+        if (employer) {
+          const employerUser = await User.findOne({
+            userId: employer.userId,
+          }).lean();
+          if (employerUser) {
+            againstUserMap[id] = employerUser;
+          }
+        } else {
+          // Check if it's a freelancerId
+          const freelancer = await Freelancer.findOne({
+            freelancerId: id,
+          }).lean();
+          if (freelancer) {
+            const freelancerUser = await User.findOne({
+              userId: freelancer.userId,
+            }).lean();
+            if (freelancerUser) {
+              againstUserMap[id] = freelancerUser;
+            }
+          }
+        }
+      }
+    }
+
     // Format complaints data
     const formattedComplaints = complaints
       .map((complaint) => {
-        const submittedByUser = userMap[complaint.submittedBy];
-        const againstUserData = userMap[complaint.againstUser];
+        const submittedByUser = submittedByMap[complaint.submittedBy];
+        const againstUserData =
+          complaint.againstUser === "general"
+            ? null
+            : againstUserMap[complaint.againstUser];
 
         return {
           ...complaint,
           submittedByName: submittedByUser?.name || "Unknown User",
           submittedByRole: submittedByUser?.role || "Unknown",
-          againstUserName: againstUserData?.name || "Unknown User",
-          againstUserRole: againstUserData?.role || "Unknown",
+          againstUserName:
+            complaint.againstUser === "general"
+              ? "System/Platform"
+              : againstUserData?.name || "User Not Found",
+          againstUserRole:
+            complaint.againstUser === "general"
+              ? "General"
+              : againstUserData?.role || "Unknown",
+          againstUserId: againstUserData?.userId || null, // Add the actual userId for chat
           formattedDate: new Date(complaint.submittedDate).toLocaleDateString(
             "en-US",
             {
@@ -664,35 +716,33 @@ exports.getBlogs = async (req, res) => {
   try {
     const { q } = req.query;
     let query = {};
-    
+
     if (q) {
       query = {
         $or: [
-          { title: { $regex: q, $options: 'i' } },
-          { tagline: { $regex: q, $options: 'i' } },
-          { category: { $regex: q, $options: 'i' } }
-        ]
+          { title: { $regex: q, $options: "i" } },
+          { tagline: { $regex: q, $options: "i" } },
+          { category: { $regex: q, $options: "i" } },
+        ],
       };
     }
 
-    const blogs = await Blog.find(query)
-      .sort({ createdAt: -1 })
-      .lean();
+    const blogs = await Blog.find(query).sort({ createdAt: -1 }).lean();
 
-    const blogsData = blogs.map(blog => ({
+    const blogsData = blogs.map((blog) => ({
       ...blog,
-      formattedCreatedAt: new Date(blog.createdAt).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
+      formattedCreatedAt: new Date(blog.createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
       }),
-      readTimeDisplay: `${blog.minReadTime} min read`
+      readTimeDisplay: `${blog.minReadTime} min read`,
     }));
 
     res.render("Jayanth/blogs", {
       user: req.session.user,
       blogs: blogsData,
-      searchQuery: q || ""
+      searchQuery: q || "",
     });
   } catch (error) {
     console.error("Error fetching blogs:", error);
@@ -702,12 +752,13 @@ exports.getBlogs = async (req, res) => {
 
 exports.getCreateBlog = (req, res) => {
   res.render("Jayanth/others/create-blog", {
-    user: req.session.user
+    user: req.session.user,
   });
 };
 
 exports.createBlog = async (req, res) => {
   try {
+<<<<<<< HEAD
     const { title, tagline, category, imageUrl, minReadTime, content } = req.body;
 
     console.log('createBlog received body:', JSON.stringify(req.body));
@@ -735,6 +786,16 @@ exports.createBlog = async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid content format. Please ensure content is valid JSON.' });
       }
     } else if (Array.isArray(content)) {
+=======
+    const { title, tagline, category, imageUrl, minReadTime, content } =
+      req.body;
+
+    // Parse content if it's a string
+    let parsedContent = [];
+    if (typeof content === "string") {
+      parsedContent = JSON.parse(content);
+    } else {
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
       parsedContent = content;
     } else {
       return res.status(400).json({ success: false, message: 'Invalid content format.' });
@@ -765,7 +826,11 @@ exports.createBlog = async (req, res) => {
 
     res.json({
       success: true,
+<<<<<<< HEAD
       message: 'Blog created successfully',
+=======
+      message: "Blog created successfully",
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
       blogId: newBlog.blogId,
     });
   } catch (error) {
@@ -778,7 +843,11 @@ exports.createBlog = async (req, res) => {
 
     res.status(500).json({
       success: false,
+<<<<<<< HEAD
       message: error.message || 'Error creating blog'
+=======
+      message: "Error creating blog",
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
     });
   }
 };
@@ -790,26 +859,26 @@ exports.featureBlog = async (req, res) => {
     if (!blogId) {
       return res.status(400).json({
         success: false,
-        message: "Blog ID is required"
+        message: "Blog ID is required",
       });
     }
 
     // If featuring this blog, unfeature all other blogs first
     if (isFeatured) {
       await Blog.updateMany(
-        { 'featured.isFeatured': true },
-        { 
-          $set: { 
-            'featured.isFeatured': false,
-            'featured.featuredAt': null
-          }
+        { "featured.isFeatured": true },
+        {
+          $set: {
+            "featured.isFeatured": false,
+            "featured.featuredAt": null,
+          },
         }
       );
     }
 
     const updateData = {
-      'featured.isFeatured': isFeatured,
-      'featured.featuredAt': isFeatured ? new Date() : null,
+      "featured.isFeatured": isFeatured,
+      "featured.featuredAt": isFeatured ? new Date() : null,
     };
 
     const updatedBlog = await Blog.findOneAndUpdate(
@@ -821,21 +890,52 @@ exports.featureBlog = async (req, res) => {
     if (!updatedBlog) {
       return res.status(404).json({
         success: false,
-        message: "Blog not found"
+        message: "Blog not found",
       });
     }
 
     res.json({
       success: true,
-      message: `Blog ${isFeatured ? 'featured' : 'unfeatured'} successfully`,
-      blog: updatedBlog
+      message: `Blog ${isFeatured ? "featured" : "unfeatured"} successfully`,
+      blog: updatedBlog,
     });
-
   } catch (error) {
     console.error("Error featuring blog:", error);
     res.status(500).json({
       success: false,
-      message: "Server error while updating blog feature status"
+      message: "Server error while updating blog feature status",
+    });
+  }
+};
+
+// API endpoint for refreshing skills data (AJAX support)
+exports.getSkillsAPI = async (req, res) => {
+  try {
+    const searchQuery = req.query.q ? req.query.q.trim() : "";
+
+    let query = {};
+    if (searchQuery) {
+      query.name = { $regex: searchQuery, $options: "i" };
+    }
+
+    const skills = await Skill.find(query).lean();
+
+    const skillData = skills.map((skill) => ({
+      ...skill,
+      questionCount: skill.questions.length,
+      totalMarks: skill.questions.reduce((sum, q) => sum + q.marks, 0),
+    }));
+
+    res.json({
+      success: true,
+      skills: skillData,
+      total: skillData.length,
+    });
+  } catch (error) {
+    console.error("Error in getSkillsAPI:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch skills data",
     });
   }
 };

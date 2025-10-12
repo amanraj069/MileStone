@@ -13,7 +13,7 @@ exports.getFreelancerActiveJobs = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
-    
+
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
@@ -228,11 +228,17 @@ exports.updateFreelancerProfile = async (req, res) => {
     // Get current user data to preserve existing picture if no new file uploaded
     // Parse data early so we can use it for file processing
     const parsedExperience =
-      typeof experienceData === "string" ? JSON.parse(experienceData) : experienceData || [];
+      typeof experienceData === "string"
+        ? JSON.parse(experienceData)
+        : experienceData || [];
     const parsedEducation =
-      typeof educationData === "string" ? JSON.parse(educationData) : educationData || [];
+      typeof educationData === "string"
+        ? JSON.parse(educationData)
+        : educationData || [];
     const parsedPortfolio =
-      typeof portfolioData === "string" ? JSON.parse(portfolioData) : portfolioData || [];
+      typeof portfolioData === "string"
+        ? JSON.parse(portfolioData)
+        : portfolioData || [];
     const parsedSkills =
       typeof skills === "string" ? JSON.parse(skills) : skills || [];
 
@@ -242,30 +248,71 @@ exports.updateFreelancerProfile = async (req, res) => {
     // Handle profile image upload
     if (req.files && req.files.profileImage && req.files.profileImage[0]) {
       try {
-        const uploadResult = await uploadToCloudinary(req.files.profileImage[0].buffer, 'freelancer-profiles', 'image');
+        const uploadResult = await uploadToCloudinary(
+          req.files.profileImage[0].buffer,
+          "freelancer-profiles",
+          "image"
+        );
         pictureUrl = uploadResult.secure_url; // Cloudinary secure URL
       } catch (uploadError) {
-        console.error("Error uploading profile image to Cloudinary:", uploadError);
-        return res.status(500).json({ error: "Failed to upload profile image" });
+        console.error(
+          "Error uploading profile image to Cloudinary:",
+          uploadError
+        );
+        return res
+          .status(500)
+          .json({ error: "Failed to upload profile image" });
       }
     }
 
+    // Get current freelancer data to preserve existing portfolio images
+    const currentFreelancer = await Freelancer.findOne({ freelancerId }).lean();
+    const existingPortfolio = currentFreelancer?.portfolio || [];
+
     // Handle portfolio images upload
     let updatedPortfolio = [...parsedPortfolio]; // Create a copy to modify
-    if (req.files && req.files.portfolioImages && req.files.portfolioImages.length > 0) {
+
+    // Preserve existing images for portfolio items that don't have new uploads
+    updatedPortfolio.forEach((item, index) => {
+      if (
+        existingPortfolio[index] &&
+        existingPortfolio[index].image &&
+        !item.image
+      ) {
+        item.image = existingPortfolio[index].image;
+      }
+    });
+
+    if (
+      req.files &&
+      req.files.portfolioImages &&
+      req.files.portfolioImages.length > 0
+    ) {
       try {
         for (let i = 0; i < req.files.portfolioImages.length; i++) {
           const file = req.files.portfolioImages[i];
-          const uploadResult = await uploadToCloudinary(file.buffer, 'freelancer-portfolio', 'image');
-          
-          // Find the corresponding portfolio item and update its image
-          if (updatedPortfolio[i]) {
-            updatedPortfolio[i].image = uploadResult.secure_url;
+          if (file && file.size > 0) {
+            // Only process non-empty files
+            const uploadResult = await uploadToCloudinary(
+              file.buffer,
+              "freelancer-portfolio",
+              "image"
+            );
+
+            // Find the corresponding portfolio item and update its image
+            if (updatedPortfolio[i]) {
+              updatedPortfolio[i].image = uploadResult.secure_url;
+            }
           }
         }
       } catch (uploadError) {
-        console.error("Error uploading portfolio images to Cloudinary:", uploadError);
-        return res.status(500).json({ error: "Failed to upload portfolio images" });
+        console.error(
+          "Error uploading portfolio images to Cloudinary:",
+          uploadError
+        );
+        return res
+          .status(500)
+          .json({ error: "Failed to upload portfolio images" });
       }
     }
 
@@ -318,7 +365,7 @@ exports.getFreelancerJobHistory = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
-    
+
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
@@ -389,7 +436,7 @@ exports.getFreelancerPayment = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
-    
+
     // Fetch user and freelancer data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
     const freelancer = await Freelancer.findOne({ freelancerId }).lean();
@@ -461,7 +508,7 @@ exports.getFreelancerSkills = async (req, res) => {
     }
 
     const freelancerId = req.session.user.roleId;
-    
+
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
@@ -514,12 +561,12 @@ exports.getFreelancerSubscription = async (req, res) => {
 
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
-    
+
     if (!user) {
       console.error("User not found in database for ID:", req.session.user.id);
       return res.status(404).send("User not found");
     }
-    
+
     res.render("Vanya/subscription", {
       user: {
         name: user.name,
@@ -547,10 +594,10 @@ exports.getSkillQuiz = async (req, res) => {
     }
 
     const skillId = req.params.skillId;
-    
+
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
-    
+
     const skill = await Skill.findOne({ skillId }).lean();
 
     if (!skill) {
@@ -647,7 +694,7 @@ exports.getMilestone = async (req, res) => {
 
     const freelancerId = req.session.user.roleId;
     const { jobId } = req.params;
-    
+
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
@@ -807,7 +854,7 @@ exports.getSubscription = async (req, res) => {
 
 exports.upgradeSubscription = async (req, res) => {
   try {
-    const user=req.session.user;
+    const user = req.session.user;
     const userId = req.session.user.id;
     if (!userId) {
       return res.status(401).json({ success: false, message: "Not logged in" });
@@ -833,55 +880,57 @@ exports.submitComplaint = async (req, res) => {
     console.log("Job ID:", req.params.jobId);
     console.log("Request body:", req.body);
     console.log("User session:", req.session.user);
-    
+
     const { jobId } = req.params;
     const { complaintType, againstUser, issue } = req.body;
-    
+
     if (!req.session.user) {
       console.log("Unauthorized access attempt");
       return res.status(401).json({ error: "Unauthorized: Please log in" });
     }
-    
+
     // Get job details to find employer
     const job = await JobListing.findOne({ jobId: jobId }).lean();
     console.log("Job found:", job);
-    
+
     if (!job) {
       console.log("Job not found for ID:", jobId);
       return res.status(404).json({ error: "Job not found" });
     }
-    
+
     // Create complaint data
     const submittedById = req.session.user.id; // Fixed: use 'id' instead of 'userId'
     console.log("DEBUG: req.session.user.id =", submittedById);
     console.log("DEBUG: typeof submittedById =", typeof submittedById);
-    
+
     const complaintData = {
       submittedBy: submittedById,
       againstUser: againstUser || job.employerId,
       complaintType: complaintType || "Job Related",
       jobId: jobId,
       issue: issue || "Issue with employer regarding job completion",
-      status: "pending"
+      status: "pending",
     };
-    
+
     console.log("Creating complaint with data:", complaintData);
-    
+
     // Create complaint
     const complaint = new Complaint(complaintData);
     const savedComplaint = await complaint.save();
-    
+
     console.log("Complaint saved successfully:", savedComplaint);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: "Complaint submitted successfully",
-      complaintId: savedComplaint.complaintId
+      complaintId: savedComplaint.complaintId,
     });
   } catch (error) {
     console.error("Error submitting complaint:", error);
     console.error("Error stack:", error.stack);
-    res.status(500).json({ error: "Failed to submit complaint", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Failed to submit complaint", details: error.message });
   }
 };
 
@@ -891,7 +940,7 @@ exports.getComplaintForm = async (req, res) => {
     const jobId = req.query.jobId;
 
     if (!userId) {
-      return res.redirect('/login');
+      return res.redirect("/login");
     }
 
     // Get user information
@@ -903,20 +952,20 @@ exports.getComplaintForm = async (req, res) => {
     let job = null;
     if (jobId) {
       // Get job information if jobId is provided
-      job = await JobListing.findOne({ 
+      job = await JobListing.findOne({
         jobId: jobId,
-        'assignedFreelancer.freelancerId': req.session.user.roleId 
+        "assignedFreelancer.freelancerId": req.session.user.roleId,
       }).lean();
-      
+
       if (job) {
         // Get employer information
-        const employer = await Employer.findOne({ 
-          employerId: job.employerId 
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
         }).lean();
         if (employer) {
           job.employer = {
             employerId: employer.employerId,
-            name: employer.name
+            name: employer.name,
           };
         }
       }
@@ -927,7 +976,7 @@ exports.getComplaintForm = async (req, res) => {
         name: user.name,
         picture: user.picture,
         role: user.role,
-        email: user.email
+        email: user.email,
       },
       job: job,
       activePage: "active_job",
@@ -940,15 +989,15 @@ exports.getComplaintForm = async (req, res) => {
 
 exports.submitComplaintForm = async (req, res) => {
   try {
-    const { 
-      jobId, 
-      againstUser, 
-      complaintType, 
-      priority, 
-      issue, 
+    const {
+      jobId,
+      againstUser,
+      complaintType,
+      priority,
+      issue,
       expectedResolution,
       contactEmail,
-      preferredContact
+      preferredContact,
     } = req.body;
 
     if (!req.session.user) {
@@ -957,22 +1006,33 @@ exports.submitComplaintForm = async (req, res) => {
 
     // Validate required fields
     if (!complaintType || !issue) {
-      return res.status(400).json({ error: "Complaint type and issue description are required" });
+      return res
+        .status(400)
+        .json({ error: "Complaint type and issue description are required" });
     }
 
     if (issue.trim().length < 5) {
-      return res.status(400).json({ error: "Issue description must be at least 5 characters" });
+      return res
+        .status(400)
+        .json({ error: "Issue description must be at least 5 characters" });
     }
 
     // Get job details if jobId is provided
     let job = null;
     let finalAgainstUser = againstUser;
-    
+
     if (jobId) {
       job = await JobListing.findOne({ jobId: jobId }).lean();
-      
+
       if (job && !finalAgainstUser) {
-        finalAgainstUser = job.employerId;
+        // Get the employer's user ID from the employer collection
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
+        }).lean();
+
+        if (employer) {
+          finalAgainstUser = employer.userId;
+        }
       }
     }
 
@@ -981,14 +1041,14 @@ exports.submitComplaintForm = async (req, res) => {
 
     const complaintData = {
       submittedBy: submittedById,
-      againstUser: finalAgainstUser || 'general',
+      againstUser: finalAgainstUser || "general",
       complaintType: complaintType,
-      jobId: jobId || '',
+      jobId: jobId || "",
       issue: issue.trim(),
-      priority: priority || 'Medium',
-      expectedResolution: expectedResolution ? expectedResolution.trim() : '',
-      contactEmail: contactEmail || req.session.user.email || '',
-      preferredContact: preferredContact || 'email',
+      priority: priority || "Medium",
+      expectedResolution: expectedResolution ? expectedResolution.trim() : "",
+      contactEmail: contactEmail || req.session.user.email || "",
+      preferredContact: preferredContact || "email",
       status: "pending",
     };
 
@@ -1030,45 +1090,190 @@ exports.updateSubTaskStatus = async (req, res) => {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
-    const milestone = job.milestones.find(m => m.milestoneId === milestoneId);
+    const milestone = job.milestones.find((m) => m.milestoneId === milestoneId);
     if (!milestone) {
-      return res.status(404).json({ success: false, message: "Milestone not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Milestone not found" });
     }
 
-    const subTask = milestone.subTasks.find(st => st.subTaskId === subTaskId);
+    const subTask = milestone.subTasks.find((st) => st.subTaskId === subTaskId);
     if (!subTask) {
-      return res.status(404).json({ success: false, message: "Sub-task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Sub-task not found" });
     }
 
     // Update sub-task
     subTask.status = status;
     subTask.notes = notes || subTask.notes;
-    if (status === 'completed') {
+    if (status === "completed") {
       subTask.completedDate = new Date();
     }
 
     // Calculate milestone completion percentage
-    const completedSubTasks = milestone.subTasks.filter(st => st.status === 'completed').length;
-    milestone.completionPercentage = milestone.subTasks.length > 0 
-      ? Math.round((completedSubTasks / milestone.subTasks.length) * 100) 
-      : 0;
+    const completedSubTasks = milestone.subTasks.filter(
+      (st) => st.status === "completed"
+    ).length;
+    milestone.completionPercentage =
+      milestone.subTasks.length > 0
+        ? Math.round((completedSubTasks / milestone.subTasks.length) * 100)
+        : 0;
 
     // Update milestone status based on sub-task completion
     if (milestone.completionPercentage === 100) {
-      milestone.status = 'in-progress'; // Ready for payment request
+      milestone.status = "in-progress"; // Ready for payment request
     } else if (milestone.completionPercentage > 0) {
-      milestone.status = 'in-progress';
+      milestone.status = "in-progress";
     }
 
     await job.save();
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       message: "Sub-task updated successfully",
-      completionPercentage: milestone.completionPercentage
+      completionPercentage: milestone.completionPercentage,
     });
   } catch (error) {
     console.error("Error updating sub-task:", error);
-    res.status(500).json({ success: false, message: "Failed to update sub-task" });
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to update sub-task" });
+  }
+};
+
+// API endpoint for refreshing skills data (AJAX support)
+exports.refreshSkillsAPI = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const freelancerId = req.session.user.roleId;
+
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
+    if (!freelancer) {
+      return res.status(404).json({ error: "Freelancer profile not found" });
+    }
+
+    const allSkills = await Skill.find().lean();
+    const freelancerSkillIds = freelancer.skills.map((skill) => skill.skillId);
+
+    const skillsData = allSkills.map((skill) => ({
+      skillId: skill.skillId,
+      name: skill.name,
+      hasQuiz: skill.questions && skill.questions.length > 0,
+      isAcquired: freelancerSkillIds.includes(skill.skillId),
+      questionCount: skill.questions ? skill.questions.length : 0,
+      createdAt: skill.createdAt,
+    }));
+
+    res.json({
+      success: true,
+      skills: skillsData,
+      total: skillsData.length,
+      acquired: skillsData.filter((s) => s.isAcquired).length,
+      available: skillsData.filter((s) => !s.isAcquired).length,
+    });
+  } catch (error) {
+    console.error("Error refreshing skills:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to refresh skills data",
+    });
+  }
+};
+
+// API endpoint for starting a quiz (AJAX support)
+exports.startQuizAPI = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const skillId = req.params.skillId;
+    const freelancerId = req.session.user.roleId;
+
+    // Check if skill exists and has quiz
+    const skill = await Skill.findOne({ skillId }).lean();
+    if (!skill) {
+      return res.status(404).json({ error: "Skill not found" });
+    }
+
+    if (!skill.questions || skill.questions.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "No quiz available for this skill" });
+    }
+
+    // Check if freelancer already has this skill
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
+    if (freelancer && freelancer.skills.some((s) => s.skillId === skillId)) {
+      return res.status(400).json({ error: "You already have this skill" });
+    }
+
+    res.json({
+      success: true,
+      message: "Quiz ready to start",
+      quizUrl: `/freelancerD/skills_badges/quiz/${skillId}`,
+    });
+  } catch (error) {
+    console.error("Error starting quiz:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to start quiz",
+    });
+  }
+};
+
+// API endpoint for generating progress report (AJAX support)
+exports.generateProgressReportAPI = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const freelancerId = req.session.user.roleId;
+    const user = await User.findOne({ userId: req.session.user.id }).lean();
+    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
+
+    if (!user || !freelancer) {
+      return res
+        .status(404)
+        .json({ error: "User or freelancer profile not found" });
+    }
+
+    const allSkills = await Skill.find().lean();
+    const freelancerSkillIds = freelancer.skills.map((skill) => skill.skillId);
+    const acquiredSkills = allSkills.filter((skill) =>
+      freelancerSkillIds.includes(skill.skillId)
+    );
+
+    // Create a simple text report (in a real application, you'd generate a PDF)
+    const reportData = {
+      name: user.name,
+      email: user.email,
+      totalSkills: allSkills.length,
+      acquiredSkills: acquiredSkills.length,
+      progressPercentage: Math.round(
+        (acquiredSkills.length / allSkills.length) * 100
+      ),
+      skillsList: acquiredSkills.map((skill) => skill.name),
+      generatedAt: new Date().toISOString(),
+    };
+
+    // For demo purposes, return JSON data
+    // In production, you would generate and return a PDF blob
+    res.json({
+      success: true,
+      report: reportData,
+      message: "Progress report generated successfully",
+    });
+  } catch (error) {
+    console.error("Error generating progress report:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to generate progress report",
+    });
   }
 };

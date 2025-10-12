@@ -29,38 +29,43 @@ exports.getHome = async (req, res) => {
     // Fetch featured jobs
     const featuredJobs = await JobListing.find({
       "featured.isActive": true,
-      status: { $in: ["open", "active"] }
+      status: { $in: ["open", "active"] },
     })
-    .populate('employerId')
-    .sort({ "featured.featuredAt": -1 })
-    .limit(3)
-    .lean();
+      .populate("employerId")
+      .sort({ "featured.featuredAt": -1 })
+      .limit(3)
+      .lean();
 
     // Format featured jobs for display
-    const formattedFeaturedJobs = await Promise.all(featuredJobs.map(async (job) => {
-      // Get category icon based on job category or skills
-      const categoryIcon = getCategoryIcon(job.category, job.description.skills);
-      
-      // Create budget range (30-50% variation)
-      const budgetRange = createBudgetRange(job.budget.amount);
-      
-      // Calculate time since posted
-      const timeAgo = getTimeAgo(job.postedDate);
-      
-      // Get description excerpt (15-20 words)
-      const descriptionExcerpt = getDescriptionExcerpt(job.description.text);
-      
-      return {
-        jobId: job.jobId,
-        title: job.title,
-        category: job.featured.category,
-        icon: categoryIcon,
-        budgetRange: budgetRange,
-        timeAgo: timeAgo,
-        description: descriptionExcerpt,
-        skills: job.description.skills.slice(0, 2), // Show first 2 skills
-      };
-    }));
+    const formattedFeaturedJobs = await Promise.all(
+      featuredJobs.map(async (job) => {
+        // Get category icon based on job category or skills
+        const categoryIcon = getCategoryIcon(
+          job.category,
+          job.description.skills
+        );
+
+        // Create budget range (30-50% variation)
+        const budgetRange = createBudgetRange(job.budget.amount);
+
+        // Calculate time since posted
+        const timeAgo = getTimeAgo(job.postedDate);
+
+        // Get description excerpt (15-20 words)
+        const descriptionExcerpt = getDescriptionExcerpt(job.description.text);
+
+        return {
+          jobId: job.jobId,
+          title: job.title,
+          category: job.featured.type,
+          icon: categoryIcon,
+          budgetRange: budgetRange,
+          timeAgo: timeAgo,
+          description: descriptionExcerpt,
+          skills: job.description.skills.slice(0, 2), // Show first 2 skills
+        };
+      })
+    );
 
     // Fetch latest blogs (published) to show on homepage - newest first, limit 3
     let recentBlogs = [];
@@ -186,6 +191,235 @@ exports.sendMessage = async (req, res) => {
   } catch (error) {
     console.error("Error sending message:", error);
     res.redirect(`/chat/${userId}?error=Failed to send message`);
+  }
+};
+
+// =================== ENHANCED CHAT API ENDPOINTS ===================
+
+// API endpoint for sending messages via AJAX
+exports.sendMessageAPI = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    // Check authentication
+    if (!req.session.user || !req.session.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    const { messageData } = req.body;
+
+    // Validate input
+    if (!userId || !messageData || !messageData.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields or empty message",
+      });
+    }
+
+    // Check message length
+    if (messageData.trim().length > 1000) {
+      return res.status(400).json({
+        success: false,
+        message: "Message too long (maximum 1000 characters)",
+      });
+    }
+
+    // Validate recipient exists
+    const recipient = await User.findOne({ userId }).lean();
+    if (!recipient) {
+      return res.status(404).json({
+        success: false,
+        message: "Recipient not found",
+      });
+    }
+
+    // Create and save message
+    const message = new Message({
+      from: req.session.user.id,
+      to: userId,
+      messageData: messageData.trim(),
+    });
+
+    await message.save();
+
+    // Return success response
+    res.json({
+      success: true,
+      message: "Message sent successfully",
+      data: {
+        messageId: message._id,
+        timestamp: message.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error("Error sending message via API:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+// API endpoint for fetching messages
+exports.getMessagesAPI = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    // Check authentication
+    if (!req.session.user || !req.session.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    // Validate recipient exists
+    const recipient = await User.findOne({ userId }).lean();
+    if (!recipient) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Fetch messages between users
+    const messages = await Message.find({
+      $or: [
+        { from: req.session.user.id, to: userId },
+        { from: userId, to: req.session.user.id },
+      ],
+    })
+      .sort({ createdAt: 1 })
+      .lean();
+
+    // Format messages for API response
+    const formattedMessages = messages.map((message) => ({
+      id: message._id,
+      from: message.from,
+      to: message.to,
+      messageData: message.messageData,
+      createdAt: message.createdAt,
+      updatedAt: message.updatedAt,
+    }));
+
+    res.json({
+      success: true,
+      message: "Messages retrieved successfully",
+      messages: formattedMessages,
+      count: formattedMessages.length,
+    });
+  } catch (error) {
+    console.error("Error fetching messages via API:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+// API endpoint for checking user status (online/offline simulation)
+exports.getUserStatusAPI = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    // Check authentication
+    if (!req.session.user || !req.session.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    // Validate user exists
+    const user = await User.findOne({ userId }).lean();
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Simulate user status (in a real app, this would be based on active sessions)
+    // For demo purposes, we'll randomly assign online/offline status
+    const isOnline = Math.random() > 0.3; // 70% chance of being online
+    const lastSeen = isOnline
+      ? null
+      : new Date(Date.now() - Math.random() * 3600000); // Random time within last hour
+
+    res.json({
+      success: true,
+      status: isOnline ? "online" : "offline",
+      lastSeen: lastSeen,
+      userId: userId,
+      name: user.name,
+    });
+  } catch (error) {
+    console.error("Error checking user status via API:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+// API endpoint for getting chat statistics
+exports.getChatStatsAPI = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    // Check authentication
+    if (!req.session.user || !req.session.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "Authentication required",
+      });
+    }
+
+    // Count messages between users
+    const messageCount = await Message.countDocuments({
+      $or: [
+        { from: req.session.user.id, to: userId },
+        { from: userId, to: req.session.user.id },
+      ],
+    });
+
+    // Get latest message
+    const latestMessage = await Message.findOne({
+      $or: [
+        { from: req.session.user.id, to: userId },
+        { from: userId, to: req.session.user.id },
+      ],
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Count messages sent by current user
+    const sentByUser = await Message.countDocuments({
+      from: req.session.user.id,
+      to: userId,
+    });
+
+    // Count messages received from the other user
+    const receivedFromUser = await Message.countDocuments({
+      from: userId,
+      to: req.session.user.id,
+    });
+
+    res.json({
+      success: true,
+      stats: {
+        totalMessages: messageCount,
+        sentByYou: sentByUser,
+        receivedFromThem: receivedFromUser,
+        lastActivity: latestMessage ? latestMessage.createdAt : null,
+        conversationStarted: latestMessage ? latestMessage.createdAt : null,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching chat stats via API:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
@@ -491,6 +725,10 @@ exports.getProfile = async (req, res) => {
       }
     }
 
+    // Debug logging
+    console.log("User data:", user);
+    console.log("User picture URL:", user.picture);
+
     // Render the profile with the fetched data
     res.render("Aman/common_profile", {
       user: req.session && req.session.user ? req.session.user : null,
@@ -501,7 +739,9 @@ exports.getProfile = async (req, res) => {
         location: user.location || "N/A",
         email: user.email || "N/A",
         phone: user.phone || "N/A",
-        picture: user.picture || "/assets/user_female.png",
+        picture:
+          user.picture ||
+          "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png",
         aboutMe: user.aboutMe || "No description provided.",
         skills: skillNames || [],
         experience: freelancer.experience || [],
@@ -543,50 +783,75 @@ exports.testComplaint = async (req, res) => {
 
 // Helper functions for formatting featured jobs
 function getCategoryIcon(category, skills) {
-  const skillsLower = skills.map(skill => skill.toLowerCase());
-  
+  const skillsLower = skills.map((skill) => skill.toLowerCase());
+
   // Check for web development
-  if (skillsLower.some(skill => 
-    ['javascript', 'react', 'angular', 'vue', 'html', 'css', 'node'].some(tech => skill.includes(tech)))) {
-    return 'fas fa-code';
+  if (
+    skillsLower.some((skill) =>
+      ["javascript", "react", "angular", "vue", "html", "css", "node"].some(
+        (tech) => skill.includes(tech)
+      )
+    )
+  ) {
+    return "fas fa-code";
   }
-  
+
   // Check for design
-  if (skillsLower.some(skill => 
-    ['design', 'photoshop', 'figma', 'illustrator', 'ui', 'ux'].some(tech => skill.includes(tech)))) {
-    return 'fas fa-paint-brush';
+  if (
+    skillsLower.some((skill) =>
+      ["design", "photoshop", "figma", "illustrator", "ui", "ux"].some((tech) =>
+        skill.includes(tech)
+      )
+    )
+  ) {
+    return "fas fa-paint-brush";
   }
-  
+
   // Check for writing
-  if (skillsLower.some(skill => 
-    ['writing', 'content', 'copywriting', 'blog'].some(tech => skill.includes(tech)))) {
-    return 'fas fa-pen-nib';
+  if (
+    skillsLower.some((skill) =>
+      ["writing", "content", "copywriting", "blog"].some((tech) =>
+        skill.includes(tech)
+      )
+    )
+  ) {
+    return "fas fa-pen-nib";
   }
-  
+
   // Check for data science
-  if (skillsLower.some(skill => 
-    ['python', 'data', 'analytics', 'sql', 'machine learning'].some(tech => skill.includes(tech)))) {
-    return 'fas fa-chart-line';
+  if (
+    skillsLower.some((skill) =>
+      ["python", "data", "analytics", "sql", "machine learning"].some((tech) =>
+        skill.includes(tech)
+      )
+    )
+  ) {
+    return "fas fa-chart-line";
   }
-  
+
   // Check for marketing
-  if (skillsLower.some(skill => 
-    ['marketing', 'seo', 'social media', 'advertising'].some(tech => skill.includes(tech)))) {
-    return 'fas fa-bullhorn';
+  if (
+    skillsLower.some((skill) =>
+      ["marketing", "seo", "social media", "advertising"].some((tech) =>
+        skill.includes(tech)
+      )
+    )
+  ) {
+    return "fas fa-bullhorn";
   }
-  
+
   // Default to software development
-  return 'fas fa-laptop-code';
+  return "fas fa-laptop-code";
 }
 
 function createBudgetRange(amount) {
   const minVariation = Math.floor(amount * 0.7); // 30% less
   const maxVariation = Math.floor(amount * 1.3); // 30% more
-  
+
   return {
     min: minVariation,
     max: maxVariation,
-    formatted: `₹${minVariation.toLocaleString()} - ₹${maxVariation.toLocaleString()}`
+    formatted: `₹${minVariation.toLocaleString()} - ₹${maxVariation.toLocaleString()}`,
   };
 }
 
@@ -596,25 +861,25 @@ function getTimeAgo(postedDate) {
   const diffTime = Math.abs(now - posted);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
-  
+
   if (diffDays === 0) {
     return `${diffHours} hours`;
   } else if (diffDays === 1) {
-    return '1 day';
+    return "1 day";
   } else if (diffDays <= 30) {
     return `${diffDays} days`;
   } else {
     const diffMonths = Math.floor(diffDays / 30);
-    return `${diffMonths} month${diffMonths > 1 ? 's' : ''}`;
+    return `${diffMonths} month${diffMonths > 1 ? "s" : ""}`;
   }
 }
 
 function getDescriptionExcerpt(description) {
-  if (!description) return 'No description available';
-  
-  const words = description.split(' ');
-  const excerpt = words.slice(0, 18).join(' '); // Take first 18 words
-  
+  if (!description) return "No description available";
+
+  const words = description.split(" ");
+  const excerpt = words.slice(0, 18).join(" "); // Take first 18 words
+
   return words.length > 18 ? `${excerpt}...` : excerpt;
 }
 
@@ -623,34 +888,43 @@ exports.getBlogPage = async (req, res) => {
   try {
     // Get featured blog
     const featuredBlog = await Blog.getFeaturedBlog();
+<<<<<<< HEAD
     
   // Get recent blogs (include featured so admin posts appear in latest list)
   const recentBlogs = await Blog.getRecentBlogs(6, true);
     
+=======
+
+    // Get recent blogs (excluding featured)
+    const recentBlogs = await Blog.getRecentBlogs(6);
+
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
     // Format blogs for display
-    const formattedRecentBlogs = recentBlogs.map(blog => ({
+    const formattedRecentBlogs = recentBlogs.map((blog) => ({
       ...blog.toObject(),
       formattedCreatedAt: blog.formattedCreatedAt,
-      readTimeDisplay: blog.readTimeDisplay
+      readTimeDisplay: blog.readTimeDisplay,
     }));
 
-    const formattedFeaturedBlog = featuredBlog ? {
-      ...featuredBlog.toObject(),
-      formattedCreatedAt: featuredBlog.formattedCreatedAt,
-      readTimeDisplay: featuredBlog.readTimeDisplay
-    } : null;
+    const formattedFeaturedBlog = featuredBlog
+      ? {
+          ...featuredBlog.toObject(),
+          formattedCreatedAt: featuredBlog.formattedCreatedAt,
+          readTimeDisplay: featuredBlog.readTimeDisplay,
+        }
+      : null;
 
     res.render("Aman/blog", {
       user: req.session.user || null,
       featuredBlog: formattedFeaturedBlog,
-      recentBlogs: formattedRecentBlogs
+      recentBlogs: formattedRecentBlogs,
     });
   } catch (error) {
     console.error("Error fetching blogs:", error);
     res.render("Aman/blog", {
       user: req.session.user || null,
       featuredBlog: null,
-      recentBlogs: []
+      recentBlogs: [],
     });
   }
 };
@@ -658,7 +932,7 @@ exports.getBlogPage = async (req, res) => {
 exports.getBlogPost = async (req, res) => {
   try {
     const { blogId } = req.params;
-    
+
     // Find blog and increment view count
     const blog = await Blog.findOneAndUpdate(
       { blogId: blogId },
@@ -668,10 +942,11 @@ exports.getBlogPost = async (req, res) => {
 
     if (!blog) {
       return res.status(404).render("errors/404", {
-        message: "Blog post not found"
+        message: "Blog post not found",
       });
     }
 
+<<<<<<< HEAD
     // Get featured blog (selected by admin)
     const featuredBlog = await Blog.getFeaturedBlog();
 
@@ -680,13 +955,24 @@ exports.getBlogPost = async (req, res) => {
 
     // Latest posts (newest first), exclude only the current blog so featured admin posts also appear
     const recentBlogs = await Blog.getRecentBlogs(6, true, excludeIds);
+=======
+    // Get related blogs (same category, excluding current)
+    const relatedBlogs = await Blog.find({
+      category: blog.category,
+      blogId: { $ne: blogId },
+      status: "published",
+    })
+      .limit(3)
+      .sort({ createdAt: -1 });
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
 
     const formattedBlog = {
       ...blog.toObject(),
       formattedCreatedAt: blog.formattedCreatedAt,
-      readTimeDisplay: blog.readTimeDisplay
+      readTimeDisplay: blog.readTimeDisplay,
     };
 
+<<<<<<< HEAD
     const formattedFeaturedBlog = featuredBlog ? {
       ...featuredBlog.toObject(),
       formattedCreatedAt: featuredBlog.formattedCreatedAt,
@@ -697,18 +983,28 @@ exports.getBlogPost = async (req, res) => {
       ...rb.toObject(),
       formattedCreatedAt: rb.formattedCreatedAt,
       readTimeDisplay: rb.readTimeDisplay
+=======
+    const formattedRelatedBlogs = relatedBlogs.map((relatedBlog) => ({
+      ...relatedBlog.toObject(),
+      formattedCreatedAt: relatedBlog.formattedCreatedAt,
+      readTimeDisplay: relatedBlog.readTimeDisplay,
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
     }));
 
     res.render("Aman/blog-post", {
       user: req.session.user || null,
       blog: formattedBlog,
+<<<<<<< HEAD
       featuredBlog: formattedFeaturedBlog,
       recentBlogs: formattedRecentBlogs
+=======
+      relatedBlogs: formattedRelatedBlogs,
+>>>>>>> fe96779f8c70fe5f019d9d9849302223611b0d4c
     });
   } catch (error) {
     console.error("Error fetching blog post:", error);
     res.status(500).render("errors/500", {
-      message: "Error loading blog post"
+      message: "Error loading blog post",
     });
   }
 };
