@@ -142,7 +142,7 @@
 
       .complaint-card {
         background: white;
-        border: 1px solid #e1e5e9;
+        border: 3px solid #e1e5e9;
         border-radius: 12px;
         padding: 20px;
         transition: all 0.3s ease;
@@ -155,16 +155,37 @@
         transform: translateY(-2px);
       }
 
-      .complaint-card.pending {
-        border-left: 4px solid #f59e0b;
+      /* Priority-based borders - only for pending complaints */
+      .complaint-card.priority-high {
+        border: 3px solid #dc2626;
+        background: linear-gradient(to right, rgba(220, 38, 38, 0.05) 0%, white 5%);
       }
 
-      .complaint-card.resolved {
-        border-left: 4px solid #10b981;
+      .complaint-card.priority-medium {
+        border: 3px solid #f59e0b;
+        background: linear-gradient(to right, rgba(245, 158, 11, 0.05) 0%, white 5%);
       }
 
-      .complaint-card.dismissed {
-        border-left: 4px solid #ef4444;
+      .complaint-card.priority-low {
+        border: 3px solid #2563eb;
+        background: linear-gradient(to right, rgba(37, 99, 235, 0.05) 0%, white 5%);
+      }
+      
+      /* Default for no priority */
+      .complaint-card.priority-none {
+        border: 3px solid #6b7280;
+        background: linear-gradient(to right, rgba(107, 114, 128, 0.05) 0%, white 5%);
+      }
+
+      /* Status-based borders override priority */
+      .complaint-card.status-resolved {
+        border: 3px solid #10b981 !important;
+        background: linear-gradient(to right, rgba(16, 185, 129, 0.05) 0%, white 5%) !important;
+      }
+
+      .complaint-card.status-dismissed {
+        border: 3px solid #6b7280 !important;
+        background: linear-gradient(to right, rgba(107, 114, 128, 0.05) 0%, white 5%) !important;
       }
 
       .complaint-header {
@@ -269,10 +290,19 @@
         margin: 10px 0;
       }
 
+
+
       .complaint-actions {
         display: flex;
         flex-direction: column;
         gap: 15px;
+      }
+
+      .action-buttons-row {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        align-items: flex-start;
       }
 
       .btn-view-actions {
@@ -291,6 +321,40 @@
       .btn-view-actions:hover {
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      }
+
+      .btn-view-job {
+        background: linear-gradient(45deg, #2563eb, #1e40af);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        align-self: flex-start;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-view-job:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      }
+
+      .btn-view-job:disabled {
+        background: #e5e7eb;
+        color: #9ca3af;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      .btn-view-job:disabled:hover {
+        transform: none;
+        box-shadow: none;
       }
 
       .btn-resolved,
@@ -316,7 +380,8 @@
       }
 
       .additional-actions {
-        margin-top: 15px;
+        margin-top: 0;
+        width: 100%;
       }
 
       .action-buttons {
@@ -487,8 +552,9 @@
           <% if (complaints && complaints.length > 0) { %> <%
           complaints.forEach(complaint => { %>
           <div
-            class="complaint-card <%= complaint.status %>"
+            class="complaint-card priority-<%= complaint.priority ? complaint.priority.toLowerCase() : 'none' %> status-<%= complaint.status %>"
             data-status="<%= complaint.status %>"
+            data-priority="<%= complaint.priority ? complaint.priority.toLowerCase() : 'none' %>"
           >
             <div class="complaint-header">
               <h3>
@@ -514,16 +580,32 @@
                   <p>
                     <strong><i class="fas fa-user"></i> Submitted by:</strong
                     ><br />
-                    <%= complaint.submittedByName %> (<%=
-                    complaint.submittedByRole %>)
+                    <span style="color: #2563eb; font-weight: 600;">
+                      <%= complaint.submittedByName %>
+                    </span> 
+                    <span style="color: #666;">(<%=
+                      complaint.submittedByRole %>)</span>
                   </p>
                 </div>
                 <div class="party">
                   <p>
                     <strong><i class="fas fa-user-times"></i> Against:</strong
                     ><br />
-                    <%= complaint.againstUserName %> (<%=
-                    complaint.againstUserRole %>)
+                    <% if (complaint.againstUser === 'general' || complaint.againstUserName === 'System/Platform') { %>
+                      <span style="color: #f59e0b; font-weight: 600;">
+                        <i class="fas fa-building"></i> System/Platform Issue
+                      </span>
+                    <% } else if (complaint.againstUserName === 'Unknown User') { %>
+                      <span style="color: #6b7280; font-weight: 600;">
+                        <i class="fas fa-question-circle"></i> User Not Found
+                      </span>
+                    <% } else { %>
+                      <span style="color: #dc2626; font-weight: 600;">
+                        <%= complaint.againstUserName %>
+                      </span> 
+                      <span style="color: #666;">(<%=
+                        complaint.againstUserRole %>)</span>
+                    <% } %>
                   </p>
                 </div>
               </div>
@@ -532,13 +614,6 @@
                 <strong><i class="fas fa-tag"></i> Type:</strong> <%=
                 complaint.complaintType %>
               </p>
-
-              <% if (complaint.jobId) { %>
-              <p>
-                <strong><i class="fas fa-briefcase"></i> Job ID:</strong> <%=
-                complaint.jobId %>
-              </p>
-              <% } %>
 
               <div class="complaint-desc">
                 <strong><i class="fas fa-exclamation-circle"></i> Issue:</strong
@@ -562,19 +637,31 @@
             </div>
 
             <div class="complaint-actions">
-              <% if (complaint.status === 'resolved') { %>
-              <button class="btn-resolved" disabled>
-                <i class="fas fa-check"></i> Resolved
-              </button>
-              <% } else if (complaint.status === 'dismissed') { %>
-              <button class="btn-dismissed" disabled>
-                <i class="fas fa-times"></i> Dismissed
-              </button>
-              <% } else { %>
-              <button class="btn-view-actions" onclick="toggleActions(this)">
-                <i class="fas fa-cog"></i> View Actions
-              </button>
-              <% } %>
+              <div class="action-buttons-row">
+                <% if (complaint.status === 'resolved') { %>
+                <button class="btn-resolved" disabled>
+                  <i class="fas fa-check"></i> Resolved
+                </button>
+                <% } else if (complaint.status === 'dismissed') { %>
+                <button class="btn-dismissed" disabled>
+                  <i class="fas fa-times"></i> Dismissed
+                </button>
+                <% } else { %>
+                <button class="btn-view-actions" onclick="toggleActions(this)">
+                  <i class="fas fa-cog"></i> View Actions
+                </button>
+                <% } %>
+
+                <% if (complaint.jobId) { %>
+                <a href="/jobs/<%= complaint.jobId %>" class="btn-view-job">
+                  <i class="fas fa-briefcase"></i> View Job
+                </a>
+                <% } else { %>
+                <button class="btn-view-job" disabled>
+                  <i class="fas fa-briefcase"></i> No Job Linked
+                </button>
+                <% } %>
+              </div>
 
               <div class="additional-actions" style="display: none">
                 <div class="action-buttons">
@@ -585,6 +672,16 @@
                     <i class="fas fa-envelope"></i> Contact <%=
                     complaint.submittedByRole %>
                   </button>
+
+                  <% if (complaint.againstUser && complaint.againstUser !== 'general') { %>
+                  <button
+                    class="btn-contact"
+                    onclick="contactUser('<%= complaint.againstUserId || complaint.againstUser %>', '<%= complaint.againstUserName %>')"
+                  >
+                    <i class="fas fa-envelope"></i> Contact <%=
+                    complaint.againstUserRole %>
+                  </button>
+                  <% } %>
 
                   <% if (complaint.status !== 'resolved' && complaint.status !==
                   'dismissed') { %>

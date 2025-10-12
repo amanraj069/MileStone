@@ -1,180 +1,469 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        background: linear-gradient(135deg, #a0c0ff 0%, #a9c9ff 100%);
+        width: 100%;
+        max-width: 900px;
+      }
+
+      .chat-container {
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        margin: 20px;
+        height: calc(100vh - 40px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #091859 0%, #0c1b50 100%);
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: none;
+      }
+
+      .header .user-info {
+        display: flex;
+        align-items: center;
+        color: white;
+      }
+
+      .header img {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin-right: 16px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        object-fit: cover;
+      }
+
+      .header .user-name {
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 2px;
+      }
+
+      .header .status {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-color: #4ade80;
+        border-radius: 50%;
+        margin-left: 8px;
+        border: 2px solid white;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+        }
+      }
+
+      .back-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .chat-area {
+        flex: 1;
+        padding: 24px;
+        overflow-y: auto;
+        background: #f8fafc;
+        position: relative;
+      }
+
+      .chat-area::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chat-area::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .chat-area::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+
+      .chat-area::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      .message {
+        margin: 16px 0;
+        display: flex;
+        align-items: flex-end;
+        animation: fadeInUp 0.4s ease;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .message.sent {
+        justify-content: flex-end;
+      }
+
+      .message.received {
+        justify-content: flex-start;
+      }
+
+      .message img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin: 0 12px;
+        border: 2px solid #e2e8f0;
+        object-fit: cover;
+      }
+
+      .message .bubble {
+        padding: 14px 18px;
+        border-radius: 20px;
+        max-width: 70%;
+        position: relative;
+        font-size: 15px;
+        line-height: 1.4;
+        word-wrap: break-word;
+      }
+
+      .message.sent .bubble {
+        background: linear-gradient(135deg, #6692ea 0%, #4b59a2 100%);
+        color: white;
+        border-bottom-right-radius: 6px;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      .message.received .bubble {
+        background: white;
+        color: #1e293b;
+        border-bottom-left-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+      }
+
+      .message .time {
+        font-size: 12px;
+        color: #64748b;
+        margin: 0 12px;
+        align-self: flex-end;
+        margin-bottom: 4px;
+        font-weight: 400;
+      }
+
+      .input-area {
+        display: flex;
+        padding: 20px 24px;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        align-items: center;
+      }
+
+      .input-area form {
+        display: flex;
+        width: 100%;
+        gap: 12px;
+      }
+
+      .input-area input {
+        flex: 1;
+        padding: 14px 20px;
+        border: 2px solid #e2e8f0;
+        border-radius: 24px;
+        outline: none;
+        font-size: 15px;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+      }
+
+      .input-area input:focus {
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .input-area input::placeholder {
+        color: #94a3b8;
+      }
+
+      .input-area button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        transition: all 0.3s ease;
+        font-size: 18px;
+      }
+
+      .input-area button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .input-area button:active {
+        transform: scale(0.95);
+      }
+
+      .error {
+        color: #ef4444;
+        padding: 16px 24px;
+        text-align: center;
+        background: #fef2f2;
+        border-left: 4px solid #ef4444;
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .empty-chat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #64748b;
+        text-align: center;
+      }
+
+      .empty-chat .icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+        opacity: 0.5;
+      }
+
+      .empty-chat .text {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      .empty-chat .subtext {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
         body {
-            font-family: Arial, sans-serif;
-            margin: 0 auto;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f5f5f5;
-            width: 55%;
+          width: 100%;
+          margin: 0;
         }
+
+        .chat-container {
+          margin: 0;
+          border-radius: 0;
+          height: 100vh;
+        }
+
         .header {
-            background-color: #fff;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+          padding: 16px 20px;
         }
-        .header .user-info {
-            display: flex;
-            align-items: center;
-        }
+
         .header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
+          width: 40px;
+          height: 40px;
         }
-        .header span {
-            font-weight: bold;
+
+        .header .user-name {
+          font-size: 16px;
         }
-        .header .status {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #00ff00;
-            border-radius: 50%;
-            margin-left: 5px;
-        }
-        .back-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .back-button:hover {
-            background-color: #0056b3;
-        }
+
         .chat-area {
-            flex: 1;
-            padding: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            overflow-y: auto;
-            background-color: #fff;
-        }   
-        .message {
-            margin: 25px 0;
-            display: flex;
-            align-items: center;
+          padding: 16px;
         }
-        .message.sent {
-            justify-content: flex-end;
-        }
-        .message.received {
-            justify-content: flex-start;
-        }
-        .message img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin: 0 10px;
-        }
+
         .message .bubble {
-            padding: 10px 15px;
-            border-radius: 20px;
-            max-width: 60%;
-            position: relative;
+          max-width: 85%;
+          font-size: 14px;
         }
-        .message.sent .bubble {
-            background-color: #007bff;
-            color: white;
-        }
-        .message.received .bubble {
-            background-color: #e9ecef;
-            color: black;
-        }
-        .message .time {
-            font-size: 0.8em;
-            color: #666;
-            margin: 0 10px;
-        }
+
         .input-area {
-            display: flex;
-            padding: 10px;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
+          padding: 16px 20px;
         }
-        .input-area input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            margin-right: 10px;
-            outline: none;
-        }
-        .input-area button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .input-area button:hover {
-            background-color: #0056b3;
-        }
-        .error {
-            color: red;
-            padding: 10px;
-            text-align: center;
-        }
+      }
     </style>
-</head>
-<body>
-    <div class="header">
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="header">
         <div class="user-info">
-            <img src="<%= recipient.picture %>" alt="Profile Picture">
-            <span><%= recipient.name %></span>
-            <span class="status"></span>
+          <img src="<%= recipient.picture %>" alt="Profile Picture" />
+          <div>
+            <div class="user-name"><%= recipient.name %></div>
+          </div>
+          <span class="status"></span>
         </div>
-        <button class="back-button" onclick="window.history.back()">Go Back</button>
-    </div>
-    <% if (error) { %>
-        <div class="error"><%= error %></div>
-    <% } %>
-    <div class="chat-area">
-        <% messages.forEach(message => { %>
-            <div class="message <%= message.from === user.id ? 'sent' : 'received' %>">
-                <% if (message.from === user.id) { %>
-                    <div class="time"><%= new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
-                    <div class="bubble"><%= message.messageData %></div>
-                    <img src="<%= user.picture || '/assets/user_female.png' %>" alt="Profile Picture">
-                <% } else { %>
-                    <img src="<%= recipient.picture %>" alt="Profile Picture">
-                    <div class="bubble"><%= message.messageData %></div>
-                    <div class="time"><%= new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
-                <% } %>
-            </div>
-        <% }) %>
-    </div>
-    <div class="input-area">
-        <form action="/chat/<%= recipient.userId || '' %>" method="POST" style="display: flex; width: 100%;">
-            <input type="text" name="messageData" placeholder="Type your message..." required>
-            <button type="submit">➤</button>
+        <button class="back-button" onclick="window.history.back()">
+          Go Back
+        </button>
+      </div>
+      <% if (error) { %>
+      <div class="error"><%= error %></div>
+      <% } %>
+      <div class="chat-area">
+        <% if (messages.length === 0) { %>
+        <div class="empty-chat">
+          <div class="icon">💬</div>
+          <div class="text">No messages yet</div>
+          <div class="subtext">
+            Start a conversation with <%= recipient.name %>
+          </div>
+        </div>
+        <% } else { %> <% messages.forEach(message => { %>
+        <div
+          class="message <%= message.from === user.id ? 'sent' : 'received' %>"
+        >
+          <% if (message.from === user.id) { %>
+          <div class="time">
+            <%= new Date(message.createdAt).toLocaleTimeString([], { hour:
+            '2-digit', minute: '2-digit' }) %>
+          </div>
+          <div class="bubble"><%= message.messageData %></div>
+          <img
+            src="<%= user.picture || '/assets/user_female.png' %>"
+            alt="Profile Picture"
+          />
+          <% } else { %>
+          <img src="<%= recipient.picture %>" alt="Profile Picture" />
+          <div class="bubble"><%= message.messageData %></div>
+          <div class="time">
+            <%= new Date(message.createdAt).toLocaleTimeString([], { hour:
+            '2-digit', minute: '2-digit' }) %>
+          </div>
+          <% } %>
+        </div>
+        <% }) %> <% } %>
+      </div>
+      <div class="input-area">
+        <form action="/chat/<%= recipient.userId || '' %>" method="POST">
+          <input
+            type="text"
+            name="messageData"
+            placeholder="Type your message..."
+            required
+          />
+          <button type="submit">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 2L11 13"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M22 2L15 22L11 13L2 9L22 2Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
         </form>
+      </div>
     </div>
 
     <script>
-        // Auto-scroll to the bottom of the chat area when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatArea = document.querySelector('.chat-area');
-            chatArea.scrollTop = chatArea.scrollHeight;
+      // Auto-scroll to the bottom of the chat area when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        const chatArea = document.querySelector(".chat-area");
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        // Add smooth scrolling behavior when new messages are added
+        const observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.addedNodes.length) {
+              chatArea.scrollTop = chatArea.scrollHeight;
+            }
+          });
         });
+
+        observer.observe(chatArea, { childList: true });
+
+        // Add auto-resize to input field
+        const messageInput = document.querySelector(
+          'input[name="messageData"]'
+        );
+        messageInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            this.closest("form").submit();
+          }
+        });
+
+        // Add typing indicator simulation (optional)
+        let typingTimer;
+        messageInput.addEventListener("keyup", function () {
+          clearTimeout(typingTimer);
+          // You can add typing indicator logic here if needed
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

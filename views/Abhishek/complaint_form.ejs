@@ -338,12 +338,18 @@
             <h4><i class="fas fa-file-alt"></i> Job Details</h4>
             <div class="job-details">
               <p><strong>Title:</strong> <%= job.title %></p>
-              <p><strong>Job ID:</strong> <%= job.jobId %></p>
               <% if (job.assignedFreelancer && job.assignedFreelancer.name) { %>
               <p><strong>Assigned Freelancer:</strong> <%= job.assignedFreelancer.name %></p>
               <% } %>
-              <p><strong>Budget:</strong> $<%= job.budget %></p>
+              <p><strong>Budget:</strong> ₹<%= 
+                typeof job.budget === 'object' && job.budget.amount ? 
+                  Number(job.budget.amount).toLocaleString('en-IN') : 
+                  (Number(job.budget) || 0).toLocaleString('en-IN') 
+              %></p>
               <p><strong>Status:</strong> <%= job.status || 'Active' %></p>
+            </div>
+            <div class="help-text" style="margin-top: 10px; font-size: 12px; color: #666;">
+              <i class="fas fa-info-circle"></i> Job reference details are automatically included for admin review
             </div>
           </div>
         </div>
@@ -387,7 +393,6 @@
                   <option value="Low">Low</option>
                   <option value="Medium" selected>Medium</option>
                   <option value="High">High</option>
-                  <option value="Urgent">Urgent</option>
                 </select>
                 <div class="help-text">How urgent is this matter?</div>
               </div>

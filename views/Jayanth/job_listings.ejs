@@ -784,12 +784,14 @@
       });
 
       // Feature dropdown functionality
-      const featureSelect = document.getElementById('featureSelect');
-      const checkboxContainers = document.querySelectorAll('.feature-checkbox-container');
-      
-      featureSelect.addEventListener('change', function() {
+      const featureSelect = document.getElementById("featureSelect");
+      const checkboxContainers = document.querySelectorAll(
+        ".feature-checkbox-container"
+      );
+
+      featureSelect.addEventListener("change", function () {
         const selectedValue = this.value;
-        
+
         if (selectedValue) {
           // Show all checkboxes with proper styling
           checkboxContainers.forEach(container => {
@@ -817,8 +819,8 @@
           });
         } else {
           // Hide all checkboxes
-          checkboxContainers.forEach(container => {
-            container.style.display = 'none';
+          checkboxContainers.forEach((container) => {
+            container.style.display = "none";
           });
         }
       });
@@ -836,10 +838,10 @@
       });
 
       // Handle checkbox changes
-      document.querySelectorAll('.feature-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-          const jobId = this.getAttribute('data-job-id');
-          const featureType = this.getAttribute('data-feature-type');
+      document.querySelectorAll(".feature-checkbox").forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          const jobId = this.getAttribute("data-job-id");
+          const featureType = this.getAttribute("data-feature-type");
           const isChecked = this.checked;
           const container = this.closest('.feature-checkbox-container');
           const label = container.querySelector('.feature-label');
@@ -865,26 +867,26 @@
           }
           
           // Send AJAX request to update feature status
-          fetch('/adminD/jobs/feature', {
-            method: 'POST',
+          fetch("/adminD/jobs/feature", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               jobId: jobId,
               featureType: featureType,
-              isActive: isChecked
-            })
+              isActive: isChecked,
+            }),
           })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-                console.log('Job feature status updated successfully');
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                console.log("Job feature status updated successfully");
                 // Show correct message for feature/unfeature
                 if (isChecked) {
                   showNotification(`Job featured as ${featureType} successfully!`, 'success');
                 } else {
-                  showNotification('Job unfeatured successfully!', 'success');
+                  showNotification("Job unfeatured successfully!", "success");
                 }
             } else {
               console.error('Error updating job feature status:', data.message);
@@ -932,7 +934,7 @@
 
       // Notification function
       function showNotification(message, type) {
-        const notification = document.createElement('div');
+        const notification = document.createElement("div");
         notification.className = `notification ${type}`;
         notification.textContent = message;
         notification.style.cssText = `
@@ -940,15 +942,15 @@
           top: 20px;
           right: 20px;
           padding: 15px 20px;
-          background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+          background: ${type === "success" ? "#4CAF50" : "#f44336"};
           color: white;
           border-radius: 4px;
           z-index: 1000;
           font-size: 14px;
         `;
-        
+
         document.body.appendChild(notification);
-        
+
         setTimeout(() => {
           notification.remove();
         }, 3000);

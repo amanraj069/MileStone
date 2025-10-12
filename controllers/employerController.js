@@ -1130,7 +1130,15 @@ const employerController = {
         job = await JobListing.findOne({ jobId: jobId }).lean();
         
         if (job && job.assignedFreelancer && !finalAgainstUser) {
-          finalAgainstUser = job.assignedFreelancer.freelancerId;
+          // Get the freelancer's user ID from the freelancer collection
+          const Freelancer = require("../models/freelancer");
+          const freelancer = await Freelancer.findOne({ 
+            freelancerId: job.assignedFreelancer.freelancerId 
+          }).lean();
+          
+          if (freelancer) {
+            finalAgainstUser = freelancer.userId;
+          }
         }
       }
 
@@ -1151,7 +1159,7 @@ const employerController = {
         status: "pending",
       };
 
-      console.log("Creating complaint with data:", complaintData);
+
 
       // Create complaint
       const complaint = new Complaint(complaintData);
