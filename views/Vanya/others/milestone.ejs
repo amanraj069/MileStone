@@ -137,13 +137,18 @@
                         Payment Requested
                       </button>
                     <% } else { %>
+                      <% 
+                        // If milestone has no subtasks, allow direct request
+                        // If milestone has subtasks, require 100% completion
+                        const canRequestPayment = milestone.subTasks.length === 0 || milestone.completionPercentage >= 100;
+                      %>
                       <button class="request-btn" 
                               data-job-id="<%= job.jobId %>"
                               data-milestone-id="<%= milestone.milestoneId %>"
                               data-description="<%= milestone.description %>"
                               data-amount="<%= milestone.amount %>"
-                              <%= milestone.completionPercentage < 100 ? 'disabled' : '' %>>
-                        <%= milestone.completionPercentage < 100 ? 'Complete Tasks First' : 'Request Payment' %>
+                              <%= canRequestPayment ? '' : 'disabled' %>>
+                        <%= canRequestPayment ? 'Request Payment' : 'Complete Tasks First' %>
                       </button>
                     <% } %>
                   </div>

@@ -741,7 +741,11 @@ exports.getMilestone = async (req, res) => {
         status: m.status,
         requested: m.requested === "true" || m.requested === true, // Convert string "true"/"false" to boolean
         subTasks: m.subTasks || [],
-        completionPercentage: m.completionPercentage || 0,
+        // If no subtasks, consider milestone as 100% complete for payment purposes
+        completionPercentage:
+          m.subTasks && m.subTasks.length > 0
+            ? m.completionPercentage || 0
+            : 100,
       })),
       progress: {
         completionPercentage,
@@ -1118,7 +1122,7 @@ exports.updateSubTaskStatus = async (req, res) => {
     milestone.completionPercentage =
       milestone.subTasks.length > 0
         ? Math.round((completedSubTasks / milestone.subTasks.length) * 100)
-        : 0;
+        : 100; // If no subtasks, consider it 100% complete
 
     // Update milestone status based on sub-task completion
     if (milestone.completionPercentage === 100) {

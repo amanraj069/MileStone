@@ -334,7 +334,7 @@
 
             <div class="freelancer-info">
               <a
-                href="/employerD/view_profile/<%= freelancerData.freelancer.id %>"
+                href="/profile/<%= freelancerData.freelancer.id %>"
                 class="freelancer-name"
               >
                 <%= freelancerData.freelancer.name %>
@@ -408,44 +408,53 @@
     </div>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // Get DOM elements
-        const searchInput = document.querySelector('.search-input');
-        const searchBtn = document.querySelector('.search-btn');
-        const freelancerCards = document.querySelectorAll('.freelancer-card');
-        
+        const searchInput = document.querySelector(".search-input");
+        const searchBtn = document.querySelector(".search-btn");
+        const freelancerCards = document.querySelectorAll(".freelancer-card");
+
         // Search functionality
         function filterFreelancers() {
           const searchTerm = searchInput.value.toLowerCase().trim();
           let visibleCount = 0;
-          
-          freelancerCards.forEach(card => {
-            const freelancerName = card.querySelector('.freelancer-name').textContent.toLowerCase();
-            const skills = Array.from(card.querySelectorAll('.skill-tag')).map(tag => tag.textContent.toLowerCase());
-            const projectName = card.querySelector('.project-name').textContent.toLowerCase();
-            const rating = card.querySelector('.rating span').textContent.toLowerCase();
-            
+
+          freelancerCards.forEach((card) => {
+            const freelancerName = card
+              .querySelector(".freelancer-name")
+              .textContent.toLowerCase();
+            const skills = Array.from(card.querySelectorAll(".skill-tag")).map(
+              (tag) => tag.textContent.toLowerCase()
+            );
+            const projectName = card
+              .querySelector(".project-name")
+              .textContent.toLowerCase();
+            const rating = card
+              .querySelector(".rating span")
+              .textContent.toLowerCase();
+
             // Check if search term matches any field
-            const matchesSearch = searchTerm === '' || 
+            const matchesSearch =
+              searchTerm === "" ||
               freelancerName.includes(searchTerm) ||
-              skills.some(skill => skill.includes(searchTerm)) ||
+              skills.some((skill) => skill.includes(searchTerm)) ||
               projectName.includes(searchTerm) ||
               rating.includes(searchTerm);
-            
+
             // Show/hide freelancer card
             if (matchesSearch) {
-              card.style.display = 'block';
-              card.style.animation = 'fadeIn 0.3s ease';
+              card.style.display = "block";
+              card.style.animation = "fadeIn 0.3s ease";
               visibleCount++;
             } else {
-              card.style.display = 'none';
+              card.style.display = "none";
             }
           });
-          
+
           // Update results counter and no results message
           updateSearchResults(visibleCount);
         }
-        
+
         // Debounce function for better performance
         function debounce(func, wait) {
           let timeout;
@@ -458,46 +467,46 @@
             timeout = setTimeout(later, wait);
           };
         }
-        
+
         // Add event listeners with debounced search
         const debouncedFilter = debounce(filterFreelancers, 300);
-        
-        searchInput.addEventListener('input', debouncedFilter);
-        searchInput.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
+
+        searchInput.addEventListener("input", debouncedFilter);
+        searchInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
             e.preventDefault();
             filterFreelancers();
           }
         });
-        
-        searchBtn.addEventListener('click', function(e) {
+
+        searchBtn.addEventListener("click", function (e) {
           e.preventDefault();
           filterFreelancers();
         });
-        
+
         // Update search results feedback
         function updateSearchResults(visibleCount) {
           const totalCount = freelancerCards.length;
-          
+
           // Update stats card with active freelancers
-          const activeFreelancersCount = document.querySelector('.stat-number');
+          const activeFreelancersCount = document.querySelector(".stat-number");
           if (activeFreelancersCount) {
             activeFreelancersCount.textContent = visibleCount;
           }
-          
+
           // Show/hide results counter
           updateResultsCounter(visibleCount, totalCount);
-          
+
           // Show/hide no results message
           updateNoResultsMessage(visibleCount);
         }
-        
+
         function updateResultsCounter(visibleCount, totalCount) {
-          let counter = document.querySelector('.results-counter');
-          
+          let counter = document.querySelector(".results-counter");
+
           if (!counter) {
-            counter = document.createElement('div');
-            counter.className = 'results-counter';
+            counter = document.createElement("div");
+            counter.className = "results-counter";
             counter.style.cssText = `
               color: #666;
               font-size: 14px;
@@ -508,33 +517,33 @@
               align-items: center;
               gap: 10px;
             `;
-            
-            const contentCard = document.querySelector('.content-card');
-            const searchSection = document.querySelector('.search-section');
+
+            const contentCard = document.querySelector(".content-card");
+            const searchSection = document.querySelector(".search-section");
             if (searchSection) {
               contentCard.insertBefore(counter, searchSection.nextSibling);
             }
           }
-          
-          if (searchInput.value.trim() !== '') {
+
+          if (searchInput.value.trim() !== "") {
             counter.innerHTML = `
               <i class="fas fa-filter" style="color: #2563eb;"></i>
               <span>Showing ${visibleCount} of ${totalCount} freelancers</span>
             `;
-            counter.style.display = 'flex';
+            counter.style.display = "flex";
           } else {
-            counter.style.display = 'none';
+            counter.style.display = "none";
           }
         }
-        
+
         function updateNoResultsMessage(visibleCount) {
-          let noResultsMsg = document.querySelector('.no-search-results');
-          
+          let noResultsMsg = document.querySelector(".no-search-results");
+
           if (visibleCount === 0 && freelancerCards.length > 0) {
             // Create no results message if it doesn't exist
             if (!noResultsMsg) {
-              noResultsMsg = document.createElement('div');
-              noResultsMsg.className = 'no-search-results';
+              noResultsMsg = document.createElement("div");
+              noResultsMsg.className = "no-search-results";
               noResultsMsg.innerHTML = `
                 <div style="text-align: center; padding: 50px; color: #666;">
                   <i class="fas fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
@@ -552,130 +561,149 @@
                   ">Clear Search</button>
                 </div>
               `;
-              
-              const contentCard = document.querySelector('.content-card');
+
+              const contentCard = document.querySelector(".content-card");
               contentCard.appendChild(noResultsMsg);
             }
-            noResultsMsg.style.display = 'block';
+            noResultsMsg.style.display = "block";
           } else if (noResultsMsg) {
-            noResultsMsg.style.display = 'none';
+            noResultsMsg.style.display = "none";
           }
         }
-        
+
         // Global function to clear search
-        window.clearSearch = function() {
-          searchInput.value = '';
+        window.clearSearch = function () {
+          searchInput.value = "";
           filterFreelancers();
           searchInput.focus();
         };
-        
+
         // Add search enhancements
-        
+
         // Animated placeholder
         const placeholders = [
-          'Search freelancers, skills...',
+          "Search freelancers, skills...",
           'Try "React", "Node.js"...',
-          'Search by name...',
-          'Find specific skills...'
+          "Search by name...",
+          "Find specific skills...",
         ];
-        
+
         let placeholderIndex = 0;
-        
+
         function animatePlaceholder() {
-          if (searchInput.value === '') {
+          if (searchInput.value === "") {
             searchInput.placeholder = placeholders[placeholderIndex];
             placeholderIndex = (placeholderIndex + 1) % placeholders.length;
           }
         }
-        
+
         // Change placeholder every 3 seconds
         setInterval(animatePlaceholder, 3000);
-        
+
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener("keydown", function (e) {
           // Ctrl/Cmd + K to focus search
-          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          if ((e.ctrlKey || e.metaKey) && e.key === "k") {
             e.preventDefault();
             searchInput.focus();
           }
-          
+
           // Escape to clear search
-          if (e.key === 'Escape' && document.activeElement === searchInput) {
+          if (e.key === "Escape" && document.activeElement === searchInput) {
             clearSearch();
           }
         });
-        
+
         // Highlight search matches
         function highlightMatches(text, searchTerm) {
           if (!searchTerm) return text;
-          
-          const regex = new RegExp(`(${searchTerm})`, 'gi');
-          return text.replace(regex, '<mark style="background: #fff3cd; padding: 1px 2px; border-radius: 2px;">$1</mark>');
+
+          const regex = new RegExp(`(${searchTerm})`, "gi");
+          return text.replace(
+            regex,
+            '<mark style="background: #fff3cd; padding: 1px 2px; border-radius: 2px;">$1</mark>'
+          );
         }
-        
+
         // Enhanced search with highlighting (optional enhancement)
         function filterFreelancersWithHighlight() {
           const searchTerm = searchInput.value.toLowerCase().trim();
           let visibleCount = 0;
-          
-          freelancerCards.forEach(card => {
-            const nameElement = card.querySelector('.freelancer-name');
-            const projectElement = card.querySelector('.project-name');
-            const originalName = nameElement.getAttribute('data-original') || nameElement.textContent;
-            const originalProject = projectElement.getAttribute('data-original') || projectElement.textContent;
-            
+
+          freelancerCards.forEach((card) => {
+            const nameElement = card.querySelector(".freelancer-name");
+            const projectElement = card.querySelector(".project-name");
+            const originalName =
+              nameElement.getAttribute("data-original") ||
+              nameElement.textContent;
+            const originalProject =
+              projectElement.getAttribute("data-original") ||
+              projectElement.textContent;
+
             // Store original text if not already stored
-            if (!nameElement.getAttribute('data-original')) {
-              nameElement.setAttribute('data-original', originalName);
+            if (!nameElement.getAttribute("data-original")) {
+              nameElement.setAttribute("data-original", originalName);
             }
-            if (!projectElement.getAttribute('data-original')) {
-              projectElement.setAttribute('data-original', originalProject);
+            if (!projectElement.getAttribute("data-original")) {
+              projectElement.setAttribute("data-original", originalProject);
             }
-            
+
             const freelancerName = originalName.toLowerCase();
-            const skills = Array.from(card.querySelectorAll('.skill-tag')).map(tag => tag.textContent.toLowerCase());
+            const skills = Array.from(card.querySelectorAll(".skill-tag")).map(
+              (tag) => tag.textContent.toLowerCase()
+            );
             const projectName = originalProject.toLowerCase();
-            
-            const matchesSearch = searchTerm === '' || 
+
+            const matchesSearch =
+              searchTerm === "" ||
               freelancerName.includes(searchTerm) ||
-              skills.some(skill => skill.includes(searchTerm)) ||
+              skills.some((skill) => skill.includes(searchTerm)) ||
               projectName.includes(searchTerm);
-            
+
             if (matchesSearch) {
               // Highlight matches if search term exists
               if (searchTerm) {
-                nameElement.innerHTML = highlightMatches(originalName, searchTerm);
-                projectElement.innerHTML = highlightMatches(originalProject, searchTerm);
+                nameElement.innerHTML = highlightMatches(
+                  originalName,
+                  searchTerm
+                );
+                projectElement.innerHTML = highlightMatches(
+                  originalProject,
+                  searchTerm
+                );
               } else {
                 nameElement.innerHTML = originalName;
                 projectElement.innerHTML = originalProject;
               }
-              
-              card.style.display = 'block';
+
+              card.style.display = "block";
               visibleCount++;
             } else {
-              card.style.display = 'none';
+              card.style.display = "none";
             }
           });
-          
+
           updateSearchResults(visibleCount);
         }
-        
+
         // Replace the basic filter with enhanced version
-        const debouncedEnhancedFilter = debounce(filterFreelancersWithHighlight, 300);
-        
-        searchInput.removeEventListener('input', debouncedFilter);
-        searchInput.addEventListener('input', debouncedEnhancedFilter);
-        
+        const debouncedEnhancedFilter = debounce(
+          filterFreelancersWithHighlight,
+          300
+        );
+
+        searchInput.removeEventListener("input", debouncedFilter);
+        searchInput.addEventListener("input", debouncedEnhancedFilter);
+
         // Update search button click handler
-        searchBtn.removeEventListener('click', filterFreelancers);
-        searchBtn.addEventListener('click', function(e) {
+        searchBtn.removeEventListener("click", filterFreelancers);
+        searchBtn.addEventListener("click", function (e) {
           e.preventDefault();
           filterFreelancersWithHighlight();
         });
-        
+
         // Add fade-in animation CSS
-        const style = document.createElement('style');
+        const style = document.createElement("style");
         style.textContent = `
           @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
