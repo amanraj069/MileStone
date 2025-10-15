@@ -444,6 +444,31 @@ exports.getJobListing = async (req, res) => {
   }
 };
 
+// API: return job listings as JSON for public page
+exports.getJobListingAPI = async (req, res) => {
+  try {
+    const jobListings = await JobListing.find({ status: "open" }).lean();
+
+    // Attach application counts
+    const jobListingsWithApplications = await Promise.all(
+      jobListings.map(async (job) => {
+        const applicationCount = await JobApplication.countDocuments({
+          jobId: job.jobId,
+        });
+        return {
+          ...job,
+          applicationCount,
+        };
+      })
+    );
+
+    res.json({ success: true, jobs: jobListingsWithApplications });
+  } catch (error) {
+    console.error("Error fetching jobs API:", error);
+    res.status(500).json({ success: false, message: "Error fetching jobs" });
+  }
+};
+
 exports.getJobDetails = async (req, res) => {
   try {
     const jobId = req.params.jobId || req.query.jobId;
