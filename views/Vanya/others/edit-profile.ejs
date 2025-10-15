@@ -185,6 +185,8 @@
                       name="title"
                       value="<%= user.role || '' %>"
                       placeholder="e.g., Web Developer, Graphic Designer"
+                      readonly
+                      style="background-color: #f5f5f5; cursor: not-allowed;"
                     />
                     <div class="validation-container">
                       <div id="titleError" class="error-message"></div>
@@ -249,6 +251,8 @@
                       name="email"
                       value="<%= user.email || '' %>"
                       placeholder="Enter your email address"
+                      readonly
+                      style="background-color: #f5f5f5; cursor: not-allowed;"
                     />
                     <div class="validation-container">
                       <div id="emailError" class="error-message"></div>
@@ -264,7 +268,7 @@
                       id="phone"
                       name="phone"
                       value="<%= user.phone || '' %>"
-                      maxlength="14"
+                      maxlength="10"
                       placeholder="Enter your 10-digit phone number"
                     />
                     <div id="phoneError" class="error-message" style="display: none;"></div>
@@ -620,25 +624,16 @@
         const trimmed = phoneNumber.trim();
         if (!trimmed) return ''; // Phone is optional
         
-        // Phone regex patterns for validation
-        const phonePattern = /^[2-9]\d{2}[-.]?\d{3}[-.]?\d{4}$/; // US format: (2-9)XX-XXX-XXXX
+        // Phone validation for 10 digits only
         const digitsOnlyPattern = /^\d{10}$/; // Exactly 10 digits
         
-        // Remove all non-digit characters for validation
-        const digitsOnly = trimmed.replace(/\D/g, '');
-        
         // Check if it's exactly 10 digits
-        if (!digitsOnlyPattern.test(digitsOnly)) {
+        if (!digitsOnlyPattern.test(trimmed)) {
           return 'Phone number must be exactly 10 digits';
         }
         
-        // Check if the original input matches acceptable format
-        if (!phonePattern.test(trimmed) && !digitsOnlyPattern.test(trimmed)) {
-          return 'Please enter a valid phone number format (e.g., 123-456-7890 or 1234567890)';
-        }
-        
         // Check if it starts with a valid digit (not 0 or 1)
-        if (digitsOnly[0] === '0' || digitsOnly[0] === '1') {
+        if (trimmed[0] === '0' || trimmed[0] === '1') {
           return 'Phone number cannot start with 0 or 1';
         }
         
@@ -758,15 +753,7 @@
         displayFieldError('name', error);
       });
 
-      document.getElementById('title').addEventListener('input', function(e) {
-        const error = validateTitle(e.target.value);
-        displayFieldError('title', error);
-      });
-
-      document.getElementById('email').addEventListener('input', function(e) {
-        const error = validateEmail(e.target.value);
-        displayFieldError('email', error);
-      });
+      // Title and email fields are read-only, no real-time validation needed
 
       document.getElementById('phone').addEventListener('input', function(e) {
         const error = validatePhoneNumber(e.target.value);
@@ -806,7 +793,7 @@
         });
       });
 
-      // Phone number formatting and validation (formats as user types - 10 digits only)
+      // Phone number validation (10 digits only, no formatting)
       document.getElementById('phone').addEventListener('keyup', function(e) {
         let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
         
@@ -815,24 +802,12 @@
           value = value.slice(0, 10);
         }
         
-        let formattedValue = '';
-        
-        if (value.length > 0) {
-          if (value.length <= 3) {
-            formattedValue = value;
-          } else if (value.length <= 6) {
-            formattedValue = value.slice(0, 3) + '-' + value.slice(3);
-          } else if (value.length <= 10) {
-            formattedValue = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6);
-          }
-        }
-        
-        e.target.value = formattedValue;
+        e.target.value = value;
         
         // Trigger validation after formatting
         const error = validatePhoneNumber(e.target.value);
         displayFieldError('phone', error);
-        console.log('Phone formatting and validation - Formatted:', formattedValue, 'Error:', error); // Debug log
+        console.log('Phone validation - Value:', value, 'Error:', error); // Debug log
       });
 
       // Add Experience
@@ -928,23 +903,7 @@
           displayFieldError('name', '');
         }
 
-        const titleError = validateTitle(document.getElementById('title').value);
-        if (titleError) {
-          displayFieldError('title', titleError);
-          errors.push('title');
-          isValid = false;
-        } else {
-          displayFieldError('title', '');
-        }
-
-        const emailError = validateEmail(document.getElementById('email').value);
-        if (emailError) {
-          displayFieldError('email', emailError);
-          errors.push('email');
-          isValid = false;
-        } else {
-          displayFieldError('email', '');
-        }
+        // Title and email are read-only fields, skip validation
 
         const phoneError = validatePhoneNumber(document.getElementById('phone').value);
         if (phoneError) {
