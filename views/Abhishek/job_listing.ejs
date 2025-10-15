@@ -279,94 +279,40 @@
         transform: none !important;
       }
 
-      /* Notification styles */
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        z-index: 1000;
-        opacity: 0;
-        transform: translateX(100%);
-        transition: all 0.3s ease;
+      /* Loading screen styles */
+      .loading-container {
         display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .notification.show {
-        opacity: 1;
-        transform: translateX(0);
-      }
-
-      .notification.success {
-        background: #28a745;
-      }
-
-      .notification.error {
-        background: #dc3545;
-      }
-
-      .notification.info {
-        background: #17a2b8;
-      }
-
-      /* Loading states */
-      .job-card.loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-
-      /* Confirmation modal */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1001;
-        display: none;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-      }
-
-      .modal-content {
-        background: white;
-        border-radius: 12px;
-        padding: 30px;
-        max-width: 400px;
-        width: 90%;
+        padding: 80px 20px;
         text-align: center;
       }
 
-      .modal-buttons {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 20px;
+      .loading-spinner {
+        font-size: 48px;
+        color: #2563eb;
+        margin-bottom: 20px;
       }
 
-      .modal-btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.3s ease;
+      .loading-spinner i {
+        animation: spin 1s linear infinite;
       }
 
-      .modal-btn-danger {
-        background: #dc3545;
-        color: white;
+      .loading-text {
+        font-size: 16px;
+        color: #666;
+        margin: 0;
       }
 
-      .modal-btn-cancel {
-        background: #6c757d;
-        color: white;
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Hide loading screen initially */
+      .loading-container.hidden {
+        display: none;
       }
     </style>
   </head>
@@ -377,13 +323,12 @@
     <div class="main-content">
       <div class="page-header">
         <div>
-          <h1 class="page-title">Job Listings</h1>
-          <p class="page-subtitle">
-            Browse and manage your posted job opportunities
-          </p>
+          <h2 class="page-title">Job Listings</h2>
+          <p class="page-subtitle">Browse and manage your posted job opportunities</p>
         </div>
         <a href="/employerD/job_listings/new" class="btn btn-primary">
-          <i class="fas fa-plus"></i> Post New Job
+          <i class="fas fa-plus"></i>
+          Post New Job
         </a>
       </div>
 
@@ -404,217 +349,148 @@
           </div>
         </div>
 
-        <% if (jobListings && jobListings.length > 0) { %> <%
-        jobListings.forEach(job => { %>
-        <div class="job-card">
-          <div class="job-img-container">
-            <img
-              src="<%= job.imageUrl || '/assets/company_logo.jpg' %>"
-              alt="Company"
-              class="job-img"
-            />
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-container">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
           </div>
-
-          <div class="job-info">
-            <h3 class="job-title"><%= job.title %></h3>
-            <div class="job-price">
-              <%= job.budget.amount.toLocaleString('en-IN', { style: 'currency',
-              currency: 'INR' }) %> (<%= job.budget.period %>)
-            </div>
-
-            <div class="job-tech">
-              <% job.description.skills.slice(0, 3).forEach(skill => { %>
-              <span class="tech-tag"><%= skill %></span>
-              <% }) %>
-            </div>
-
-            <div class="job-meta">
-              <span>
-                <i class="fas fa-map-marker-alt"></i>
-                <%= job.location || 'Not specified' %>
-              </span>
-              <span>
-                <i class="fas fa-briefcase"></i>
-                <%= job.jobType %>
-              </span>
-              <span>
-                <i class="fas fa-calendar"></i>
-                Posted <%= Math.floor((Date.now() - new Date(job.postedDate)) /
-                (1000 * 60 * 60 * 24)) %> days ago
-              </span>
-            </div>
-          </div>
-
-          <div class="job-actions">
-            <span class="applications-count">
-              <%= jobApplications.filter(app => app.jobId === job.jobId).length
-              %> applicants
-            </span>
-            <div class="action-buttons">
-              <a href="/jobs/<%= job.jobId %>">
-                <button class="see-more-btn">See More</button>
-              </a>
-              <button class="delete-job-btn" onclick="deleteJob('<%= job.jobId %>', this)" title="Delete Job">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          </div>
+          <p class="loading-text">Loading job listings...</p>
         </div>
-        <% }) %> <% } else { %>
-        <div class="no-jobs">
-          <i class="fas fa-briefcase"></i>
-          <h3>No job listings found</h3>
-          <p>Start by posting your first job opportunity!</p>
-        </div>
-        <% } %>
+
+        <!-- Job listings will be populated here by JavaScript -->
+        <div id="job-listings-container"></div>
       </div>
     </div>
 
     <script>
+      let jobListingsData = [];
+      let jobApplicationsData = [];
+
       document.addEventListener('DOMContentLoaded', function() {
-        // Get DOM elements
-        const searchInput = document.querySelector('.search-input');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const jobCards = document.querySelectorAll('.job-card');
+        // Initialize the page
+        loadJobListings();
+        setupEventListeners();
+      });
+
+      async function loadJobListings() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const container = document.getElementById('job-listings-container');
         
-        let currentFilter = 'All Jobs';
-        
-        // Search functionality
-        searchInput.addEventListener('input', function() {
-          filterJobs();
-        });
-        
-        // Filter button functionality
-        filterButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Update current filter
-            currentFilter = this.textContent.trim();
-            
-            // Filter jobs
-            filterJobs();
-          });
-        });
-        
-        function filterJobs() {
-          const searchTerm = searchInput.value.toLowerCase().trim();
-          let visibleCount = 0;
+        try {
+          // Show loading screen
+          loadingScreen.style.display = 'flex';
+          container.innerHTML = '';
+
+          // Fetch data from API
+          console.log('Fetching job listings from API...');
+          const response = await fetch('/employerD/job_listings/api/data');
           
-          jobCards.forEach(card => {
-            const jobTitle = card.querySelector('.job-title').textContent.toLowerCase();
-            const jobPrice = card.querySelector('.job-price').textContent.toLowerCase();
-            const techTags = Array.from(card.querySelectorAll('.tech-tag')).map(tag => tag.textContent.toLowerCase());
-            const jobMeta = card.querySelector('.job-meta').textContent.toLowerCase();
-            
-            // Check if search term matches
-            const matchesSearch = searchTerm === '' || 
-              jobTitle.includes(searchTerm) ||
-              jobPrice.includes(searchTerm) ||
-              techTags.some(tag => tag.includes(searchTerm)) ||
-              jobMeta.includes(searchTerm);
-            
-            // Check if filter matches
-            const matchesFilter = checkFilterMatch(card, currentFilter);
-            
-            // Show/hide job card based on both search and filter
-            if (matchesSearch && matchesFilter) {
-              card.style.display = 'flex';
-              visibleCount++;
-            } else {
-              card.style.display = 'none';
-            }
-          });
-          
-          // Show/hide no results message
-          updateNoResultsMessage(visibleCount);
-        }
-        
-        function checkFilterMatch(card, filter) {
-          const jobMeta = card.querySelector('.job-meta').textContent.toLowerCase();
-          const postedDaysAgo = extractDaysAgo(card);
-          
-          switch (filter) {
-            case 'All Jobs':
-              return true;
-              
-            case 'Recent':
-              return postedDaysAgo <= 7; // Jobs posted within last 7 days
-              
-            case 'Remote':
-              return jobMeta.includes('remote') || jobMeta.includes('work from home');
-              
-            case 'Full-time':
-              return jobMeta.includes('full-time') || jobMeta.includes('full time');
-              
-            case 'Part-time':
-              return jobMeta.includes('part-time') || jobMeta.includes('part time');
-              
-            default:
-              return true;
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
+
+          const result = await response.json();
+          console.log('API Response:', result);
+
+          if (result.success) {
+            jobListingsData = result.data.jobListings;
+            jobApplicationsData = result.data.jobApplications;
+            
+            // Hide loading screen
+            loadingScreen.style.display = 'none';
+            
+            // Render job listings
+            renderJobListings();
+          } else {
+            throw new Error(result.message || 'Failed to fetch job listings');
+          }
+        } catch (error) {
+          console.error('Error loading job listings:', error);
+          loadingScreen.style.display = 'none';
+          showError('Failed to load job listings. Please try again later.');
         }
+      }
+
+      function renderJobListings() {
+        const container = document.getElementById('job-listings-container');
         
-        function extractDaysAgo(card) {
-          const metaText = card.querySelector('.job-meta').textContent;
-          const match = metaText.match(/Posted (\d+) days ago/);
-          return match ? parseInt(match[1]) : 0;
+        if (!jobListingsData || jobListingsData.length === 0) {
+          container.innerHTML = `
+            <div class="no-jobs">
+              <i class="fas fa-briefcase"></i>
+              <h3>No job listings found</h3>
+              <p>Start by posting your first job opportunity!</p>
+            </div>
+          `;
+          return;
         }
-        
-        function updateNoResultsMessage(visibleCount) {
-          let noResultsMsg = document.querySelector('.no-results-message');
+
+        container.innerHTML = jobListingsData.map(job => {
+          const applicationsCount = jobApplicationsData.filter(app => app.jobId === job.jobId).length;
+          const daysAgo = Math.floor((Date.now() - new Date(job.postedDate)) / (1000 * 60 * 60 * 24));
           
-          if (visibleCount === 0 && jobCards.length > 0) {
-            // Create no results message if it doesn't exist
-            if (!noResultsMsg) {
-              noResultsMsg = document.createElement('div');
-              noResultsMsg.className = 'no-results-message';
-              noResultsMsg.innerHTML = `
-                <div style="text-align: center; padding: 50px; color: #666;">
-                  <i class="fas fa-search" style="font-size: 48px; color: #ddd; margin-bottom: 20px;"></i>
-                  <h3>No jobs found</h3>
-                  <p>Try adjusting your search criteria or filters</p>
+          return `
+            <div class="job-card" data-job-id="${job.jobId}">
+              <div class="job-img-container">
+                <img
+                  src="${job.imageUrl || '/assets/company_logo.jpg'}"
+                  alt="Company"
+                  class="job-img"
+                />
+              </div>
+
+              <div class="job-info">
+                <h3 class="job-title">${job.title}</h3>
+                <div class="job-price">
+                  ₹${job.budget.amount.toLocaleString('en-IN')} (${job.budget.period})
                 </div>
-              `;
-              
-              // Insert after the last job card or at the end of content
-              const contentCard = document.querySelector('.content-card');
-              contentCard.appendChild(noResultsMsg);
-            }
-            noResultsMsg.style.display = 'block';
-          } else if (noResultsMsg) {
-            noResultsMsg.style.display = 'none';
-          }
-        }
-        
-        // Add some helper functions for better search experience
-        
-        // Debounce search to improve performance
-        function debounce(func, wait) {
-          let timeout;
-          return function executedFunction(...args) {
-            const later = () => {
-              clearTimeout(timeout);
-              func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-          };
-        }
-        
-        // Replace the direct input listener with debounced version
-        const debouncedFilter = debounce(filterJobs, 300);
-        searchInput.removeEventListener('input', filterJobs);
-        searchInput.addEventListener('input', debouncedFilter);
-        
-        // Add search form validation
-        validateSearchForm();
-        
-        // Add search placeholder animation
+
+                <div class="job-tech">
+                  ${job.description.skills.slice(0, 3).map(skill => `
+                    <span class="tech-tag">${skill}</span>
+                  `).join('')}
+                </div>
+
+                <div class="job-meta">
+                  <span>
+                    <i class="fas fa-map-marker-alt"></i>
+                    ${job.location || 'Not specified'}
+                  </span>
+                  <span>
+                    <i class="fas fa-briefcase"></i>
+                    ${job.jobType}
+                  </span>
+                  <span>
+                    <i class="fas fa-calendar"></i>
+                    Posted ${daysAgo} days ago
+                  </span>
+                </div>
+              </div>
+
+              <div class="job-actions">
+                <span class="applications-count">
+                  ${applicationsCount} applicants
+                </span>
+                <div class="action-buttons">
+                  <a href="/jobs/${job.jobId}">
+                    <button class="see-more-btn">See More</button>
+                  </a>
+                  <button class="delete-job-btn" onclick="deleteJob('${job.jobId}', this)" title="Delete Job">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Setup search and filter functionality
+        setupSearchAndFilter();
+      }
+
+      function setupEventListeners() {
+        // Placeholder animation for search input
+        const searchInput = document.querySelector('.search-input');
         const placeholders = [
           'Search jobs, companies...',
           'Try "React", "Node.js"...',
@@ -625,288 +501,163 @@
         let placeholderIndex = 0;
         
         function animatePlaceholder() {
-          if (searchInput.value === '') {
+          if (searchInput && searchInput.value === '') {
             searchInput.placeholder = placeholders[placeholderIndex];
             placeholderIndex = (placeholderIndex + 1) % placeholders.length;
           }
         }
         
-        // Change placeholder every 3 seconds
         setInterval(animatePlaceholder, 3000);
-        
-        // Add keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-          // Ctrl/Cmd + K to focus search
-          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-            e.preventDefault();
-            searchInput.focus();
-          }
-          
-          // Escape to clear search
-          if (e.key === 'Escape' && document.activeElement === searchInput) {
-            searchInput.value = '';
+      }
+
+      function setupSearchAndFilter() {
+        const searchInput = document.querySelector('.search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'All Jobs';
+
+        // Search functionality
+        searchInput?.addEventListener('input', filterJobs);
+
+        // Filter button functionality
+        filterButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            currentFilter = this.textContent.trim();
             filterJobs();
-          }
+          });
         });
-        
-        // Add search results counter
-        function updateResultsCounter() {
-          const visibleJobs = Array.from(jobCards).filter(card => card.style.display !== 'none').length;
-          const totalJobs = jobCards.length;
-          
-          let counter = document.querySelector('.results-counter');
-          if (!counter) {
-            counter = document.createElement('div');
-            counter.className = 'results-counter';
-            counter.style.cssText = `
-              color: #666;
-              font-size: 14px;
-              margin-bottom: 20px;
-              padding: 10px 0;
-              border-bottom: 1px solid #eee;
-            `;
-            
-            const contentCard = document.querySelector('.content-card');
-            const firstJobCard = document.querySelector('.job-card');
-            if (firstJobCard) {
-              contentCard.insertBefore(counter, firstJobCard);
+
+        function filterJobs() {
+          const searchTerm = searchInput.value.toLowerCase().trim();
+          const jobCards = document.querySelectorAll('.job-card');
+          let visibleCount = 0;
+
+          jobCards.forEach(card => {
+            const jobTitle = card.querySelector('.job-title').textContent.toLowerCase();
+            const jobPrice = card.querySelector('.job-price').textContent.toLowerCase();
+            const techTags = Array.from(card.querySelectorAll('.tech-tag')).map(tag => tag.textContent.toLowerCase());
+            const jobMeta = card.querySelector('.job-meta').textContent.toLowerCase();
+
+            const matchesSearch = searchTerm === '' || 
+              jobTitle.includes(searchTerm) || 
+              jobPrice.includes(searchTerm) || 
+              techTags.some(tag => tag.includes(searchTerm)) ||
+              jobMeta.includes(searchTerm);
+
+            const matchesFilter = checkFilterMatch(card, currentFilter);
+
+            if (matchesSearch && matchesFilter) {
+              card.style.display = 'flex';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
             }
+          });
+
+          updateNoResultsMessage(visibleCount, jobCards.length);
+        }
+
+        function checkFilterMatch(card, filter) {
+          const jobMeta = card.querySelector('.job-meta').textContent.toLowerCase();
+          const metaText = card.querySelector('.job-meta').textContent;
+          const match = metaText.match(/Posted (\d+) days ago/);
+          const postedDaysAgo = match ? parseInt(match[1]) : 0;
+
+          switch (filter) {
+            case 'All Jobs': return true;
+            case 'Recent': return postedDaysAgo <= 7;
+            case 'Remote': return jobMeta.includes('remote');
+            case 'Full-time': return jobMeta.includes('full-time');
+            case 'Part-time': return jobMeta.includes('part-time');
+            default: return true;
           }
+        }
+
+        function updateNoResultsMessage(visibleCount, totalCount) {
+          let noResultsMsg = document.querySelector('.no-results-message');
           
-          if (searchInput.value.trim() !== '' || currentFilter !== 'All Jobs') {
-            counter.textContent = `Showing ${visibleJobs} of ${totalJobs} jobs`;
-            counter.style.display = 'block';
-          } else {
-            counter.style.display = 'none';
+          if (visibleCount === 0 && totalCount > 0) {
+            if (!noResultsMsg) {
+              noResultsMsg = document.createElement('div');
+              noResultsMsg.className = 'no-results-message';
+              noResultsMsg.innerHTML = `
+                <div class="no-jobs" style="margin-top: 30px;">
+                  <i class="fas fa-search"></i>
+                  <h3>No jobs found</h3>
+                  <p>Try adjusting your search or filter criteria</p>
+                </div>
+              `;
+              document.getElementById('job-listings-container').appendChild(noResultsMsg);
+            }
+            noResultsMsg.style.display = 'block';
+          } else if (noResultsMsg) {
+            noResultsMsg.style.display = 'none';
           }
         }
-        
-        // Update the filterJobs function to include results counter
-        const originalFilterJobs = filterJobs;
-        filterJobs = function() {
-          originalFilterJobs();
-          updateResultsCounter();
-        };
-      });
+      }
 
-      // AJAX job deletion functionality
+      function showError(message) {
+        const container = document.getElementById('job-listings-container');
+        container.innerHTML = `
+          <div class="no-jobs">
+            <i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i>
+            <h3>Error Loading Job Listings</h3>
+            <p>${message}</p>
+            <button class="btn btn-primary" onclick="loadJobListings()" style="margin-top: 15px;">
+              <i class="fas fa-refresh"></i> Try Again
+            </button>
+          </div>
+        `;
+      }
+
+      // Simple delete job function
       async function deleteJob(jobId, buttonElement) {
-        if (!jobId) {
-          showNotification('Invalid job ID', 'error');
-          return;
-        }
-
-        // Show confirmation modal
-        const confirmed = await showConfirmationModal(
-          'Delete Job',
-          'Are you sure you want to delete this job listing? This action cannot be undone.'
-        );
-
-        if (!confirmed) {
+        if (!confirm('Are you sure you want to delete this job listing?')) {
           return;
         }
 
         const jobCard = buttonElement.closest('.job-card');
         
         try {
-          // Show loading state
-          jobCard.classList.add('loading');
           buttonElement.disabled = true;
           buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-          showNotification('Deleting job listing...', 'info');
 
           const response = await fetch(`/employerD/job_listings/delete/${jobId}`, {
             method: 'DELETE',
             headers: {
-              'Content-Type': 'application/json',
-              'X-Requested-With': 'XMLHttpRequest'
+              'Content-Type': 'application/json'
             }
           });
 
           if (response.ok) {
-            const result = await response.json();
-            showNotification('Job listing deleted successfully!', 'success');
-            
-            // Remove the job card from DOM
             jobCard.style.transition = 'all 0.5s ease';
             jobCard.style.transform = 'translateX(-100%)';
             jobCard.style.opacity = '0';
             
             setTimeout(() => {
               jobCard.remove();
-              updateResultsCounter();
-              
-              // Check if no jobs left
               const remainingJobs = document.querySelectorAll('.job-card');
               if (remainingJobs.length === 0) {
-                showNoJobsMessage();
+                document.getElementById('job-listings-container').innerHTML = `
+                  <div class="no-jobs">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>No job listings found</h3>
+                    <p>Start by posting your first job opportunity!</p>
+                  </div>
+                `;
               }
             }, 500);
             
+            alert('Job listing deleted successfully!');
           } else {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to delete job');
+            throw new Error('Failed to delete job');
           }
         } catch (error) {
           console.error('Delete job error:', error);
-          showNotification(`Failed to delete job: ${error.message}`, 'error');
-          
-          // Reset loading state
-          jobCard.classList.remove('loading');
+          alert('Failed to delete job. Please try again.');
           buttonElement.disabled = false;
           buttonElement.innerHTML = '<i class="fas fa-trash"></i>';
-        }
-      }
-
-      // Show confirmation modal
-      function showConfirmationModal(title, message) {
-        return new Promise((resolve) => {
-          const modal = document.createElement('div');
-          modal.className = 'modal-overlay';
-          modal.innerHTML = `
-            <div class="modal-content">
-              <h3>${title}</h3>
-              <p>${message}</p>
-              <div class="modal-buttons">
-                <button class="modal-btn modal-btn-cancel" onclick="closeModal(false)">Cancel</button>
-                <button class="modal-btn modal-btn-danger" onclick="closeModal(true)">Delete</button>
-              </div>
-            </div>
-          `;
-          
-          document.body.appendChild(modal);
-          modal.style.display = 'flex';
-          
-          // Store resolve function globally for button handlers
-          window.modalResolve = resolve;
-          
-          window.closeModal = function(confirmed) {
-            modal.remove();
-            delete window.modalResolve;
-            delete window.closeModal;
-            resolve(confirmed);
-          };
-          
-          // Close on overlay click
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-              window.closeModal(false);
-            }
-          });
-        });
-      }
-
-      // Show no jobs message
-      function showNoJobsMessage() {
-        const container = document.querySelector('.content-card');
-        const noJobsHtml = `
-          <div class="no-jobs" style="margin-top: 50px;">
-            <i class="fas fa-briefcase"></i>
-            <h3>No job listings found</h3>
-            <p>Start by posting your first job opportunity!</p>
-          </div>
-        `;
-        container.innerHTML = container.innerHTML.split('<div class="no-jobs">')[0] + noJobsHtml;
-      }
-
-      // Notification system
-      function showNotification(message, type = 'info') {
-        // Remove existing notifications
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) {
-          existingNotification.remove();
-        }
-
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        
-        const icon = type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : 'info-circle';
-        notification.innerHTML = `
-          <i class="fas fa-${icon}"></i>
-          <span>${message}</span>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => notification.classList.add('show'), 100);
-        
-        setTimeout(() => {
-          notification.classList.remove('show');
-          setTimeout(() => notification.remove(), 300);
-        }, 3000);
-      }
-
-      // Form validation for search input
-      function validateSearchForm() {
-        const searchInput = document.querySelector('.search-input');
-        
-        if (!searchInput) return;
-        
-        searchInput.addEventListener('input', function() {
-          validateSearchInput(this);
-        });
-        
-        searchInput.addEventListener('blur', function() {
-          validateSearchInput(this);
-        });
-      }
-
-      function validateSearchInput(inputElement) {
-        const value = inputElement.value.trim();
-        
-        // Remove previous error states
-        inputElement.classList.remove('error');
-        removeFieldError(inputElement);
-        
-        // Validate search input constraints
-        if (value.length > 100) {
-          showFieldError(inputElement, 'Search term too long (max 100 characters)');
-          return false;
-        }
-        
-        // Check for potentially harmful characters
-        const dangerousPattern = /[<>'"&]/;
-        if (dangerousPattern.test(value)) {
-          showFieldError(inputElement, 'Invalid characters in search term');
-          return false;
-        }
-        
-        // Check for SQL injection patterns
-        const sqlPattern = /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER)\b)/i;
-        if (sqlPattern.test(value)) {
-          showFieldError(inputElement, 'Invalid search pattern detected');
-          return false;
-        }
-        
-        return true;
-      }
-
-      function showFieldError(inputElement, message) {
-        inputElement.classList.add('error');
-        inputElement.style.borderColor = '#dc3545';
-        
-        let errorElement = inputElement.parentElement.querySelector('.error-message');
-        if (!errorElement) {
-          errorElement = document.createElement('div');
-          errorElement.className = 'error-message';
-          errorElement.style.cssText = `
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 5px;
-            display: block;
-          `;
-          inputElement.parentElement.appendChild(errorElement);
-        }
-        
-        errorElement.textContent = message;
-      }
-
-      function removeFieldError(inputElement) {
-        inputElement.style.borderColor = '';
-        const errorElement = inputElement.parentElement.querySelector('.error-message');
-        if (errorElement) {
-          errorElement.remove();
         }
       }
     </script>

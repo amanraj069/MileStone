@@ -5,6 +5,7 @@ const { upload } = require("../middleware/imageUpload");
 
 router.get("/current_jobs", employerController.getCurrentJobs);
 router.get("/job_listings", employerController.getJobListings);
+router.get("/job_listings/api/data", employerController.getJobListingsAPI);
 router.get("/job_listings/new", employerController.getNewJobForm);
 router.post("/job_listings/new", employerController.createJobListing);
 router.get("/job_listings/edit/:jobId", employerController.getEditJobForm);
