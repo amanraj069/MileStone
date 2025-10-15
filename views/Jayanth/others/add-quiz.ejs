@@ -198,9 +198,7 @@
       }
 
       .option-group {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+        display: block;
         margin-bottom: 12px;
       }
 
@@ -295,6 +293,28 @@
         font-weight: 500;
         display: none;
       }
+
+      .field-error {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 5px;
+        font-weight: 500;
+        display: block;
+        min-height: 16px;
+      }
+
+      .form-control.error,
+      .option-input.error,
+      .correct-answer-select.error {
+        border-color: #ef4444 !important;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+      }
+
+      .form-control.valid,
+      .option-input.valid {
+        border-color: #10b981 !important;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+      }
     </style>
   </head>
   <body>
@@ -334,6 +354,7 @@
                   required
                   placeholder="Enter skill name (e.g. JavaScript, Python, React)"
                 />
+                <div class="field-error" id="skill-name-error"></div>
               </div>
 
               <div class="questions-container" id="questions-container">
@@ -390,45 +411,140 @@
         // Enhanced skill name validation
         function validateSkillName() {
           const value = skillNameInput.value.trim();
-          const existingError = skillNameInput.parentNode.querySelector('.error-message');
+          const errorDiv = document.getElementById('skill-name-error');
           
-          if (existingError) {
-            existingError.remove();
-          }
+          // Clear previous styling
+          skillNameInput.classList.remove('error', 'valid');
+          errorDiv.textContent = '';
 
           if (value.length === 0) {
-            showFieldError(skillNameInput, 'Skill name is required');
+            showInputError(skillNameInput, errorDiv, 'Skill name is required');
             return false;
           }
 
           if (value.length < 3) {
-            showFieldError(skillNameInput, 'Skill name must be at least 3 characters');
+            showInputError(skillNameInput, errorDiv, 'Minimum 3 characters required');
             return false;
           }
 
           if (value.length > 50) {
-            showFieldError(skillNameInput, 'Skill name must be less than 50 characters');
+            showInputError(skillNameInput, errorDiv, 'Maximum 50 characters allowed');
             return false;
           }
 
           const specialCharPattern = /[<>{}]/;
           if (specialCharPattern.test(value)) {
-            showFieldError(skillNameInput, 'Special characters < > { } are not allowed');
+            showInputError(skillNameInput, errorDiv, 'Special characters < > { } are not allowed');
             return false;
           }
 
-          // Valid input - show success
-          skillNameInput.style.borderColor = '#10b981';
+          // Valid input
+          skillNameInput.classList.add('valid');
+          errorDiv.textContent = '';
           return true;
         }
 
-        function showFieldError(field, message) {
-          field.style.borderColor = '#ef4444';
-          const errorDiv = document.createElement('div');
-          errorDiv.className = 'error-message';
-          errorDiv.textContent = message;
-          errorDiv.style.display = 'block';
-          field.parentNode.appendChild(errorDiv);
+        function showInputError(inputElement, errorElement, message) {
+          inputElement.classList.add('error');
+          inputElement.classList.remove('valid');
+          errorElement.textContent = message;
+        }
+
+        function showInputSuccess(inputElement, errorElement) {
+          inputElement.classList.add('valid');
+          inputElement.classList.remove('error');
+          errorElement.textContent = '';
+        }
+
+        function validateQuestionText(questionIndex, value) {
+          const questionCard = document.querySelector(`.question-card[data-index="${questionIndex}"]`);
+          const questionTextInput = questionCard.querySelector('.question-text');
+          let errorElement = questionCard.querySelector('.question-text-error');
+          
+          if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.className = 'field-error question-text-error';
+            questionTextInput.parentNode.appendChild(errorElement);
+          }
+
+          questionTextInput.classList.remove('error', 'valid');
+          const trimmedValue = value.trim();
+
+          if (trimmedValue.length === 0) {
+            showInputError(questionTextInput, errorElement, 'Question text is required');
+            return false;
+          }
+
+          if (trimmedValue.length < 10) {
+            showInputError(questionTextInput, errorElement, 'Minimum 10 characters required');
+            return false;
+          }
+
+          if (trimmedValue.length > 500) {
+            showInputError(questionTextInput, errorElement, 'Maximum 500 characters allowed');
+            return false;
+          }
+
+          showInputSuccess(questionTextInput, errorElement);
+          return true;
+        }
+
+        function validateOption(questionIndex, optionIndex, value) {
+          const questionCard = document.querySelector(`.question-card[data-index="${questionIndex}"]`);
+          const optionInputs = questionCard.querySelectorAll('.option-input');
+          const optionInput = optionInputs[optionIndex];
+          
+          if (!optionInput) return false;
+
+          let errorElement = optionInput.parentNode.querySelector('.option-error');
+          if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.className = 'field-error option-error';
+            optionInput.parentNode.appendChild(errorElement);
+          }
+
+          optionInput.classList.remove('error', 'valid');
+          const trimmedValue = value.trim();
+
+          if (trimmedValue.length === 0) {
+            showInputError(optionInput, errorElement, 'Option text is required');
+            return false;
+          }
+
+          if (trimmedValue.length < 2) {
+            showInputError(optionInput, errorElement, 'Minimum 2 characters required');
+            return false;
+          }
+
+          if (trimmedValue.length > 100) {
+            showInputError(optionInput, errorElement, 'Maximum 100 characters allowed');
+            return false;
+          }
+
+          showInputSuccess(optionInput, errorElement);
+          return true;
+        }
+
+        function validateCorrectAnswer(questionIndex) {
+          const questionCard = document.querySelector(`.question-card[data-index="${questionIndex}"]`);
+          const correctAnswerSelect = questionCard.querySelector('.correct-answer-select');
+          let errorElement = questionCard.querySelector('.correct-answer-error');
+          
+          if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.className = 'field-error correct-answer-error';
+            correctAnswerSelect.parentNode.appendChild(errorElement);
+          }
+
+          correctAnswerSelect.classList.remove('error', 'valid');
+
+          if (!correctAnswerSelect.value || correctAnswerSelect.value === '') {
+            showInputError(correctAnswerSelect, errorElement, 'Please select the correct answer');
+            return false;
+          }
+
+          showInputSuccess(correctAnswerSelect, errorElement);
+          return true;
         }
 
         skillNameInput.addEventListener('input', validateSkillName);
@@ -513,6 +629,7 @@
               <textarea class="form-control question-text" rows="3" value="${questionText}" 
                 placeholder="Enter your question (minimum 10 characters)" 
                 oninput="updateQuestionText(${questionIndex}, this.value)" required></textarea>
+              <div class="field-error question-text-error"></div>
             </div>
             <div class="options-container">
               <label style="margin-bottom: 12px; font-weight: 600; color: #333; font-size: 14px;">Answer Options <span style="color: #ef4444;">*</span></label>
@@ -530,6 +647,7 @@
                 onchange="setCorrectAnswer(${questionIndex}, this.value)">
                 <option value="">Select correct answer</option>
               </select>
+              <div class="field-error correct-answer-error"></div>
             </div>
             <div class="error-message" id="error-message-${questionIndex}">
               Please complete all required fields for this question.
@@ -561,10 +679,31 @@
               const correctAlphabet = String.fromCharCode(65 + correctOptionIndex);
               correctAnswerSelect.value = correctAlphabet;
             }
+            
+            // Run validation on existing data
+            setTimeout(() => {
+              validateQuestionText(questionIndex, questionData.questionText);
+              questionData.options.forEach((option, optionIndex) => {
+                validateOption(questionIndex, optionIndex, option);
+              });
+              validateCorrectAnswer(questionIndex);
+            }, 100);
           }
 
           updateQuestionsJson();
           updateQuestionStatus(questionIndex);
+
+          // Add real-time validation for question text
+          const questionTextInput = questionCard.querySelector('.question-text');
+          questionTextInput.addEventListener('blur', function() {
+            validateQuestionText(questionIndex, this.value);
+          });
+
+          // Add real-time validation for correct answer select
+          const correctAnswerSelectEl = questionCard.querySelector('.correct-answer-select');
+          correctAnswerSelectEl.addEventListener('change', function() {
+            validateCorrectAnswer(questionIndex);
+          });
         }
 
         function addOptionToDOM(container, questionIndex, optionIndex, optionText = "", correctAnswerSelect) {
@@ -576,17 +715,22 @@
           const optionLabel = String.fromCharCode(65 + optionIndex);
 
           optionGroup.innerHTML = `
-            <span class="option-label">${optionLabel}</span>
-            <input type="text" class="option-input" value="${optionText}" 
-              placeholder="Option ${optionLabel} (minimum 2 characters)" 
-              oninput="updateOptionText(${questionIndex}, ${optionIndex}, this.value)" required>
-            <button type="button" class="delete-option" onclick="removeOption(${questionIndex}, ${optionIndex})"
-                    style="background: #ef4444; color: white; border: none; border-radius: 4px; width: 24px; height: 24px; cursor: pointer; margin-left: 8px; ${questions[questionIndex] && questions[questionIndex].options && questions[questionIndex].options.length <= 2 ? 'display: none;' : ''}">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
+            <div style="display: flex; align-items: flex-start; gap: 12px; width: 100%;">
+              <span class="option-label" style="margin-top: 12px;">${optionLabel}</span>
+              <div style="flex: 1;">
+                <input type="text" class="option-input" value="${optionText}" 
+                  placeholder="Option ${optionLabel} (minimum 2 characters)" 
+                  oninput="updateOptionText(${questionIndex}, ${optionIndex}, this.value)" required>
+                <div class="field-error option-error"></div>
+              </div>
+              <button type="button" class="delete-option" onclick="removeOption(${questionIndex}, ${optionIndex})"
+                      style="background: #ef4444; color: white; border: none; border-radius: 4px; width: 24px; height: 24px; cursor: pointer; margin-top: 12px; ${questions[questionIndex] && questions[questionIndex].options && questions[questionIndex].options.length <= 2 ? 'display: none;' : ''}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
           `;
 
           container.appendChild(optionGroup);
@@ -603,6 +747,13 @@
           }
           
           questions[questionIndex].options[optionIndex] = optionText || "";
+          
+          // Add real-time validation for option input
+          const optionInput = optionGroup.querySelector('.option-input');
+          optionInput.addEventListener('blur', function() {
+            validateOption(questionIndex, optionIndex, this.value);
+          });
+          
           updateQuestionsJson();
         }
 
@@ -628,6 +779,17 @@
 
         // Initialize with one question
         createQuestionCard(0);
+
+        // Trigger initial validation for empty fields
+        setTimeout(() => {
+          validateSkillName();
+          if (questions.length > 0) {
+            validateQuestionText(0, '');
+            validateOption(0, 0, '');
+            validateOption(0, 1, '');
+            validateCorrectAnswer(0);
+          }
+        }, 100);
 
         addQuestionBtn.addEventListener("click", function () {
           createQuestionCard(questions.length);
@@ -680,35 +842,50 @@
         });
 
         function validateCompleteForm() {
+          let isValid = true;
+
           // Validate skill name
           if (!validateSkillName()) {
             skillNameInput.focus();
-            return false;
+            isValid = false;
           }
 
-          // Validate questions
+          // Validate all questions
           for (let i = 0; i < questions.length; i++) {
             const question = questions[i];
 
-            if (!question.questionText || question.questionText.trim().length < 10) {
-              showNotification(`Question ${i + 1} text must be at least 10 characters long`, 'error');
-              return false;
+            // Validate question text
+            const questionTextValid = validateQuestionText(i, question.questionText);
+            if (!questionTextValid) {
+              isValid = false;
             }
 
-            const validOptions = question.options.filter(opt => opt && opt.trim().length >= 2);
-            if (validOptions.length < 2) {
-              showNotification(`Question ${i + 1} must have at least 2 valid options (minimum 2 characters each)`, 'error');
-              return false;
+            // Validate options
+            let validOptionsCount = 0;
+            for (let j = 0; j < question.options.length; j++) {
+              if (validateOption(i, j, question.options[j])) {
+                validOptionsCount++;
+              } else {
+                isValid = false;
+              }
             }
 
-            if (!question.correctAnswer || !validOptions.includes(question.correctAnswer)) {
-              showNotification(`Please select a valid correct answer for Question ${i + 1}`, 'error');
-              return false;
+            if (validOptionsCount < 2) {
+              showNotification(`Question ${i + 1} must have at least 2 valid options`, 'error');
+              isValid = false;
+            }
+
+            // Validate correct answer
+            if (!validateCorrectAnswer(i)) {
+              isValid = false;
             }
           }
 
-          updateQuestionsJson();
-          return true;
+          if (isValid) {
+            updateQuestionsJson();
+          }
+          
+          return isValid;
         }
 
         function showNotification(message, type = 'info') {
@@ -739,6 +916,7 @@
         // Make functions globally available
         window.updateQuestionText = function(questionIndex, value) {
           questions[questionIndex].questionText = value.trim();
+          validateQuestionText(questionIndex, value);
           updateQuestionsJson();
           updateQuestionStatus(questionIndex);
         };
@@ -755,6 +933,9 @@
           const previousValue = questions[questionIndex].options[optionIndex];
           questions[questionIndex].options[optionIndex] = trimmedValue;
           
+          // Validate the option
+          validateOption(questionIndex, optionIndex, value);
+          
           if (questions[questionIndex].correctAnswer === previousValue) {
             questions[questionIndex].correctAnswer = trimmedValue;
           }
@@ -766,6 +947,7 @@
         window.setCorrectAnswer = function(questionIndex, alphabet) {
           if (!alphabet) {
             questions[questionIndex].correctAnswer = "";
+            validateCorrectAnswer(questionIndex);
             updateQuestionsJson();
             updateQuestionStatus(questionIndex);
             return;
@@ -783,6 +965,7 @@
             questions[questionIndex].correctAnswer = optionValue.trim();
           }
           
+          validateCorrectAnswer(questionIndex);
           updateQuestionsJson();
           updateQuestionStatus(questionIndex);
         };

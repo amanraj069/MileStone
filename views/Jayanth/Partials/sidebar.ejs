@@ -4,8 +4,8 @@
     <div class="user-info">
       <div class="profile-img-container">
         <% if (user.picture && user.picture !==
-        'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png')
-        { %>
+        'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png'){
+        %>
         <img
           src="<%= user.picture %>"
           alt="Profile Image"
@@ -28,7 +28,7 @@
           ><i class="fas fa-home"></i> Home</a
         >
       </li>
-    
+
       <li>
         <a
           href="/adminD/job_listings"

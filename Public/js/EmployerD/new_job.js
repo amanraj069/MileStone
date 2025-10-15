@@ -129,6 +129,12 @@ function addMilestone() {
 
   // Initialize subtask count for this milestone
   subtaskCounts[milestoneCount] = 0;
+
+  // Add real-time validation to the new milestone fields
+  addMilestoneValidation(milestoneCount);
+  
+  // Check subtask requirement for this milestone
+  checkSubtaskRequirement(milestoneCount);
 }
 
 // Add sub-task function
@@ -171,6 +177,12 @@ function addSubTask(milestoneId) {
     newSubtask.style.opacity = '1';
     newSubtask.style.transform = 'translateX(0)';
   }, 100);
+
+  // Add real-time validation to the new subtask field
+  addSubtaskValidation(milestoneId, subtaskCounts[milestoneId]);
+  
+  // Check subtask requirement for this milestone
+  checkSubtaskRequirement(milestoneId);
 }
 
 // Remove sub-task function
@@ -192,6 +204,9 @@ function removeSubTask(milestoneId, subtaskId) {
       if (emptyState) {
         emptyState.style.display = 'block';
       }
+      
+      // Check subtask requirement after removal
+      checkSubtaskRequirement(milestoneId);
     }
   }, 300);
 }
@@ -267,7 +282,6 @@ function validateForm() {
 
   if (!imageUrl.value.trim()) {
     showFieldError(imageUrl, "Company logo URL is required");
-    isValid = false;
   }
 
   if (!description.value.trim()) {
@@ -312,6 +326,24 @@ function validateForm() {
     showFieldError(milestonesSection, "Please add at least one milestone");
     isValid = false;
   }
+
+  // Check subtask requirements for each milestone
+  const milestones = document.querySelectorAll('.milestone-item');
+  milestones.forEach((milestone, index) => {
+    if (milestone.id) {
+      const milestoneId = milestone.id.split('-')[1];
+      if (milestoneId) {
+        const subtasks = milestone.querySelectorAll('.subtask-item');
+        if (subtasks.length === 0) {
+          const subtasksSection = milestone.querySelector('.subtasks-section');
+          if (subtasksSection) {
+            showFieldError(subtasksSection, "At least one subtask is required for this milestone");
+            isValid = false;
+          }
+        }
+      }
+    }
+  });
 
   // Check milestone vs budget
   const milestonePayments = Array.from(
@@ -499,19 +531,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add basic real-time validation
   addRealTimeValidation();
+  
+  // Check subtask requirements for existing milestones
+  const existingMilestones = document.querySelectorAll('.milestone-item');
+  existingMilestones.forEach((milestone) => {
+    if (milestone.id) {
+      const milestoneId = milestone.id.split('-')[1];
+      if (milestoneId) {
+        checkSubtaskRequirement(milestoneId);
+      }
+    }
+  });
 });
 
 // Real-time validation for better UX
 function addRealTimeValidation() {
-  const titleInput = document.getElementById('title');
-  const budgetInput = document.getElementById('budget');
-  const descriptionInput = document.getElementById('description');
-
   // Title validation
+  const titleInput = document.getElementById('title');
   if (titleInput) {
-    titleInput.addEventListener('blur', () => {
+    titleInput.addEventListener('input', () => {
       const value = titleInput.value.trim();
-      if (value && value.length < 3) {
+      if (value.length > 0 && value.length < 3) {
         showFieldError(titleInput, 'Title must be at least 3 characters long');
       } else {
         clearFieldValidation(titleInput);
@@ -519,11 +559,51 @@ function addRealTimeValidation() {
     });
   }
 
+  // Category validation
+  const categoryInput = document.getElementById('category');
+  if (categoryInput) {
+    categoryInput.addEventListener('change', () => {
+      clearFieldValidation(categoryInput);
+    });
+  }
+
+  // Image URL validation
+  const imageUrlInput = document.getElementById('imageUrl');
+  if (imageUrlInput) {
+    imageUrlInput.addEventListener('input', () => {
+      const value = imageUrlInput.value.trim();
+      if (value) {
+        try {
+          new URL(value);
+          clearFieldValidation(imageUrlInput);
+        } catch (e) {
+          showFieldError(imageUrlInput, 'Please enter a valid URL (e.g., https://example.com/logo.png)');
+        }
+      } else {
+        clearFieldValidation(imageUrlInput);
+      }
+    });
+  }
+
+  // Description validation
+  const descriptionInput = document.getElementById('description');
+  if (descriptionInput) {
+    descriptionInput.addEventListener('input', () => {
+      const value = descriptionInput.value.trim();
+      if (value.length > 0 && value.length < 10) {
+        showFieldError(descriptionInput, 'Description must be at least 10 characters long');
+      } else {
+        clearFieldValidation(descriptionInput);
+      }
+    });
+  }
+
   // Budget validation
+  const budgetInput = document.getElementById('budget');
   if (budgetInput) {
-    budgetInput.addEventListener('blur', () => {
+    budgetInput.addEventListener('input', () => {
       const value = parseFloat(budgetInput.value);
-      if (value && value < 500) {
+      if (budgetInput.value.trim() && (isNaN(value) || value < 500)) {
         showFieldError(budgetInput, 'Budget must be at least ₹500');
       } else {
         clearFieldValidation(budgetInput);
@@ -531,22 +611,184 @@ function addRealTimeValidation() {
     });
   }
 
-  // Description validation
-  if (descriptionInput) {
-    descriptionInput.addEventListener('blur', () => {
-      const value = descriptionInput.value.trim();
-      if (value && value.length < 10) {
-        showFieldError(descriptionInput, 'Description must be at least 10 characters long');
+  // Location validation
+  const locationInput = document.getElementById('location');
+  if (locationInput) {
+    locationInput.addEventListener('input', () => {
+      const value = locationInput.value.trim();
+      if (value.length > 0 && value.length < 2) {
+        showFieldError(locationInput, 'Location must be at least 2 characters long');
       } else {
-        clearFieldValidation(descriptionInput);
+        clearFieldValidation(locationInput);
       }
     });
+  }
+
+  // Job Type validation
+  const jobTypeInput = document.getElementById('jobType');
+  if (jobTypeInput) {
+    jobTypeInput.addEventListener('change', () => {
+      clearFieldValidation(jobTypeInput);
+    });
+  }
+
+  // Experience Level validation
+  const experienceLevelInput = document.getElementById('experienceLevel');
+  if (experienceLevelInput) {
+    experienceLevelInput.addEventListener('change', () => {
+      clearFieldValidation(experienceLevelInput);
+    });
+  }
+
+  // Application Deadline validation
+  const deadlineInput = document.getElementById('deadline');
+  if (deadlineInput) {
+    deadlineInput.addEventListener('change', () => {
+      const value = deadlineInput.value;
+      if (value) {
+        const selectedDate = new Date(value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (selectedDate < today) {
+          showFieldError(deadlineInput, 'Deadline cannot be in the past');
+        } else {
+          clearFieldValidation(deadlineInput);
+        }
+      } else {
+        clearFieldValidation(deadlineInput);
+      }
+    });
+  }
+
+  // Responsibilities validation
+  const responsibilitiesInput = document.getElementById('responsibilities');
+  if (responsibilitiesInput) {
+    responsibilitiesInput.addEventListener('input', () => {
+      const value = responsibilitiesInput.value.trim();
+      if (value.length > 0 && value.length < 10) {
+        showFieldError(responsibilitiesInput, 'Responsibilities must be at least 10 characters long');
+      } else {
+        clearFieldValidation(responsibilitiesInput);
+      }
+    });
+  }
+
+  // Skills validation
+  const skillsInput = document.getElementById('skills');
+  if (skillsInput) {
+    skillsInput.addEventListener('input', () => {
+      const value = skillsInput.value.trim();
+      if (value.length > 0 && value.length < 10) {
+        showFieldError(skillsInput, 'Skills must be at least 10 characters long');
+      } else {
+        clearFieldValidation(skillsInput);
+      }
+    });
+  }
+}
+
+// Add real-time validation to milestone fields
+function addMilestoneValidation(milestoneId) {
+  const milestone = document.getElementById(`milestone-${milestoneId}`);
+  if (!milestone) return; // Safety check
+  
+  // Description validation
+  const descriptionField = milestone.querySelector('textarea[name$="[description]"]');
+  if (descriptionField) {
+    descriptionField.addEventListener('input', () => {
+      const value = descriptionField.value.trim();
+      if (value.length > 0 && value.length < 10) {
+        showFieldError(descriptionField, 'Description must be at least 10 characters long');
+      } else {
+        clearFieldValidation(descriptionField);
+      }
+    });
+  }
+
+  // Deadline validation
+  const deadlineField = milestone.querySelector('input[name$="[deadline]"]');
+  if (deadlineField) {
+    deadlineField.addEventListener('change', () => {
+      const value = deadlineField.value;
+      if (value) {
+        const selectedDate = new Date(value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        if (selectedDate < today) {
+          showFieldError(deadlineField, 'Deadline cannot be in the past');
+        } else {
+          clearFieldValidation(deadlineField);
+        }
+      } else {
+        clearFieldValidation(deadlineField);
+      }
+    });
+  }
+
+  // Payment validation
+  const paymentField = milestone.querySelector('input[name$="[payment]"]');
+  if (paymentField) {
+    paymentField.addEventListener('input', () => {
+      const value = parseFloat(paymentField.value);
+      if (paymentField.value.trim() && (isNaN(value) || value <= 0)) {
+        showFieldError(paymentField, 'Payment must be a positive number');
+      } else {
+        clearFieldValidation(paymentField);
+      }
+    });
+  }
+}
+
+// Add real-time validation to subtask fields
+function addSubtaskValidation(milestoneId, subtaskId) {
+  const subtask = document.getElementById(`subtask-${milestoneId}-${subtaskId}`);
+  if (!subtask) return; // Safety check
+  
+  // Description validation
+  const descriptionField = subtask.querySelector('input[name$="[description]"]');
+  if (descriptionField) {
+    descriptionField.addEventListener('input', () => {
+      const value = descriptionField.value.trim();
+      if (value.length > 0 && value.length < 3) {
+        showFieldError(descriptionField, 'Subtask description must be at least 3 characters long');
+      } else {
+        clearFieldValidation(descriptionField);
+      }
+    });
+  }
+}
+
+// Check if milestone has at least one subtask
+function checkSubtaskRequirement(milestoneId) {
+  const container = document.getElementById(`subtasks-${milestoneId}`);
+  if (!container) return; // Safety check
+  
+  const subtasks = container.querySelectorAll('.subtask-item');
+  
+  // Remove existing requirement message
+  const existingRequirement = container.querySelector('.subtask-requirement-message');
+  if (existingRequirement) {
+    existingRequirement.remove();
+  }
+  
+  if (subtasks.length === 0) {
+    // Show requirement message
+    const requirementMessage = document.createElement('div');
+    requirementMessage.className = 'subtask-requirement-message';
+    requirementMessage.style.cssText = 'color: #f59e0b; font-size: 12px; margin-top: 8px; font-weight: 500; display: flex; align-items: center; background: #fef3c7; padding: 8px 12px; border-radius: 4px; border: 1px solid #fbbf24;';
+    requirementMessage.innerHTML = `<i class="fas fa-exclamation-triangle" style="margin-right: 6px;"></i> At least one subtask is required for this milestone`;
+    
+    // Insert at the beginning of the container
+    container.insertBefore(requirementMessage, container.firstChild);
   }
 }
 
 // Field-level validation helpers
 function showFieldError(field, message) {
   field.style.borderColor = '#dc2626';
+  field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
   
   // Remove existing validation message for this field
   const existingMessage = field.parentNode.querySelector('.field-validation-message');
@@ -557,14 +799,36 @@ function showFieldError(field, message) {
   // Add error message directly below the field
   const errorMessage = document.createElement('div');
   errorMessage.className = 'field-validation-message error-message';
-  errorMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+  errorMessage.style.cssText = 'color: #dc2626; font-size: 12px; margin-top: 4px; font-weight: 500; display: flex; align-items: center;';
+  errorMessage.innerHTML = `<i class="fas fa-exclamation-circle" style="margin-right: 6px;"></i> ${message}`;
   
   // Insert after the field
   field.parentNode.appendChild(errorMessage);
 }
 
+function showFieldSuccess(field, message) {
+  field.style.borderColor = '#10b981';
+  field.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+  
+  // Remove existing validation message for this field
+  const existingMessage = field.parentNode.querySelector('.field-validation-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  
+  // Add success message directly below the field
+  const successMessage = document.createElement('div');
+  successMessage.className = 'field-validation-message success-message';
+  successMessage.style.cssText = 'color: #10b981; font-size: 12px; margin-top: 4px; font-weight: 500; display: flex; align-items: center;';
+  successMessage.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 6px;"></i> ${message}`;
+  
+  // Insert after the field
+  field.parentNode.appendChild(successMessage);
+}
+
 function clearFieldValidation(field) {
   field.style.borderColor = '';
+  field.style.boxShadow = '';
   
   // Remove existing validation message
   const existingMessage = field.parentNode.querySelector('.field-validation-message');

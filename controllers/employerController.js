@@ -230,17 +230,52 @@ const employerController = {
         milestones,
       } = req.body;
 
+      console.log("imageUrl from form:", imageUrl);
+
+      console.log("Raw description received:", description);
+      console.log("Type of description:", typeof description);
+      console.log("Raw budget received:", budget);
+      console.log("Type of budget:", typeof budget);
+      console.log("Raw milestones received:", milestones);
+      console.log("Type of milestones:", typeof milestones);
+
       const employerId = req.session.user.roleId;
       const userId = req.session.user.id;
       if (!employerId || !userId) {
         throw new Error("Employer roleId or userId not found in session");
       }
 
-      // Get employer's profile image from user data
+      // Get employer's user data
       const user = await User.findOne({ userId });
-      const employerImageUrl =
-        user?.picture ||
-        "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png";
+      
+      console.log("Original imageUrl from form:", imageUrl);
+      console.log("imageUrl type:", typeof imageUrl);
+      console.log("imageUrl length:", imageUrl ? imageUrl.length : 'undefined');
+      console.log("imageUrl includes special chars:", imageUrl ? /[^\x00-\x7F]/.test(imageUrl) : false);
+      
+      // Validate URL format
+      let jobImageUrl;
+      try {
+        if (imageUrl && imageUrl.trim() !== '') {
+          const trimmedUrl = imageUrl.trim();
+          console.log("Trimmed URL:", trimmedUrl);
+          
+          // Test if it's a valid URL
+          new URL(trimmedUrl);
+          jobImageUrl = trimmedUrl;
+          console.log("Valid URL confirmed:", jobImageUrl);
+        } else {
+          jobImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
+          console.log("Using fallback URL:", jobImageUrl);
+        }
+      } catch (urlError) {
+        console.log("Invalid URL format:", imageUrl);
+        console.log("URL Error:", urlError.message);
+        jobImageUrl = user?.picture || 'https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png';
+        console.log("Using fallback URL due to invalid format:", jobImageUrl);
+      }
+      
+      console.log("Final job image URL being used:", jobImageUrl);
 
       // Parse milestones array if it's not already parsed
       let parsedMilestones = [];
@@ -250,80 +285,96 @@ const employerController = {
         parsedMilestones = milestones;
       }
 
-      const newJob = new JobListing({
-        employerId,
-        imageUrl: employerImageUrl,
-        title,
-        budget: {
-          amount: Number(budget?.amount) || Number(budget) || 0,
-          period: budget?.period || "fixed",
-        },
-        location: location || "Remote",
-        jobType: jobType || "contract",
-        experienceLevel: experienceLevel || "Mid",
-        remote: remote === "true" || remote === true,
-        applicationDeadline: new Date(applicationDeadline),
-        description: {
-          text: description?.text || description || "",
-          responsibilities: responsibilities
-            ? responsibilities.split("\n").filter((r) => r.trim())
-            : [],
-          requirements: [], // No longer using separate requirements field
-          skills: skills
-            ? skills
-                .split(/[,\n]/)
-                .map((s) => s.trim())
-                .filter((s) => s)
-            : [],
-        },
-        milestones: parsedMilestones.map((m) => ({
-          description: m.description || "",
-          deadline: m.deadline || "",
-          payment: m.payment || "0",
-          status: "not-paid",
-          requested: false,
-          subTasks: m.subTasks
-            ? Object.values(m.subTasks).map((st) => ({
-                description: st.description || "",
-                status: "pending",
-                completedDate: null,
-                notes: "",
-              }))
-            : [],
-          completionPercentage: 0,
-        })),
-      });
+      let newJob;
+      
+      try {
+        console.log("Creating JobListing object...");
+        
+        // Final URL validation before creating JobListing
+        try {
+          new URL(jobImageUrl);
+          console.log("Final URL validation passed:", jobImageUrl);
+        } catch (finalUrlError) {
+          console.error("Final URL validation failed:", finalUrlError.message);
+          throw new Error(`Invalid image URL: ${jobImageUrl}`);
+        }
+        
+        newJob = new JobListing({
+          employerId,
+          imageUrl: jobImageUrl,
+          title,
+          budget: {
+            amount: Number(budget?.amount) || Number(budget) || 0,
+            period: budget?.period || "fixed",
+          },
+          location: location || "Remote",
+          jobType: jobType || "contract",
+          experienceLevel: experienceLevel || "Mid",
+          remote: remote === "true" || remote === true,
+          applicationDeadline: new Date(applicationDeadline),
+          description: {
+            text: description?.text || description || "",
+            responsibilities: responsibilities ? responsibilities.split("\n").filter((r) => r.trim()) : [],
+            requirements: [], // No longer using separate requirements field
+            skills: skills ? skills.split(/[,\n]/).map(s => s.trim()).filter((s) => s) : [],
+          },
+          milestones: parsedMilestones.map((m) => ({
+            description: m.description || "",
+            deadline: m.deadline || "",
+            payment: m.payment || "0",
+            status: "not-paid",
+            requested: false,
+            subTasks: m.subTasks ? Object.values(m.subTasks).map((st) => ({
+              description: st.description || "",
+              status: "pending",
+              completedDate: null,
+              notes: "",
+            })) : [],
+            completionPercentage: 0,
+          })),
+        });
 
-      await newJob.save();
+        console.log("JobListing object created successfully");
+        console.log("Attempting to save...");
+        
+        await newJob.save();
+        console.log("JobListing saved successfully");
+        
+      } catch (validationError) {
+        console.error("Validation/Save error:", validationError);
+        throw validationError;
+      }
       
       // Check if it's an AJAX request
-      const isAjax = req.headers.accept && req.headers.accept.includes('application/json');
-      
+      const isAjax =
+        req.headers.accept && req.headers.accept.includes("application/json");
+
       if (isAjax) {
         return res.status(201).json({
           success: true,
           message: "Job created successfully!",
           redirectUrl: "/employerD/job_listings",
-          jobId: newJob.jobId
+          jobId: newJob.jobId,
         });
       }
-      
+
       res.redirect("/employerD/job_listings");
     } catch (error) {
       console.error("Error creating job listing:", error.message);
       console.error("Full error:", error);
       console.error("Request body:", JSON.stringify(req.body, null, 2));
-      
+
       // Check if it's an AJAX request
-      const isAjax = req.headers.accept && req.headers.accept.includes('application/json');
-      
+      const isAjax =
+        req.headers.accept && req.headers.accept.includes("application/json");
+
       if (isAjax) {
         return res.status(500).json({
-          error: "Error creating job listing"
+          error: "Error creating job listing",
         });
       }
-      
-      res.status(500).send("Error creating job listing"  );
+
+      res.status(500).send("Error creating job listing");
     }
   },
 
@@ -896,7 +947,11 @@ const employerController = {
             status: m.status,
             requested: isRequested,
             subTasks: m.subTasks || [],
-            completionPercentage: m.completionPercentage || 0,
+            // If no subtasks, consider milestone as 100% complete for display purposes
+            completionPercentage:
+              m.subTasks && m.subTasks.length > 0
+                ? m.completionPercentage || 0
+                : 100,
           };
         });
 
@@ -1236,52 +1291,53 @@ const employerController = {
       const userId = req.session.user.id;
 
       if (!planType) {
-        return res.status(400).json({ 
-          success: false, 
-          message: 'Plan type is required' 
+        return res.status(400).json({
+          success: false,
+          message: "Plan type is required",
         });
       }
 
       // Validate plan type
-      const validPlans = ['Basic', 'Premium', 'Free'];
+      const validPlans = ["Basic", "Premium", "Free"];
       if (!validPlans.includes(planType)) {
-        return res.status(400).json({ 
-          success: false, 
-          message: 'Invalid plan type' 
+        return res.status(400).json({
+          success: false,
+          message: "Invalid plan type",
         });
       }
 
       // For Premium plans, redirect to payment
-      if (planType === 'Premium') {
+      if (planType === "Premium") {
         return res.json({
           success: true,
           requiresPayment: true,
           amount: amount || 868,
-          redirectUrl: `/employerD/payment?plan=${planType}&amount=${amount || 868}`
+          redirectUrl: `/employerD/payment?plan=${planType}&amount=${
+            amount || 868
+          }`,
         });
       }
 
       // For Basic/Free plans, update immediately
-      const Employer = require('../models/employer');
-      await Employer.findByIdAndUpdate(userId, { 
-        subscription: planType 
+      const Employer = require("../models/employer");
+      await Employer.findByIdAndUpdate(userId, {
+        subscription: planType,
       });
 
       // Update session
       req.session.user.subscription = planType;
 
-      res.json({ 
-        success: true, 
+      res.json({
+        success: true,
         message: `Successfully switched to ${planType} plan`,
-        requiresPayment: false
+        requiresPayment: false,
       });
-
     } catch (error) {
-      console.error('Error purchasing subscription:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: 'Internal server error during subscription purchase',
-        error: error.message
+      console.error("Error purchasing subscription:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error during subscription purchase",
+        error: error.message,
       });
     }
   },
@@ -1294,14 +1350,14 @@ const employerController = {
       if (!jobId) {
         return res.status(400).json({
           success: false,
-          message: 'Job ID is required'
+          message: "Job ID is required",
         });
       }
 
       if (!employerId) {
         return res.status(401).json({
           success: false,
-          message: 'Employer not authenticated'
+          message: "Employer not authenticated",
         });
       }
 
@@ -1310,21 +1366,21 @@ const employerController = {
       if (!job) {
         return res.status(404).json({
           success: false,
-          message: 'Job not found or you are not authorized to delete it'
+          message: "Job not found or you are not authorized to delete it",
         });
       }
 
       // Check if job has active applications that need to be handled
-      const JobApplication = require('../models/job_application');
-      const activeApplications = await JobApplication.find({ 
-        jobId, 
-        status: { $in: ['pending', 'accepted'] }
+      const JobApplication = require("../models/job_application");
+      const activeApplications = await JobApplication.find({
+        jobId,
+        status: { $in: ["pending", "accepted"] },
       });
 
       if (activeApplications.length > 0) {
         return res.status(400).json({
           success: false,
-          message: `Cannot delete job with ${activeApplications.length} active application(s). Please handle applications first.`
+          message: `Cannot delete job with ${activeApplications.length} active application(s). Please handle applications first.`,
         });
       }
 
@@ -1336,15 +1392,14 @@ const employerController = {
 
       res.json({
         success: true,
-        message: 'Job listing deleted successfully'
+        message: "Job listing deleted successfully",
       });
-
     } catch (error) {
-      console.error('Error deleting job listing:', error);
+      console.error("Error deleting job listing:", error);
       res.status(500).json({
         success: false,
-        message: 'Internal server error while deleting job',
-        error: error.message
+        message: "Internal server error while deleting job",
+        error: error.message,
       });
     }
   },
@@ -1357,26 +1412,26 @@ const employerController = {
       if (!jobId) {
         return res.status(400).json({
           success: false,
-          message: 'Job ID is required'
+          message: "Job ID is required",
         });
       }
 
       if (!employerId) {
         return res.status(401).json({
           success: false,
-          message: 'Employer not authenticated'
+          message: "Employer not authenticated",
         });
       }
 
       // Find the job and populate freelancer information
       const job = await JobListing.findOne({ jobId, employerId })
-        .populate('assignedFreelancer.freelancerId', 'name email picture')
+        .populate("assignedFreelancer.freelancerId", "name email picture")
         .lean();
 
       if (!job) {
         return res.status(404).json({
           success: false,
-          message: 'Transaction not found or you are not authorized to view it'
+          message: "Transaction not found or you are not authorized to view it",
         });
       }
 
@@ -1384,27 +1439,32 @@ const employerController = {
       const transactionDetails = {
         projectTitle: job.title,
         amount: job.budget.amount,
-        status: job.assignedFreelancer ? 
-          (job.assignedFreelancer.status === 'finished' ? 'completed' : 'in-progress') : 
-          'pending',
-        startDate: job.assignedFreelancer ? job.assignedFreelancer.assignedDate : job.postedDate,
-        freelancer: job.assignedFreelancer ? {
-          name: job.assignedFreelancer.freelancerId.name,
-          email: job.assignedFreelancer.freelancerId.email,
-          picture: job.assignedFreelancer.freelancerId.picture
-        } : null,
+        status: job.assignedFreelancer
+          ? job.assignedFreelancer.status === "finished"
+            ? "completed"
+            : "in-progress"
+          : "pending",
+        startDate: job.assignedFreelancer
+          ? job.assignedFreelancer.assignedDate
+          : job.postedDate,
+        freelancer: job.assignedFreelancer
+          ? {
+              name: job.assignedFreelancer.freelancerId.name,
+              email: job.assignedFreelancer.freelancerId.email,
+              picture: job.assignedFreelancer.freelancerId.picture,
+            }
+          : null,
         milestones: job.milestones || [],
-        jobId: jobId
+        jobId: jobId,
       };
 
       res.json(transactionDetails);
-
     } catch (error) {
-      console.error('Error fetching transaction details:', error);
+      console.error("Error fetching transaction details:", error);
       res.status(500).json({
         success: false,
-        message: 'Internal server error while fetching transaction details',
-        error: error.message
+        message: "Internal server error while fetching transaction details",
+        error: error.message,
       });
     }
   },
@@ -1417,19 +1477,19 @@ const employerController = {
       if (!jobId || !employerId) {
         return res.status(400).json({
           success: false,
-          message: 'Missing required parameters'
+          message: "Missing required parameters",
         });
       }
 
       // Find the job
       const job = await JobListing.findOne({ jobId, employerId })
-        .populate('assignedFreelancer.freelancerId', 'name email picture')
+        .populate("assignedFreelancer.freelancerId", "name email picture")
         .lean();
 
       if (!job) {
         return res.status(404).json({
           success: false,
-          message: 'Transaction not found'
+          message: "Transaction not found",
         });
       }
 
@@ -1437,26 +1497,27 @@ const employerController = {
       const transactionData = {
         projectTitle: job.title,
         amount: job.budget.amount,
-        status: job.assignedFreelancer?.status || 'in-progress',
+        status: job.assignedFreelancer?.status || "in-progress",
         startDate: job.assignedFreelancer?.assignedDate || job.postedDate,
         freelancer: {
-          name: job.assignedFreelancer?.freelancerId?.name || 'Unknown',
-          email: job.assignedFreelancer?.freelancerId?.email || '',
-          picture: job.assignedFreelancer?.freelancerId?.picture || '/assets/default-avatar.png'
+          name: job.assignedFreelancer?.freelancerId?.name || "Unknown",
+          email: job.assignedFreelancer?.freelancerId?.email || "",
+          picture:
+            job.assignedFreelancer?.freelancerId?.picture ||
+            "/assets/default-avatar.png",
         },
         milestones: job.milestones || [],
         jobType: job.jobType,
-        location: job.location
+        location: job.location,
       };
 
       res.json(transactionData);
-
     } catch (error) {
-      console.error('Error getting transaction details:', error);
+      console.error("Error getting transaction details:", error);
       res.status(500).json({
         success: false,
-        message: 'Internal server error while fetching transaction details',
-        error: error.message
+        message: "Internal server error while fetching transaction details",
+        error: error.message,
       });
     }
   },
