@@ -498,7 +498,9 @@
               <div class="contact-details">
                 <div class="contact-label">Joined Date</div>
                 <div class="contact-value">
-                  <%= new Date(user.createdAt || Date.now()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                  <%= new Date(user.createdAt ||
+                  Date.now()).toLocaleDateString('en-US', { year: 'numeric',
+                  month: 'long', day: 'numeric' }) %>
                 </div>
               </div>
             </div>
@@ -512,7 +514,12 @@
           </h3>
           <div class="about-content" id="aboutDisplay">
             <p>
-              <%= user.aboutMe || 'I am an experienced system administrator managing the ZeroGravity platform operations with a focus on user support, system efficiency, and maintaining high-quality service standards. Passionate about ensuring a seamless experience for all users while continuously improving platform performance and security.' %>
+              <%= user.aboutMe || 'I am an experienced system administrator
+              managing the Milestone platform operations with a focus on user
+              support, system efficiency, and maintaining high-quality service
+              standards. Passionate about ensuring a seamless experience for all
+              users while continuously improving platform performance and
+              security.' %>
             </p>
           </div>
 
@@ -570,36 +577,6 @@
                 <div class="activity-content">
                   <div class="activity-title">Reviewed user complaints</div>
                   <div class="activity-time">2 hours ago</div>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon">
-                  <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="activity-content">
-                  <div class="activity-title">Approved new job listings</div>
-                  <div class="activity-time">4 hours ago</div>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon">
-                  <i class="fas fa-cog"></i>
-                </div>
-                <div class="activity-content">
-                  <div class="activity-title">Updated system settings</div>
-                  <div class="activity-time">Yesterday</div>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon">
-                  <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="activity-content">
-                  <div class="activity-title">Generated analytics report</div>
-                  <div class="activity-time">2 days ago</div>
                 </div>
               </div>
             </div>

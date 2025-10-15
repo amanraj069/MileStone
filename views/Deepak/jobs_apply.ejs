@@ -143,7 +143,7 @@
         <div class="application-form">
           <h2 class="section-title">Application Form</h2>
 
-          <form action="/jobs/apply/<%= job.jobId %>" method="POST">
+          <form action="/jobs/apply/<%= job.jobId %>" method="POST" id="applicationForm">
             <div class="form-group">
               <label for="coverMessage" class="form-label">Cover Message</label>
               <textarea
@@ -151,8 +151,11 @@
                 name="coverMessage"
                 rows="5"
                 class="form-textarea"
+                placeholder="Tell the employer why you're the perfect fit for this job..."
                 required
               ></textarea>
+              <div class="character-count" id="coverMessageCount">0/50 minimum characters</div>
+              <div class="error-message" id="coverMessageError"></div>
             </div>
 
             <div class="form-group">
@@ -162,9 +165,10 @@
                 id="resumeLink"
                 name="resumeLink"
                 class="form-input"
-                placeholder="https://example.com/resume.pdf"
+                placeholder="https://drive.google.com/file/d/your-file-id/view?usp=sharing"
                 required
               />
+              <div class="error-message" id="resumeLinkError"></div>
             </div>
 
             <input type="hidden" name="jobId" value="<%= job.jobId %>" />
@@ -174,7 +178,7 @@
               value="<%= user.roleId %>"
             />
 
-            <button type="submit" class="submit-button">
+            <button type="submit" class="submit-button" id="submitButton">
               Submit Application
             </button>
           </form>
@@ -255,5 +259,7 @@
             </div>
         </div>
     </footer>
+    
+    <script src="/js/Joblisting/jobs_apply_validation.js"></script>
   </body>
 </html>

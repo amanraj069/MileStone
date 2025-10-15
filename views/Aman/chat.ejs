@@ -1526,7 +1526,6 @@
         }
       }
 
-      // =================== UTILITY FUNCTIONS ===================
       function initializeMessageDisplay() {
         const chatArea = document.querySelector(".chat-area");
         chatArea.scrollTop = chatArea.scrollHeight;
@@ -1571,7 +1570,7 @@
         const notification = document.createElement("div");
         notification.className = "notification";
         notification.style.cssText = `
-          position: fixed; top: 20px; right: 20px; z-index: 1000;
+          position: fixed; bottom: 20px; right: 20px; z-index: 1000;
           padding: 12px 20px; border-radius: 8px; color: white; font-weight: 500;
           background: ${
             type === "success"
