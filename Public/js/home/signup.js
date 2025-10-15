@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Regular expressions for validation
   const emailRegex = /^[^\s@]+@[a-zA-Z][^\s@]*\.[a-zA-Z]+$/;
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  const nameRegex = /^[a-zA-Z\s]+$/;
 
   // Clear any existing error messages initially
   errorContainer.innerHTML = "";
@@ -77,6 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (name.length < 2) {
       errors.push("Name must be at least 2 characters long.");
       isValid = false;
+    } else if (!nameRegex.test(name)) {
+      errors.push("Name can only contain letters and spaces.");
+      isValid = false;
     }
 
     // Email validation
@@ -115,7 +119,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = form.querySelector("input[name='email']");
   const passwordInput = form.querySelector("input[name='password']");
 
-  nameInput.addEventListener("input", () => {
+  nameInput.addEventListener("input", (e) => {
+    // Only allow alphabetic characters and spaces
+    const value = e.target.value;
+    const filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
+    if (value !== filteredValue) {
+      e.target.value = filteredValue;
+    }
     validateNameField(nameInput);
   });
 
@@ -134,11 +144,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Field validation functions
   function validateNameField(nameInput) {
     const name = nameInput.value.trim();
-    if (name && name.length >= 2) {
+    if (name && name.length >= 2 && nameRegex.test(name)) {
       nameInput.style.borderColor = "#28a745";
-    } else if (name && name.length < 2) {
+    } else if (name && (name.length < 2 || !nameRegex.test(name))) {
       nameInput.style.borderColor = "#dc3545";
-      } else {
+    } else {
       nameInput.style.borderColor = "#ced4da";
     }
   }
@@ -156,12 +166,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function validatePasswordField(passwordInput) {
     const password = passwordInput.value.trim();
-    if (password && passwordRegex.test(password)) {
-      passwordInput.style.borderColor = "#28a745";
-    } else if (password && !passwordRegex.test(password)) {
-      passwordInput.style.borderColor = "#dc3545";
-    } else {
+    
+    // to get password validation container
+    let validationContainer = document.getElementById('password-validation');
+    if (!validationContainer) {
+      validationContainer = document.createElement('div');
+      validationContainer.id = 'password-validation';
+      validationContainer.style.marginTop = '5px';
+      validationContainer.style.fontSize = '12px';
+      passwordInput.parentNode.appendChild(validationContainer);
+    }
+    
+    if (!password) {
       passwordInput.style.borderColor = "#ced4da";
+      validationContainer.innerHTML = '';
+      return;
+    }
+    
+    // Check password requirements
+    const hasLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasDigit = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*]/.test(password);
+    
+    // Create validation feedback
+    let validationHTML = '<div style="color: #666;">Password requirements:</div>';
+    validationHTML += `<div style="color: ${hasLength ? '#28a745' : '#dc3545'};"><i class="fas fa-${hasLength ? 'check' : 'times'}" style="margin-right: 5px;"></i>At least 8 characters</div>`;
+    validationHTML += `<div style="color: ${hasUppercase ? '#28a745' : '#dc3545'};"><i class="fas fa-${hasUppercase ? 'check' : 'times'}" style="margin-right: 5px;"></i>One uppercase letter</div>`;
+    validationHTML += `<div style="color: ${hasDigit ? '#28a745' : '#dc3545'};"><i class="fas fa-${hasDigit ? 'check' : 'times'}" style="margin-right: 5px;"></i>One digit</div>`;
+    validationHTML += `<div style="color: ${hasSpecial ? '#28a745' : '#dc3545'};"><i class="fas fa-${hasSpecial ? 'check' : 'times'}" style="margin-right: 5px;"></i>One special character (!@#$%^&*)</div>`;
+    
+    validationContainer.innerHTML = validationHTML;
+    
+    // Set border color based on overall validation
+    if (hasLength && hasUppercase && hasDigit && hasSpecial) {
+      passwordInput.style.borderColor = "#28a745";
+    } else {
+      passwordInput.style.borderColor = "#dc3545";
     }
   }
 
