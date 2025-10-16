@@ -391,6 +391,42 @@
         cursor: pointer;
         color: #666;
       }
+
+      /* Loading screen styles */
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 20px;
+        text-align: center;
+      }
+
+      .loading-spinner {
+        font-size: 48px;
+        color: #2563eb;
+        margin-bottom: 20px;
+      }
+
+      .loading-spinner i {
+        animation: spin 1s linear infinite;
+      }
+
+      .loading-text {
+        font-size: 16px;
+        color: #666;
+        margin: 0;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Hide loading screen initially */
+      .loading-container.hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -407,30 +443,19 @@
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number">
-            <%= applications ? applications.length : 0 %>
-          </div>
+          <div class="stat-number" id="total-applications">0</div>
           <div class="stat-label">Total Applications</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">
-            <%= applications ? applications.filter(app => app.status ===
-            'Pending').length : 0 %>
-          </div>
+          <div class="stat-number" id="pending-applications">0</div>
           <div class="stat-label">Pending Review</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">
-            <%= applications ? applications.filter(app => app.status ===
-            'Accepted').length : 0 %>
-          </div>
+          <div class="stat-number" id="accepted-applications">0</div>
           <div class="stat-label">Accepted</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">
-            <%= applications ? applications.filter(app => app.status ===
-            'Rejected').length : 0 %>
-          </div>
+          <div class="stat-number" id="rejected-applications">0</div>
           <div class="stat-label">Rejected</div>
         </div>
       </div>
@@ -450,113 +475,207 @@
           </div>
         </div>
 
-        <% if (applications && applications.length > 0) { %> <%
-        applications.forEach(application => { %>
-        <div
-          class="application-card visible"
-          data-freelancer="<%= application.freelancerName.toLowerCase() %>"
-          data-job="<%= application.jobTitle.toLowerCase() %>"
-        >
-          <div class="card-header">
-            <img
-              src="<%= application.freelancerPicture || '/assets/user_default.png' %>"
-              alt="Profile"
-              class="profile-img"
-            />
-
-            <div class="application-info">
-              <a
-                href="/profile/<%= application.freelancerId %>"
-                class="freelancer-name"
-              >
-                <%= application.freelancerName %>
-              </a>
-              <div class="job-title">
-                Applied for: <%= application.jobTitle %>
-              </div>
-              <div class="application-date">
-                Applied on: <%= new
-                Date(application.appliedDate).toLocaleDateString() %>
-              </div>
-            </div>
-
-            <div class="status <%= application.status.toLowerCase() %>">
-              <%= application.status %>
-            </div>
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-container">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
           </div>
-
-          <div class="card-body">
-            <div class="cover-message">
-              <p class="info-label">Cover Message:</p>
-              <p>
-                <%= application.coverMessage || 'No cover message provided' %>
-              </p>
-            </div>
-
-            <% if (application.resumeLink) { %>
-            <div class="resume-link">
-              <p class="info-label">Resume:</p>
-              <a href="<%= application.resumeLink %>" target="_blank">
-                <i class="fas fa-file-pdf"></i> View Resume
-              </a>
-            </div>
-            <% } %>
-          </div>
-
-          <% if (application.status === 'Pending') { %>
-          <div class="card-footer">
-            <button type="button" class="btn accept-btn" onclick="acceptApplication('<%= application.applicationId %>', this)">
-              <i class="fas fa-check"></i> Accept
-            </button>
-            <button type="button" class="btn reject-btn" onclick="rejectApplication('<%= application.applicationId %>', this)">
-              <i class="fas fa-times"></i> Reject
-            </button>
-          </div>
-          <% } %>
+          <p class="loading-text">Loading job applications...</p>
         </div>
-        <% }) %> <% } else { %>
-        <div class="no-applications">
-          <i class="fas fa-file-alt"></i>
-          <h3>No Applications Yet</h3>
-          <p>Applications for your job listings will appear here.</p>
-        </div>
-        <% } %>
+
+        <!-- Applications will be populated here by JavaScript -->
+        <div id="applications-container"></div>
       </div>
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const searchInput = document.getElementById("searchInput");
-        const searchBtn = document.getElementById("searchBtn");
-        const applicationCards = document.querySelectorAll(".application-card");
+      let applicationsData = [];
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize the page
+        loadApplications();
+        setupEventListeners();
+      });
+
+      async function loadApplications() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const container = document.getElementById('applications-container');
+        
+        try {
+          // Show loading screen
+          loadingScreen.style.display = 'flex';
+          container.innerHTML = '';
+
+          // Fetch data from API
+          console.log('Fetching job applications from API...');
+          const response = await fetch('/employerD/job_applications/api/data');
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          console.log('API Response:', result);
+
+          if (result.success) {
+            applicationsData = result.data.applications;
+            
+            // Update stats
+            updateStats(result.data.stats);
+            
+            // Hide loading screen
+            loadingScreen.style.display = 'none';
+            
+            // Render applications
+            renderApplications();
+          } else {
+            throw new Error(result.message || 'Failed to fetch job applications');
+          }
+        } catch (error) {
+          console.error('Error loading job applications:', error);
+          loadingScreen.style.display = 'none';
+          showError('Failed to load job applications. Please try again later.');
+        }
+      }
+
+      function updateStats(stats) {
+        document.getElementById('total-applications').textContent = stats.total;
+        document.getElementById('pending-applications').textContent = stats.pending;
+        document.getElementById('accepted-applications').textContent = stats.accepted;
+        document.getElementById('rejected-applications').textContent = stats.rejected;
+      }
+
+      function renderApplications() {
+        const container = document.getElementById('applications-container');
+        
+        if (!applicationsData || applicationsData.length === 0) {
+          container.innerHTML = `
+            <div class="no-applications">
+              <i class="fas fa-file-alt"></i>
+              <h3>No Applications Yet</h3>
+              <p>Applications for your job listings will appear here.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = applicationsData.map(application => {
+          return `
+            <div class="application-card visible" 
+                 data-freelancer="${application.freelancerName.toLowerCase()}"
+                 data-job="${application.jobTitle.toLowerCase()}">
+              <div class="card-header">
+                <img
+                  src="${application.freelancerPicture || '/assets/user_default.png'}"
+                  alt="Profile"
+                  class="profile-img"
+                />
+
+                <div class="application-info">
+                  <a href="/profile/${application.freelancerId}" class="freelancer-name">
+                    ${application.freelancerName}
+                  </a>
+                  <div class="job-title">
+                    Applied for: ${application.jobTitle}
+                  </div>
+                  <div class="application-date">
+                    Applied on: ${new Date(application.appliedDate).toLocaleDateString()}
+                  </div>
+                </div>
+
+                <div class="status ${application.status.toLowerCase()}">
+                  ${application.status}
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="cover-message">
+                  <p class="info-label">Cover Message:</p>
+                  <p>${application.coverMessage || 'No cover message provided'}</p>
+                </div>
+
+                ${application.resumeLink ? `
+                <div class="resume-link">
+                  <p class="info-label">Resume:</p>
+                  <a href="${application.resumeLink}" target="_blank">
+                    <i class="fas fa-file-pdf"></i> View Resume
+                  </a>
+                </div>
+                ` : ''}
+              </div>
+
+              ${application.status === 'Pending' ? `
+              <div class="card-footer">
+                <button type="button" class="btn accept-btn" onclick="acceptApplication('${application.applicationId}', this)">
+                  <i class="fas fa-check"></i> Accept
+                </button>
+                <button type="button" class="btn reject-btn" onclick="rejectApplication('${application.applicationId}', this)">
+                  <i class="fas fa-times"></i> Reject
+                </button>
+              </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+
+        setupSearchAndFilter();
+      }
+
+      function setupEventListeners() {
+        // Any additional event listeners can be set up here
+      }
+
+      function setupSearchAndFilter() {
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
 
         const filterApplications = () => {
           const searchTerm = searchInput.value.toLowerCase().trim();
+          const applicationCards = document.querySelectorAll('.application-card');
 
           applicationCards.forEach((card) => {
-            const freelancerName = card.getAttribute("data-freelancer");
-            const jobTitle = card.getAttribute("data-job");
+            const freelancerName = card.getAttribute('data-freelancer');
+            const jobTitle = card.getAttribute('data-job');
 
             if (
-              searchTerm === "" ||
+              searchTerm === '' ||
               freelancerName.includes(searchTerm) ||
               jobTitle.includes(searchTerm)
             ) {
-              card.classList.add("visible");
+              card.classList.add('visible');
             } else {
-              card.classList.remove("visible");
+              card.classList.remove('visible');
             }
           });
         };
 
-        searchBtn.addEventListener("click", filterApplications);
-        searchInput.addEventListener("keypress", (e) => {
-          if (e.key === "Enter") {
-            filterApplications();
-          }
-        });
-        searchInput.addEventListener("input", filterApplications);
-      });
+        if (searchBtn) {
+          searchBtn.addEventListener('click', filterApplications);
+        }
+        
+        if (searchInput) {
+          searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+              filterApplications();
+            }
+          });
+          searchInput.addEventListener('input', filterApplications);
+        }
+      }
+
+      function showError(message) {
+        const container = document.getElementById('applications-container');
+        container.innerHTML = `
+          <div class="no-applications">
+            <i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i>
+            <h3>Error Loading Applications</h3>
+            <p>${message}</p>
+            <button class="btn btn-primary" onclick="loadApplications()" style="margin-top: 15px; background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+              <i class="fas fa-refresh"></i> Try Again
+            </button>
+          </div>
+        `;
+      }
 
       // AJAX functions for accept/reject applications
       async function acceptApplication(applicationId, buttonElement) {
@@ -589,17 +708,20 @@
             showNotification('Application accepted successfully!', 'success');
             
             // Update the card UI
-            const statusElement = cardElement.querySelector('.status-pending, .status-accepted, .status-rejected');
+            const statusElement = cardElement.querySelector('.status');
             if (statusElement) {
-              statusElement.className = 'status status-accepted';
-              statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Accepted';
+              statusElement.className = 'status accepted';
+              statusElement.textContent = 'Accepted';
             }
             
             // Remove the buttons since status is no longer pending
-            cardElement.querySelector('.card-footer').remove();
+            const cardFooter = cardElement.querySelector('.card-footer');
+            if (cardFooter) {
+              cardFooter.remove();
+            }
             
             // Update stats if they exist
-            updateApplicationStats();
+            updateStatsAfterAction();
           } else {
             const errorData = await response.json();
             showNotification(errorData.message || 'Failed to accept application', 'error');
@@ -663,17 +785,20 @@
             showNotification('Application rejected successfully!', 'success');
             
             // Update the card UI
-            const statusElement = cardElement.querySelector('.status-pending, .status-accepted, .status-rejected');
+            const statusElement = cardElement.querySelector('.status');
             if (statusElement) {
-              statusElement.className = 'status status-rejected';
-              statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Rejected';
+              statusElement.className = 'status rejected';
+              statusElement.textContent = 'Rejected';
             }
             
             // Remove the buttons since status is no longer pending
-            cardElement.querySelector('.card-footer').remove();
+            const cardFooter = cardElement.querySelector('.card-footer');
+            if (cardFooter) {
+              cardFooter.remove();
+            }
             
             // Update stats if they exist
-            updateApplicationStats();
+            updateStatsAfterAction();
           } else {
             const errorData = await response.json();
             showNotification(errorData.message || 'Failed to reject application', 'error');
@@ -734,20 +859,7 @@
         }, 3000);
       }
 
-      // Update application statistics
-      function updateApplicationStats() {
-        const pendingCount = document.querySelectorAll('.status-pending').length;
-        const acceptedCount = document.querySelectorAll('.status-accepted').length;
-        const rejectedCount = document.querySelectorAll('.status-rejected').length;
-        
-        // Update stat cards if they exist
-        const statCards = document.querySelectorAll('.stat-number');
-        if (statCards.length >= 3) {
-          statCards[0].textContent = pendingCount + acceptedCount + rejectedCount; // Total
-          statCards[1].textContent = pendingCount; // Pending
-          statCards[2].textContent = acceptedCount; // Accepted
-        }
-      }
+
 
       // Form validation for search
       function validateSearchForm() {
@@ -824,6 +936,98 @@
           });
         }
       });
+
+      // Update stats after application action
+      function updateStatsAfterAction() {
+        const allCards = document.querySelectorAll('.application-card');
+        const totalApps = allCards.length;
+        
+        let pendingCount = 0;
+        let acceptedCount = 0;
+        let rejectedCount = 0;
+        
+        allCards.forEach(card => {
+          const statusElement = card.querySelector('.status');
+          if (statusElement) {
+            const statusText = statusElement.textContent.toLowerCase();
+            if (statusText === 'pending') {
+              pendingCount++;
+            } else if (statusText === 'accepted') {
+              acceptedCount++;
+            } else if (statusText === 'rejected') {
+              rejectedCount++;
+            }
+          }
+        });
+        
+        // Update stat display
+        document.getElementById('total-applications').textContent = totalApps;
+        document.getElementById('pending-applications').textContent = pendingCount;
+        document.getElementById('accepted-applications').textContent = acceptedCount;
+        document.getElementById('rejected-applications').textContent = rejectedCount;
+      }
+
+      // Simple notification system
+      function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        
+        const icon = type === 'success' ? 'fa-check-circle' : 
+                    type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+        
+        notification.innerHTML = `
+          <i class="fas ${icon}"></i>
+          <span>${message}</span>
+        `;
+        
+        // Add styles
+        Object.assign(notification.style, {
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          padding: '15px 20px',
+          backgroundColor: type === 'success' ? '#28a745' : 
+                          type === 'error' ? '#dc3545' : '#17a2b8',
+          color: 'white',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          zIndex: '9999',
+          fontSize: '14px',
+          fontWeight: '500',
+          opacity: '0',
+          transform: 'translateX(100%)',
+          transition: 'all 0.3s ease',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          maxWidth: '400px'
+        });
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+          notification.style.opacity = '1';
+          notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Remove after delay
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          notification.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.remove();
+            }
+          }, 300);
+        }, 4000);
+      }
     </script>
   </body>
 </html>

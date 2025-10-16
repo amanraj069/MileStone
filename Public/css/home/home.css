@@ -415,11 +415,11 @@ section {
 }
 .hero-overlay-image3 {
   position: absolute;
-  top: 6740px;
-  left: 120px;
+  top: 2px;
+  right: 700px;
   width: 310px; /* Adjust size as needed */
   height: auto;
-  z-index: 2; /* Ensure it appears above the background */
+  z-index: 500; /* Ensure it appears above the background */
   pointer-events: none; /* Prevent interaction with the image */
 }
 .hero-overlay-image4 {

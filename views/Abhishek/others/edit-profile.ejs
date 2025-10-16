@@ -6,6 +6,60 @@
   <title>Edit Employer Profile</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="/css/EmployerD/edit-profile.css">
+  <style>
+    /* Form validation styles */
+    .form-group input.error,
+    .form-group textarea.error {
+      border-color: #dc3545 !important;
+      border-width: 2px !important;
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+    
+    .form-group input.success,
+    .form-group textarea.success {
+      border-color: #28a745 !important;
+      border-width: 2px !important;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+    
+    .validation-message {
+      font-size: 12px;
+      margin-top: 5px;
+      font-weight: 500;
+    }
+    
+    .error-message {
+      color: #dc3545;
+    }
+    
+    .success-message {
+      color: #28a745;
+    }
+    
+    .required-field::after {
+      content: "*";
+      color: #dc3545;
+      margin-left: 4px;
+    }
+    
+    /* Image preview styles */
+    .image-preview-container {
+      margin-top: 15px;
+    }
+    
+    .image-preview-container img {
+      border-radius: 12px;
+      border: 3px solid #28a745;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+    }
+    
+    /* Submit button disabled state */
+    .btn[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+  </style>
 </head>
 <body>
   <div class="dashboard-wrapper">
@@ -32,15 +86,15 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="companyName">Company Name</label>
-                  <input type="text" id="companyName" name="companyName" value="<%= company.name %>">
+                  <label for="companyName" class="required-field">Company Name</label>
+                  <input type="text" id="companyName" name="companyName" value="<%= company.name %>" required>
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="location">Location</label>
-                  <input type="text" id="location" name="location" value="<%= user.location %>">
+                  <label for="location" class="required-field">Location</label>
+                  <input type="text" id="location" name="location" value="<%= user.location %>" placeholder="City, State" required>
                 </div>
               </div>
 
@@ -55,7 +109,7 @@
               <div class="form-row">
                 <div class="form-group">
                   <label for="websiteLink">Website Link</label>
-                  <input type="url" id="websiteLink" name="websiteLink" value="<%= company.website %>">
+                  <input type="url" id="websiteLink" name="websiteLink" value="<%= company.website %>" placeholder="https://example.com">
                 </div>
               </div>
             </div>
@@ -65,15 +119,15 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" id="email" name="email" value="<%= user.email %>">
+                  <label for="email" class="required-field">Email</label>
+                  <input type="email" id="email" name="email" value="<%= user.email %>" required>
                 </div>
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label for="phone">Phone</label>
-                  <input type="text" id="phone" name="phone" value="<%= user.phone %>">
+                  <label for="phone" class="required-field">Phone</label>
+                  <input type="tel" id="phone" name="phone" value="<%= user.phone %>" placeholder="10-digit phone number" required>
                 </div>
               </div>
             </div>
@@ -151,6 +205,6 @@
     </div>
   </div>
 
-  <script src="/js/EmployerD/edit-profile-new.js"></script>
+  <script src="/js/EmployerD/edit-profile.js"></script>
 </body>
 </html>

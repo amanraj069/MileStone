@@ -262,6 +262,10 @@
         color: #ddd;
         margin-bottom: 20px;
       }
+
+      #loadingIndicator {
+        display: block;
+      }
     </style>
   </head>
   <body>
@@ -278,9 +282,7 @@
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number">
-            <%= freelancers ? freelancers.length : 0 %>
-          </div>
+          <div class="stat-number" id="completedProjects">0</div>
           <div class="stat-label">Completed Projects</div>
         </div>
         <div class="stat-card">
@@ -312,110 +314,182 @@
           </div>
         </div>
 
-        <% if (freelancers && freelancers.length > 0) { %> <%
-        freelancers.forEach(freelancerData => { %>
-        <div
-          class="freelancer-card"
-          data-rating="<%= freelancerData.freelancer.rating %>"
-          data-name="<%= freelancerData.freelancer.name.toLowerCase() %>"
-          data-project="<%= freelancerData.projectName.toLowerCase() %>"
-        >
-          <div class="card-header">
-            <img
-              src="<%= freelancerData.freelancer.picture %>"
-              alt="Profile"
-              class="profile-img"
-            />
-
-            <div class="freelancer-info">
-              <a
-                href="/profile/<%= freelancerData.freelancer.id %>"
-                class="freelancer-name"
-              >
-                <%= freelancerData.freelancer.name %>
-              </a>
-              <div class="rating">
-                <% for (let i = 0; i < 5; i++) { %>
-                <i
-                  class="fas fa-star <%= i < Math.floor(freelancerData.freelancer.rating) ? '' : 'far' %>"
-                ></i>
-                <% } %>
-                <span><%= freelancerData.freelancer.rating.toFixed(1) %></span>
-              </div>
-            </div>
-
-            <span class="completion-badge">Completed</span>
-          </div>
-
-          <div class="card-body">
-            <div class="project-info">
-              <p class="info-label">Worked on:</p>
-              <p class="project-name"><%= freelancerData.projectName %></p>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="completion-date">
-              <i class="fas fa-calendar-check"></i>
-              <span
-                >Completed <%= Math.floor((new Date() - new
-                Date(freelancerData.completionDate)) / (1000 * 60 * 60 * 24)) %>
-                days ago</span
-              >
-            </div>
-
-            <div class="action-buttons">
-              <a
-                href="/chat/<%= freelancerData.userId %>"
-                class="btn btn-primary"
-              >
-                <i class="fas fa-comment"></i> Chat
-              </a>
-              <a
-                href="/profile/<%= freelancerData.freelancer.id %>"
-                class="btn btn-outline"
-              >
-                <i class="fas fa-user"></i> Profile
-              </a>
-            </div>
-          </div>
+        <div id="freelancersContainer">
+          <!-- Content will be loaded dynamically -->
         </div>
-        <% }) %> <% } else { %>
-        <div class="no-freelancers">
-          <i class="fas fa-history"></i>
-          <h3>No Previous Work</h3>
-          <p>No freelancers have previously worked on your projects.</p>
+
+        <div id="loadingIndicator" style="text-align: center; padding: 50px;">
+          <i class="fas fa-spinner fa-spin" style="font-size: 48px; color: #2563eb;"></i>
+          <p style="margin-top: 20px; color: #666;">Loading previous work...</p>
         </div>
-        <% } %>
       </div>
     </div>
 
     <script>
+      let freelancersData = [];
+
       document.addEventListener("DOMContentLoaded", () => {
+        loadFreelancersData();
+        setupSearchFunctionality();
+      });
+
+      function setupSearchFunctionality() {
         const searchInput = document.getElementById("searchInput");
+        if (searchInput) {
+          searchInput.addEventListener("input", filterFreelancers);
+        }
+      }
+
+      async function loadFreelancersData() {
+        try {
+          const response = await fetch('/employerD/previously_worked/api/data');
+          const data = await response.json();
+          
+          if (data.success) {
+            freelancersData = data.freelancers;
+            updateStatsGrid(data.freelancers.length);
+            renderFreelancers(data.freelancers);
+            hideLoadingIndicator();
+            // Re-setup search functionality after content is rendered
+            setupSearchFunctionality();
+          } else {
+            throw new Error(data.message || 'Failed to fetch data');
+          }
+        } catch (error) {
+          console.error('Error fetching freelancers data:', error);
+          showErrorMessage('Failed to load previous work data. Please try again later.');
+          hideLoadingIndicator();
+        }
+      }
+
+      function updateStatsGrid(count) {
+        document.getElementById('completedProjects').textContent = count;
+      }
+
+      function hideLoadingIndicator() {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        loadingIndicator.style.display = 'none';
+      }
+
+      function showErrorMessage(message) {
+        const container = document.getElementById('freelancersContainer');
+        container.innerHTML = `
+          <div class="no-freelancers">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Error Loading Data</h3>
+            <p>${message}</p>
+          </div>
+        `;
+      }
+
+      function renderFreelancers(freelancers) {
+        const container = document.getElementById('freelancersContainer');
+        
+        if (freelancers.length === 0) {
+          container.innerHTML = `
+            <div class="no-freelancers">
+              <i class="fas fa-history"></i>
+              <h3>No Previous Work</h3>
+              <p>No freelancers have previously worked on your projects.</p>
+            </div>
+          `;
+          return;
+        }
+
+        const freelancerCards = freelancers.map(freelancerData => {
+          const daysSinceCompletion = Math.floor((new Date() - new Date(freelancerData.completionDate)) / (1000 * 60 * 60 * 24));
+          const rating = freelancerData.freelancer.rating;
+          const starsHtml = Array.from({length: 5}, (_, i) => 
+            `<i class="fas fa-star ${i < Math.floor(rating) ? '' : 'far'}"></i>`
+          ).join('');
+
+          return `
+            <div
+              class="freelancer-card"
+              data-rating="${rating}"
+              data-name="${freelancerData.freelancer.name.toLowerCase()}"
+              data-project="${freelancerData.projectName.toLowerCase()}"
+            >
+              <div class="card-header">
+                <img
+                  src="${freelancerData.freelancer.picture}"
+                  alt="Profile"
+                  class="profile-img"
+                />
+
+                <div class="freelancer-info">
+                  <a
+                    href="/profile/${freelancerData.freelancer.id}"
+                    class="freelancer-name"
+                  >
+                    ${freelancerData.freelancer.name}
+                  </a>
+                  <div class="rating">
+                    ${starsHtml}
+                    <span>${rating.toFixed(1)}</span>
+                  </div>
+                </div>
+
+                <span class="completion-badge">Completed</span>
+              </div>
+
+              <div class="card-body">
+                <div class="project-info">
+                  <p class="info-label">Worked on:</p>
+                  <p class="project-name">${freelancerData.projectName}</p>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="completion-date">
+                  <i class="fas fa-calendar-check"></i>
+                  <span>Completed ${daysSinceCompletion} days ago</span>
+                </div>
+
+                <div class="action-buttons">
+                  <a
+                    href="/chat/${freelancerData.userId}"
+                    class="btn btn-primary"
+                  >
+                    <i class="fas fa-comment"></i> Chat
+                  </a>
+                  <a
+                    href="/profile/${freelancerData.freelancer.id}"
+                    class="btn btn-outline"
+                  >
+                    <i class="fas fa-user"></i> Profile
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        container.innerHTML = freelancerCards;
+      }
+
+      function filterFreelancers() {
+        const searchInput = document.getElementById("searchInput");
+        if (!searchInput) return;
+        
+        const searchTerm = searchInput.value.toLowerCase().trim();
         const freelancerCards = document.querySelectorAll(".freelancer-card");
 
-        const filterFreelancers = () => {
-          const searchTerm = searchInput.value.toLowerCase().trim();
+        freelancerCards.forEach((card) => {
+          const freelancerName = card.getAttribute("data-name") || "";
+          const projectName = card.getAttribute("data-project") || "";
 
-          freelancerCards.forEach((card) => {
-            const freelancerName = card.getAttribute("data-name");
-            const projectName = card.getAttribute("data-project");
-
-            if (
-              searchTerm === "" ||
-              freelancerName.includes(searchTerm) ||
-              projectName.includes(searchTerm)
-            ) {
-              card.style.display = "block";
-            } else {
-              card.style.display = "none";
-            }
-          });
-        };
-
-        searchInput.addEventListener("input", filterFreelancers);
-      });
+          if (
+            searchTerm === "" ||
+            freelancerName.includes(searchTerm) ||
+            projectName.includes(searchTerm)
+          ) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
     </script>
   </body>
 </html>
