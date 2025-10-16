@@ -4,7 +4,64 @@ document.addEventListener("DOMContentLoaded", () => {
   const jobList = document.getElementById("jobList");
   const jobTypeSelect = document.getElementById("jobTypeSelect");
   const remoteCheckbox = document.getElementById("remoteCheckbox");
-  const allJobs = Array.from(document.querySelectorAll(".job-card"));
+  let allJobs = [];
+
+  // Fetch jobs from API and render them
+  async function loadJobs() {
+    try {
+      const res = await fetch('/jobs/api');
+      const data = await res.json();
+      if (!data.success) return;
+
+      // Clear existing jobList and build cards
+      jobList.innerHTML = '<h1>Available Positions</h1>';
+      data.jobs.forEach((job) => {
+        const card = buildJobCard(job);
+        jobList.appendChild(card);
+        allJobs.push(card);
+      });
+
+      // After creating nodes, initialize tag listeners
+      initSkillTagListeners();
+      applyFiltersAndSort();
+    } catch (err) {
+      console.error('Failed to load jobs', err);
+      jobList.innerHTML = '<h1>Available Positions</h1><p style="color:#666">Failed to load jobs.</p>';
+    }
+  }
+
+  // Build a job-card DOM node from job JSON
+  function buildJobCard(job) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'job-card';
+    wrapper.dataset.jobId = job.jobId;
+
+    wrapper.innerHTML = `
+      <div class="job-img-container">
+        <img src="${job.imageUrl}" alt="${job.title}" class="job-img" />
+      </div>
+      <div class="job-info">
+        <h2 class="job-title">${job.title} ( ${job.experienceLevel} )</h2>
+        <div class="job-price">₹${Number(job.budget?.amount || 0).toLocaleString()} (${job.budget?.period || 'fixed'})</div>
+        <div class="job-tech">
+          ${ (job.description?.skills || []).slice(0,3).map(s => `<span class="tech-tag">${s}</span>`).join('') }
+        </div>
+        <div class="job-meta">
+          <span class="location"><i class="fas fa-map-marker-alt"></i> ${job.location || 'Not specified'}</span>
+          <span class="location"><i class="fas fa-user-tie"></i> ${job.experienceLevel || 'Not specified'}</span>
+          <span><i class="fas fa-home"></i> ${job.remote ? 'Remote' : ''}</span>
+          <span class="work"><i class="fas fa-briefcase"></i> ${job.jobType || ''}</span>
+          <span class="clock"><i class="fas fa-clock"></i> Posted ${new Date(job.postedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+        </div>
+      </div>
+      <div class="job-actions">
+        <span class="applications-count">${job.applicationCount || 0} applicants</span>
+        <a href="/jobs/${job.jobId}"><button class="see-more-btn">See More</button></a>
+      </div>
+    `;
+
+    return wrapper;
+  }
 
   // Handle checkbox groups with single selection for experience level
   const setupCheckboxFilters = (selector, singleSelect = false) => {
@@ -22,13 +79,18 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Skill tags toggle
-  const skillTags = document.querySelectorAll(".skill-tag");
-  skillTags.forEach((tag) => {
-    tag.addEventListener("click", () => {
-      tag.classList.toggle("selected");
-      applyFiltersAndSort();
+  function initSkillTagListeners() {
+    const skillTags = document.querySelectorAll('.skill-tag');
+    skillTags.forEach((tag) => {
+      tag.removeEventListener('click', tag._skillHandler);
+      const handler = () => {
+        tag.classList.toggle('selected');
+        applyFiltersAndSort();
+      };
+      tag.addEventListener('click', handler);
+      tag._skillHandler = handler;
     });
-  });
+  }
 
   // Event listeners
   sortSelect.addEventListener("change", applyFiltersAndSort);
@@ -80,8 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sortBy = sortSelect.value;
     const searchTerm = searchInput.value;
 
-    // Filter jobs
-    let filteredJobs = [...allJobs];
+  // Filter jobs
+  let filteredJobs = [...allJobs];
 
     // Apply search
     filteredJobs = performSearch(filteredJobs, searchTerm);
@@ -193,6 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
     true
   );
 
-  // Initial application of filters
-  applyFiltersAndSort();
-});
+    // Start by loading jobs from API
+    loadJobs();
+  });
