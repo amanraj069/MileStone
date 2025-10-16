@@ -92,6 +92,26 @@ const employerController = {
 
   getPreviouslyWorked: async (req, res) => {
     try {
+      const userData =
+        (await getUserData(req.session.user.id)) || req.session.user;
+
+      res.render("Abhishek/previously_worked", {
+        user: userData,
+        activePage: "previously_worked",
+      });
+    } catch (error) {
+      console.error(
+        "Error loading previously worked page:",
+        error.message
+      );
+      res
+        .status(500)
+        .send("Error loading previously worked page: " + error.message);
+    }
+  },
+
+  getPreviouslyWorkedAPI: async (req, res) => {
+    try {
       const employerId = req.session.user.roleId;
       if (!employerId) {
         throw new Error("Employer roleId not found in session");
@@ -140,22 +160,19 @@ const employerController = {
         };
       });
 
-      const userData =
-        (await getUserData(req.session.user.id)) || req.session.user;
-
-      res.render("Abhishek/previously_worked", {
-        user: userData,
-        activePage: "previously_worked",
+      res.json({
+        success: true,
         freelancers: freelancersWithDetails,
       });
     } catch (error) {
       console.error(
-        "Error fetching previously worked freelancers:",
+        "Error fetching previously worked freelancers API:",
         error.message
       );
-      res
-        .status(500)
-        .send("Error fetching previously worked freelancers: " + error.message);
+      res.status(500).json({
+        success: false,
+        message: "Error fetching previously worked freelancers: " + error.message,
+      });
     }
   },
 
@@ -458,9 +475,28 @@ const employerController = {
 
   getJobApplications: async (req, res) => {
     try {
+      const userData =
+        (await getUserData(req.session.user.id)) || req.session.user;
+
+      res.render("Abhishek/job_applications", {
+        user: userData,
+        activePage: "job_applications",
+      });
+    } catch (error) {
+      console.error("Error fetching job applications:", error.message);
+      res.status(500).send("Error fetching job applications: " + error.message);
+    }
+  },
+
+  // API endpoint for job applications data
+  getJobApplicationsAPI: async (req, res) => {
+    try {
       const employerId = req.session?.user?.roleId;
       if (!employerId) {
-        throw new Error("Employer roleId not found in session");
+        return res.status(401).json({
+          success: false,
+          message: "Employer roleId not found in session"
+        });
       }
 
       const jobs = await JobListing.find({ employerId }).lean();
@@ -490,17 +526,24 @@ const employerController = {
         };
       });
 
-      const userData =
-        (await getUserData(req.session.user.id)) || req.session.user;
-
-      res.render("Abhishek/job_applications", {
-        user: userData,
-        activePage: "job_applications",
-        applications: applicationsWithDetails,
+      res.json({
+        success: true,
+        data: {
+          applications: applicationsWithDetails,
+          stats: {
+            total: applicationsWithDetails.length,
+            pending: applicationsWithDetails.filter(app => app.status === 'Pending').length,
+            accepted: applicationsWithDetails.filter(app => app.status === 'Accepted').length,
+            rejected: applicationsWithDetails.filter(app => app.status === 'Rejected').length
+          }
+        }
       });
     } catch (error) {
-      console.error("Error fetching job applications:", error.message);
-      res.status(500).send("Error fetching job applications: " + error.message);
+      console.error("Error fetching job applications API:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Error fetching job applications: " + error.message
+      });
     }
   },
 
