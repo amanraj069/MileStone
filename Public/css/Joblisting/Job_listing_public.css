@@ -8,7 +8,7 @@
   --text-color: #1e293b;
   --text-muted: #64748b;
   --border-color: #e2e8f0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color: rgba(0.1, 0.1, 0.1, 0.1);
   --gradient-start: #2563eb;
   --gradient-end: #1e40af;
   --hero-bg: linear-gradient(135deg, #2563eb, #1e40af);
@@ -328,8 +328,8 @@ img {
 
 /* Main Content */
 .main-content {
-  padding: 6rem 0 4rem;
-  margin-top: 20px;
+  padding: 2.5rem 0 3rem;
+  margin-top: 10px;
 }
 
 .main-content .container {
@@ -439,11 +439,14 @@ img {
   flex: 1;
 }
 
+
+
 .job_listings h1 {
   color: var(--text-color);
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  /* reduce bottom margin to tighten spacing with the list */
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -454,13 +457,13 @@ img {
   padding: 2rem;
   border-radius: 0.75rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 6px var(--shadow-color);
+  box-shadow: 20px 4px 6px var(--shadow-color);
   transition: all 0.3s ease;
 }
 
 .job-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px var(--shadow-color);
+  box-shadow: 10px 10px 15px var(--shadow-color);
 }
 
 .job-img-container {

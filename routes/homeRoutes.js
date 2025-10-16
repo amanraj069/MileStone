@@ -16,6 +16,8 @@ router.get("/chat/:userId/api/status", homeController.getUserStatusAPI);
 router.get("/chat/:userId/api/stats", homeController.getChatStatsAPI);
 
 router.get("/jobs", homeController.getJobListing);
+// API endpoint to fetch public job listings as JSON
+router.get("/jobs/api", homeController.getJobListingAPI);
 router.get("/jobs/:jobId", homeController.getJobDetails);
 router.get("/jobs/apply/:jobId", homeController.getJobApplication);
 router.post("/jobs/apply/:jobId", homeController.applyForJob);
