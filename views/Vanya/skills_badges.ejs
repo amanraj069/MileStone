@@ -34,6 +34,13 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         margin-bottom: 30px;
         border-left: 4px solid #2563eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .page-header-content {
+        flex: 1;
       }
 
       .page-title {
@@ -288,17 +295,43 @@
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'skills_badges', user:
-      user}) %>
+      <%- include('./partials/sidebar', {activePage: 'skills_badges', user: user
+      || { name: 'User' }}) %>
 
       <!-- Main Content Area -->
       <div class="main-content">
         <div class="page-header">
-          <h1 class="page-title">Skills & Badges</h1>
-          <p class="page-subtitle">
-            Earn badges by completing tasks and showcasing your expertise. Take
-            quizzes to add new skills to your profile.
-          </p>
+          <div class="page-header-content">
+            <h1 class="page-title">Skills & Badges</h1>
+            <p class="page-subtitle">
+              Earn badges by completing tasks and showcasing your expertise.
+              Take quizzes to add new skills to your profile.
+            </p>
+          </div>
+          <button
+            id="refreshSkillsHeader"
+            style="
+              background: #2563eb;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+              border-radius: 8px;
+              cursor: pointer;
+              font-size: 14px;
+              font-weight: 500;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              transition: all 0.3s ease;
+              white-space: nowrap;
+              height: fit-content;
+            "
+            onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-1px)'"
+            onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'"
+          >
+            <i class="fas fa-sync-alt"></i>
+            Refresh Skills
+          </button>
         </div>
 
         <!-- Statistics Cards -->
@@ -372,311 +405,409 @@
         </div>
 
         <div class="content-card">
-          <!-- Search and Filter Section -->
-          <div
-            class="search-filter-section"
-            style="
-              margin-bottom: 25px;
-              padding: 20px;
-              background: #f8f9fa;
-              border-radius: 8px;
-              border-left: 4px solid #2563eb;
-            "
-          >
-            <h4 style="margin-bottom: 15px; color: #333">
-              Search & Filter Skills
-            </h4>
-            <div
-              style="
-                display: flex;
-                gap: 15px;
-                flex-wrap: wrap;
-                align-items: center;
-              "
-            >
-              <div>
-                <input
-                  type="text"
-                  id="skillSearch"
-                  placeholder="Search skills..."
-                  style="
-                    padding: 8px 12px;
-                    border: 1px solid #e1e5e9;
-                    border-radius: 6px;
-                    width: 200px;
-                  "
-                />
-                <div
-                  id="searchError"
-                  style="
-                    color: #ef4444;
-                    font-size: 12px;
-                    margin-top: 5px;
-                    display: none;
-                  "
-                ></div>
-              </div>
-              <div>
-                <select
-                  id="skillCategory"
-                  style="
-                    padding: 8px 12px;
-                    border: 1px solid #e1e5e9;
-                    border-radius: 6px;
-                  "
-                >
-                  <option value="">All Categories</option>
-                  <option value="javascript">JavaScript</option>
-                  <option value="python">Python</option>
-                  <option value="react">React</option>
-                  <option value="design">Design</option>
-                  <option value="html">HTML</option>
-                  <option value="css">CSS</option>
-                  <option value="node">Node.js</option>
-                </select>
-              </div>
-              <div>
-                <select
-                  id="skillStatus"
-                  style="
-                    padding: 8px 12px;
-                    border: 1px solid #e1e5e9;
-                    border-radius: 6px;
-                  "
-                >
-                  <option value="">All Skills</option>
-                  <option value="available">Available</option>
-                  <option value="acquired">Acquired</option>
-                </select>
-              </div>
-              <button
-                id="clearFilters"
-                style="
-                  padding: 8px 16px;
-                  background: #6b7280;
-                  color: white;
-                  border: none;
-                  border-radius: 6px;
-                  cursor: pointer;
-                "
-              >
-                Clear Filters
-              </button>
-            </div>
+          <!-- Loading Indicator -->
+          <div id="loading-indicator" style="text-align: center; padding: 50px">
+            <i
+              class="fas fa-spinner fa-spin"
+              style="font-size: 24px; color: #2563eb"
+            ></i>
+            <p style="margin-top: 10px; color: #666">
+              Loading skills & badges...
+            </p>
           </div>
 
-          <!-- Available Skills Section -->
-          <section class="skills-section">
-            <h4 class="section-title">
-              <i class="fas fa-plus-circle"></i>
-              Available Skills
-              <button
-                id="toggleAvailableSkills"
-                style="
-                  margin-left: auto;
-                  padding: 5px 10px;
-                  background: #2563eb;
-                  color: white;
-                  border: none;
-                  border-radius: 4px;
-                  cursor: pointer;
-                  font-size: 12px;
-                "
-              >
-                Hide
-              </button>
-            </h4>
-            <div class="available-skills" id="availableSkillsContainer">
-              <% skills.filter(skill => !skill.isAcquired).forEach(skill => { %>
-              <div
-                class="skill-item"
-                data-skill-name="<%= skill.name.toLowerCase() %>"
-                data-skill-category="<%= skill.name.toLowerCase().includes('javascript') ? 'javascript' : skill.name.toLowerCase().includes('python') ? 'python' : skill.name.toLowerCase().includes('react') ? 'react' : skill.name.toLowerCase().includes('html') ? 'html' : skill.name.toLowerCase().includes('css') ? 'css' : skill.name.toLowerCase().includes('node') ? 'node' : skill.name.toLowerCase().includes('design') ? 'design' : 'other' %>"
-                data-skill-status="available"
-              >
-                <div class="skill-badge-icon">
-                  <% if (skill.name.toLowerCase().includes('javascript')) { %>
-                  <i class="fab fa-js-square"></i>
-                  <% } else if (skill.name.toLowerCase().includes('python')) {
-                  %>
-                  <i class="fab fa-python"></i>
-                  <% } else if (skill.name.toLowerCase().includes('react')) { %>
-                  <i class="fab fa-react"></i>
-                  <% } else if (skill.name.toLowerCase().includes('html')) { %>
-                  <i class="fab fa-html5"></i>
-                  <% } else if (skill.name.toLowerCase().includes('css')) { %>
-                  <i class="fab fa-css3-alt"></i>
-                  <% } else if (skill.name.toLowerCase().includes('node')) { %>
-                  <i class="fab fa-node-js"></i>
-                  <% } else if (skill.name.toLowerCase().includes('design')) {
-                  %>
-                  <i class="fas fa-palette"></i>
-                  <% } else { %>
-                  <i class="fas fa-code"></i>
-                  <% } %>
-                </div>
-                <h5 class="skill-name"><%= skill.name %></h5>
-                <p class="skill-description">
-                  <% if (skill.name.includes('Beginner')) { %> Master the
-                  fundamentals of <%= skill.name.replace(' Beginner', '') %>
-                  programming <% } else if (skill.name.includes('Advanced')) {
-                  %> Advanced concepts and techniques in <%=
-                  skill.name.replace(' Advanced', '') %> <% } else { %>
-                  Essential skills in <%= skill.name %> development <% } %>
-                </p>
-                <% if (skill.hasQuiz) { %>
-                <button
-                  class="take-quiz-btn"
-                  onclick="startQuiz('<%= skill.skillId %>', '<%= skill.name %>')"
-                >
-                  Take Quiz
-                </button>
-                <% } %>
-              </div>
-              <% }) %>
-            </div>
-          </section>
-
-          <!-- Badges Section -->
-          <section class="badges-section">
-            <h4 class="section-title">
-              <i class="fas fa-medal"></i>
-              Your Badges
-              <button
-                id="toggleBadges"
-                style="
-                  margin-left: auto;
-                  padding: 5px 10px;
-                  background: #10b981;
-                  color: white;
-                  border: none;
-                  border-radius: 4px;
-                  cursor: pointer;
-                  font-size: 12px;
-                "
-              >
-                Hide
-              </button>
-            </h4>
-            <div class="badges-grid" id="badgesContainer">
-              <!-- Acquired Skills as Badges -->
-              <% skills.filter(skill => skill.isAcquired).forEach(skill => { %>
-              <div
-                class="badge-item"
-                data-skill-name="<%= skill.name.toLowerCase() %>"
-                data-skill-category="<%= skill.name.toLowerCase().includes('javascript') ? 'javascript' : skill.name.toLowerCase().includes('python') ? 'python' : skill.name.toLowerCase().includes('react') ? 'react' : skill.name.toLowerCase().includes('html') ? 'html' : skill.name.toLowerCase().includes('css') ? 'css' : skill.name.toLowerCase().includes('node') ? 'node' : skill.name.toLowerCase().includes('design') ? 'design' : 'other' %>"
-                data-skill-status="acquired"
-              >
-                <div
-                  class="skill-badge-icon"
-                  style="width: 80px; height: 80px; margin: 0 auto 15px"
-                >
-                  <% if (skill.name.toLowerCase().includes('javascript')) { %>
-                  <i class="fab fa-js-square"></i>
-                  <% } else if (skill.name.toLowerCase().includes('python')) {
-                  %>
-                  <i class="fab fa-python"></i>
-                  <% } else if (skill.name.toLowerCase().includes('react')) { %>
-                  <i class="fab fa-react"></i>
-                  <% } else if (skill.name.toLowerCase().includes('html')) { %>
-                  <i class="fab fa-html5"></i>
-                  <% } else if (skill.name.toLowerCase().includes('css')) { %>
-                  <i class="fab fa-css3-alt"></i>
-                  <% } else if (skill.name.toLowerCase().includes('node')) { %>
-                  <i class="fab fa-node-js"></i>
-                  <% } else if (skill.name.toLowerCase().includes('design')) {
-                  %>
-                  <i class="fas fa-palette"></i>
-                  <% } else { %>
-                  <i class="fas fa-code"></i>
-                  <% } %>
-                </div>
-                <h5><%= skill.name %></h5>
-                <p>
-                  <% if (skill.name.includes('Beginner')) { %> Mastered the
-                  fundamentals of <%= skill.name.replace(' Beginner', '') %>
-                  programming <% } else if (skill.name.includes('Advanced')) {
-                  %> Advanced expertise in <%= skill.name.replace(' Advanced',
-                  '') %> <% } else { %> Certified skills in <%= skill.name %>
-                  development <% } %>
-                </p>
-                <span class="badge-date"
-                  >Earned: <%= new Date().toLocaleDateString('en-US', { month:
-                  'short', year: 'numeric' }) %></span
-                >
-              </div>
-              <% }) %>
-            </div>
-          </section>
-
-          <!-- Quick Actions Section -->
-          <section
-            class="quick-actions"
+          <!-- Error Message -->
+          <div
+            id="error-message"
             style="
-              margin-top: 40px;
-              padding: 25px;
-              background: #f8f9fa;
-              border-radius: 12px;
-              border-left: 4px solid #f59e0b;
+              display: none;
+              text-align: center;
+              padding: 50px;
+              color: #ef4444;
             "
           >
-            <h4 style="margin-bottom: 20px; color: #333">Quick Actions</h4>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap">
-              <button
-                id="refreshSkills"
+            <i
+              class="fas fa-exclamation-triangle"
+              style="font-size: 24px; margin-bottom: 10px"
+            ></i>
+            <h3>Error loading skills</h3>
+            <p>
+              Unable to load skills and badges. Please refresh the page and try
+              again.
+            </p>
+            <button
+              onclick="loadSkillsData()"
+              style="
+                margin-top: 15px;
+                padding: 10px 20px;
+                background: #2563eb;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+              "
+            >
+              Retry
+            </button>
+          </div>
+
+          <!-- Main Content (Hidden until loaded) -->
+          <div id="skills-content" style="display: none">
+            <!-- Search and Filter Section -->
+            <div
+              class="search-filter-section"
+              style="
+                margin-bottom: 25px;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 8px;
+                border-left: 4px solid #2563eb;
+              "
+            >
+              <h4 style="margin-bottom: 15px; color: #333">
+                Search & Filter Skills
+              </h4>
+              <div
                 style="
-                  padding: 10px 20px;
-                  background: #2563eb;
-                  color: white;
-                  border: none;
-                  border-radius: 6px;
-                  cursor: pointer;
                   display: flex;
+                  gap: 15px;
+                  flex-wrap: wrap;
                   align-items: center;
-                  gap: 8px;
                 "
               >
-                <i class="fas fa-sync-alt"></i> Refresh Skills
-              </button>
-              <button
-                id="downloadProgress"
-                style="
-                  padding: 10px 20px;
-                  background: #10b981;
-                  color: white;
-                  border: none;
-                  border-radius: 6px;
-                  cursor: pointer;
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                "
-              >
-                <i class="fas fa-download"></i> Download Progress
-              </button>
-              <button
-                id="shareProgress"
-                style="
-                  padding: 10px 20px;
-                  background: #f59e0b;
-                  color: white;
-                  border: none;
-                  border-radius: 6px;
-                  cursor: pointer;
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                "
-              >
-                <i class="fas fa-share"></i> Share Progress
-              </button>
+                <div>
+                  <input
+                    type="text"
+                    id="skillSearch"
+                    placeholder="Search skills..."
+                    style="
+                      padding: 8px 12px;
+                      border: 1px solid #e1e5e9;
+                      border-radius: 6px;
+                      width: 200px;
+                    "
+                  />
+                  <div
+                    id="searchError"
+                    style="
+                      color: #ef4444;
+                      font-size: 12px;
+                      margin-top: 5px;
+                      display: none;
+                    "
+                  ></div>
+                </div>
+                <div>
+                  <select
+                    id="skillCategory"
+                    style="
+                      padding: 8px 12px;
+                      border: 1px solid #e1e5e9;
+                      border-radius: 6px;
+                    "
+                  >
+                    <option value="">All Categories</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="react">React</option>
+                    <option value="design">Design</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="node">Node.js</option>
+                  </select>
+                </div>
+                <div>
+                  <select
+                    id="skillStatus"
+                    style="
+                      padding: 8px 12px;
+                      border: 1px solid #e1e5e9;
+                      border-radius: 6px;
+                    "
+                  >
+                    <option value="">All Skills</option>
+                    <option value="available">Available</option>
+                    <option value="acquired">Acquired</option>
+                  </select>
+                </div>
+                <button
+                  id="clearFilters"
+                  style="
+                    padding: 8px 16px;
+                    background: #6b7280;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                  "
+                >
+                  Clear Filters
+                </button>
+              </div>
             </div>
-          </section>
+
+            <!-- Available Skills Section -->
+            <section class="skills-section">
+              <h4 class="section-title">
+                <i class="fas fa-plus-circle"></i>
+                Available Skills
+                <button
+                  id="toggleAvailableSkills"
+                  style="
+                    margin-left: auto;
+                    padding: 5px 10px;
+                    background: #2563eb;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 12px;
+                  "
+                >
+                  Hide
+                </button>
+              </h4>
+              <div class="available-skills" id="availableSkillsContainer">
+                <!-- Available skills will be dynamically loaded here -->
+              </div>
+            </section>
+
+            <!-- Badges Section -->
+            <section class="badges-section">
+              <h4 class="section-title">
+                <i class="fas fa-medal"></i>
+                Your Badges
+                <button
+                  id="toggleBadges"
+                  style="
+                    margin-left: auto;
+                    padding: 5px 10px;
+                    background: #10b981;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 12px;
+                  "
+                >
+                  Hide
+                </button>
+              </h4>
+              <div class="badges-grid" id="badgesContainer">
+                <!-- Acquired skills as badges will be dynamically loaded here -->
+              </div>
+            </section>
+          </div>
+          <!-- End skills-content -->
         </div>
       </div>
     </div>
 
     <script>
+      let currentSkillsData = [];
+
+      // Load skills data when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadSkillsData();
+        initializeEventListeners();
+      });
+
+      async function loadSkillsData() {
+        const loadingIndicator = document.getElementById("loading-indicator");
+        const errorMessage = document.getElementById("error-message");
+        const skillsContent = document.getElementById("skills-content");
+
+        try {
+          loadingIndicator.style.display = "block";
+          errorMessage.style.display = "none";
+          skillsContent.style.display = "none";
+
+          const response = await fetch(
+            "/freelancerD/skills_badges/api/refresh"
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          loadingIndicator.style.display = "none";
+
+          if (data.success && data.skills) {
+            currentSkillsData = data.skills;
+            renderSkills(data.skills);
+            updateStatistics(data);
+            skillsContent.style.display = "block";
+          } else {
+            throw new Error("Invalid response format");
+          }
+        } catch (error) {
+          console.error("Error loading skills:", error);
+          loadingIndicator.style.display = "none";
+          errorMessage.style.display = "block";
+        }
+      }
+
+      function renderSkills(skills) {
+        const availableSkillsContainer = document.getElementById(
+          "availableSkillsContainer"
+        );
+        const badgesContainer = document.getElementById("badgesContainer");
+
+        const availableSkills = skills.filter((skill) => !skill.isAcquired);
+        const acquiredSkills = skills.filter((skill) => skill.isAcquired);
+
+        // Render available skills
+        availableSkillsContainer.innerHTML = availableSkills
+          .map(
+            (skill) => `
+          <div
+            class="skill-item"
+            data-skill-name="${skill.name.toLowerCase()}"
+            data-skill-category="${getSkillCategory(skill.name)}"
+            data-skill-status="available"
+          >
+            <div class="skill-badge-icon">
+              ${getSkillIcon(skill.name)}
+            </div>
+            <h5 class="skill-name">${escapeHtml(skill.name)}</h5>
+            <p class="skill-description">
+              ${getSkillDescription(skill.name)}
+            </p>
+            ${
+              skill.hasQuiz
+                ? `
+              <button
+                class="take-quiz-btn"
+                onclick="startQuiz('${skill.skillId}', '${escapeHtml(
+                    skill.name
+                  )}')"
+              >
+                Take Quiz
+              </button>
+            `
+                : ""
+            }
+          </div>
+        `
+          )
+          .join("");
+
+        // Render acquired skills as badges
+        badgesContainer.innerHTML = acquiredSkills
+          .map(
+            (skill) => `
+          <div
+            class="badge-item"
+            data-skill-name="${skill.name.toLowerCase()}"
+            data-skill-category="${getSkillCategory(skill.name)}"
+            data-skill-status="acquired"
+          >
+            <div class="skill-badge-icon" style="width: 80px; height: 80px; margin: 0 auto 15px">
+              ${getSkillIcon(skill.name)}
+            </div>
+            <h5>${escapeHtml(skill.name)}</h5>
+            <p>
+              ${getBadgeDescription(skill.name)}
+            </p>
+            <span class="badge-date">
+              Earned: ${new Date().toLocaleDateString("en-US", {
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+          </div>
+        `
+          )
+          .join("");
+
+        // Apply current filters if any
+        applyFilters();
+      }
+
+      function getSkillCategory(skillName) {
+        const name = skillName.toLowerCase();
+        if (name.includes("javascript")) return "javascript";
+        if (name.includes("python")) return "python";
+        if (name.includes("react")) return "react";
+        if (name.includes("html")) return "html";
+        if (name.includes("css")) return "css";
+        if (name.includes("node")) return "node";
+        if (name.includes("design")) return "design";
+        return "other";
+      }
+
+      function getSkillIcon(skillName) {
+        const name = skillName.toLowerCase();
+        if (name.includes("javascript"))
+          return '<i class="fab fa-js-square"></i>';
+        if (name.includes("python")) return '<i class="fab fa-python"></i>';
+        if (name.includes("react")) return '<i class="fab fa-react"></i>';
+        if (name.includes("html")) return '<i class="fab fa-html5"></i>';
+        if (name.includes("css")) return '<i class="fab fa-css3-alt"></i>';
+        if (name.includes("node")) return '<i class="fab fa-node-js"></i>';
+        if (name.includes("design")) return '<i class="fas fa-palette"></i>';
+        return '<i class="fas fa-code"></i>';
+      }
+
+      function getSkillDescription(skillName) {
+        if (skillName.includes("Beginner")) {
+          return `Master the fundamentals of ${skillName.replace(
+            " Beginner",
+            ""
+          )} programming`;
+        } else if (skillName.includes("Advanced")) {
+          return `Advanced concepts and techniques in ${skillName.replace(
+            " Advanced",
+            ""
+          )}`;
+        } else {
+          return `Essential skills in ${skillName} development`;
+        }
+      }
+
+      function getBadgeDescription(skillName) {
+        if (skillName.includes("Beginner")) {
+          return `Mastered the fundamentals of ${skillName.replace(
+            " Beginner",
+            ""
+          )} programming`;
+        } else if (skillName.includes("Advanced")) {
+          return `Advanced expertise in ${skillName.replace(" Advanced", "")}`;
+        } else {
+          return `Certified skills in ${skillName} development`;
+        }
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      function updateStatistics(data) {
+        // Animate the numbers
+        animateNumber("totalSkills", data.total);
+        animateNumber("acquiredSkills", data.acquired);
+        const progressPercentage =
+          data.total > 0 ? Math.round((data.acquired / data.total) * 100) : 0;
+        animateNumber("progressPercentage", progressPercentage, "%");
+      }
+
+      function initializeEventListeners() {
+        // Existing functionality - keep all the current JavaScript as is
+        initializeFormValidation();
+        initializeSectionToggling();
+
+        // Event listeners for actions
+        document
+          .getElementById("clearFilters")
+          .addEventListener("click", clearFilters);
+        document
+          .getElementById("refreshSkillsHeader")
+          .addEventListener("click", refreshSkills);
+      }
       // Enhanced form validation using DOM manipulation
       function initializeFormValidation() {
         const searchInput = document.getElementById("skillSearch");
@@ -825,23 +956,7 @@
       async function refreshSkills() {
         try {
           showNotification("Refreshing skills data...", "info");
-
-          const response = await fetch(
-            "/freelancerD/skills_badges/api/refresh",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          if (!response.ok) throw new Error("Failed to refresh skills");
-
-          const data = await response.json();
-          updateSkillsDisplay(data.skills);
-          updateStatistics();
-
+          await loadSkillsData();
           showNotification("Skills refreshed successfully!", "success");
         } catch (error) {
           console.error("Error refreshing skills:", error);
@@ -918,8 +1033,10 @@
       }
 
       function shareProgress() {
-        const totalSkills = document.querySelectorAll(".skill-item").length;
-        const acquiredSkills = document.querySelectorAll(".badge-item").length;
+        const totalSkills = currentSkillsData.length;
+        const acquiredSkills = currentSkillsData.filter(
+          (skill) => skill.isAcquired
+        ).length;
         const progressPercentage =
           totalSkills > 0
             ? Math.round((acquiredSkills / totalSkills) * 100)
@@ -972,8 +1089,10 @@
       }
 
       function updateStatistics() {
-        const totalSkills = document.querySelectorAll(".skill-item").length;
-        const acquiredSkills = document.querySelectorAll(".badge-item").length;
+        const totalSkills = currentSkillsData.length;
+        const acquiredSkills = currentSkillsData.filter(
+          (skill) => skill.isAcquired
+        ).length;
         const progressPercentage =
           totalSkills > 0
             ? Math.round((acquiredSkills / totalSkills) * 100)
@@ -1105,20 +1224,6 @@
         initializeFormValidation();
         initializeSectionToggling();
         updateStatistics();
-
-        // Event listeners for quick actions
-        document
-          .getElementById("clearFilters")
-          .addEventListener("click", clearFilters);
-        document
-          .getElementById("refreshSkills")
-          .addEventListener("click", refreshSkills);
-        document
-          .getElementById("downloadProgress")
-          .addEventListener("click", downloadProgress);
-        document
-          .getElementById("shareProgress")
-          .addEventListener("click", shareProgress);
 
         // Initial filter application
         applyFilters();

@@ -144,7 +144,7 @@
       }
 
       .job-status.finished::before {
-        content: '✓';
+        content: "✓";
         font-weight: bold;
       }
 
@@ -156,7 +156,7 @@
 
       .job-status.cancelled::before,
       .job-status.left::before {
-        content: '✕';
+        content: "✕";
         font-weight: bold;
       }
 
@@ -296,8 +296,8 @@
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'job_history', user: user})
-      %>
+      <%- include('./partials/sidebar', {activePage: 'job_history', user: user
+      || { name: 'User' }}) %>
 
       <!-- Main Content Area -->
       <div class="main-content">
@@ -309,71 +309,213 @@
         </div>
 
         <div class="content-card">
-          <% if (history_jobs && history_jobs.length > 0) { %> <%
-          history_jobs.forEach(job => { %>
-          <div class="job-card">
-            <div class="job-company-logo">
-              <img src="<%= job.logo %>" alt="Company Logo" />
-            </div>
-            <div class="job-info">
-              <div class="job-header">
-                <div>
-                  <h3 class="job-title"><%= job.title %></h3>
-                  <div class="job-company"><%= job.company %></div>
-                </div>
-                <div class="job-status <%= job.status %>">
-                  <%= job.status === 'finished' ? 'Completed' : job.status ===
-                  'left' ? 'Left Job' : 'Cancelled' %>
-                </div>
-              </div>
-
-              <div class="job-tech">
-                <% job.tech.forEach(tech => { %>
-                <span class="tech-tag"><%= tech %></span>
-                <% }) %>
-              </div>
-
-              <div class="job-meta">
-                <div class="job-date">
-                  <i class="fas fa-calendar"></i>
-                  <%= job.date %>
-                </div>
-              </div>
-
-              <% if (job.status === 'left') { %>
-              <div class="job-cancel-reason">Reason: You left the job</div>
-              <% } %> <% if (job.status === 'finished' && job.rating) { %>
-              <div class="job-rating">
-                <div class="rating-stars">
-                  <% for(let i = 1; i <= 5; i++) { %> <% if (i <=
-                  Math.floor(job.rating)) { %>
-                  <i class="fas fa-star"></i>
-                  <% } else if (i === Math.ceil(job.rating) && job.rating % 1
-                  !== 0) { %>
-                  <i class="fas fa-star-half-alt"></i>
-                  <% } else { %>
-                  <i class="far fa-star"></i>
-                  <% } %> <% } %>
-                </div>
-                <span class="rating-score"><%= job.rating.toFixed(1) %>/5</span>
-              </div>
-              <% } %>
-            </div>
-
-            <div class="job-actions">
-              <a href="/jobs/<%= job.id %>" class="see-more-btn">See More</a>
-              <div class="job-price"><%= job.price %></div>
-            </div>
+          <div id="loading-indicator" style="text-align: center; padding: 50px">
+            <i
+              class="fas fa-spinner fa-spin"
+              style="font-size: 24px; color: #2563eb"
+            ></i>
+            <p style="margin-top: 10px; color: #666">Loading job history...</p>
           </div>
-          <% }) %> <% } else { %>
-          <div class="no-jobs">
+
+          <div id="jobs-container" style="display: none">
+            <!-- Jobs will be dynamically loaded here -->
+          </div>
+
+          <div id="no-jobs-message" class="no-jobs" style="display: none">
             <i class="fas fa-history"></i>
             <h3>No job history found</h3>
             <p>You haven't completed any jobs yet.</p>
           </div>
-          <% } %>
         </div>
       </div>
     </div>
+
+    <script>
+      // Load job history when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadJobHistory();
+      });
+
+      async function loadJobHistory() {
+        const loadingIndicator = document.getElementById("loading-indicator");
+        const jobsContainer = document.getElementById("jobs-container");
+        const noJobsMessage = document.getElementById("no-jobs-message");
+
+        try {
+          loadingIndicator.style.display = "block";
+          jobsContainer.style.display = "none";
+          noJobsMessage.style.display = "none";
+
+          const response = await fetch("/freelancerD/job_history/api");
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          loadingIndicator.style.display = "none";
+
+          if (data.success && data.historyJobs && data.historyJobs.length > 0) {
+            renderJobs(data.historyJobs);
+            jobsContainer.style.display = "block";
+          } else {
+            noJobsMessage.style.display = "block";
+          }
+        } catch (error) {
+          console.error("Error loading job history:", error);
+          loadingIndicator.style.display = "none";
+
+          // Show error message
+          jobsContainer.innerHTML = `
+            <div style="text-align: center; padding: 50px; color: #ef4444;">
+              <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+              <h3>Error loading job history</h3>
+              <p>Unable to load job history. Please refresh the page and try again.</p>
+              <button onclick="loadJobHistory()" style="
+                margin-top: 15px; 
+                padding: 10px 20px; 
+                background: #2563eb; 
+                color: white; 
+                border: none; 
+                border-radius: 6px; 
+                cursor: pointer;
+              ">Retry</button>
+            </div>
+          `;
+          jobsContainer.style.display = "block";
+        }
+      }
+
+      function renderJobs(jobs) {
+        const jobsContainer = document.getElementById("jobs-container");
+
+        const jobsHTML = jobs
+          .map((job) => {
+            const statusDisplayName =
+              job.status === "finished"
+                ? "Completed"
+                : job.status === "left"
+                ? "Left Job"
+                : "Cancelled";
+
+            const ratingHTML =
+              job.status === "finished" && job.rating > 0
+                ? `
+            <div class="job-rating">
+              <div class="rating-stars">
+                ${generateStarRating(job.rating)}
+              </div>
+              <span class="rating-score">${job.rating.toFixed(1)}/5</span>
+            </div>
+          `
+                : "";
+
+            const cancelReasonHTML =
+              job.status === "left"
+                ? '<div class="job-cancel-reason">Reason: You left the job</div>'
+                : "";
+
+            return `
+            <div class="job-card">
+              <div class="job-company-logo">
+                <img src="${
+                  job.logo
+                }" alt="Company Logo" onerror="this.src='/assets/company_logo.jpg'" />
+              </div>
+              <div class="job-info">
+                <div class="job-header">
+                  <div>
+                    <h3 class="job-title">${escapeHtml(job.title)}</h3>
+                    <div class="job-company">${escapeHtml(job.company)}</div>
+                  </div>
+                  <div class="job-status ${job.status}">
+                    ${statusDisplayName}
+                  </div>
+                </div>
+
+                <div class="job-tech">
+                  ${job.tech
+                    .map(
+                      (tech) =>
+                        `<span class="tech-tag">${escapeHtml(tech)}</span>`
+                    )
+                    .join("")}
+                </div>
+
+                <div class="job-meta">
+                  <div class="job-date">
+                    <i class="fas fa-calendar"></i>
+                    ${escapeHtml(job.date)}
+                  </div>
+                </div>
+
+                ${cancelReasonHTML}
+                ${ratingHTML}
+              </div>
+
+              <div class="job-actions">
+                <a href="/jobs/${job.id}" class="see-more-btn">See More</a>
+                <div class="job-price">${escapeHtml(job.price)}</div>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+
+        jobsContainer.innerHTML = jobsHTML;
+      }
+
+      function generateStarRating(rating) {
+        let starsHTML = "";
+        for (let i = 1; i <= 5; i++) {
+          if (i <= Math.floor(rating)) {
+            starsHTML += '<i class="fas fa-star"></i>';
+          } else if (i === Math.ceil(rating) && rating % 1 !== 0) {
+            starsHTML += '<i class="fas fa-star-half-alt"></i>';
+          } else {
+            starsHTML += '<i class="far fa-star"></i>';
+          }
+        }
+        return starsHTML;
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      // Add refresh functionality
+      function refreshJobHistory() {
+        loadJobHistory();
+      }
+
+      // Add a refresh button to the page header
+      document.addEventListener("DOMContentLoaded", function () {
+        const pageHeader = document.querySelector(".page-header");
+        if (pageHeader) {
+          const refreshBtn = document.createElement("button");
+          refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+          refreshBtn.style.cssText = `
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          `;
+          refreshBtn.onclick = refreshJobHistory;
+
+          const titleContainer = pageHeader.querySelector("h1").parentNode;
+          pageHeader.style.flexDirection = "row";
+          pageHeader.appendChild(refreshBtn);
+        }
+      });
+    </script>
   </body>
 </html>

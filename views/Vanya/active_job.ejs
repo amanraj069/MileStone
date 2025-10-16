@@ -246,8 +246,8 @@
   <body>
     <div class="dashboard-wrapper">
       <!-- Sidebar -->
-      <%- include('./partials/sidebar', {activePage: 'active_job', user: user})
-      %>
+      <%- include('./partials/sidebar', {activePage: 'active_job', user: user ||
+      { name: 'User' }}) %>
 
       <!-- Main Content Area -->
       <div class="main-content">
@@ -259,37 +259,121 @@
         </div>
 
         <div class="content-card">
-          <% if (active_jobs && active_jobs.length > 0) { %> <%
-          active_jobs.forEach(job => { %>
-          <div class="job-card" data-job-id="<%= job.id %>">
+          <div id="loading-indicator" style="text-align: center; padding: 50px">
+            <i
+              class="fas fa-spinner fa-spin"
+              style="font-size: 24px; color: #2563eb"
+            ></i>
+            <p style="margin-top: 10px; color: #666">Loading active jobs...</p>
+          </div>
+
+          <div id="jobs-container" style="display: none">
+            <!-- Jobs will be dynamically loaded here -->
+          </div>
+
+          <div id="no-jobs-message" class="no-jobs" style="display: none">
+            <i class="fas fa-briefcase"></i>
+            <h3>No active jobs found</h3>
+            <p>You don't have any active jobs at the moment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Load active jobs when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadActiveJobs();
+      });
+
+      async function loadActiveJobs() {
+        const loadingIndicator = document.getElementById("loading-indicator");
+        const jobsContainer = document.getElementById("jobs-container");
+        const noJobsMessage = document.getElementById("no-jobs-message");
+
+        try {
+          loadingIndicator.style.display = "block";
+          jobsContainer.style.display = "none";
+          noJobsMessage.style.display = "none";
+
+          const response = await fetch("/freelancerD/active_job/api");
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          loadingIndicator.style.display = "none";
+
+          if (data.success && data.activeJobs && data.activeJobs.length > 0) {
+            renderJobs(data.activeJobs);
+            jobsContainer.style.display = "block";
+          } else {
+            noJobsMessage.style.display = "block";
+          }
+        } catch (error) {
+          console.error("Error loading active jobs:", error);
+          loadingIndicator.style.display = "none";
+
+          // Show error message
+          jobsContainer.innerHTML = `
+            <div style="text-align: center; padding: 50px; color: #ef4444;">
+              <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 10px;"></i>
+              <h3>Error loading jobs</h3>
+              <p>Unable to load active jobs. Please refresh the page and try again.</p>
+              <button onclick="loadActiveJobs()" style="
+                margin-top: 15px; 
+                padding: 10px 20px; 
+                background: #2563eb; 
+                color: white; 
+                border: none; 
+                border-radius: 6px; 
+                cursor: pointer;
+              ">Retry</button>
+            </div>
+          `;
+          jobsContainer.style.display = "block";
+        }
+      }
+
+      function renderJobs(jobs) {
+        const jobsContainer = document.getElementById("jobs-container");
+
+        const jobsHTML = jobs
+          .map(
+            (job) => `
+          <div class="job-card" data-job-id="${job.id}">
             <div class="job-top">
               <div class="job-company-logo">
-                <img src="<%= job.logo %>" alt="Company Logo" />
+                <img src="${
+                  job.logo
+                }" alt="Company Logo" onerror="this.src='/assets/company_logo.jpg'" />
               </div>
               <div class="job-actions">
                 <button
                   class="chat-btn"
-                  onclick="window.location.href='/chat/<%= job.employerUserId %>'"
+                  onclick="window.location.href='/chat/${job.employerUserId}'"
                   title="Chat with Employer"
                 >
                   <i class="fas fa-comment"></i>
                 </button>
                 <button
                   class="complain-btn"
-                  onclick="raiseComplaint('<%= job.id %>')"
+                  onclick="raiseComplaint('${job.id}')"
                   title="Raise Complaint"
                 >
                   <i class="fas fa-exclamation-triangle"></i>
                 </button>
                 <button
                   class="leave-job-btn"
-                  onclick="leaveJob('<%= job.id %>')"
+                  onclick="leaveJob('${job.id}')"
                   title="Leave Job"
                 >
                   <i class="fas fa-sign-out-alt"></i>
                 </button>
                 <a
-                  href="/jobs/<%= job.id%>"
+                  href="/jobs/${job.id}"
                   class="see-more-btn"
                   title="View Details"
                 >
@@ -298,45 +382,49 @@
               </div>
             </div>
             <div class="job-info">
-              <h3 class="job-title"><%= job.title %></h3>
-              <div class="job-company"><%= job.company %></div>
+              <h3 class="job-title">${escapeHtml(job.title)}</h3>
+              <div class="job-company">${escapeHtml(job.company)}</div>
               <div class="job-tech">
-                <% job.tech.forEach(tech => { %>
-                <span class="tech-tag"><%= tech %></span>
-                <% }) %>
+                ${job.tech
+                  .map(
+                    (tech) =>
+                      `<span class="tech-tag">${escapeHtml(tech)}</span>`
+                  )
+                  .join("")}
               </div>
               <div class="job-meta">
                 <div class="job-deadline">
-                  <i class="far fa-clock"></i> <%= job.deadline %>
+                  <i class="far fa-clock"></i> ${escapeHtml(job.deadline)}
                 </div>
-                <div class="job-price"><%= job.price %></div>
+                <div class="job-price">${escapeHtml(job.price)}</div>
               </div>
               <div class="job-progress">
                 <div class="progress-label">
                   <span>Milestone Progress</span>
-                  <span><%= job.progress %>%</span>
+                  <span>${job.progress}%</span>
                 </div>
                 <div class="progress-bar">
                   <div
                     class="progress-filled"
-                    style="width: <%= job.progress %>%"
+                    style="width: ${job.progress}%"
                   ></div>
                 </div>
               </div>
             </div>
           </div>
-          <% }) %> <% } else { %>
-          <div class="no-jobs">
-            <i class="fas fa-briefcase"></i>
-            <h3>No active jobs found</h3>
-            <p>You don't have any active jobs at the moment.</p>
-          </div>
-          <% } %>
-        </div>
-      </div>
-    </div>
+        `
+          )
+          .join("");
 
-    <script>
+        jobsContainer.innerHTML = jobsHTML;
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
       async function leaveJob(jobId) {
         if (confirm("Are you sure you want to leave this job?")) {
           try {
@@ -353,9 +441,22 @@
             const data = await response.json();
             if (response.ok) {
               alert(data.message);
-              document
-                .querySelector(`.job-card[data-job-id="${jobId}"]`)
-                .remove();
+              // Remove the job card from the UI
+              const jobCard = document.querySelector(
+                `.job-card[data-job-id="${jobId}"]`
+              );
+              if (jobCard) {
+                jobCard.remove();
+
+                // Check if there are any remaining jobs
+                const remainingJobs = document.querySelectorAll(".job-card");
+                if (remainingJobs.length === 0) {
+                  document.getElementById("jobs-container").style.display =
+                    "none";
+                  document.getElementById("no-jobs-message").style.display =
+                    "block";
+                }
+              }
             } else {
               alert(data.error || "Failed to leave the job. Please try again.");
             }
@@ -373,6 +474,47 @@
 
         window.location.href = `/freelancerD/complaint/form?${params.toString()}`;
       }
+
+      // Add refresh functionality
+      function refreshJobs() {
+        loadActiveJobs();
+      }
+
+      // Add a refresh button to the page header
+      document.addEventListener("DOMContentLoaded", function () {
+        const pageHeader = document.querySelector(".page-header");
+        if (pageHeader) {
+          const refreshBtn = document.createElement("button");
+          refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+          refreshBtn.style.cssText = `
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          `;
+          refreshBtn.onclick = refreshJobs;
+
+          const headerDiv = document.createElement("div");
+          headerDiv.style.cssText =
+            "display: flex; justify-content: space-between; align-items: center;";
+
+          const titleDiv = document.createElement("div");
+          titleDiv.appendChild(pageHeader.querySelector(".page-title"));
+          titleDiv.appendChild(pageHeader.querySelector(".page-subtitle"));
+
+          headerDiv.appendChild(titleDiv);
+          headerDiv.appendChild(refreshBtn);
+
+          pageHeader.appendChild(headerDiv);
+        }
+      });
     </script>
   </body>
 </html>

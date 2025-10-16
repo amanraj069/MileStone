@@ -12,61 +12,11 @@ exports.getFreelancerActiveJobs = async (req, res) => {
       return res.status(401).send("Unauthorized: Please log in");
     }
 
-    const freelancerId = req.session.user.roleId;
-
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
-    const activeJobs = await JobListing.find({
-      "assignedFreelancer.freelancerId": freelancerId,
-      "assignedFreelancer.status": "working",
-    }).lean();
-
-    const employerIds = activeJobs
-      .map((job) => job.employerId)
-      .filter((id) => id);
-    const users = await User.find({ roleId: { $in: employerIds } })
-      .select("roleId userId")
-      .lean();
-
-    const formattedJobs = await Promise.all(
-      activeJobs.map(async (job) => {
-        const paidAmount = job.milestones
-          .filter((milestone) => milestone.status === "paid")
-          .reduce(
-            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
-            0
-          );
-
-        const totalBudget = parseFloat(job.budget.amount) || 0;
-        const progress =
-          totalBudget > 0 ? Math.min((paidAmount / totalBudget) * 100, 100) : 0;
-
-        const employer = await Employer.findOne({
-          employerId: job.employerId,
-        }).lean();
-        const companyName = employer ? employer.companyName : "Unknown Company";
-
-        const user = users.find((u) => u.roleId === job.employerId);
-
-        return {
-          id: job.jobId,
-          title: job.title,
-          company: companyName,
-          logo: job.imageUrl || "/assets/company_logo.jpg",
-          deadline: job.applicationDeadline
-            ? job.applicationDeadline.toLocaleDateString()
-            : "No deadline",
-          price: job.budget.amount
-            ? `Rs.${parseFloat(job.budget.amount).toFixed(2)}`
-            : "Not specified",
-          progress: Math.round(progress),
-          tech: job.description.skills || [],
-          employerUserId: user?.userId || "", // Include employer's userId from User table
-        };
-      })
-    );
-
+    // Just render the page template with user data
+    // Jobs will be loaded dynamically via JavaScript fetch API
     res.render("Vanya/active_job", {
       user: {
         name: user.name,
@@ -79,12 +29,11 @@ exports.getFreelancerActiveJobs = async (req, res) => {
         subscription: user.subscription,
         role: user.role,
       },
-      active_jobs: formattedJobs,
       activePage: "active_job",
     });
   } catch (error) {
-    console.error("Error fetching active jobs:", error.message);
-    res.status(500).send("Server Error: Unable to load active jobs");
+    console.error("Error loading active jobs page:", error.message);
+    res.status(500).send("Server Error: Unable to load active jobs page");
   }
 };
 
@@ -364,50 +313,11 @@ exports.getFreelancerJobHistory = async (req, res) => {
       return res.status(401).send("Unauthorized: Please log in");
     }
 
-    const freelancerId = req.session.user.roleId;
-
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
-    const historyJobs = await JobListing.find({
-      "assignedFreelancer.freelancerId": freelancerId,
-      "assignedFreelancer.status": { $in: ["finished", "left"] },
-    }).lean();
-
-    const formattedJobs = await Promise.all(
-      historyJobs.map(async (job) => {
-        const paidAmount = job.milestones
-          .filter((milestone) => milestone.status === "paid")
-          .reduce(
-            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
-            0
-          );
-
-        const employer = await Employer.findOne({
-          employerId: job.employerId,
-        }).lean();
-        const companyName = employer ? employer.companyName : "Unknown Company";
-
-        return {
-          id: job.jobId,
-          title: job.title,
-          company: companyName,
-          logo: job.imageUrl || "/assets/company_logo.jpg",
-          status: job.assignedFreelancer.status,
-          tech: job.description.skills || [],
-          date: `${
-            job.assignedFreelancer.startDate
-              ? job.assignedFreelancer.startDate.toLocaleDateString()
-              : "Unknown"
-          } - ${
-            job.updatedAt ? job.updatedAt.toLocaleDateString() : "Unknown"
-          }`,
-          price: paidAmount ? `Rs.${paidAmount.toFixed(2)}` : "Not paid",
-          rating: job.rating || 0,
-        };
-      })
-    );
-
+    // Just render the page template with user data
+    // Jobs will be loaded dynamically via JavaScript fetch API
     res.render("Vanya/job_history", {
       user: {
         name: user.name,
@@ -420,12 +330,11 @@ exports.getFreelancerJobHistory = async (req, res) => {
         subscription: user.subscription,
         role: user.role,
       },
-      history_jobs: formattedJobs,
       activePage: "job_history",
     });
   } catch (error) {
-    console.error("Error rendering job history:", error.message);
-    res.status(500).send("Server Error: Unable to render job history page");
+    console.error("Error loading job history page:", error.message);
+    res.status(500).send("Server Error: Unable to load job history page");
   }
 };
 
@@ -507,30 +416,11 @@ exports.getFreelancerSkills = async (req, res) => {
       return res.status(401).send("Unauthorized: Please log in");
     }
 
-    const freelancerId = req.session.user.roleId;
-
     // Fetch user data for proper user object construction
     const user = await User.findOne({ userId: req.session.user.id }).lean();
 
-    const freelancer = await Freelancer.findOne({ freelancerId }).lean();
-    if (!freelancer) {
-      return res.status(404).send("Freelancer profile not found");
-    }
-
-    const allSkills = await Skill.find().lean();
-
-    const freelancerSkillIds = freelancer.skills.map((skill) => skill.skillId);
-    const freelancerSkills = await Skill.find({
-      skillId: { $in: freelancerSkillIds },
-    }).lean();
-
-    const skillsData = allSkills.map((skill) => ({
-      skillId: skill.skillId,
-      name: skill.name,
-      hasQuiz: skill.questions && skill.questions.length > 0,
-      isAcquired: freelancerSkillIds.includes(skill.skillId),
-    }));
-
+    // Just render the page template with user data
+    // Skills will be loaded dynamically via JavaScript fetch API
     res.render("Vanya/skills_badges", {
       user: {
         name: user.name,
@@ -543,13 +433,11 @@ exports.getFreelancerSkills = async (req, res) => {
         subscription: user.subscription,
         role: user.role,
       },
-      skills: skillsData,
-      freelancerSkills: freelancerSkills.map((skill) => skill.name),
       activePage: "skills_badges",
     });
   } catch (error) {
-    console.error("Error rendering skills_badges:", error.message);
-    res.status(500).send("Server Error: Unable to render skills page");
+    console.error("Error loading skills & badges page:", error.message);
+    res.status(500).send("Server Error: Unable to load skills & badges page");
   }
 };
 
@@ -1278,6 +1166,141 @@ exports.generateProgressReportAPI = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to generate progress report",
+    });
+  }
+};
+
+// API endpoint for active jobs (JSON response)
+exports.getFreelancerActiveJobsAPI = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const freelancerId = req.session.user.roleId;
+
+    const activeJobs = await JobListing.find({
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": "working",
+    }).lean();
+
+    const employerIds = activeJobs
+      .map((job) => job.employerId)
+      .filter((id) => id);
+    const users = await User.find({ roleId: { $in: employerIds } })
+      .select("roleId userId")
+      .lean();
+
+    const formattedJobs = await Promise.all(
+      activeJobs.map(async (job) => {
+        const paidAmount = job.milestones
+          .filter((milestone) => milestone.status === "paid")
+          .reduce(
+            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
+            0
+          );
+
+        const totalBudget = parseFloat(job.budget.amount) || 0;
+        const progress =
+          totalBudget > 0 ? Math.min((paidAmount / totalBudget) * 100, 100) : 0;
+
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
+        }).lean();
+        const companyName = employer ? employer.companyName : "Unknown Company";
+
+        const user = users.find((u) => u.roleId === job.employerId);
+
+        return {
+          id: job.jobId,
+          title: job.title,
+          company: companyName,
+          logo: job.imageUrl || "/assets/company_logo.jpg",
+          deadline: job.applicationDeadline
+            ? job.applicationDeadline.toLocaleDateString()
+            : "No deadline",
+          price: job.budget.amount
+            ? `Rs.${parseFloat(job.budget.amount).toFixed(2)}`
+            : "Not specified",
+          progress: Math.round(progress),
+          tech: job.description.skills || [],
+          employerUserId: user?.userId || "",
+        };
+      })
+    );
+
+    res.json({
+      success: true,
+      activeJobs: formattedJobs,
+      total: formattedJobs.length,
+    });
+  } catch (error) {
+    console.error("Error fetching active jobs API:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Server Error: Unable to load active jobs",
+    });
+  }
+};
+
+// API endpoint for job history (JSON response)
+exports.getFreelancerJobHistoryAPI = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ error: "Unauthorized: Please log in" });
+    }
+
+    const freelancerId = req.session.user.roleId;
+
+    const historyJobs = await JobListing.find({
+      "assignedFreelancer.freelancerId": freelancerId,
+      "assignedFreelancer.status": { $in: ["finished", "left"] },
+    }).lean();
+
+    const formattedJobs = await Promise.all(
+      historyJobs.map(async (job) => {
+        const paidAmount = job.milestones
+          .filter((milestone) => milestone.status === "paid")
+          .reduce(
+            (sum, milestone) => sum + parseFloat(milestone.payment) || 0,
+            0
+          );
+
+        const employer = await Employer.findOne({
+          employerId: job.employerId,
+        }).lean();
+        const companyName = employer ? employer.companyName : "Unknown Company";
+
+        return {
+          id: job.jobId,
+          title: job.title,
+          company: companyName,
+          logo: job.imageUrl || "/assets/company_logo.jpg",
+          status: job.assignedFreelancer.status,
+          tech: job.description.skills || [],
+          date: `${
+            job.assignedFreelancer.startDate
+              ? job.assignedFreelancer.startDate.toLocaleDateString()
+              : "Unknown"
+          } - ${
+            job.updatedAt ? job.updatedAt.toLocaleDateString() : "Unknown"
+          }`,
+          price: paidAmount ? `Rs.${paidAmount.toFixed(2)}` : "Not paid",
+          rating: job.rating || 0,
+        };
+      })
+    );
+
+    res.json({
+      success: true,
+      historyJobs: formattedJobs,
+      total: formattedJobs.length,
+    });
+  } catch (error) {
+    console.error("Error fetching job history API:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Server Error: Unable to load job history",
     });
   }
 };
