@@ -551,6 +551,11 @@
         skillNameInput.addEventListener('blur', validateSkillName);
 
         function updateQuestionsJson() {
+          // Safety check for questions array
+          if (!Array.isArray(questions)) {
+            questions = [];
+          }
+          
           // Clean up questions data before stringifying
           const cleanedQuestions = questions.map(q => ({
             questionText: q.questionText || "",
@@ -564,6 +569,11 @@
         }
 
         function updateQuizStatistics() {
+          // Safety check for questions array
+          if (!Array.isArray(questions)) {
+            questions = [];
+          }
+          
           // Create or update statistics display
           let statsContainer = document.querySelector('.quiz-statistics');
           if (!statsContainer) {

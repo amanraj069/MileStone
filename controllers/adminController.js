@@ -545,24 +545,115 @@ exports.addQuiz = async (req, res) => {
   try {
     const { name, questions } = req.body;
 
-    const parsedQuestions =
-      typeof questions === "string" ? JSON.parse(questions) : questions;
+    // Validate that name is provided
+    if (!name || name.trim() === "") {
+      return res.status(400).json({
+        message: "Quiz name is required",
+        success: false,
+      });
+    }
+
+    // Validate and parse questions
+    let parsedQuestions;
+
+    if (!questions) {
+      return res.status(400).json({
+        message: "Questions are required to create a quiz",
+        success: false,
+      });
+    }
+
+    try {
+      parsedQuestions =
+        typeof questions === "string" ? JSON.parse(questions) : questions;
+    } catch (parseError) {
+      console.error("Error parsing questions JSON:", parseError);
+      return res.status(400).json({
+        message: "Invalid questions format. Please check your question data.",
+        success: false,
+      });
+    }
+
+    // Ensure parsedQuestions is an array
+    if (!Array.isArray(parsedQuestions)) {
+      return res.status(400).json({
+        message: "Questions must be provided as an array",
+        success: false,
+      });
+    }
+
+    // Validate that there is at least one question
+    if (parsedQuestions.length === 0) {
+      return res.status(400).json({
+        message: "At least one question is required to create a quiz",
+        success: false,
+      });
+    }
+
+    // Validate each question structure
+    for (let i = 0; i < parsedQuestions.length; i++) {
+      const q = parsedQuestions[i];
+      if (!q || !q.questionText || !q.options || !q.correctAnswer) {
+        return res.status(400).json({
+          message: `Question ${
+            i + 1
+          } is missing required fields (questionText, options, correctAnswer)`,
+          success: false,
+        });
+      }
+
+      if (!Array.isArray(q.options) || q.options.length === 0) {
+        return res.status(400).json({
+          message: `Question ${i + 1} must have at least one option`,
+          success: false,
+        });
+      }
+    }
 
     const newSkill = new Skill({
-      name,
+      name: name.trim(),
       questions: parsedQuestions.map((q) => ({
         questionText: q.questionText,
-        options: q.options,
+        options: Array.isArray(q.options) ? q.options : [],
         correctAnswer: q.correctAnswer,
         marks: parseInt(q.marks) || 1,
       })),
     });
 
     await newSkill.save();
+
+    // Check if this is an AJAX request
+    const isAjax =
+      req.headers.accept && req.headers.accept.includes("application/json");
+
+    if (isAjax) {
+      return res.json({
+        success: true,
+        message: "Quiz created successfully!",
+        skillId: newSkill.skillId,
+      });
+    }
+
     res.redirect("/adminD/quizzes");
   } catch (error) {
     console.error("Error adding quiz:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+
+    // Check if this is an AJAX request
+    const isAjax =
+      req.headers.accept && req.headers.accept.includes("application/json");
+
+    if (isAjax) {
+      return res.status(500).json({
+        message: "Server error while creating quiz",
+        error: error.message,
+        success: false,
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 };
 
@@ -601,16 +692,79 @@ exports.getEditQuiz = async (req, res) => {
 exports.updateQuiz = async (req, res) => {
   try {
     const { name, questions } = req.body;
-    const parsedQuestions =
-      typeof questions === "string" ? JSON.parse(questions) : questions;
+
+    // Validate that name is provided
+    if (!name || name.trim() === "") {
+      return res.status(400).json({
+        message: "Quiz name is required",
+        success: false,
+      });
+    }
+
+    // Validate and parse questions
+    let parsedQuestions;
+
+    if (!questions) {
+      return res.status(400).json({
+        message: "Questions are required to update a quiz",
+        success: false,
+      });
+    }
+
+    try {
+      parsedQuestions =
+        typeof questions === "string" ? JSON.parse(questions) : questions;
+    } catch (parseError) {
+      console.error("Error parsing questions JSON:", parseError);
+      return res.status(400).json({
+        message: "Invalid questions format. Please check your question data.",
+        success: false,
+      });
+    }
+
+    // Ensure parsedQuestions is an array
+    if (!Array.isArray(parsedQuestions)) {
+      return res.status(400).json({
+        message: "Questions must be provided as an array",
+        success: false,
+      });
+    }
+
+    // Validate that there is at least one question
+    if (parsedQuestions.length === 0) {
+      return res.status(400).json({
+        message: "At least one question is required to update a quiz",
+        success: false,
+      });
+    }
+
+    // Validate each question structure
+    for (let i = 0; i < parsedQuestions.length; i++) {
+      const q = parsedQuestions[i];
+      if (!q || !q.questionText || !q.options || !q.correctAnswer) {
+        return res.status(400).json({
+          message: `Question ${
+            i + 1
+          } is missing required fields (questionText, options, correctAnswer)`,
+          success: false,
+        });
+      }
+
+      if (!Array.isArray(q.options) || q.options.length === 0) {
+        return res.status(400).json({
+          message: `Question ${i + 1} must have at least one option`,
+          success: false,
+        });
+      }
+    }
 
     const updatedSkill = await Skill.findOneAndUpdate(
       { skillId: req.params.skillId },
       {
-        name,
+        name: name.trim(),
         questions: parsedQuestions.map((q) => ({
           questionText: q.questionText,
-          options: q.options,
+          options: Array.isArray(q.options) ? q.options : [],
           correctAnswer: q.correctAnswer,
           marks: parseInt(q.marks) || 1,
         })),
@@ -619,13 +773,44 @@ exports.updateQuiz = async (req, res) => {
     );
 
     if (!updatedSkill) {
-      return res.status(404).json({ message: "Skill not found" });
+      return res.status(404).json({
+        message: "Skill not found",
+        success: false,
+      });
+    }
+
+    // Check if this is an AJAX request
+    const isAjax =
+      req.headers.accept && req.headers.accept.includes("application/json");
+
+    if (isAjax) {
+      return res.json({
+        success: true,
+        message: "Quiz updated successfully!",
+        skill: updatedSkill,
+      });
     }
 
     res.redirect("/adminD/quizzes");
   } catch (error) {
     console.error("Error updating quiz:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+
+    // Check if this is an AJAX request
+    const isAjax =
+      req.headers.accept && req.headers.accept.includes("application/json");
+
+    if (isAjax) {
+      return res.status(500).json({
+        message: "Server error while updating quiz",
+        error: error.message,
+        success: false,
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
 };
 
@@ -758,46 +943,79 @@ exports.getCreateBlog = (req, res) => {
 
 exports.createBlog = async (req, res) => {
   try {
-    const { title, tagline, category, imageUrl, minReadTime, content } = req.body;
+    const { title, tagline, category, imageUrl, minReadTime, content } =
+      req.body;
 
-    console.log('createBlog received body:', JSON.stringify(req.body));
+    console.log("createBlog received body:", JSON.stringify(req.body));
 
     // Basic validation
     if (!req.session || !req.session.user || !req.session.user.id) {
-      return res.status(401).json({ success: false, message: 'Unauthorized: admin not logged in' });
+      return res
+        .status(401)
+        .json({ success: false, message: "Unauthorized: admin not logged in" });
     }
 
     if (!title || !tagline || !category || !imageUrl || !minReadTime) {
-      return res.status(400).json({ success: false, message: 'Missing required fields. Please fill all required inputs.' });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Missing required fields. Please fill all required inputs.",
+        });
     }
 
     // Parse content safely
     let parsedContent = [];
     if (!content) {
-      return res.status(400).json({ success: false, message: 'Please provide blog content sections.' });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Please provide blog content sections.",
+        });
     }
 
-    if (typeof content === 'string') {
+    if (typeof content === "string") {
       try {
         parsedContent = JSON.parse(content);
       } catch (parseErr) {
-        console.error('Error parsing content JSON:', parseErr);
-        return res.status(400).json({ success: false, message: 'Invalid content format. Please ensure content is valid JSON.' });
+        console.error("Error parsing content JSON:", parseErr);
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message:
+              "Invalid content format. Please ensure content is valid JSON.",
+          });
       }
     } else if (Array.isArray(content)) {
       parsedContent = content;
     } else {
-      return res.status(400).json({ success: false, message: 'Invalid content format.' });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid content format." });
     }
 
     if (!Array.isArray(parsedContent) || parsedContent.length === 0) {
-      return res.status(400).json({ success: false, message: 'Please add at least one content section.' });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Please add at least one content section.",
+        });
     }
 
     // Ensure each section has heading and description
     for (const [i, section] of parsedContent.entries()) {
       if (!section || !section.heading || !section.description) {
-        return res.status(400).json({ success: false, message: `Content section ${i + 1} is missing heading or description.` });
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: `Content section ${
+              i + 1
+            } is missing heading or description.`,
+          });
       }
     }
 
@@ -814,21 +1032,25 @@ exports.createBlog = async (req, res) => {
     await newBlog.save();
 
     res.json({
-  success: true,
-  message: 'Blog created successfully',
-  blogId: newBlog.blogId,
+      success: true,
+      message: "Blog created successfully",
+      blogId: newBlog.blogId,
     });
   } catch (error) {
-    console.error('Error creating blog:', error);
+    console.error("Error creating blog:", error);
     // If Mongoose validation error, return message
-    if (error.name === 'ValidationError') {
-      const messages = Object.values(error.errors).map(e => e.message).join('; ');
-      return res.status(400).json({ success: false, message: `Validation error: ${messages}` });
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors)
+        .map((e) => e.message)
+        .join("; ");
+      return res
+        .status(400)
+        .json({ success: false, message: `Validation error: ${messages}` });
     }
 
     res.status(500).json({
-  success: false,
-  message: error.message || 'Error creating blog',
+      success: false,
+      message: error.message || "Error creating blog",
     });
   }
 };
